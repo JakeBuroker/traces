@@ -78,16 +78,16 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
     const result = await connection.query(`SELECT * FROM "media";`)
     const allMediaTypes = result.rows
     const queryText = `
-         INSERT INTO "evidence" ("title", "notes", "file_url", "user_id", "media_type")
+         INSERT INTO "evidence" ("title", "notes", "aws_key", "user_id", "media_type")
          VALUES ($1, $2, $3, $4, $5);
          `
     let mediaType
     if (req.file) {
-      mediaType = checkMediaType(req.file.mimetype)
+      mediaType = checkMediaType(req.file.mimetype, allMediaTypes)
     } else {
       mediaType = 1
     }
-    // await connection.query(queryText, [req])
+    await connection.query(queryText, [req.body.title, req.body.notes, req.file.originalname, req.user.id, mediaType])
     await connection.query("COMMIT")
     res.sendStatus(201)
   } catch (error) {
