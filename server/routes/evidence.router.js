@@ -12,19 +12,19 @@ dotenv.config()
 const aws = require('@aws-sdk/client-s3')
 const signer = require('@aws-sdk/s3-request-presigner')
 
-// const bucketName = process.env.BUCKET_NAME
-// const bucketRegion = process.env.BUCKET_REGION
-// const accessKey = process.env.ACCESS_KEY
-// const secretAccessKey = process.env.SECRET_ACCESS_KEY
+const bucketName = process.env.BUCKET_NAME
+const bucketRegion = process.env.BUCKET_REGION
+const accessKey = process.env.ACCESS_KEY
+const secretAccessKey = process.env.SECRET_ACCESS_KEY
 
-// const s3 = new aws.S3Client({
-//   credentials: {
-//       accessKeyId: accessKey,
-//       secretAccessKey: secretAccessKey,
-//   },
-//   region: bucketRegion,
+const s3 = new aws.S3Client({
+  credentials: {
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccessKey,
+  },
+  region: bucketRegion,
 
-// })
+})
 
 router.get("/", (req, res) => {
   pool
@@ -43,16 +43,11 @@ router.get("/", (req, res) => {
 // This post should post to AWS only if there's a file, otherwise it will post to server with 'text' as the media_type.
 router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) => {
   console.log('Req.file', req.file, 'Req.body:', req.body)
-  // const params = {
-  //     Bucket: bucketName,
-  //     Key: req.file.originalname,
-  //     Body: req.file.buffer,
-  //     ContentType: req.file.mimetype,
-  // }
 
-  // const command = new aws.PutObjectCommand(params)
+
+
   // try {
-  //     await s3.send(command)
+      
 
   //     const queryText = `
   //     INSERT INTO "evidence" ("title", "notes", "file_url", "user_id", "media_type")
@@ -82,12 +77,26 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
          VALUES ($1, $2, $3, $4, $5);
          `
     let mediaType
+    let awsReference
     if (req.file) {
       mediaType = checkMediaType(req.file.mimetype, allMediaTypes)
+      awsReference = req.file.originalname
     } else {
       mediaType = 1
+      awsReference = req.body.title
     }
-    await connection.query(queryText, [req.body.title, req.body.notes, req.file.originalname, req.user.id, mediaType])
+    await connection.query(queryText, [req.body.title, req.body.notes, awsReference, req.user.id, mediaType])
+
+    if (req.file) {
+      const params = {
+        Bucket: bucketName,
+        Key: req.file.originalname,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype,
+      }
+      const command = new aws.PutObjectCommand(params)
+      await s3.send(command)
+    }
     await connection.query("COMMIT")
     res.sendStatus(201)
   } catch (error) {
