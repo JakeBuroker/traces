@@ -1,0 +1,48 @@
+.container {
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; 
+}
+
+.item-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: stretch;
+  width: 370px; 
+  max-width: 1200px;
+  height: 400px;
+  margin: 20px auto; 
+  border: 1.5px solid black;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.item-image {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+}
+
+.item-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  width: 50%;
+}
+
+.item-title, .item-notes, .item-location {
+  margin-bottom: 10px;
+}
+
+.item-actions {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
