@@ -7,6 +7,9 @@
   },
   "dependencies": {
 
+
+    "@mui/joy": "^5.0.0-beta.29",
+    "@mui/x-data-grid": "^6.19.6",
     "@aws-sdk/client-s3": "^3.525.0",
     "@aws-sdk/s3-request-presigner": "^3.525.0",
     "@emotion/react": "^11.11.4",

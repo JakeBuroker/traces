@@ -6,12 +6,24 @@ import './LandingPage.css';
 import RegisterForm from '../RegisterForm/RegisterForm';
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome');
+  const [heading, setHeading] = useState('Traces');
   const history = useHistory();
 
   const onLogin = (event) => {
     history.push('/login');
   };
+
+  // const linkUp = () => {
+  //   let text = "If you want to learn more about this play click on this link!";
+  //   let result = "<a href = 'https://waxfactory.nyc/productions/view/TRACES-pilot/'>" + text + "</a>";
+  //   document.getElementByID("websiteLink1").innerHTML = result;
+  //   return(result);
+  // }
+  // <script>
+  // let text = "If you want to learn more about this play click on this link!";
+  // let result = text.link("https://waxfactory.nyc/productions/view/TRACES-pilot/")
+  // document.getElementByID("websiteLink1").innerHTML = result;
+  // </script>
 
   return (
     <div className="container">
@@ -20,28 +32,12 @@ function LandingPage() {
       <div className="grid">
         <div className="grid-col grid-col_8">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            id felis metus. Vestibulum et pulvinar tortor. Morbi pharetra lacus
-            ut ex molestie blandit. Etiam et turpis sit amet risus mollis
-            interdum. Suspendisse et justo vitae metus bibendum fringilla sed
-            sed justo. Aliquam sollicitudin dapibus lectus, vitae consequat odio
-            elementum eget. Praesent efficitur eros vitae nunc interdum, eu
-            interdum justo facilisis. Sed pulvinar nulla ac dignissim efficitur.
-            Quisque eget eros metus. Vestibulum bibendum fringilla nibh a
-            luctus. Duis a sapien metus.
+          This project involves participants who are equipped with synchronized audio devices, following a narrator's prompts to track the journey of an individual (an actor) as she moves through various real public locations across the city. Participants are instructed to document their observations through audio, video, and photo recordings.
           </p>
 
-          <p>
-            Praesent consectetur orci dui, id elementum eros facilisis id. Sed
-            id dolor in augue porttitor faucibus eget sit amet ante. Nunc
-            consectetur placerat pharetra. Aenean gravida ex ut erat commodo, ut
-            finibus metus facilisis. Nullam eget lectus non urna rhoncus
-            accumsan quis id massa. Curabitur sit amet dolor nisl. Proin
-            euismod, augue at condimentum rhoncus, massa lorem semper lacus, sed
-            lobortis augue mi vel felis. Duis ultrices sapien at est convallis
-            congue.
+          <p id="websiteLink1">
           </p>
-
+         
           <p>
             Fusce porta diam ac tortor elementum, ut imperdiet metus volutpat.
             Suspendisse posuere dapibus maximus. Aliquam vitae felis libero. In
@@ -55,7 +51,7 @@ function LandingPage() {
           <RegisterForm />
 
           <center>
-            <h4>Already a Member?</h4>
+            <h4>If you are participating in the play please login.</h4>
             <button className="btn btn_sizeSm" onClick={onLogin}>
               Login
             </button>
