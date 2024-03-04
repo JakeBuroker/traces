@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import EvidencePage from '../Evidence/Evidence';
 
 import './App.css';
 
@@ -108,6 +109,14 @@ function App() {
               // Otherwise, show the Landing page
               <LandingPage />
             }
+          </Route>
+          
+          <Route
+            // shows AboutPage at all times (logged in or not)
+            exact
+            path="/Evidence"
+          >
+            <EvidencePage />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}
