@@ -41,8 +41,8 @@ router.get("/", (req, res) => {
 
 
 // This post should post to AWS only if there's a file, otherwise it will post to server with 'text' as the media_type.
-router.post('/', rejectUnauthenticated, async (req, res) => {
-  console.log('Req.file', req.file)
+router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+  console.log('Req.file', req.file, 'Req.body:', req.body)
   // const params = {
   //     Bucket: bucketName,
   //     Key: req.file.originalname,
@@ -75,14 +75,20 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
   const connection = await pool.connect()
   try {
     connection.query("BEGIN")
-    const allMediaTypes = await connection.query(`SELECT * FROM "media";`).rows
-    console.log(allMediaTypes);
+    const result = await connection.query(`SELECT * FROM "media";`)
+    const allMediaTypes = result.rows
     const queryText = `
          INSERT INTO "evidence" ("title", "notes", "file_url", "user_id", "media_type")
          VALUES ($1, $2, $3, $4, $5);
          `
-    const media_type = req.file?.mimetype || 1
-    connection.query("COMMIT")
+    let mediaType
+    if (req.file) {
+      mediaType = checkMediaType(req.file.mimetype)
+    } else {
+      mediaType = 1
+    }
+    // await connection.query(queryText, [req])
+    await connection.query("COMMIT")
     res.sendStatus(201)
   } catch (error) {
     console.log(error);
@@ -90,5 +96,14 @@ router.post('/', rejectUnauthenticated, async (req, res) => {
     connection.release()
   }
 });
+
+const checkMediaType = (mimetype, allMediaTypes) => {
+  for (let type of allMediaTypes) {
+    if (mimetype.includes(type.type)) {
+      console.log(type.id);
+      return type.id
+    }
+  }
+}
 
 module.exports = router
