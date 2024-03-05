@@ -1,3 +1,11 @@
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .container {
   margin: auto;
   display: flex;
@@ -8,43 +16,17 @@
 }
 
 .item-card {
-  position: relative;
   display: flex;
-  flex-direction: row;
-  justify-content: start;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  padding: 0;
+  margin: 0 auto;
   width: 320px; 
-  height: 400px; 
-  margin: 10px auto;
+  height: 450px; 
   border: 1.5px solid black;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  padding: 12px;
 }
 
-.item-image {
-  flex: 0 0 100px;
-  height: 90px;
-  object-fit: cover;
-  margin-top: 140px;
-  border: 1px solid black;
-  margin-right: 10px;
-}
-
-.notes {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  word-wrap: break-word;
-  padding-top: 42px; 
-}
-
-.location {
-  position: absolute;
-  bottom: 10px;
-  right: -10px;
-  width: auto; 
-}

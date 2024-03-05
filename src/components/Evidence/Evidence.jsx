@@ -7,9 +7,10 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
-import { DialogContent, Dialog } from "@mui/material";
+import { Dialog, DialogContent } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { DateTime } from "luxon";
 import "./Evidence.css";
 
 function EvidencePage() {
@@ -44,129 +45,72 @@ function EvidencePage() {
     setDetailsModalOpen(false);
   };
 
+  const handleEdit = (item) => {
+    // Implement your edit functionality here
+  };
+
+  const handleDelete = (item) => {
+    // Implement your delete functionality here
+  };
+
   return (
     <main>
       <div className="container">
         <Grid container spacing={2} justifyContent="center">
           {evidence.map((item) => (
             <Grid key={item.id} item xs={12} sm={8} md={6} lg={3}>
-              <Card className="item-card">
+              <Card className="item-card" sx={{ display: 'flex', flexDirection: 'column', position: 'relative', height: 450 }}>
+                {/* Title */}
+                <Typography variant="h5" component="div" sx={{ textAlign: "center", margin: '16px 0' }}>
+                  {item.title}
+                </Typography>
+                
+                {/* Image */}
                 <CardMedia
                   component="img"
-                  src={`images/${item.aws_key}`}
-                  className="item-image"
+                  src={item.aws_url}
                   onClick={() => openModal(item)}
+                  sx={{ height: 160, width: '80%', objectFit: 'cover', alignSelf: 'center' }}
                 />
-                <CardContent className="item-content">
-                  <Typography
-                    variant="h4"
-                    className="item-title"
-                    style={{
-                      position: "absolute",
-                      top: "20px",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      width: "auto",
-                    }}
-                  >
-                    {item.title}
-                  </Typography>
-                  <Typography variant="body2" className="notes" style={{fontSize:'19px'}}>
+
+                <CardContent sx={{ flexGrow: 1, width: '100%' }}>
+                  {/* Notes */}
+                  <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 2 }}>
                     {item.notes}
                   </Typography>
 
-                  <Typography
-                    variant="body2"
-                    className="location"
-                    style={{
-                      textAlign: "center",
-                      marginRight: "25.5px",
-                    }}
-                  >
-                    Location: {item.location}
-                  </Typography>
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: "37.5px",
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      display: "flex",
-                      gap: "20px",
-                    }}
-                  >
-                    <Chip
-                      icon={<CreateIcon />}
-                      label="Edit"
-                      onClick={() => handleEdit(selectedItem)}
-                      style={{
-                        cursor: "pointer",
-                        width: "90px",
-                        height: "40px",
-                        fontSize: "20px",
-                      }}
-                    />
-                    <Chip
-                      icon={<DeleteForeverIcon />}
-                      label="Delete"
-                      onClick={() => handleDelete(selectedItem)}
-                      style={{
-                        cursor: "pointer",
-                        width: "110px",
-                        height: "40px",
-                        fontSize: "20px",
-                      }}
-                    />
+                  {/* Buttons */}
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+                    <Chip icon={<CreateIcon />} label="Edit" onClick={() => handleEdit(item)} />
+                    <Chip icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleDelete(item)} />
                   </div>
                 </CardContent>
+
+                {/* Date - Bottom Left */}
+                <Typography variant="body2" sx={{ position: 'absolute', bottom: 10, left: 10 }}>
+                  {DateTime.fromISO(item.date_posted).toLocaleString(DateTime.DATETIME_MED)}
+                </Typography>
+
+                {/* Location - Bottom Right */}
+                <Typography variant="body2" sx={{ position: 'absolute', bottom: 10, right: 10 }}>
+                {item.location}
+                </Typography>
               </Card>
             </Grid>
           ))}
         </Grid>
       </div>
-      <Dialog
-        open={detailsModalOpen}
-        onClose={detailsModalClose}
-        fullWidth={true}
-        maxWidth="md"
-        className="details-dialog"
-      >
-        <DialogContent className="dialog-content">
+      <Dialog open={detailsModalOpen} onClose={detailsModalClose} fullWidth maxWidth="md">
+        <DialogContent>
           {selectedItem && (
             <div>
-              <img
-                src={`images/${selectedItem.aws_key}`}
-                alt="item"
-                style={{ width: "100%", height: "auto", objectFit: "cover" }}
-              />
-              <Typography variant="h5" style={{ textAlign: "center" }}>
-                {selectedItem.title}
-              </Typography>
-              <Typography variant="body1" style={{ textAlign: "center" }}>
-                {selectedItem.notes}
-              </Typography>
-              <Typography variant="body1" style={{ textAlign: "center" }}>
-                Location: {selectedItem.location}
-              </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "10px",
-                }}
-              >
-                <Chip
-                  icon={<CreateIcon />}
-                  label="Edit"
-                  onClick={() => handleEdit(selectedItem)}
-                  style={{ cursor: "pointer" }}
-                />
-                <Chip
-                  icon={<DeleteForeverIcon />}
-                  label="Delete"
-                  onClick={() => handleDelete(selectedItem)}
-                  style={{ cursor: "pointer" }}
-                />
+              <img src={selectedItem.aws_url} alt="Selected item" style={{ width: "100%", height: "auto", objectFit: "cover" }} />
+              <Typography variant="h5" textAlign="center">{selectedItem.title}</Typography>
+              <Typography variant="body1" textAlign="center">{selectedItem.notes}</Typography>
+              <Typography variant="body1" textAlign="center">Location: {selectedItem.location}</Typography>
+              <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+                <Chip icon={<CreateIcon />} label="Edit" onClick={() => handleEdit(selectedItem)} />
+                <Chip icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleDelete(selectedItem)} />
               </div>
             </div>
           )}
