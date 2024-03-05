@@ -161,7 +161,8 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   "phone_number" = $2,
   "alias" = $3,
   "waiver_acknowledged" = $4
-  WHERE "id" = $5;
+  WHERE "id" = $5
+  RETURNING "avatar_url";
   `
   const queryParams = [
     req.body.email, 
@@ -172,12 +173,15 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   ]
   const connection = await pool.connect()
   try {
-    await connection.query(queryText, queryParams)
+    const result = await connection.query(queryText, queryParams)
+    console.log(result.rows);
+    res.send(result.rows)
 
     // TODO: I need to check if there is already an image saved for this user, and get avatar_url, or set it if it's null.
-    if(req.file) {
-      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
-    }
+    
+    // if(req.file) {
+    //   await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
+    // }
     
   } catch (error) {
     console.log(error);
