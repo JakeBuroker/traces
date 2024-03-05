@@ -73,14 +73,23 @@ function Nav() {
             About
             </Link>
             </MenuItem>
+
             <MenuItem>
             <Link className="navLink" to="/gallery">
             Gallery
              </Link>
              </MenuItem>
+
+             <MenuItem>
+            <Link className="navLink" to="/evidence">
+            Evidence
+             </Link>
+             </MenuItem>
+
             <MenuItem>
             <LogOutButton className="navLink" />
             </MenuItem>
+
             </Menu>
             </Dropdown>
           </>
