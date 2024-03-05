@@ -183,11 +183,11 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
     //   await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
     // }
     
-  } catch (error) {
-    console.log(error);
-    connection.query("ROLLBACK")
-  }
-})
+//   } catch (error) {
+//     console.log(error);
+//     connection.query("ROLLBACK")
+//   }
+// })
 
 const checkMediaType = (mimetype, allMediaTypes) => {
   for (let type of allMediaTypes) {
