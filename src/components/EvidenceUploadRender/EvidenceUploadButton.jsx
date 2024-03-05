@@ -2,10 +2,27 @@
 // * renders the upload choices for which type of media you're uploading
 import './EvidenceUploadButton.css'
 import { useState, useRef } from 'react';
-export default function EvidenceUploadButton () {
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useDispatch } from 'react-redux';
 
+export default function EvidenceUploadButton () {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    let [evidenceType, setEvidenceType] = useState()
 const [showAdditionalButtons, setShowAdditionalButtons] = useState(false);
+
 // const mainButtonRef= useRef(null)
+const EvidenceUploadOnclick = (event) => {
+    event.preventDefault()
+    let uploadType = event.target.closest('button').id
+    console.log("choosing evidence upload type", uploadType);
+    setEvidenceType(uploadType)
+    dispatch({type:'SET_EVIDENCE_TYPE', payload:uploadType})
+
+    history.push('/evidenceupload')
+   
+}
+
 
 const toggleAdditionalButtons = () => {
   setShowAdditionalButtons(!showAdditionalButtons);
@@ -27,9 +44,9 @@ return (
 
     {showAdditionalButtons && (
       <div >
-        <button className="additional-button" id="cambutton">📸</button>
-        <button className="additional-button" id="audiobutton">🎤</button>
-        <button className="additional-button" id="notesbutton">📝</button>
+        <button onClick = {EvidenceUploadOnclick} className="additional-button" id="cambutton">📸</button>
+        <button onClick = {EvidenceUploadOnclick} className="additional-button" id="audiobutton">🎤</button>
+        <button onClick = {EvidenceUploadOnclick} className="additional-button" id="notesbutton">📝</button>
       </div>
     )}
   </div>

@@ -4,8 +4,14 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import axios from "axios"
-
-export default function EvidenceUpload(props) {
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
+import { useSelector } from "react-redux"
+export default function EvidenceUpload() {
+    const history = useHistory()
+    const evidenceType = useSelector(store => store.evidenceUploadReducer)
+    console.log('evidence type', evidenceType);
+    console.log(evidenceType.evidenceUploadReducer);
+    const actualType = evidenceType.evidenceUploadReducer
 let [evidenceName, setEvidenceName] = useState("")
 let [evidenceInfo, setEvidenceInfo] = useState("")
 let [selectedFiles, setSelectedFiles] = useState([])
@@ -15,6 +21,9 @@ const dispatch = useDispatch()
 const changeName = (event) => {
     event.preventDefault()
     setEvidenceName(event.target.closest('input').value)
+}
+const goBack = () => {
+    history.goBack()
 }
 // * This on change function responds to the change of the textarea for evidence info, and
 // * updates the useState so that it can be passed into the submit function
@@ -30,13 +39,16 @@ const changeFiles = (event) => {
     //  console.log( typeof(selectedFiles) )
 }
 // * Returns no input fields if the user hasn't specified an evidence type
-    if (props.type == null) {
+    if (actualType == null) {
         return (
+            <div>
+                <button onClick={goBack}> Go Back</button>
             <p>No type has been chosen</p>
+            </div>
         )
     }
  // * Returns input fields for submitting an image/video
-    else if (props.type == "imageOrVideo") {
+    else if (actualType == "cambutton") {
         let renderImage = "Image will go here"
         let renderImageSource = " "
 // ? selectedFiles is established outside of the onchange function, so that the handleSubmit function
@@ -64,6 +76,7 @@ const changeFiles = (event) => {
         }
         return (
             <div>
+                <button onClick={goBack}> Go Back</button>
                 <>This is where you upload images or videos</>
                 <br />
                 <br />
@@ -96,7 +109,7 @@ const changeFiles = (event) => {
         )
     }
 // * Returns the input fields for submitting text evidence
-    else if (props.type == "Text") {
+    else if (actualType == "notesbutton") {
         const handleSubmit = () => {
             console.log("submitting text evidence");
             console.log("evidence Name", evidenceName);
@@ -117,6 +130,8 @@ const changeFiles = (event) => {
         }
         return (
             <div>
+                <button onClick={goBack}> Go Back</button>
+
                 <>This is where you upload text</>
                 <br />
                 <br />
@@ -141,7 +156,7 @@ const changeFiles = (event) => {
         )
     }
 // * Returns the input fields for submitting audio evidence
-    else if (props.type == "Audio") {
+    else if (actualType == "audiobutton") {
         const handleSubmit = () => {
             console.log("submitting audio evidence");
             console.log("evidence Name", evidenceName);
@@ -151,6 +166,8 @@ const changeFiles = (event) => {
         }
         return (
             <div>
+                <button onClick={goBack}> Go Back</button>
+
                 <>This is where you upload audio</>
                 <br />
                 <br />
@@ -170,6 +187,15 @@ const changeFiles = (event) => {
                     <button onClick={handleSubmit}>Upload Evidence</button>
 
                 </form>
+            </div>
+        )
+       
+    }
+    else{
+        return(
+            <div>
+                <button onClick={goBack}> Go Back</button>
+                <p> I'm not sure what's going on</p>
             </div>
         )
     }

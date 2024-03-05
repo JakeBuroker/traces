@@ -21,7 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import AdminPage from '../Admin/Admin';
 import GalleryPage from '../Gallery/Gallery';
-
+import EvidenceUpload from '../EvidenceUpload/EvidenceUpload';
 
 import EvidencePage from '../Evidence/Evidence';
 
@@ -80,6 +80,13 @@ function App() {
             path="/info"
           >
             <InfoPage />
+          </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows EvidenceUpload else shows LoginPage
+            exact
+            path="/evidenceupload"
+          >
+            <EvidenceUpload />
           </ProtectedRoute>
 
           <ProtectedRoute
