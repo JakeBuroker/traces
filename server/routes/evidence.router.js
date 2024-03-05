@@ -179,15 +179,15 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
 
     // TODO: I need to check if there is already an image saved for this user, and get avatar_url, or set it if it's null.
     
-    // if(req.file) {
-    //   await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
-    // }
+    if(req.file) {
+      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
+    }
     
-//   } catch (error) {
-//     console.log(error);
-//     connection.query("ROLLBACK")
-//   }
-// })
+  } catch (error) {
+    console.log(error);
+    connection.query("ROLLBACK")
+  }
+})
 
 const checkMediaType = (mimetype, allMediaTypes) => {
   for (let type of allMediaTypes) {
