@@ -176,6 +176,7 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   ]
   const connection = await pool.connect()
   try {
+    await connection.query("BEGIN")
     const result = await connection.query(queryText, queryParams)
     console.log(result.rows);
     res.send(result.rows)
@@ -207,6 +208,7 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   }
 })
 
+// Updates to change all is_public to true.
 router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = `
@@ -223,6 +225,7 @@ router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
   }
 })
 
+// Updates to change all is_public to false.
 router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = `
@@ -239,14 +242,38 @@ router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
   }
 })
 
-// router.put('/evidence/clearance/:id', rejectUnauthenticated, async (req, res) => {
-//   if(req.user.role === 2) {
+// Update to change to toggle the specific is_public of an evidence.
+router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
+  if (req.user.role === 2) {
+    const connection = await pool.connect()
+    try {
+      connection.query("BEGIN")
+      const result = await connection.query(`SELECT "user_id", "is_public" FROM "evidence" WHERE "id" = $1;`, [req.params.id])
+      if (result.rows[0].user_id === req.user.id) {
+        const toggle = !result.rows[0].is_public
+        const queryText = `
+      UPDATE "evidence" SET "is_public" = $1 WHERE "id" = $2;
+      `
+        await connection.query(queryText, [toggle, req.params.id])
+        await connection.query("COMMIT")
+        res.send(result.rows)
+      } else {
+        res.sendStatus(403)
+      }
+    } catch (error) {
+      await connection.query("ROLLBACK")
+      console.log(error);
+      res.sendStatus(500)
+    } finally {
+      connection.release()
+    }
+  } else {
+    res.sendStatus(403)
+  }
+})
 
-//   } else {
 
-//   }
-// })
-
+// Utility function
 const checkMediaType = (mimetype, allMediaTypes) => {
   for (let type of allMediaTypes) {
     if (mimetype.includes(type.type)) {
