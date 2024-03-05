@@ -1,0 +1,118 @@
+const express = require("express");
+const router = express.Router();
+const pool = require("../modules/pool");
+const { rejectUnauthenticated } = require('../modules/authentication-middleware')
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
+const dotenv = require('dotenv')
+dotenv.config()
+
+// ! Set up for AWS
+const aws = require('@aws-sdk/client-s3')
+const signer = require('@aws-sdk/s3-request-presigner')
+
+const bucketName = process.env.BUCKET_NAME
+const bucketRegion = process.env.BUCKET_REGION
+const accessKey = process.env.ACCESS_KEY
+const secretAccessKey = process.env.SECRET_ACCESS_KEY
+
+const s3 = new aws.S3Client({
+  credentials: {
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccessKey,
+  },
+  region: bucketRegion,
+
+})
+
+router.get("/", (req, res) => {
+  pool
+    .query('SELECT * from "evidence";')
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log("Error GET /api/evidence", error);
+      res.sendStatus(500);
+    });
+});
+
+
+
+// This post should post to AWS only if there's a file, otherwise it will post to server with 'text' as the media_type.
+router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+  console.log('Req.file', req.file, 'Req.body:', req.body)
+
+
+
+  // try {
+      
+
+  //     const queryText = `
+  //     INSERT INTO "evidence" ("title", "notes", "file_url", "user_id", "media_type")
+  //     VALUES ($1, $2, $3, $4, $5);
+  //     `
+  //     const queryParams = [req.body.title, req.body.notes, req.file.originalname, req.body.user_id, req.file.mimetype]
+  //     pool.query(queryText, queryParams)
+  //         .then(result => {
+  //             res.sendStatus(201)
+  //         }).catch(err => {
+  //             console.log("Error with Pool:", err);
+  //             res.sendStatus(500)
+  //         })
+
+  // } catch (error) {
+  //     console.log('Here is the error from AWS: ', error);
+  //     res.sendStatus(500)
+  // }
+
+  const connection = await pool.connect()
+  try {
+    connection.query("BEGIN")
+    const result = await connection.query(`SELECT * FROM "media";`)
+    const allMediaTypes = result.rows
+    const queryText = `
+         INSERT INTO "evidence" ("title", "notes", "aws_key", "user_id", "media_type")
+         VALUES ($1, $2, $3, $4, $5);
+         `
+    let mediaType
+    let awsReference
+    if (req.file) {
+      mediaType = checkMediaType(req.file.mimetype, allMediaTypes)
+      awsReference = req.file.originalname
+    } else {
+      mediaType = 1
+      awsReference = req.body.title
+    }
+    await connection.query(queryText, [req.body.title, req.body.notes, awsReference, req.user.id, mediaType])
+
+    if (req.file) {
+      const params = {
+        Bucket: bucketName,
+        Key: req.file.originalname,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype,
+      }
+      const command = new aws.PutObjectCommand(params)
+      await s3.send(command)
+    }
+    await connection.query("COMMIT")
+    res.sendStatus(201)
+  } catch (error) {
+    console.log(error);
+  } finally {
+    connection.release()
+  }
+});
+
+const checkMediaType = (mimetype, allMediaTypes) => {
+  for (let type of allMediaTypes) {
+    if (mimetype.includes(type.type)) {
+      console.log(type.id);
+      return type.id
+    }
+  }
+}
+
+module.exports = router
