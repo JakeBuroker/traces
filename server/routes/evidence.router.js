@@ -26,10 +26,22 @@ const s3 = new aws.S3Client({
 
 })
 
+// Gets all evidence that is public.
 router.get("/", (req, res) => {
   pool
-    .query('SELECT * from "evidence";')
-    .then((result) => {
+    .query('SELECT * from "evidence" WHERE "is_public" = true;')
+    .then(async (result) => {
+      for (e of result.rows) {
+        if (e.media_type !== 1) { // If the media_type isn't text, then...
+          const command = new aws.GetObjectCommand({
+            Bucket: bucketName,
+            Key: e.aws_key,
+          })
+          const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
+          e.aws_url = url
+        }
+        // TODO : Add an else case to get a generic text image for when media type is text
+      }
       res.send(result.rows);
     })
     .catch((error) => {
@@ -44,29 +56,6 @@ router.get("/", (req, res) => {
 router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) => {
   console.log('Req.file', req.file, 'Req.body:', req.body)
 
-
-
-  // try {
-      
-
-  //     const queryText = `
-  //     INSERT INTO "evidence" ("title", "notes", "file_url", "user_id", "media_type")
-  //     VALUES ($1, $2, $3, $4, $5);
-  //     `
-  //     const queryParams = [req.body.title, req.body.notes, req.file.originalname, req.body.user_id, req.file.mimetype]
-  //     pool.query(queryText, queryParams)
-  //         .then(result => {
-  //             res.sendStatus(201)
-  //         }).catch(err => {
-  //             console.log("Error with Pool:", err);
-  //             res.sendStatus(500)
-  //         })
-
-  // } catch (error) {
-  //     console.log('Here is the error from AWS: ', error);
-  //     res.sendStatus(500)
-  // }
-
   const connection = await pool.connect()
   try {
     connection.query("BEGIN")
@@ -76,6 +65,8 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
          INSERT INTO "evidence" ("title", "notes", "aws_key", "user_id", "media_type")
          VALUES ($1, $2, $3, $4, $5);
          `
+
+    // Determines what the media_type is.
     let mediaType
     let awsReference
     if (req.file) {
@@ -85,8 +76,10 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
       mediaType = 1
       awsReference = req.body.title
     }
+
     await connection.query(queryText, [req.body.title, req.body.notes, awsReference, req.user.id, mediaType])
 
+    // Uploads to AWS if there is a file.
     if (req.file) {
       const params = {
         Bucket: bucketName,
@@ -97,10 +90,12 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
       const command = new aws.PutObjectCommand(params)
       await s3.send(command)
     }
+
     await connection.query("COMMIT")
     res.sendStatus(201)
   } catch (error) {
     console.log(error);
+    await connection.query("ROLLBACK")
   } finally {
     connection.release()
   }
