@@ -27,7 +27,7 @@ const s3 = new aws.S3Client({
 })
 
 // Gets all evidence that is public.
-router.get("/", (req, res) => {
+router.get("/public", (req, res) => {
   pool
     .query('SELECT * from "evidence" WHERE "is_public" = true;')
     .then(async (result) => {
@@ -50,6 +50,30 @@ router.get("/", (req, res) => {
     });
 });
 
+// Gets all evidence for logged-in user.
+router.get('/', rejectUnauthenticated, (req, res) => {
+  const queryText = `
+  SELECT * FROM "evidence" WHERE "user_id" = $1;
+  `
+  pool.query(queryText, [req.user.id])
+    .then(async result => {
+      for (let e of result.rows) {
+        if (e.media_type !== 1) { // If the media_type isn't text, then...
+          const command = new aws.GetObjectCommand({
+            Bucket: bucketName,
+            Key: e.aws_key,
+          })
+          const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
+          e.aws_url = url
+        }
+        // TODO : Add an else case to get a generic text image for when media type is text
+      }
+      res.send(result.rows)
+    }).catch(err => {
+      console.log(err);
+      res.sendStatus(500)
+    })
+})
 
 
 // This post should post to AWS only if there's a file, otherwise it will post to server with 'text' as the media_type.
