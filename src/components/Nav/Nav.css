@@ -3,10 +3,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-height: 60px;
+  height: 60px;
   margin: 0 0 30px;
   background-color: #00acb0;
   overflow: hidden;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  z-index: 2000;
 }
 
 .nav a {
