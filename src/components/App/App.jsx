@@ -27,6 +27,7 @@ import EvidencePage from '../Evidence/Evidence';
 
 
 import './App.css';
+import HelpPage from '../HelpPage/HelpPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -137,6 +138,13 @@ function App() {
             path="/Evidence"
           >
             <EvidencePage />
+          </Route>
+          <Route
+            // shows AboutPage at all times (logged in or not)
+            exact
+            path="/help"
+          >
+            <HelpPage />
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

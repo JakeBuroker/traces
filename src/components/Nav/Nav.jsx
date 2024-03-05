@@ -81,8 +81,14 @@ function Nav() {
              </MenuItem>
 
              <MenuItem>
-            <Link className="navLink" to="/evidence">
+            <Link className="navLink" to="/Evidence">
             Evidence
+             </Link>
+             </MenuItem>
+
+             <MenuItem>
+             <Link className="navLink" to="/help">
+            Help
              </Link>
              </MenuItem>
 
