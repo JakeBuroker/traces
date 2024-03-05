@@ -10,7 +10,8 @@ dotenv.config()
 
 // ! Set up for AWS
 const aws = require('@aws-sdk/client-s3')
-const signer = require('@aws-sdk/s3-request-presigner')
+const signer = require('@aws-sdk/s3-request-presigner');
+const e = require("express");
 
 const bucketName = process.env.BUCKET_NAME
 const bucketRegion = process.env.BUCKET_REGION
@@ -153,6 +154,8 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
   }
 });
 
+
+// Updates all the user information.
 router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, res) => {
   const queryText = `
   UPDATE "user" 
@@ -235,6 +238,14 @@ router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
     res.sendStatus(403)
   }
 })
+
+// router.put('/evidence/clearance/:id', rejectUnauthenticated, async (req, res) => {
+//   if(req.user.role === 2) {
+
+//   } else {
+
+//   }
+// })
 
 const checkMediaType = (mimetype, allMediaTypes) => {
   for (let type of allMediaTypes) {
