@@ -8,9 +8,38 @@ const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
 
+const dotenv = require('dotenv')
+dotenv.config()
+
+// ! Set up for AWS
+const aws = require('@aws-sdk/client-s3')
+const signer = require('@aws-sdk/s3-request-presigner')
+
+const bucketName = process.env.BUCKET_NAME
+const bucketRegion = process.env.BUCKET_REGION
+const accessKey = process.env.ACCESS_KEY
+const secretAccessKey = process.env.SECRET_ACCESS_KEY
+
+const s3 = new aws.S3Client({
+  credentials: {
+    accessKeyId: accessKey,
+    secretAccessKey: secretAccessKey,
+  },
+  region: bucketRegion,
+
+})
+
 // Handles Ajax request for user information if user is authenticated
-router.get('/', rejectUnauthenticated, (req, res) => {
+router.get('/', rejectUnauthenticated, async (req, res) => {
   // Send back user object from the session (previously queried from the database)
+  if (req.user.avatar_url) {
+    const command = new aws.GetObjectCommand({
+      Bucket: bucketName,
+      Key: req.user.avatar_url,
+    })
+    const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
+    req.user.avatar_AWS_URL = url
+  }
   res.send(req.user);
 });
 
