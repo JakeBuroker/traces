@@ -12,6 +12,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { DateTime } from "luxon";
 import "./Evidence.css";
+import EvidenceUploadButton from "../EvidenceUploadRender/EvidenceUploadButton";
 
 function EvidencePage() {
   const evidence = useSelector((store) => store.evidence);
@@ -69,6 +70,7 @@ function EvidencePage() {
                 <CardMedia
                   component="img"
                   src={item.aws_url}
+                  className="item-image"
                   onClick={() => openModal(item)}
                   sx={{ height: 160, width: '80%', objectFit: 'cover', alignSelf: 'center' }}
                 />
@@ -104,18 +106,45 @@ function EvidencePage() {
         <DialogContent>
           {selectedItem && (
             <div>
-              <img src={selectedItem.aws_url} alt="Selected item" style={{ width: "100%", height: "auto", objectFit: "cover" }} />
-              <Typography variant="h5" textAlign="center">{selectedItem.title}</Typography>
-              <Typography variant="body1" textAlign="center">{selectedItem.notes}</Typography>
-              <Typography variant="body1" textAlign="center">Location: {selectedItem.location}</Typography>
-              <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-                <Chip icon={<CreateIcon />} label="Edit" onClick={() => handleEdit(selectedItem)} />
-                <Chip icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleDelete(selectedItem)} />
+              <img
+                src={selectedItem.aws_url}
+                alt="item"
+                style={{ width: "100%", height: "auto", objectFit: "cover" }}
+              />
+              <Typography variant="h5" style={{ textAlign: "center" }}>
+                {selectedItem.title}
+              </Typography>
+              <Typography variant="body1" style={{ textAlign: "center" }}>
+                {selectedItem.notes}
+              </Typography>
+              <Typography variant="body1" style={{ textAlign: "center" }}>
+                Location: {selectedItem.location}
+              </Typography>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "10px",
+                }}
+              >
+                <Chip
+                  icon={<CreateIcon />}
+                  label="Edit"
+                  onClick={() => handleEdit(selectedItem)}
+                  style={{ cursor: "pointer" }}
+                />
+                <Chip
+                  icon={<DeleteForeverIcon />}
+                  label="Delete"
+                  onClick={() => handleDelete(selectedItem)}
+                  style={{ cursor: "pointer" }}
+                />
               </div>
             </div>
           )}
         </DialogContent>
       </Dialog>
+      <EvidenceUploadButton/>
     </main>
   );
 }
