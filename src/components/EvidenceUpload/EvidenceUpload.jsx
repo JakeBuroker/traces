@@ -2,11 +2,14 @@
 // ! The fileinput.onchange has to render after the fileInput has rendered.
 // * Fixed the fileinput.onchange issue 
 import { useState } from "react"
+import { useDispatch } from "react-redux"
+import axios from "axios"
 
 export default function EvidenceUpload(props) {
 let [evidenceName, setEvidenceName] = useState("")
 let [evidenceInfo, setEvidenceInfo] = useState("")
 let [selectedFiles, setSelectedFiles] = useState([])
+const dispatch = useDispatch()
 // * This on change function responds to the change of the input box for evidence name, and
 // * updates the useState so that it can be passed into the submit function
 const changeName = (event) => {
@@ -23,7 +26,7 @@ const changeFiles = (event) => {
     event.preventDefault()
     let theFiles = event.target.closest("input").files
     console.log("theFiles", theFiles, "theFiles type", typeof(theFiles));
-    setSelectedFiles(theFiles)
+    setSelectedFiles(theFiles[0])
     //  console.log( typeof(selectedFiles) )
 }
 // * Returns no input fields if the user hasn't specified an evidence type
@@ -36,34 +39,28 @@ const changeFiles = (event) => {
     else if (props.type == "imageOrVideo") {
         let renderImage = "Image will go here"
         let renderImageSource = " "
-        const fileInput = document.getElementById("fileInput")
 // ? selectedFiles is established outside of the onchange function, so that the handleSubmit function
 // ? can also access it
-
-// TODO The onchange function has to render after the fileInput renders to avoid errors.
-// TODO Currently to make the image upload work correctly, the image/video button has to be clicked
-// TODO With the onchange commented out, and then the onchange can be uncommented.
-        // if (document?.getElementById("fileInput")?.type == "file"){
-//             console.log("there's a fileinput");
-//                 fileInput.onchange = () => {
-//              setSelectedFiles([...fileInput.files]);
-// // TODO renderImageSource currently accesses the 0 index of the selectedFiles array. Will have to cahnge to more dynamic syntax
-//             //  renderImageSource = selectedFiles[0].name
-//             console.log("Selected Files", selectedFiles);
-//             // console.log(renderImageSource);
-//         }
-
-    
+       
         
         const handleSubmit = () => {
+// ? Here is where we create the payload for the axios post for visual evidence
+            const formData = new FormData()
+            formData.append('title', evidenceName)
+            formData.append('notes', evidenceInfo)
+            formData.append('file', selectedFiles)
             console.log("submitting image/video evidence");
             // console.log(renderImageSource);
+            postNewEvidence(formData)
             console.log("Selected Files", selectedFiles);
             console.log("evidence Name", evidenceName);
             console.log("evidence Info", evidenceInfo);
             setSelectedFiles(" ")
             setEvidenceName(" ")
             setEvidenceInfo(" ")
+        }
+        const postNewEvidence = (evidence) => {
+            dispatch({type:'ENTER_EVIDENCE', payload:evidence})
         }
         return (
             <div>
@@ -106,6 +103,17 @@ const changeFiles = (event) => {
             console.log("evidence Info", evidenceInfo);
             setEvidenceName(" ")
             setEvidenceInfo(" ")
+// ? Here is where we create the payload for the axios post for visual evidence
+            const formData = new FormData()
+            formData.append('title', evidenceName)
+            formData.append('notes', evidenceInfo)
+            formData.append('file', selectedFiles)
+            console.log("submitting image/video evidence");
+            // console.log(renderImageSource);
+            postNewEvidence(formData)
+        }
+        const postNewEvidence = (evidence) => {
+            dispatch({type:'ENTER_EVIDENCE', payload:evidence})
         }
         return (
             <div>
