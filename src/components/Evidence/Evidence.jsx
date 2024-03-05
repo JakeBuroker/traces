@@ -135,7 +135,7 @@ function EvidencePage() {
           {selectedItem && (
             <div>
               <img
-                src={`images/${selectedItem.aws_key}`}
+                src={selectedItem.aws_url}
                 alt="item"
                 style={{ width: "100%", height: "auto", objectFit: "cover" }}
               />
