@@ -165,7 +165,7 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   RETURNING "avatar_url";
   `
   const queryParams = [
-    req.body.email, 
+    req.body.email,
     req.body.phone_number,
     req.body.alias,
     req.body.waiver_acknowledged,
@@ -177,15 +177,14 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
     console.log(result.rows);
     res.send(result.rows)
 
-    // TODO: I need to check if there is already an image saved for this user, and get avatar_url, or set it if it's null.
-    
-    if(req.file) {
+    if (req.file) {
       let avatarUrl
       if (result.rows.avatar_url) {
-       avatarUrl = result.rows.avatar_url
+        avatarUrl = result.rows.avatar_url
       } else {
         avatarUrl = req.file.originalname
       }
+      // ? Seems to not replace the old avatar image, but adds another.
       await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [avatarUrl, req.user.id])
       const params = {
         Bucket: bucketName,
@@ -198,10 +197,42 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
     }
 
     connection.query("COMMIT")
-    
+
   } catch (error) {
     console.log(error);
     connection.query("ROLLBACK")
+  }
+})
+
+router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
+  if (req.user.role === 2) {
+    const queryText = `
+    UPDATE "evidence" SET "is_public" = true;
+    `
+    await pool.query(queryText)
+      .catch(err => {
+        console.log(err)
+        req.sendStatus(500)
+      })
+    res.sendStatus(201)
+  } else {
+    res.sendStatus(403)
+  }
+})
+
+router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
+  if (req.user.role === 2) {
+    const queryText = `
+    UPDATE "evidence" SET "is_public" = false;
+    `
+    await pool.query(queryText)
+      .catch(err => {
+        console.log(err)
+        req.sendStatus(500)
+      })
+    res.sendStatus(201)
+  } else {
+    res.sendStatus(403)
   }
 })
 
