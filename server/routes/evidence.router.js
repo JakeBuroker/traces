@@ -10,7 +10,8 @@ dotenv.config()
 
 // ! Set up for AWS
 const aws = require('@aws-sdk/client-s3')
-const signer = require('@aws-sdk/s3-request-presigner')
+const signer = require('@aws-sdk/s3-request-presigner');
+const e = require("express");
 
 const bucketName = process.env.BUCKET_NAME
 const bucketRegion = process.env.BUCKET_REGION
@@ -153,35 +154,96 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
   }
 });
 
-// router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, res) => {
-//   const queryText = `
-//   UPDATE "user" 
-//   SET 
-//   "email" = $1, 
-//   "phone_number" = $2,
-//   "alias" = $3,
-//   "waiver_acknowledged" = $4
-//   WHERE "id" = $5;
-//   `
-//   const queryParams = [
-//     req.body.email, 
-//     req.body.phone_number,
-//     req.body.alias,
-//     req.body.waiver_acknowledged,
-//     req.user.id
-//   ]
-//   const connection = await pool.connect()
-//   try {
-//     await connection.query(queryText, queryParams)
 
-//     // TODO: I need to check if there is already an image saved for this user, and get avatar_url, or set it if it's null.
-//     if(req.file) {
-//       await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
-//     }
-    
-//   } catch (error) {
-//     console.log(error);
-//     connection.query("ROLLBACK")
+// Updates all the user information.
+router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+  const queryText = `
+  UPDATE "user" 
+  SET 
+  "email" = $1, 
+  "phone_number" = $2,
+  "alias" = $3,
+  "waiver_acknowledged" = $4
+  WHERE "id" = $5
+  RETURNING "avatar_url";
+  `
+  const queryParams = [
+    req.body.email,
+    req.body.phone_number,
+    req.body.alias,
+    req.body.waiver_acknowledged,
+    req.user.id
+  ]
+  const connection = await pool.connect()
+  try {
+    const result = await connection.query(queryText, queryParams)
+    console.log(result.rows);
+    res.send(result.rows)
+
+    if (req.file) {
+      let avatarUrl
+      if (result.rows.avatar_url) {
+        avatarUrl = result.rows.avatar_url
+      } else {
+        avatarUrl = req.file.originalname
+      }
+      // ? Seems to not replace the old avatar image, but adds another.
+      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [avatarUrl, req.user.id])
+      const params = {
+        Bucket: bucketName,
+        Key: avatarUrl,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype,
+      }
+      const command = new aws.PutObjectCommand(params)
+      await s3.send(command)
+    }
+
+    connection.query("COMMIT")
+
+  } catch (error) {
+    console.log(error);
+    connection.query("ROLLBACK")
+  }
+})
+
+router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
+  if (req.user.role === 2) {
+    const queryText = `
+    UPDATE "evidence" SET "is_public" = true;
+    `
+    await pool.query(queryText)
+      .catch(err => {
+        console.log(err)
+        req.sendStatus(500)
+      })
+    res.sendStatus(201)
+  } else {
+    res.sendStatus(403)
+  }
+})
+
+router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
+  if (req.user.role === 2) {
+    const queryText = `
+    UPDATE "evidence" SET "is_public" = false;
+    `
+    await pool.query(queryText)
+      .catch(err => {
+        console.log(err)
+        req.sendStatus(500)
+      })
+    res.sendStatus(201)
+  } else {
+    res.sendStatus(403)
+  }
+})
+
+// router.put('/evidence/clearance/:id', rejectUnauthenticated, async (req, res) => {
+//   if(req.user.role === 2) {
+
+//   } else {
+
 //   }
 // })
 
