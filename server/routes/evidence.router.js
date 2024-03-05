@@ -180,8 +180,24 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
     // TODO: I need to check if there is already an image saved for this user, and get avatar_url, or set it if it's null.
     
     if(req.file) {
-      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
+      let avatarUrl
+      if (result.rows.avatar_url) {
+       avatarUrl = result.rows.avatar_url
+      } else {
+        avatarUrl = req.file.originalname
+      }
+      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [avatarUrl, req.user.id])
+      const params = {
+        Bucket: bucketName,
+        Key: avatarUrl,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype,
+      }
+      const command = new aws.PutObjectCommand(params)
+      await s3.send(command)
     }
+
+    connection.query("COMMIT")
     
   } catch (error) {
     console.log(error);
