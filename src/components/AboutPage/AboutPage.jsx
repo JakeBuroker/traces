@@ -9,7 +9,11 @@ function AboutPage() {
   return (
     <div className="container">
       <div>
-        <p>This about page is for anyone to read!</p>
+        <h2>About the Play</h2>
+        {/* This is where the image will go */}
+        <p>This project involves participants who are equipped with synchronized audio devices, following a narrator's prompts to track the journey of an individual (an actor) as she moves through various real public locations across the city. Participants are instructed to document their observations through audio, video, and photo recordings.</p>
+        <h2>About the Artist</h2>
+        <p></p>
       </div>
     </div>
   );
