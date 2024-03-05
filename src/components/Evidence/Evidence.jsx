@@ -54,6 +54,7 @@ function EvidencePage() {
               <Card className="item-card">
                 <CardMedia
                   component="img"
+                  src={item.aws_url}
                   className="item-image"
                   onClick={() => openModal(item)}
                 />
