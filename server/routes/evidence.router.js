@@ -153,37 +153,37 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
   }
 });
 
-router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, res) => {
-  const queryText = `
-  UPDATE "user" 
-  SET 
-  "email" = $1, 
-  "phone_number" = $2,
-  "alias" = $3,
-  "waiver_acknowledged" = $4
-  WHERE "id" = $5;
-  `
-  const queryParams = [
-    req.body.email, 
-    req.body.phone_number,
-    req.body.alias,
-    req.body.waiver_acknowledged,
-    req.user.id
-  ]
-  const connection = await pool.connect()
-  try {
-    await connection.query(queryText, queryParams)
+// router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+//   const queryText = `
+//   UPDATE "user" 
+//   SET 
+//   "email" = $1, 
+//   "phone_number" = $2,
+//   "alias" = $3,
+//   "waiver_acknowledged" = $4
+//   WHERE "id" = $5;
+//   `
+//   const queryParams = [
+//     req.body.email, 
+//     req.body.phone_number,
+//     req.body.alias,
+//     req.body.waiver_acknowledged,
+//     req.user.id
+//   ]
+//   const connection = await pool.connect()
+//   try {
+//     await connection.query(queryText, queryParams)
 
-    // TODO: I need to check if there is already an image saved for this user, and get avatar_url, or set it if it's null.
-    if(req.file) {
-      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
-    }
+//     // TODO: I need to check if there is already an image saved for this user, and get avatar_url, or set it if it's null.
+//     if(req.file) {
+//       await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
+//     }
     
-  } catch (error) {
-    console.log(error);
-    connection.query("ROLLBACK")
-  }
-})
+//   } catch (error) {
+//     console.log(error);
+//     connection.query("ROLLBACK")
+//   }
+// })
 
 const checkMediaType = (mimetype, allMediaTypes) => {
   for (let type of allMediaTypes) {
