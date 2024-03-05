@@ -179,12 +179,11 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
     await connection.query("BEGIN")
     const result = await connection.query(queryText, queryParams)
     console.log(result.rows);
-    res.send(result.rows)
 
     if (req.file) {
       let avatarUrl
-      if (result.rows.avatar_url) {
-        avatarUrl = result.rows.avatar_url
+      if (result.rows[0].avatar_url) {
+        avatarUrl = result.rows[0].avatar_url
       } else {
         avatarUrl = req.file.originalname
       }
@@ -199,12 +198,14 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
       const command = new aws.PutObjectCommand(params)
       await s3.send(command)
     }
-
+    res.send(result.rows)
     connection.query("COMMIT")
 
   } catch (error) {
     console.log(error);
     connection.query("ROLLBACK")
+  } finally {
+    connection.release()
   }
 })
 
@@ -249,17 +250,14 @@ router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
     try {
       connection.query("BEGIN")
       const result = await connection.query(`SELECT "user_id", "is_public" FROM "evidence" WHERE "id" = $1;`, [req.params.id])
-      if (result.rows[0].user_id === req.user.id) {
-        const toggle = !result.rows[0].is_public
-        const queryText = `
+      const toggle = !result.rows[0].is_public
+      const queryText = `
       UPDATE "evidence" SET "is_public" = $1 WHERE "id" = $2;
       `
-        await connection.query(queryText, [toggle, req.params.id])
-        await connection.query("COMMIT")
-        res.send(result.rows)
-      } else {
-        res.sendStatus(403)
-      }
+      await connection.query(queryText, [toggle, req.params.id])
+      await connection.query("COMMIT")
+      res.send(result.rows)
+
     } catch (error) {
       await connection.query("ROLLBACK")
       console.log(error);
@@ -269,6 +267,55 @@ router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
     }
   } else {
     res.sendStatus(403)
+  }
+})
+
+// Updates Evidence For Users
+router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+  const connection = await pool.connect()
+  try {
+    await connection.query("BEGIN")
+    let result = await connection.query(`SELECT "user_id" FROM "evidence" WHERE "id" = $1`, [req.params.id])
+    if (result.rows[0].user_id === req.user.id) {
+      const queryText = `
+        UPDATE "evidence" 
+        SET 
+        "title" = $1, 
+        "notes" = $2
+        WHERE "id" = $3
+        RETURNING "aws_key";
+    `
+      const queryParams = [
+        req.body.title,
+        req.body.notes,
+        req.params.id
+      ]
+      result = await connection.query(queryText, queryParams)
+
+      console.log(req.file, req.body);
+      if (req.file) {
+        console.log('in req.file');
+        let awsKey = result.rows[0].aws_key
+        const params = {
+          Bucket: bucketName,
+          Key: awsKey,
+          Body: req.file.buffer,
+          ContentType: req.file.mimetype,
+        }
+        const command = new aws.PutObjectCommand(params)
+        await s3.send(command)
+      }
+      res.send(result.rows)
+      connection.query("COMMIT")
+
+    } else {
+      res.sendStatus(403)
+    }
+  } catch (error) {
+    console.log(error);
+    connection.query("ROLLBACK")
+  } finally {
+    connection.release()
   }
 })
 
