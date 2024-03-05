@@ -75,6 +75,34 @@ router.get('/', rejectUnauthenticated, (req, res) => {
     })
 })
 
+// GET route for the admin
+router.get('/admin', rejectUnauthenticated, (req, res) => {
+  if (req.user.role === 2) { // checking for admin status
+    const queryText = `
+    SELECT * FROM "evidence";
+    `
+    pool.query(queryText)
+      .then(async result => {
+        for (let e of result.rows) {
+          if (e.media_type !== 1) { // If the media_type isn't text, then...
+            const command = new aws.GetObjectCommand({
+              Bucket: bucketName,
+              Key: e.aws_key,
+            })
+            const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
+            e.aws_url = url
+          }
+          // TODO : Add an else case to get a generic text image for when media type is text
+        }
+        res.send(result.rows)
+      }).catch(err => {
+        console.log(err);
+        res.sendStatus(500)
+      })
+  } else {
+    res.sendStatus(403)
+  }
+})
 
 // This post should post to AWS only if there's a file, otherwise it will post to server with 'text' as the media_type.
 router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) => {
@@ -124,6 +152,38 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
     connection.release()
   }
 });
+
+router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+  const queryText = `
+  UPDATE "user" 
+  SET 
+  "email" = $1, 
+  "phone_number" = $2,
+  "alias" = $3,
+  "waiver_acknowledged" = $4
+  WHERE "id" = $5;
+  `
+  const queryParams = [
+    req.body.email, 
+    req.body.phone_number,
+    req.body.alias,
+    req.body.waiver_acknowledged,
+    req.user.id
+  ]
+  const connection = await pool.connect()
+  try {
+    await connection.query(queryText, queryParams)
+
+    // TODO: I need to check if there is already an image saved for this user, and get avatar_url, or set it if it's null.
+    if(req.file) {
+      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [req.file.originalname, req.user.id])
+    }
+    
+  } catch (error) {
+    console.log(error);
+    connection.query("ROLLBACK")
+  }
+})
 
 const checkMediaType = (mimetype, allMediaTypes) => {
   for (let type of allMediaTypes) {
