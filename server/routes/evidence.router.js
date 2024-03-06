@@ -8,10 +8,11 @@ const upload = multer({ storage: storage })
 const dotenv = require('dotenv')
 dotenv.config()
 
+const awsGet = require('../modules/get.evidence')
+
 // ! Set up for AWS
 const aws = require('@aws-sdk/client-s3')
 const signer = require('@aws-sdk/s3-request-presigner');
-const e = require("express");
 
 const bucketName = process.env.BUCKET_NAME
 const bucketRegion = process.env.BUCKET_REGION
@@ -32,18 +33,8 @@ router.get("/public", (req, res) => {
   pool
     .query('SELECT * from "evidence" WHERE "is_public" = true;')
     .then(async (result) => {
-      for (e of result.rows) {
-        if (e.media_type !== 1) { // If the media_type isn't text, then...
-          const command = new aws.GetObjectCommand({
-            Bucket: bucketName,
-            Key: e.aws_key,
-          })
-          const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
-          e.aws_url = url
-        }
-        // TODO : Add an else case to get a generic text image for when media type is text
-      }
-      res.send(result.rows);
+      const awsGetResult = await awsGet.awsGetURLs(result)
+      res.send(awsGetResult)
     })
     .catch((error) => {
       console.log("Error GET /api/evidence", error);
@@ -58,18 +49,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   `
   pool.query(queryText, [req.user.id])
     .then(async result => {
-      for (let e of result.rows) {
-        if (e.media_type !== 1) { // If the media_type isn't text, then...
-          const command = new aws.GetObjectCommand({
-            Bucket: bucketName,
-            Key: e.aws_key,
-          })
-          const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
-          e.aws_url = url
-        }
-        // TODO : Add an else case to get a generic text image for when media type is text
-      }
-      res.send(result.rows)
+      const awsGetResult = await awsGet.awsGetURLs(result)
+      res.send(awsGetResult)
     }).catch(err => {
       console.log(err);
       res.sendStatus(500)
@@ -84,18 +65,8 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
     `
     pool.query(queryText)
       .then(async result => {
-        for (let e of result.rows) {
-          if (e.media_type !== 1) { // If the media_type isn't text, then...
-            const command = new aws.GetObjectCommand({
-              Bucket: bucketName,
-              Key: e.aws_key,
-            })
-            const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
-            e.aws_url = url
-          }
-          // TODO : Add an else case to get a generic text image for when media type is text
-        }
-        res.send(result.rows)
+        const awsGetResult = await awsGet.awsGetURLs(result)
+        res.send(awsGetResult)
       }).catch(err => {
         console.log(err);
         res.sendStatus(500)
@@ -126,7 +97,7 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
     let mediaType
     let awsReference
     if (req.file) {
-      mediaType = checkMediaType(req.file.mimetype)
+      mediaType = await checkMediaType(req.file.mimetype)
       awsReference = req.file.originalname
     } else {
       mediaType = 1
@@ -371,7 +342,7 @@ router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
 
 // Utility function
 const checkMediaType = async (mimetype) => {
-  const result = await connection.query(`SELECT * FROM "media";`)
+  const result = await pool.query(`SELECT * FROM "media";`)
   const allMediaTypes = result.rows
   for (let type of allMediaTypes) {
     if (mimetype.includes(type.type)) {
