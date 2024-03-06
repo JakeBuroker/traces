@@ -106,6 +106,11 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
 })
 
 // This post should post to AWS only if there's a file, otherwise it will post to server with 'text' as the media_type.
+// This POST is expecting in a Form Data:
+//    title
+//    notes
+//    file (optional)
+//    Sends 201 'Create' if successful
 router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) => {
   console.log('Req.file', req.file, 'Req.body:', req.body)
 
@@ -154,6 +159,12 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
 
 
 // Updates all the user information.
+// This PUT is expecting in a Data Form: 
+//    email,
+//    phone_number
+//    alias (can be undefined)
+//    waiver_acknowledged (must be true or false)
+//    file (optional)
 router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, res) => {
   const queryText = `
   UPDATE "user" 
