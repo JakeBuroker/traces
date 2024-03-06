@@ -112,8 +112,6 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
   const connection = await pool.connect()
   try {
     connection.query("BEGIN")
-    const result = await connection.query(`SELECT * FROM "media";`)
-    const allMediaTypes = result.rows
     const queryText = `
          INSERT INTO "evidence" ("title", "notes", "aws_key", "user_id", "media_type")
          VALUES ($1, $2, $3, $4, $5);
@@ -123,7 +121,7 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
     let mediaType
     let awsReference
     if (req.file) {
-      mediaType = checkMediaType(req.file.mimetype, allMediaTypes)
+      mediaType = checkMediaType(req.file.mimetype)
       awsReference = req.file.originalname
     } else {
       mediaType = 1
@@ -176,14 +174,14 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   ]
   const connection = await pool.connect()
   try {
+    await connection.query("BEGIN")
     const result = await connection.query(queryText, queryParams)
     console.log(result.rows);
-    res.send(result.rows)
 
     if (req.file) {
       let avatarUrl
-      if (result.rows.avatar_url) {
-        avatarUrl = result.rows.avatar_url
+      if (result.rows[0].avatar_url) {
+        avatarUrl = result.rows[0].avatar_url
       } else {
         avatarUrl = req.file.originalname
       }
@@ -198,15 +196,18 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
       const command = new aws.PutObjectCommand(params)
       await s3.send(command)
     }
-
+    res.send(result.rows)
     connection.query("COMMIT")
 
   } catch (error) {
     console.log(error);
     connection.query("ROLLBACK")
+  } finally {
+    connection.release()
   }
 })
 
+// Updates to change all is_public to true.
 router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = `
@@ -223,6 +224,7 @@ router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
   }
 })
 
+// Updates to change all is_public to false.
 router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = `
@@ -239,15 +241,123 @@ router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
   }
 })
 
-// router.put('/evidence/clearance/:id', rejectUnauthenticated, async (req, res) => {
-//   if(req.user.role === 2) {
+// Update to change to toggle the specific is_public of an evidence.
+router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
+  if (req.user.role === 2) {
+    const connection = await pool.connect()
+    try {
+      connection.query("BEGIN")
+      const result = await connection.query(`SELECT "user_id", "is_public" FROM "evidence" WHERE "id" = $1;`, [req.params.id])
+      const toggle = !result.rows[0].is_public
+      const queryText = `
+      UPDATE "evidence" SET "is_public" = $1 WHERE "id" = $2;
+      `
+      await connection.query(queryText, [toggle, req.params.id])
+      await connection.query("COMMIT")
+      res.send(result.rows)
 
-//   } else {
+    } catch (error) {
+      await connection.query("ROLLBACK")
+      console.log(error);
+      res.sendStatus(500)
+    } finally {
+      connection.release()
+    }
+  } else {
+    res.sendStatus(403)
+  }
+})
 
-//   }
-// })
+// Updates Evidence For Users
+router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+  const connection = await pool.connect()
+  try {
+    await connection.query("BEGIN")
+    let result = await connection.query(`SELECT "user_id" FROM "evidence" WHERE "id" = $1`, [req.params.id])
+    if (result.rows[0].user_id === req.user.id) {
+      const queryText = `
+        UPDATE "evidence" 
+        SET 
+        "title" = $1, 
+        "notes" = $2
+        WHERE "id" = $3
+        RETURNING "aws_key";
+    `
+      const queryParams = [
+        req.body.title,
+        req.body.notes,
+        req.params.id
+      ]
+      result = await connection.query(queryText, queryParams)
 
-const checkMediaType = (mimetype, allMediaTypes) => {
+      console.log(req.file, req.body);
+      if (req.file) {
+        console.log('in req.file');
+        const mediaType = await checkMediaType(req.file.mimetype)
+        await connection.query(`UPDATE "evidence" SET "media_type" = $1;`, [mediaType])
+        let awsKey = result.rows[0].aws_key
+        const params = {
+          Bucket: bucketName,
+          Key: awsKey,
+          Body: req.file.buffer,
+          ContentType: req.file.mimetype,
+        }
+        const command = new aws.PutObjectCommand(params)
+        await s3.send(command)
+      }
+      res.send(result.rows)
+      connection.query("COMMIT")
+
+    } else {
+      res.sendStatus(403)
+    }
+  } catch (error) {
+    console.log(error);
+    connection.query("ROLLBACK")
+  } finally {
+    connection.release()
+  }
+})
+
+// Deletes an entry for an admin or a user.
+router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
+  // Check that user is either an admin or the user who created it
+  const connection = await pool.connect()
+  try {
+    await connection.query("BEGIN")
+    const result = await connection.query(`SELECT "user_id", "aws_key", "media_type" FROM "evidence" WHERE "id" = $1;`, [req.params.id])
+    if (result.rows[0].user_id === req.user.id || req.user.role === 2) {
+      await connection.query(`DELETE FROM "evidence" WHERE "id" = $1`, [req.params.id])
+
+      // Checking to make sure the media isn't just text. 
+      if (result.rows[0].media_type !== 1) {
+        const command = new aws.DeleteObjectCommand({
+          Bucket: bucketName,
+          Key: result.rows[0].aws_key,
+        })
+        await s3.send(command)
+      }
+
+      res.sendStatus(201)
+    } else {
+      res.sendStatus(403)
+    }
+
+    await connection.query("COMMIT")
+  } catch (error) {
+    console.log(error);
+    connection.query("ROLLBACK")
+    res.sendStatus(500)
+  } finally {
+    connection.release()
+  }
+})
+
+
+// Utility function
+const checkMediaType = async (mimetype) => {
+  const result = await connection.query(`SELECT * FROM "media";`)
+  const allMediaTypes = result.rows
   for (let type of allMediaTypes) {
     if (mimetype.includes(type.type)) {
       console.log(type.id);
