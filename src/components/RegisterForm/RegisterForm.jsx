@@ -20,6 +20,10 @@ function RegisterForm() {
       payload: {
         username: username,
         password: password,
+        email: email,
+        phone_number: phoneNumber,
+        full_name: fullName,
+        role: 2 // TODO Change this to update with a selection.
       },
     });
   }; // end registerUser
@@ -32,7 +36,7 @@ function RegisterForm() {
           {errors.registrationMessage}
         </h3>
       )}
-      <div>
+      <div style={{display: 'flex', flexDirection: 'column'}}>
         <label htmlFor="fullName">
           Full Name:
         </label>
@@ -53,9 +57,7 @@ function RegisterForm() {
           required
           onChange={(event) => setUsername(event.target.value)}
         />
-      </div>
-      <div>
-        <label htmlFor="password">
+         <label htmlFor="password">
           Password:
           <input
             type="password"
@@ -85,6 +87,10 @@ function RegisterForm() {
             onChange={(event) => setPhoneNumber(event.target.value)}
           />
         </label>
+        {/* // Todo add a input for role. */}
+      </div>
+      <div>
+       
       </div>
       <div>
         <input className="btn" type="submit" name="submit" value="Register" />

@@ -33,7 +33,7 @@ function EvidencePage() {
 
   const fetchEvidence = () => {
     axios
-      .get("/api/evidence/admin")
+      .get("/api/evidence/")
       .then((response) => {
         // Ensure this action type matches what your reducer expects
         dispatch({ type: "SET_EVIDENCE", payload: response.data });
