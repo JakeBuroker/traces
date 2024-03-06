@@ -1,0 +1,83 @@
+/* CSS for the button */
+.button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    /* background-color:black; */
+    width: 305px;
+    height: 215px;
+    
+  }
+
+.button {
+    position: fixed; /* or 'absolute' if you want it relative to a parent container */
+    bottom: 20px;
+    right: 20px;
+    width: 100px; /* Adjust as needed for the size of your button */
+    height: 100px; /* Should be equal to width for a perfect circle */
+    border-radius: 50%; /* This creates a circle */
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    text-align: center;
+    line-height: 100px; /* Vertically centers text */
+    font-size: 60px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow effect */
+}
+
+/* Hover effect */
+.button:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+/* Active effect */
+.button:active {
+    background-color:blue;
+}
+
+/* CSS for the additional buttons */
+.additional-buttons-container {
+    /* position: relative; */
+
+    top: -100000px;
+    left: 25px;
+
+  }
+
+.additional-button {
+    /* display:block; */
+    /* position: fixed; */
+    
+    bottom: 20px;
+    right: 20px;
+    width: 100px; /* Adjust as needed for the size of your button */
+    height: 100px; /* Adjust as needed */
+    border-radius: 50%; /* This creates a circle */
+    background-color: #4CAF50; /* Green background */
+    color: white;
+    text-align: center;
+    line-height: 100px; /* Vertically centers text */
+    font-size: 60px;
+    cursor: pointer;
+    transition: opacity 5.0s ease-in-out; /* Add a smooth transition effect */
+}
+
+/* Show the additional buttons when the main button is clicked */
+.additional-button.show {
+    display:flex;
+}
+
+/* Additional buttons positioned in a semi-circle */
+#cambutton {
+    top: 410px;
+    left: 160px;
+}
+#audiobutton {
+    top: 540px;
+    left: 120px;
+}
+#notesbutton {
+    top: 3400px;
+    left: 270px;
+}
+
