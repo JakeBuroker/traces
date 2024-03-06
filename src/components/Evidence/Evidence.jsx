@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
-import { Dialog, DialogContent } from "@mui/material";
+import {
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Chip,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { DateTime } from "luxon";
@@ -18,6 +23,8 @@ function EvidencePage() {
   const evidence = useSelector((store) => store.evidence);
   const [selectedItem, setSelectedItem] = useState(null);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,8 +33,9 @@ function EvidencePage() {
 
   const fetchEvidence = () => {
     axios
-      .get("/api/evidence")
+      .get("/api/evidence/admin")
       .then((response) => {
+        // Ensure this action type matches what your reducer expects
         dispatch({ type: "SET_EVIDENCE", payload: response.data });
       })
       .catch((error) => {
@@ -47,31 +55,36 @@ function EvidencePage() {
   };
 
   const handleEdit = (item) => {
-    // Implement edit functionality here
+    console.log("Edit:", item.id);
+  };
+
+  const openDeleteConfirmation = (item) => {
+    setItemToDelete(item);
+    setDeleteConfirmationOpen(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+    setDeleteConfirmationOpen(false);
+    setItemToDelete(null);
+  };
+
+  const handleDelete = () => {
+    if (itemToDelete) {
+      deleteEvidence(itemToDelete.id);
+    }
+    closeDeleteConfirmation();
   };
 
   const deleteEvidence = (itemId) => {
-    axios.delete(`/api/evidence/delete/${itemId}`)
+    axios
+      .delete(`/api/evidence/delete/${itemId}`)
       .then(() => {
         fetchEvidence();
       })
       .catch((error) => {
-        console.error("Error deleting evidence:", console.log(itemId));
-        if (error.response) {
-          alert(`Could not delete evidence: ${error.response.data.message}`);
-        } else if (error.request) {
-          console.log(error.request);
-          alert("No response from server on delete attempt");
-        } else {
-          console.log('Error', error.message);
-          alert("Error deleting evidence");
-        }
+        console.error("Error deleting evidence:", error);
+        alert("Could not delete evidence.");
       });
-  };
-
-  const handleDelete = (item) => {
-    deleteEvidence(item.id);
-    console.log(item.id)
   };
 
   return (
@@ -89,7 +102,6 @@ function EvidencePage() {
                   height: 450,
                 }}
               >
-                {/* Title */}
                 <Typography
                   variant="h5"
                   component="div"
@@ -97,8 +109,6 @@ function EvidencePage() {
                 >
                   {item.title}
                 </Typography>
-
-                {/* Image */}
                 <CardMedia
                   component="img"
                   src={item.aws_url}
@@ -111,9 +121,7 @@ function EvidencePage() {
                     alignSelf: "center",
                   }}
                 />
-
                 <CardContent sx={{ flexGrow: 1, width: "100%" }}>
-                  {/* Notes */}
                   <Typography
                     variant="body2"
                     color="text.secondary"
@@ -121,8 +129,6 @@ function EvidencePage() {
                   >
                     {item.notes}
                   </Typography>
-
-                  {/* Buttons */}
                   <div
                     style={{
                       display: "flex",
@@ -138,12 +144,10 @@ function EvidencePage() {
                     <Chip
                       icon={<DeleteForeverIcon />}
                       label="Delete"
-                      onClick={() => handleDelete(item)}
+                      onClick={() => openDeleteConfirmation(item)}
                     />
                   </div>
                 </CardContent>
-
-                {/* Date - Bottom Left */}
                 <Typography
                   variant="body2"
                   sx={{ position: "absolute", bottom: 10, left: 10 }}
@@ -152,8 +156,6 @@ function EvidencePage() {
                     DateTime.DATETIME_MED
                   )}
                 </Typography>
-
-                {/* Location - Bottom Right */}
                 <Typography
                   variant="body2"
                   sx={{ position: "absolute", bottom: 10, right: 10 }}
@@ -165,6 +167,7 @@ function EvidencePage() {
           ))}
         </Grid>
       </div>
+
       <Dialog
         open={detailsModalOpen}
         onClose={detailsModalClose}
@@ -204,7 +207,7 @@ function EvidencePage() {
                 <Chip
                   icon={<DeleteForeverIcon />}
                   label="Delete"
-                  onClick={() => handleDelete(selectedItem)}
+                  onClick={() => openDeleteConfirmation(selectedItem)}
                   style={{ cursor: "pointer" }}
                 />
               </div>
@@ -212,6 +215,21 @@ function EvidencePage() {
           )}
         </DialogContent>
       </Dialog>
+
+      <Dialog open={deleteConfirmationOpen} onClose={closeDeleteConfirmation}>
+        <DialogContent>
+          <Typography>
+            Are you sure you want to delete this evidence?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteConfirmation}>Cancel</Button>
+          <Button onClick={handleDelete} color="primary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <EvidenceUploadButton />
     </main>
   );

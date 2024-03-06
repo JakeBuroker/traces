@@ -1,122 +1,198 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { DataGrid } from '@mui/x-data-grid';
-import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
-import InfoIcon from "@mui/icons-material/Info"
-import { DeleteForeverTwoTone } from '@mui/icons-material';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { DateTime } from "luxon";
+import {
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Chip,
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Button,
+} from "@mui/material"
+import { DataGrid } from "@mui/x-data-grid";
+import DeleteIcon from "@mui/icons-material/Delete";
+import InfoIcon from "@mui/icons-material/Info";
+import CreateIcon from "@mui/icons-material/Create";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 
-function AdminPage(){
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
-        {
-          field: 'fullName',
-          headerName: 'Full name',
-          width: 150,
-          editable: true,
-        },
-        {
-          field: 'title',
-          headerName: 'Title',
-          width: 150,
-          editable: true,
-        },
+function Admin() {
+  const dispatch = useDispatch();
+  const evidenceList = useSelector((store) => store.evidence);
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-        {
-            field: 'date',
-            headerName: 'Date',
-            width: 150,
-            editable: true,
-        },
-        {
-            field: 'time',
-            headerName: 'Time',
-            width: 150,
-            editable: true,
-        },
-        {
-            field: 'location',
-            headerName: 'Location',
-            width: 150,
-            editable: true,
-        },
-        {
-            field: 'media',
-            headerName: 'Media',
-            width: 100,
-            editable: true,
-        },
-        {
-            field: "actions",
-            headerName: "Actions",
-            sortable: false,
-            width: 150,
-            renderCell: (params) => (
-              <div>
-                <button
-                  onClick={() => (params.row)}
-                  style={{
-                    cursor: "pointer",
-                    marginRight: "5px",
-                    backgroundColor: "hsl(60, 73%, 98%)",
-                  }}
-                >
-                  <InfoIcon />
-                </button>
-                </div>
-        )},
-        {
-            field: "delete",
-            headerName: "Delete",
-            sortable: false,
-            width: 150,
-            renderCell: (params) => (
-              <div>
-                <button
-                  onClick={() => (params.row)}
-                  style={{
-                    cursor: "pointer",
-                    marginRight: "5px",
-                    backgroundColor: "hsl(60, 73%, 98%)",
-                  }}
-                >
-                  <DeleteForeverTwoTone />
-                </button>
-                </div>
-        )},
-      ];
-      
-      const rows = [
-        { id: 1, fullName: 'Jon', title: 'Cool Title', date: '2/22/24', time: '11:30 am', location: 'Minneapolis', media:'📷',},
-        { id: 2, fullName: 'Cersei', title: 'Cool Title', date: '2/22/24', time: '11:30 am', location: 'Minneapolis', media:'📷' },
-        { id: 3, fullName: 'Jaime', title: 'Cool Title', date: '2/22/24', time: '11:30 am', location: 'Minneapolis', media:'📷' },
-        { id: 4, fullName: 'Arya', title: 'Cool Title', date: '2/22/24', time: '11:30 am', location: 'Minneapolis', media:'📷' },
-        { id: 5, fullName: 'Daenerys', title: 'Cool Title', date: '2/22/24', time: '11:30 am', location: 'Minneapolis', media:'📷' },
-  
-      ];
-    return(
+  useEffect(() => {
+    fetchEvidence();
+  }, []);
+
+  const fetchEvidence = () => {
+    axios
+      .get("/api/evidence/admin")
+      .then((response) => {
+        dispatch({ type: "SET_EVIDENCE", payload: response.data });
+      })
+      .catch((error) => {
+        console.error("Could not fetch evidence:", error);
+      });
+  };
+
+  const deleteEvidence = (evidenceId) => {
+    axios
+      .delete(`/api/evidence/delete/${evidenceId}`)
+      .then(() => {
+        fetchEvidence();
+        setDeleteModalOpen(false);
+        alert("Evidence deleted successfully!");
+      })
+      .catch((error) => {
+        console.error("Error deleting evidence:", error);
+        alert("Could not delete evidence!");
+      });
+  };
+
+  const openModal = (item) => {
+    setSelectedItem(item);
+    setDetailsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedItem(null);
+    setDetailsModalOpen(false);
+  };
+
+  const openDeleteConfirmModal = (item) => {
+    setSelectedItem(item);
+    setDeleteModalOpen(true);
+  };
+
+  // Defines columns for the DataGrid component to display evidence information
+  const columns = [
+    { field: "title", headerName: "Title", width: 150 },
+    { field: "location", headerName: "Location", width: 150 },
+    { field: "datePosted", headerName: "Date Posted", width: 200 },
+    { field: "notes", headerName: "Notes", width: 200 },
+    // Renders action buttons for details modal and deleting evidence
+    {
+      field: "actions",
+      headerName: "Details",
+      sortable: false,
+      width: 150,
+      renderCell: (params) => (
         <div>
-            <h2>This is the Admin view</h2>
-        <Box sx={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
-      </Box>
-      <Button>Make All Private</Button>
-      <Button>Make All Public</Button>
-      </div>
-    )
+          <Button
+            onClick={() => openModal(params.row)}
+            style={{
+              cursor: "pointer",
+              marginRight: "5px",
+            }}
+            startIcon={<InfoIcon />}
+          >
+    
+          </Button>
+          
+          <Button
+            onClick={() => openDeleteConfirmModal(params.row)}
+            style={{
+              cursor: "pointer",
+              marginRight: "5px",
+            }}
+            startIcon={<DeleteIcon />}
+            color="error"
+          >
+     
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
+  const rows = evidenceList.map((item) => ({
+    id: item.id,
+    title: item.title,
+    location: item.location,
+    datePosted: DateTime.fromISO(item.date_posted).toLocaleString(DateTime.DATETIME_MED),
+    notes: item.notes,
+  }));
+
+  return (
+    <div style={{ height: 400, width: "100%" }}>
+      <h1>Evidence Administration</h1>
+
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+        checkboxSelection={false}
+        disableSelectionOnClick
+      />
+
+      {/* Details Modal */}
+      <Dialog
+        open={detailsModalOpen} onClose={closeModal} 
+        fullWidth
+        maxWidth="md"
+      >
+        <DialogContent>
+          {selectedItem && (
+            <div>
+              <img
+                src={selectedItem.aws_url}
+                alt="item"
+                style={{ width: "100%", height: "auto", objectFit: "cover" }}
+              />
+              <Typography variant="h5" style={{ textAlign: "center" }}>
+                {selectedItem.title}
+              </Typography>
+              <Typography variant="body1" style={{ textAlign: "center" }}>
+                {selectedItem.notes}
+              </Typography>
+              <Typography variant="body1" style={{ textAlign: "center" }}>
+                Location: {selectedItem.location}
+              </Typography>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "10px",
+                }}
+              >
+                <Chip
+                  icon={<CreateIcon />}
+                  label="Edit"
+                  onClick={() => handleEdit(selectedItem)}
+                  style={{ cursor: "pointer" }}
+                />
+                <Chip
+                  icon={<DeleteForeverIcon />}
+                  label="Delete"
+                  onClick={() => openDeleteConfirmation(selectedItem)}
+                  style={{ cursor: "pointer" }}
+                />
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+
+      {/* Delete Confirmation Modal */}
+      <Dialog open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
+        <DialogContent>
+          <Typography>Are you sure you want to delete this evidence?</Typography>
+        </DialogContent>
+        <Button onClick={() => deleteEvidence(selectedItem.id)} color="error">Delete</Button>
+        <Button onClick={() => setDeleteModalOpen(false)}>Cancel</Button>
+      </Dialog>
+    </div>
+  );
 }
-export default AdminPage
+
+export default Admin;
