@@ -47,11 +47,31 @@ function EvidencePage() {
   };
 
   const handleEdit = (item) => {
-    // Implement your edit functionality here
+    // Implement edit functionality here
+  };
+
+  const deleteEvidence = (itemId) => {
+    axios.delete(`/api/evidence/delete/${itemId}`)
+      .then(() => {
+        fetchEvidence();
+      })
+      .catch((error) => {
+        console.error("Error deleting evidence:", console.log(itemId));
+        if (error.response) {
+          alert(`Could not delete evidence: ${error.response.data.message}`);
+        } else if (error.request) {
+          console.log(error.request);
+          alert("No response from server on delete attempt");
+        } else {
+          console.log('Error', error.message);
+          alert("Error deleting evidence");
+        }
+      });
   };
 
   const handleDelete = (item) => {
-    // Implement your delete functionality here
+    deleteEvidence(item.id);
+    console.log(item.id)
   };
 
   return (
@@ -60,49 +80,97 @@ function EvidencePage() {
         <Grid container spacing={2} justifyContent="center">
           {evidence.map((item) => (
             <Grid key={item.id} item xs={12} sm={8} md={6} lg={3}>
-              <Card className="item-card" sx={{ display: 'flex', flexDirection: 'column', position: 'relative', height: 450 }}>
+              <Card
+                className="item-card"
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  position: "relative",
+                  height: 450,
+                }}
+              >
                 {/* Title */}
-                <Typography variant="h5" component="div" sx={{ textAlign: "center", margin: '16px 0' }}>
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{ textAlign: "center", margin: "16px 0" }}
+                >
                   {item.title}
                 </Typography>
-                
+
                 {/* Image */}
                 <CardMedia
                   component="img"
                   src={item.aws_url}
                   className="item-image"
                   onClick={() => openModal(item)}
-                  sx={{ height: 160, width: '80%', objectFit: 'cover', alignSelf: 'center' }}
+                  sx={{
+                    height: 160,
+                    width: "80%",
+                    objectFit: "cover",
+                    alignSelf: "center",
+                  }}
                 />
 
-                <CardContent sx={{ flexGrow: 1, width: '100%' }}>
+                <CardContent sx={{ flexGrow: 1, width: "100%" }}>
                   {/* Notes */}
-                  <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 2 }}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ marginBottom: 2 }}
+                  >
                     {item.notes}
                   </Typography>
 
                   {/* Buttons */}
-                  <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-                    <Chip icon={<CreateIcon />} label="Edit" onClick={() => handleEdit(item)} />
-                    <Chip icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleDelete(item)} />
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      gap: "20px",
+                    }}
+                  >
+                    <Chip
+                      icon={<CreateIcon />}
+                      label="Edit"
+                      onClick={() => handleEdit(item)}
+                    />
+                    <Chip
+                      icon={<DeleteForeverIcon />}
+                      label="Delete"
+                      onClick={() => handleDelete(item)}
+                    />
                   </div>
                 </CardContent>
 
                 {/* Date - Bottom Left */}
-                <Typography variant="body2" sx={{ position: 'absolute', bottom: 10, left: 10 }}>
-                  {DateTime.fromISO(item.date_posted).toLocaleString(DateTime.DATETIME_MED)}
+                <Typography
+                  variant="body2"
+                  sx={{ position: "absolute", bottom: 10, left: 10 }}
+                >
+                  {DateTime.fromISO(item.date_posted).toLocaleString(
+                    DateTime.DATETIME_MED
+                  )}
                 </Typography>
 
                 {/* Location - Bottom Right */}
-                <Typography variant="body2" sx={{ position: 'absolute', bottom: 10, right: 10 }}>
-                {item.location}
+                <Typography
+                  variant="body2"
+                  sx={{ position: "absolute", bottom: 10, right: 10 }}
+                >
+                  {item.location}
                 </Typography>
               </Card>
             </Grid>
           ))}
         </Grid>
       </div>
-      <Dialog open={detailsModalOpen} onClose={detailsModalClose} fullWidth maxWidth="md">
+      <Dialog
+        open={detailsModalOpen}
+        onClose={detailsModalClose}
+        fullWidth
+        maxWidth="md"
+      >
         <DialogContent>
           {selectedItem && (
             <div>
@@ -144,7 +212,7 @@ function EvidencePage() {
           )}
         </DialogContent>
       </Dialog>
-      <EvidenceUploadButton/>
+      <EvidenceUploadButton />
     </main>
   );
 }
