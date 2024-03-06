@@ -112,8 +112,6 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
   const connection = await pool.connect()
   try {
     connection.query("BEGIN")
-    const result = await connection.query(`SELECT * FROM "media";`)
-    const allMediaTypes = result.rows
     const queryText = `
          INSERT INTO "evidence" ("title", "notes", "aws_key", "user_id", "media_type")
          VALUES ($1, $2, $3, $4, $5);
@@ -123,7 +121,7 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
     let mediaType
     let awsReference
     if (req.file) {
-      mediaType = checkMediaType(req.file.mimetype, allMediaTypes)
+      mediaType = checkMediaType(req.file.mimetype)
       awsReference = req.file.originalname
     } else {
       mediaType = 1
@@ -295,6 +293,8 @@ router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (r
       console.log(req.file, req.body);
       if (req.file) {
         console.log('in req.file');
+        const mediaType = await checkMediaType(req.file.mimetype)
+        await connection.query(`UPDATE "evidence" SET "media_type" = $1;`, [mediaType])
         let awsKey = result.rows[0].aws_key
         const params = {
           Bucket: bucketName,
@@ -319,9 +319,45 @@ router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (r
   }
 })
 
+// Deletes an entry for an admin or a user.
+router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
+  // Check that user is either an admin or the user who created it
+  const connection = await pool.connect()
+  try {
+    await connection.query("BEGIN")
+    const result = await connection.query(`SELECT "user_id", "aws_key", "media_type" FROM "evidence" WHERE "id" = $1;`, [req.params.id])
+    if (result.rows[0].user_id === req.user.id || req.user.role === 2) {
+      await connection.query(`DELETE FROM "evidence" WHERE "id" = $1`, [req.params.id])
+
+      // Checking to make sure the media isn't just text. 
+      if (result.rows[0].media_type !== 1) {
+        const command = new aws.DeleteObjectCommand({
+          Bucket: bucketName,
+          Key: result.rows[0].aws_key,
+        })
+        await s3.send(command)
+      }
+
+      res.sendStatus(201)
+    } else {
+      res.sendStatus(403)
+    }
+
+    await connection.query("COMMIT")
+  } catch (error) {
+    console.log(error);
+    connection.query("ROLLBACK")
+    res.sendStatus(500)
+  } finally {
+    connection.release()
+  }
+})
+
 
 // Utility function
-const checkMediaType = (mimetype, allMediaTypes) => {
+const checkMediaType = async (mimetype) => {
+  const result = await connection.query(`SELECT * FROM "media";`)
+  const allMediaTypes = result.rows
   for (let type of allMediaTypes) {
     if (mimetype.includes(type.type)) {
       console.log(type.id);
