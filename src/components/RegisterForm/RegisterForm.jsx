@@ -4,6 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [fullName, setFullName] = useState('')
+  const [role, setRole] = useState('')
+
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -28,26 +33,56 @@ function RegisterForm() {
         </h3>
       )}
       <div>
+        <label htmlFor="fullName">
+          Full Name:
+        </label>
+        <input
+          type="text"
+          id="fullName"
+          value={fullName}
+          required
+          onChange={(event) => setFullName(event.target.value)}
+        />
         <label htmlFor="username">
           Username:
-          <input
-            type="text"
-            name="username"
-            value={username}
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
         </label>
+        <input
+          type="text"
+          id="username"
+          value={username}
+          required
+          onChange={(event) => setUsername(event.target.value)}
+        />
       </div>
       <div>
         <label htmlFor="password">
           Password:
           <input
             type="password"
-            name="password"
+            id="password"
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}
+          />
+        </label>
+        <label htmlFor="email">
+          Email:
+          <input
+            type="text"
+            id="email"
+            value={email}
+            required
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </label>
+        <label htmlFor="phoneNumber">
+          Phone Number:
+          <input
+            type="text"
+            id="phoneNumber"
+            value={phoneNumber}
+            required
+            onChange={(event) => setPhoneNumber(event.target.value)}
           />
         </label>
       </div>
