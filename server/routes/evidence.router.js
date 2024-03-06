@@ -280,6 +280,10 @@ router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
 })
 
 // Updates Evidence For Users
+// This PUT requires in a Form Data:
+//    title
+//    notes
+//    file (optional)
 router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (req, res) => {
   const connection = await pool.connect()
   try {
