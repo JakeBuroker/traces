@@ -119,6 +119,7 @@ function Admin() {
     location: item.location,
     datePosted: DateTime.fromISO(item.date_posted).toLocaleString(DateTime.DATETIME_MED),
     notes: item.notes,
+    aws_url: item.aws_url,
   }));
 
   return (
@@ -143,17 +144,23 @@ function Admin() {
         <DialogContent>
           {selectedItem && (
             <div>
-              <img
-                src={selectedItem.aws_url}
-                alt="item"
-                style={{ width: "100%", height: "auto", objectFit: "cover" }}
-              />
               <Typography variant="h5" style={{ textAlign: "center" }}>
                 {selectedItem.title}
               </Typography>
               <Typography variant="body1" style={{ textAlign: "center" }}>
                 {selectedItem.notes}
               </Typography>
+              <CardMedia
+                  component="img"
+                  src={selectedItem.aws_url}
+                  className="item-image"
+                  sx={{
+                    height: 160,
+                    width: "80%",
+                    objectFit: "cover",
+                    alignSelf: "center",
+                  }}
+                />
               <Typography variant="body1" style={{ textAlign: "center" }}>
                 Location: {selectedItem.location}
               </Typography>
@@ -164,6 +171,7 @@ function Admin() {
                   gap: "10px",
                 }}
               >
+              
                 <Chip
                   icon={<CreateIcon />}
                   label="Edit"
