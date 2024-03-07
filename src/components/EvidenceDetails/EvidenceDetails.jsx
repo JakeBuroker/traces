@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export default function EvidenceDetails() {
   const [title, setTitle] = useState("");
   const [notes, setNotes] = useState("");
+  const [previewUrl, setPreviewUrl] = useState(""); // State to hold the image preview URL
   const file = useSelector((state) => state.media[0]);
   const dispatch = useDispatch();
-  console.log(file);
   const history = useHistory();
+
+  useEffect(() => {
+    if (file) {
+      const objectUrl = URL.createObjectURL(file); // Create an object URL for the file
+      setPreviewUrl(objectUrl);
+
+      // Clean up the object URL on component unmount
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [file]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,6 +37,12 @@ export default function EvidenceDetails() {
   return (
     <div>
       <h2>Add Details for Your Evidence</h2>
+      {previewUrl && ( // Render the image preview if the URL is available
+        <div>
+          <h3>Preview:</h3>
+          <img src={previewUrl} alt="Preview" style={{ maxWidth: "100%", height: "auto" }} />
+        </div>
+      )}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title">Title:</label>
@@ -46,6 +62,7 @@ export default function EvidenceDetails() {
             onChange={(e) => setNotes(e.target.value)}
           />
         </div>
+       
         <button type="submit">Upload Evidence</button>
       </form>
     </div>
