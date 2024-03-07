@@ -6,7 +6,6 @@ body,
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  
   margin-top: 60px;
 }
 
@@ -27,18 +26,7 @@ Container
 Button
 -------------------------------------------------------------------------------- */
 
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  border-color: #014041;
-  border-width: 1px 1px 3px;
-  border-radius: 4px;
-  background-color: #00acb0;
-  color: #f8f8f8;
-  font-size: 1.1rem;
-  outline: 0;
-  cursor: pointer;
-}
+
 
 .btn_sizeMin {
   min-height: 50px;
@@ -55,27 +43,12 @@ Button
   width: 100%;
 }
 
-.btn:hover {
-  background-color: #008183;
-  text-decoration: none;
-}
+
 
 /* This line makes the "Register" and "Login" buttons look like links */
-.btn_asLink {
-  padding: 0;
-  border-width: 0;
-  border-bottom: 1px solid #444;
-  border-radius: 0;
-  background: none;
-  font: inherit;
-  color: #444;
-}
 
-.btn_asLink:hover {
-  background-color: transparent;
-  border-color: #008183;
-  color: #008183;
-}
+
+
 
 /* --------------------------------------------------------------------------------
 Alert
@@ -85,10 +58,10 @@ Alert
   box-sizing: border-box;
   padding: 15px 10px;
   margin: 15px 0;
-  border: 2px solid #e01616;
-  background-color: #efefef;
+  border: 2px solid #c40f0f;
+  background-color: #000000;
   border-radius: 3px;
-  color: #e01616;
+  color: #c40f0f;
   font-size: 0.8rem;
 }
 
@@ -100,11 +73,6 @@ Form Treatment
   box-sizing: border-box;
   width: 400px;
   max-width: 100%;
-  padding: 25px;
-  margin: 0 auto 20px;
-  background-color: #efefef;
-  border-radius: 3px;
-  box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
 }
 
 input {
