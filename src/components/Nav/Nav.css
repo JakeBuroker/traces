@@ -18,17 +18,18 @@
 }
 
 .nav-title {
-  font-size: 24px;
+  font-size: 34px;
   font-weight: 700;
   color: #000000;
-  padding-left: 10px;
+  padding-left: 15px;
+  padding-bottom: 5px;
   margin: 0;
 }
 
 .navLink {
   display: inline-block;
-  color: #f2f2f2;
-  background-color: #00acb0;
+  color: black;
+  background-color: #c40f0f;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
@@ -42,5 +43,5 @@
 }
 
 .navLink:hover {
-  background-color: #008183;
+  background-color: #c40f0f;
 }
