@@ -6,6 +6,8 @@ import { useDispatch } from "react-redux"
 import axios from "axios"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import { useSelector } from "react-redux"
+import AudioUploadElement from "./AudioUploadElement"
+import AudioPlayer from "../AudioPlayerElement/AudioPlayer"
 export default function EvidenceUpload() {
     const history = useHistory()
     const evidenceType = useSelector(store => store.evidenceUploadReducer)
@@ -185,8 +187,12 @@ const changeFiles = (event) => {
                     placeholder="Optional Notes" />
                      <br/>
                     <button onClick={handleSubmit}>Upload Evidence</button>
-
+                    <input 
+                    type="file" id="fileInput" multiple />
                 </form>
+                <AudioPlayer/>
+
+                <AudioUploadElement/>
             </div>
         )
        

@@ -2,7 +2,7 @@ import { takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
 function* enterEvidence (action) {
-    console.log('entering visual evidence with a saga', action.payload);
+    console.log('entering evidence with a saga', action.payload);
   
     axios.post('/api/evidence', action.payload).then(() => {
        console.log('touching server');
