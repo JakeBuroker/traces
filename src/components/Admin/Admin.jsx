@@ -3,15 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { DateTime } from "luxon";
 import {
-  Grid,
-  Card,
   CardMedia,
-  CardContent,
   Typography,
   Chip,
   Dialog,
   DialogContent,
-  DialogActions,
   Button,
 } from "@mui/material"
 import { DataGrid } from "@mui/x-data-grid";
@@ -19,6 +15,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
 function Admin() {
@@ -27,6 +25,8 @@ function Admin() {
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [inEditMode, setInEditMode] = useState(false)
+  const [editsInput, setEditsInput] = useState({})
 
   useEffect(() => {
     fetchEvidence();
@@ -42,6 +42,55 @@ function Admin() {
         console.error("Could not fetch evidence:", error);
       });
   };
+
+  const toggleIsPublic = (id) => {
+    axios.put(`/api/evidence/clearance/${id}`)
+      .then(() => {
+        fetchEvidence()
+      }).catch(err => {
+        console.log(err);
+      })
+  }
+
+  const makeAllPublic = (bool) => {
+    let route
+    if (bool) {
+      route = 'makeAllPublic'
+    } else {
+      route = 'makeAllSecret'
+    }
+    axios.put(`/api/evidence/${route}`)
+      .then(response => {
+        fetchEvidence()
+      }).catch(err => {
+        console.log(err);
+      })
+  }
+
+  const handleEdit = (item) => {
+    setEditsInput({
+      id: item.id,
+      title: item.title,
+      notes: item.notes,
+    })
+    setSelectedItem(item)
+    console.log(item);
+    setInEditMode(true)
+  }
+
+  const handleUpdate = (item) => {
+    console.log(item);
+    axios.put(`/api/evidence/update/${item.id}`, {
+      title: item.title,
+      notes: item.notes,
+    }).then(response => {
+      setInEditMode(false)
+      fetchEvidence()
+      setSelectedItem({...selectedItem, title: item.title, notes: item.notes})
+    }).catch(err => {
+      console.log(err);
+    })
+  }
 
   const deleteEvidence = (evidenceId) => {
     axios
@@ -65,19 +114,22 @@ function Admin() {
   const closeModal = () => {
     setSelectedItem(null);
     setDetailsModalOpen(false);
+    setInEditMode(false)
   };
 
   const openDeleteConfirmModal = (item) => {
     setSelectedItem(item);
     setDeleteModalOpen(true);
+    setInEditMode(false)
   };
 
   // Defines columns for the DataGrid component to display evidence information
   const columns = [
-    { field: "title", headerName: "Title", width: 150 },
+    { field: "title", headerName: "Evidence Title", width: 150 },
     { field: "location", headerName: "Location", width: 150 },
     { field: "datePosted", headerName: "Date Posted", width: 200 },
     { field: "notes", headerName: "Notes", width: 200 },
+    { field: "postedBy", headerName: "Post By", width: 200 },
     // Renders action buttons for details modal and deleting evidence
     {
       field: "actions",
@@ -94,9 +146,38 @@ function Admin() {
             }}
             startIcon={<InfoIcon />}
           >
-    
+
           </Button>
-          
+        </div>
+      ),
+    },
+    {
+      field: "actions1",
+      headerName: "Toggle Secrecy",
+      sortable: false,
+      width: 150,
+      renderCell: (params) => (
+        <div>
+          <Button
+            onClick={() => toggleIsPublic(params.row.id)}
+            style={{
+              cursor: "pointer",
+              marginRight: "5px",
+            }}
+            startIcon={params.row.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          >
+            {params.row.isPublic ? 'Public' : 'Hidden'}
+          </Button>
+        </div>
+      ),
+    },
+    {
+      field: "actions2",
+      headerName: "Delete?",
+      sortable: false,
+      width: 150,
+      renderCell: (params) => (
+        <div>
           <Button
             onClick={() => openDeleteConfirmModal(params.row)}
             style={{
@@ -106,7 +187,7 @@ function Admin() {
             startIcon={<DeleteIcon />}
             color="error"
           >
-     
+
           </Button>
         </div>
       ),
@@ -120,11 +201,17 @@ function Admin() {
     datePosted: DateTime.fromISO(item.date_posted).toLocaleString(DateTime.DATETIME_MED),
     notes: item.notes,
     aws_url: item.aws_url,
+    postedBy: item.full_name,
+    isPublic: item.is_public,
   }));
 
   return (
     <div style={{ height: 400, width: "100%" }}>
       <h1>Evidence Administration</h1>
+      <div>
+        <Button variant="outlined" onClick={() => makeAllPublic(true)}>Make All Public</Button>
+        <Button variant="outlined" onClick={() => makeAllPublic(false)}>Make All Private</Button>
+      </div>
 
       <DataGrid
         rows={rows}
@@ -137,51 +224,52 @@ function Admin() {
 
       {/* Details Modal */}
       <Dialog
-        open={detailsModalOpen} onClose={closeModal} 
+        open={detailsModalOpen} onClose={closeModal}
         fullWidth
         maxWidth="md"
       >
         <DialogContent>
           {selectedItem && (
             <div>
-              <Typography variant="h5" style={{ textAlign: "center" }}>
-                {selectedItem.title}
-              </Typography>
-              <Typography variant="body1" style={{ textAlign: "center" }}>
-                {selectedItem.notes}
-              </Typography>
-              <CardMedia
+              <div>
+                <CardMedia
                   component="img"
                   src={selectedItem.aws_url}
                   className="item-image"
-                  sx={{
-                    height: 160,
-                    width: "80%",
-                    objectFit: "cover",
-                    alignSelf: "center",
-                  }}
+                  sx={{ marginBottom: '50px' }}
                 />
-              <Typography variant="body1" style={{ textAlign: "center" }}>
-                Location: {selectedItem.location}
-              </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "10px",
-                }}
+                {inEditMode ? <Typography variant="h5">Title: <input value={editsInput.title} onChange={(e) => setEditsInput({ ...editsInput, title: e.target.value })} /></Typography> : <Typography variant="h5">
+                  Title: {selectedItem.title}
+                </Typography>}
+                {inEditMode ? <Typography variant="h5">Notes: <input value={editsInput.notes} onChange={(e) => setEditsInput({ ...editsInput, notes: e.target.value })} /></Typography> : <Typography variant="body1">
+                  Notes: {selectedItem.notes}
+                </Typography>}
+                <Typography variant="body1">
+                  Location: {selectedItem.location}
+                </Typography>
+              </div>
+              <div style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+              }}
               >
-              
-                <Chip
+                {inEditMode ? <Chip
+                  icon={<CreateIcon />}
+                  label="Save"
+                  onClick={() => handleUpdate(editsInput)}
+                  style={{ cursor: "pointer" }}
+                  color="primary"
+                /> : <Chip
                   icon={<CreateIcon />}
                   label="Edit"
                   onClick={() => handleEdit(selectedItem)}
                   style={{ cursor: "pointer" }}
-                />
+                />}
                 <Chip
                   icon={<DeleteForeverIcon />}
                   label="Delete"
-                  onClick={() => openDeleteConfirmation(selectedItem)}
+                  onClick={() => openDeleteConfirmModal(selectedItem)}
                   style={{ cursor: "pointer" }}
                 />
               </div>

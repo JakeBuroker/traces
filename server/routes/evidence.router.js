@@ -61,7 +61,18 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.get('/admin', rejectUnauthenticated, (req, res) => {
   if (req.user.role === 2) { // checking for admin status
     const queryText = `
-    SELECT * FROM "evidence";
+    SELECT 
+    "evidence".id,
+    "evidence"."location",
+    "evidence".title,
+    "evidence".notes,
+    "evidence".aws_key,
+    "evidence".date_posted,
+    "evidence".is_public,
+    "evidence".media_type,
+    "user".full_name
+    FROM "evidence"
+    JOIN "user" ON "evidence".user_id = "user".id;
     `
     pool.query(queryText)
       .then(async result => {
@@ -260,7 +271,7 @@ router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (r
   try {
     await connection.query("BEGIN")
     let result = await connection.query(`SELECT "user_id" FROM "evidence" WHERE "id" = $1`, [req.params.id])
-    if (result.rows[0].user_id === req.user.id) {
+    if (result.rows[0].user_id === req.user.id || req.user.role === 2) {
       const queryText = `
         UPDATE "evidence" 
         SET 
