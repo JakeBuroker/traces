@@ -71,10 +71,25 @@ function Admin() {
     setEditsInput({
       id: item.id,
       title: item.title,
+      notes: item.notes,
     })
     setSelectedItem(item)
     console.log(item);
     setInEditMode(true)
+  }
+
+  const handleUpdate = (item) => {
+    console.log(item);
+    axios.put(`/api/evidence/update/${item.id}`, {
+      title: item.title,
+      notes: item.notes,
+    }).then(response => {
+      setInEditMode(false)
+      fetchEvidence()
+      setSelectedItem({...selectedItem, title: item.title, notes: item.notes})
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   const deleteEvidence = (evidenceId) => {
@@ -223,12 +238,12 @@ function Admin() {
                   className="item-image"
                   sx={{ marginBottom: '50px' }}
                 />
-                {inEditMode ? <Typography variant="h5">Title: <input value={editsInput.title}/></Typography> : <Typography variant="h5">
+                {inEditMode ? <Typography variant="h5">Title: <input value={editsInput.title} onChange={(e) => setEditsInput({ ...editsInput, title: e.target.value })} /></Typography> : <Typography variant="h5">
                   Title: {selectedItem.title}
                 </Typography>}
-                <Typography variant="body1">
+                {inEditMode ? <Typography variant="h5">Notes: <input value={editsInput.notes} onChange={(e) => setEditsInput({ ...editsInput, notes: e.target.value })} /></Typography> : <Typography variant="body1">
                   Notes: {selectedItem.notes}
-                </Typography>
+                </Typography>}
                 <Typography variant="body1">
                   Location: {selectedItem.location}
                 </Typography>
@@ -239,12 +254,18 @@ function Admin() {
                 gap: "10px",
               }}
               >
-                <Chip
+                {inEditMode ? <Chip
+                  icon={<CreateIcon />}
+                  label="Save"
+                  onClick={() => handleUpdate(editsInput)}
+                  style={{ cursor: "pointer" }}
+                  color="primary"
+                /> : <Chip
                   icon={<CreateIcon />}
                   label="Edit"
                   onClick={() => handleEdit(selectedItem)}
                   style={{ cursor: "pointer" }}
-                />
+                />}
                 <Chip
                   icon={<DeleteForeverIcon />}
                   label="Delete"

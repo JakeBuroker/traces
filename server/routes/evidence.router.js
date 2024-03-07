@@ -271,7 +271,7 @@ router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (r
   try {
     await connection.query("BEGIN")
     let result = await connection.query(`SELECT "user_id" FROM "evidence" WHERE "id" = $1`, [req.params.id])
-    if (result.rows[0].user_id === req.user.id) {
+    if (result.rows[0].user_id === req.user.id || req.user.role === 2) {
       const queryText = `
         UPDATE "evidence" 
         SET 
