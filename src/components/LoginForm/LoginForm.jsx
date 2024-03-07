@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import {useSelector} from 'react-redux';
+import { useDispatch, useSelector, } from 'react-redux';
+import { Button } from '@mui/material';
+import './LoginForm.css'; // Assuming you have a CSS file for styles
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const errors = useSelector(store => store.errors);
+  const history = useHistory();
   const dispatch = useDispatch();
 
   const login = (event) => {
     event.preventDefault();
-
     if (username && password) {
       dispatch({
         type: 'LOGIN',
@@ -22,19 +24,26 @@ function LoginForm() {
     } else {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
-  }; // end login
+  }; 
 
   return (
-    <form className="formPanel" onSubmit={login}>
-      <h2>Login</h2>
-      {errors.loginMessage && (
-        <h3 className="alert" role="alert">
-          {errors.loginMessage}
-        </h3>
-      )}
-      <div>
-        <label htmlFor="username">
-          Username:
+    <div className="login-container">
+      <form className="formPanel" onSubmit={login}>
+        <div className="image-container">
+          {/* Assuming you want to include an image at the top, you can use an img tag here */}
+          <img src="/images/krib.jpg" alt="Login" style={{ width: 200, height: 200 }} />
+
+        </div>
+
+        {errors.loginMessage && (
+          <h3 className="alert" role="alert">
+            {errors.loginMessage}
+          </h3>
+        )}
+        <div className="input-container">
+        <h4 htmlFor="username">
+            Username:
+            </h4>
           <input
             type="text"
             name="username"
@@ -42,11 +51,11 @@ function LoginForm() {
             value={username}
             onChange={(event) => setUsername(event.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="password">
-          Password:
+        </div>
+        <div className="input-container">
+          <h4 htmlFor="password">
+            Password:
+          </h4>
           <input
             type="password"
             name="password"
@@ -54,12 +63,13 @@ function LoginForm() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <input className="btn" type="submit" name="submit" value="Log In" />
-      </div>
-    </form>
+        </div>
+        <div>
+          <Button className="btn" type="submit" name="submit" value="Log In">Login </Button>
+          <Button className="btn" type="button" onClick={() => (history.push("/registration"))}>Register</Button>
+        </div>
+      </form>
+    </div>
   );
 }
 
