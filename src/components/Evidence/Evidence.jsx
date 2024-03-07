@@ -26,10 +26,9 @@ function EvidencePage() {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
   const [formState, setFormState] = useState({
-    user_id: '',
+    id: '',
     title: '',
     notes: '',
-    location: '',
    });
 
   useEffect(() => {
@@ -83,8 +82,7 @@ function EvidencePage() {
       id: item.id,
        title: item.title,
        notes: item.notes,
-      //  date_posted: DateTime.fromISO(item.date_posted).toISO(),
-       location: item.location,
+
     });
     setIsEditing(true);
 
@@ -93,9 +91,6 @@ function EvidencePage() {
     // Update the item in your state or backend
     // For example, to update in state:
     console.log("formState", formState);
-    // const updatedEvidence = evidence.map((item) =>
-    //    item.id === editItem.id ? { ...item, ...formState } : item
-    // );
     editEvidence(formState);
     setIsEditing(false);
     detailsModalClose();
@@ -286,6 +281,12 @@ function EvidencePage() {
     <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
     <DialogTitle>Edit Item</DialogTitle>
     <DialogContent>
+      <input
+        onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
+        type="file"
+        id="fileInput"
+        multiple
+          />
       <TextField
         autoFocus
         margin="dense"
@@ -304,16 +305,6 @@ function EvidencePage() {
         value={formState.notes}
         onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
       />
-      <TextField
-        autoFocus
-        margin="dense"
-        label="Location"
-        type="text"
-        fullWidth
-        value={formState.location}
-        onChange={(e) => setFormState({ ...formState, location: e.target.value })}
-      />
-
     </DialogContent>
     <DialogActions>
       <Button onClick={() => handleCancel()} color="primary">

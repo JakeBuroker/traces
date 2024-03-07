@@ -71,22 +71,14 @@ function Nav() {
                 </MenuItem>
 
                 <MenuItem
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#c40f0f!important",
-                    },
-                  }}
+
                 >
                   <Link className="navLink" to="/admin">
                     Admin Page
                   </Link>
                 </MenuItem>
                 <MenuItem
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#c40f0f !important",
-                    },
-                  }}
+
                 >
                   <Link className="navLink" to="/about">
                     About
@@ -94,11 +86,7 @@ function Nav() {
                 </MenuItem>
 
                 <MenuItem
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#c40f0f!important",
-                    },
-                  }}
+
                 >
                   <Link className="navLink" to="/gallery">
                     Gallery
@@ -106,11 +94,7 @@ function Nav() {
                 </MenuItem>
 
                 <MenuItem
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#c40f0f !important",
-                    },
-                  }}
+
                 >
                   <Link className="navLink" to="/Evidence">
                     Evidence
@@ -118,11 +102,7 @@ function Nav() {
                 </MenuItem>
 
                 <MenuItem
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#c40f0f !important",
-                    },
-                  }}
+
                 >
                   <Link className="navLink" to="/help">
                     Help
@@ -130,11 +110,7 @@ function Nav() {
                 </MenuItem>
 
                 <MenuItem
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#c40f0f !important",
-                    },
-                  }}
+
                 >
                   <LogOutButton className="navLink" />
                 </MenuItem>
