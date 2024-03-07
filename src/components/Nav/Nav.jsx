@@ -69,17 +69,6 @@ function Nav() {
                     Home
                   </Link>
                 </MenuItem>
-                <MenuItem
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#c40f0f !important",
-                    },
-                  }}
-                >
-                  <Link className="navLink" to="/info">
-                    Upload
-                  </Link>
-                </MenuItem>
 
                 <MenuItem
                   sx={{
