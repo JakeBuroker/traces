@@ -3,6 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import evidence from './evidence.reducer'
 import evidenceUploadReducer from './evidence.upload.reducer';
+import mediaReducer from './evidence.media.reducer'
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -14,7 +15,9 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   user, // will have an id and username if someone is logged in
   evidence,
-  evidenceUploadReducer
+  evidenceUploadReducer,
+ media: mediaReducer,
+
 });
 
 export default rootReducer;

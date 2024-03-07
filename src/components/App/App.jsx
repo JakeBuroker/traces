@@ -15,7 +15,6 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
@@ -28,6 +27,7 @@ import EvidencePage from '../Evidence/Evidence';
 
 import './App.css';
 import HelpPage from '../HelpPage/HelpPage';
+import EvidenceDetails from '../EvidenceDetails/EvidenceDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -75,13 +75,6 @@ function App() {
           </ProtectedRoute>
 
           <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <InfoPage />
-          </ProtectedRoute>
-          <ProtectedRoute
             // logged in shows EvidenceUpload else shows LoginPage
             exact
             path="/evidenceupload"
@@ -95,6 +88,14 @@ function App() {
             path="/admin"
           >
             <AdminPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows Adminpage
+            exact
+            path="/evidence-details"
+          >
+            <EvidenceDetails />
           </ProtectedRoute>
 
           <Route

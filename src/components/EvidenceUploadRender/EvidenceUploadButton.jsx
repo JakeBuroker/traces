@@ -18,7 +18,7 @@ const EvidenceUploadOnclick = (event) => {
     console.log("choosing evidence upload type", uploadType);
     setEvidenceType(uploadType)
     dispatch({type:'SET_EVIDENCE_TYPE', payload:uploadType})
-
+    
     history.push('/evidenceupload')
    
 }
@@ -27,19 +27,10 @@ const EvidenceUploadOnclick = (event) => {
 const toggleAdditionalButtons = () => {
   setShowAdditionalButtons(!showAdditionalButtons);
 };
-// if (mainButtonRef.current) {
-// const mainButton = mainButtonRef.current.getBoundingClientRect();
 
-// const newStyles = { 
-//     camButton:
-//     audioButton
-
-// }
-// }
 return (
   <div className='button-container'>
     <button 
-    // ref={mainButtonRef}
     className="button" onClick={toggleAdditionalButtons}>📕</button>
 
     {showAdditionalButtons && (
@@ -52,6 +43,10 @@ return (
   </div>
 );
 }
+
+
+
+
 
 // import './EvidenceUploadButton.css';
 // import { useState, useEffect, useRef } from 'react';
