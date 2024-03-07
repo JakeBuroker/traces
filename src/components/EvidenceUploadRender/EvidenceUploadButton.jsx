@@ -18,11 +18,17 @@ const EvidenceUploadOnclick = (event) => {
     console.log("choosing evidence upload type", uploadType);
     setEvidenceType(uploadType)
     dispatch({type:'SET_EVIDENCE_TYPE', payload:uploadType})
-    
     history.push('/evidenceupload')
-   
-}
 
+}
+const EvidenceDetails = (event) => {
+  event.preventDefault()
+  let uploadType = event.target.closest('button').id
+  console.log("choosing evidence upload type", uploadType);
+  setEvidenceType(uploadType)
+  dispatch({type:'SET_EVIDENCE_TYPE', payload:uploadType})
+  history.push('/evidence-details')
+}
 
 const toggleAdditionalButtons = () => {
   setShowAdditionalButtons(!showAdditionalButtons);
@@ -37,7 +43,7 @@ return (
       <div >
         <button onClick = {EvidenceUploadOnclick} className="additional-button" id="cambutton">📸</button>
         <button onClick = {EvidenceUploadOnclick} className="additional-button" id="audiobutton">🎤</button>
-        <button onClick = {EvidenceUploadOnclick} className="additional-button" id="notesbutton">📝</button>
+        <button onClick = {EvidenceDetails} className="additional-button" id="notesbutton">📝</button>
       </div>
     )}
   </div>

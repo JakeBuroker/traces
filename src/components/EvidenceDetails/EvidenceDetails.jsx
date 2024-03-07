@@ -5,21 +5,26 @@ import { useHistory } from "react-router-dom";
 export default function EvidenceDetails() {
   const [title, setTitle] = useState("");
   const [notes, setNotes] = useState("");
-  const file = useSelector((state) => state.media[0]);
+  const file = useSelector((state) => state.media[0]); // Assuming first selected file for simplicity
+  const evidenceType = useSelector((state) => state.evidenceUploadReducer.evidenceUploadReducer); // Adjust based on your store
   const dispatch = useDispatch();
-  console.log(file);
   const history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!file) {
-      console.error("No file selected.");
-      return;
+    // Form data is created regardless, but filled conditionally
+    const formData = new FormData();
+    
+    if (evidenceType !== 'notesbutton') {
+      // Only append file if not submitting notes-only evidence
+      if (!file) {
+        console.error("No file selected.");
+        return;
+      }
+      formData.append("file", file);
     }
 
-    const formData = new FormData();
-    formData.append("file", file);
     formData.append("title", title);
     formData.append("notes", notes);
 
@@ -27,6 +32,9 @@ export default function EvidenceDetails() {
       type: "ENTER_EVIDENCE",
       payload: formData,
     });
+
+    // Navigate after dispatch
+    history.push('/upload-success');
   };
 
   return (
@@ -43,14 +51,17 @@ export default function EvidenceDetails() {
             required
           />
         </div>
-        <div>
-          <label htmlFor="notes">Notes:</label>
-          <textarea
-            id="notes"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-          />
-        </div>
+        {/* Conditionally render notes input only for notes evidence type */}
+        {evidenceType === 'notesbutton' && (
+          <div>
+            <label htmlFor="notes">Notes:</label>
+            <textarea
+              id="notes"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+            />
+          </div>
+        )}
         <button type="submit">Upload Evidence</button>
       </form>
     </div>

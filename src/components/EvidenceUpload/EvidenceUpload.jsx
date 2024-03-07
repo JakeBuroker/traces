@@ -8,7 +8,6 @@ export default function EvidenceUpload() {
   console.log("evidence type", evidenceType);
   const actualType = evidenceType.evidenceUploadReducer;
   const dispatch = useDispatch();
-  let [selectedFiles, setSelectedFiles] = useState([]);
 
   const goBack = () => {
     history.goBack();
@@ -22,6 +21,7 @@ export default function EvidenceUpload() {
     dispatch({ type: 'SET_MEDIA', payload: selectedFilesArray });
     history.push('/evidence-details');
   };
+
   // Returns no input fields if the user hasn't specified an evidence type
   if (actualType == null) {
     return (
@@ -47,10 +47,30 @@ export default function EvidenceUpload() {
             multiple
           />
           <br />
-          {/* Removed the button to submit here, assuming the file selection triggers navigation */}
         </form>
       </div>
-    );
+    ); } else if (actualType === "notesbutton") {
+        // Returns input fields for submitting an image/video
+        return (
+          <div>
+            <button onClick={goBack}>Go Back</button>
+            <p>This is where you upload images or videos</p>
+            <br />
+            <form>
+              <input
+                onChange={(event) => {
+                  changeFiles(event);
+                }}
+                type="file"
+                id="fileInput"
+                multiple
+              />
+              <br />
+            </form>
+          </div>
+        );
+    
+    
   } else {
     // Handles other types of evidence similarly or provides a fallback
     return (
