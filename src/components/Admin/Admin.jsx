@@ -3,15 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { DateTime } from "luxon";
 import {
-  Grid,
-  Card,
   CardMedia,
-  CardContent,
   Typography,
   Chip,
   Dialog,
   DialogContent,
-  DialogActions,
   Button,
 } from "@mui/material"
 import { DataGrid } from "@mui/x-data-grid";
@@ -19,6 +15,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
 function Admin() {
@@ -42,6 +40,15 @@ function Admin() {
         console.error("Could not fetch evidence:", error);
       });
   };
+
+  const toggleIsPublic = (id) => {
+    axios.put(`/api/evidence/clearance/${id}`)
+    .then(() => {
+      fetchEvidence()
+    }).catch(err => {
+      console.log(err);
+    })
+  }
 
   const deleteEvidence = (evidenceId) => {
     axios
@@ -74,10 +81,11 @@ function Admin() {
 
   // Defines columns for the DataGrid component to display evidence information
   const columns = [
-    { field: "title", headerName: "Title", width: 150 },
+    { field: "title", headerName: "Evidence Title", width: 150 },
     { field: "location", headerName: "Location", width: 150 },
     { field: "datePosted", headerName: "Date Posted", width: 200 },
     { field: "notes", headerName: "Notes", width: 200 },
+    { field: "postedBy", headerName: "Post By", width: 200 },
     // Renders action buttons for details modal and deleting evidence
     {
       field: "actions",
@@ -96,7 +104,36 @@ function Admin() {
           >
     
           </Button>
-          
+        </div>
+      ),
+    },
+    {
+      field: "actions1",
+      headerName: "Toggle Secrecy",
+      sortable: false,
+      width: 150,
+      renderCell: (params) => (
+        <div> 
+          <Button
+            onClick={() => toggleIsPublic(params.row.id)}
+            style={{
+              cursor: "pointer",
+              marginRight: "5px",
+            }}
+            startIcon={params.row.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
+          >
+            {params.row.isPublic ? 'Public' : 'Hidden'}
+          </Button>
+        </div>
+      ),
+    },
+    {
+      field: "actions2",
+      headerName: "Delete?",
+      sortable: false,
+      width: 150,
+      renderCell: (params) => (
+        <div> 
           <Button
             onClick={() => openDeleteConfirmModal(params.row)}
             style={{
@@ -120,6 +157,8 @@ function Admin() {
     datePosted: DateTime.fromISO(item.date_posted).toLocaleString(DateTime.DATETIME_MED),
     notes: item.notes,
     aws_url: item.aws_url,
+    postedBy: item.full_name,
+    isPublic: item.is_public,
   }));
 
   return (
@@ -155,7 +194,6 @@ function Admin() {
                   src={selectedItem.aws_url}
                   className="item-image"
                   sx={{
-                    height: 160,
                     width: "80%",
                     objectFit: "cover",
                     alignSelf: "center",
