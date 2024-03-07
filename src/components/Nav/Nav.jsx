@@ -8,6 +8,7 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Box } from "@mui/material";
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -17,15 +18,16 @@ function Nav() {
       <Link to="/home">
         <h2 className="nav-title">Traces</h2>
       </Link>
-      <div>
+      <div >
         {/* If no user is logged in, show these links */}
         {!user.id && (
           // If there's no user, show login/registration links
           <>
+          <Box >
             <Dropdown>
-              <MenuButton>
+              <MenuButton sx={{marginRight:"10px",color: "black" }}>
                 <MenuIcon />
-                <Menu>
+                <Menu sx={{ backgroundColor: "#c40f0f", border: "black" }}>
                   <MenuItem>
                     <Link className="navLink" to="/login">
                       Login / Register
@@ -44,32 +46,33 @@ function Nav() {
                 </Menu>
               </MenuButton>
             </Dropdown>
+            </Box>
           </>
         )}
 
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            <Dropdown sx={{ bgcolor: "#009900" }}>
-              <MenuButton sx={{ color: "white" }}>
+            <Dropdown sx={{  bgcolor: "#c40f0f" }}>
+              <MenuButton sx={{marginRight:"10px",color: "black" }}>
                 <MenuIcon />
               </MenuButton>
-              <Menu sx={{ backgroundColor: "#00acb0" }}>
+              <Menu sx={{ backgroundColor: "#c40f0f", border: "black" }}>
                 <MenuItem
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#00acb0 !important",
+                      backgroundColor: "#c40f0 !important",
                     },
                   }}
                 >
-                  <Link className="navLink" to="/user">
+                  <Link  className="navLink" to="/user">
                     Home
                   </Link>
                 </MenuItem>
                 <MenuItem
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#00acb0 !important",
+                      backgroundColor: "#c40f0f !important",
                     },
                   }}
                 >
@@ -81,7 +84,7 @@ function Nav() {
                 <MenuItem
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#00acb0 !important",
+                      backgroundColor: "#c40f0f!important",
                     },
                   }}
                 >
@@ -92,7 +95,7 @@ function Nav() {
                 <MenuItem
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#00acb0 !important",
+                      backgroundColor: "#c40f0f !important",
                     },
                   }}
                 >
@@ -104,7 +107,7 @@ function Nav() {
                 <MenuItem
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#00acb0 !important",
+                      backgroundColor: "#c40f0f!important",
                     },
                   }}
                 >
@@ -116,7 +119,7 @@ function Nav() {
                 <MenuItem
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#00acb0 !important",
+                      backgroundColor: "#c40f0f !important",
                     },
                   }}
                 >
@@ -128,7 +131,7 @@ function Nav() {
                 <MenuItem
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#00acb0 !important",
+                      backgroundColor: "#c40f0f !important",
                     },
                   }}
                 >
@@ -140,7 +143,7 @@ function Nav() {
                 <MenuItem
                   sx={{
                     "&:hover": {
-                      backgroundColor: "#00acb0 !important",
+                      backgroundColor: "#c40f0f !important",
                     },
                   }}
                 >

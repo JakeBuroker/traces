@@ -5,7 +5,7 @@
   align-items: center;
   height: 60px;
   margin: 0 0 30px;
-  background-color: #00acb0;
+  background-color: #c40f0f;
   overflow: hidden;
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
@@ -18,17 +18,18 @@
 }
 
 .nav-title {
-  font-size: 24px;
+  font-size: 34px;
   font-weight: 700;
-  color: #f2f2f2;
-  padding-left: 10px;
+  color: #000000;
+  padding-left: 15px;
+  padding-bottom: 5px;
   margin: 0;
 }
 
 .navLink {
   display: inline-block;
-  color: #f2f2f2;
-  background-color: #00acb0;
+  color: black;
+  background-color: #c40f0f;
   text-align: center;
   padding: 24px 10px;
   text-decoration: none;
@@ -42,5 +43,5 @@
 }
 
 .navLink:hover {
-  background-color: #008183;
+  background-color: #c40f0f;
 }
