@@ -25,6 +25,8 @@ function Admin() {
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [inEditMode, setInEditMode] = useState(false)
+  const [editsInput, setEditsInput] = useState({})
 
   useEffect(() => {
     fetchEvidence();
@@ -58,11 +60,21 @@ function Admin() {
       route = 'makeAllSecret'
     }
     axios.put(`/api/evidence/${route}`)
-    .then(response => {
-      fetchEvidence()
-    }).catch(err => {
-      console.log(err);
+      .then(response => {
+        fetchEvidence()
+      }).catch(err => {
+        console.log(err);
+      })
+  }
+
+  const handleEdit = (item) => {
+    setEditsInput({
+      id: item.id,
+      title: item.title,
     })
+    setSelectedItem(item)
+    console.log(item);
+    setInEditMode(true)
   }
 
   const deleteEvidence = (evidenceId) => {
@@ -87,11 +99,13 @@ function Admin() {
   const closeModal = () => {
     setSelectedItem(null);
     setDetailsModalOpen(false);
+    setInEditMode(false)
   };
 
   const openDeleteConfirmModal = (item) => {
     setSelectedItem(item);
     setDeleteModalOpen(true);
+    setInEditMode(false)
   };
 
   // Defines columns for the DataGrid component to display evidence information
@@ -202,33 +216,29 @@ function Admin() {
         <DialogContent>
           {selectedItem && (
             <div>
-              <Typography variant="h5" style={{ textAlign: "center" }}>
-                {selectedItem.title}
-              </Typography>
-              <Typography variant="body1" style={{ textAlign: "center" }}>
-                {selectedItem.notes}
-              </Typography>
-              <CardMedia
-                component="img"
-                src={selectedItem.aws_url}
-                className="item-image"
-                sx={{
-                  width: "80%",
-                  objectFit: "cover",
-                  alignSelf: "center",
-                }}
-              />
-              <Typography variant="body1" style={{ textAlign: "center" }}>
-                Location: {selectedItem.location}
-              </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "10px",
-                }}
+              <div>
+                <CardMedia
+                  component="img"
+                  src={selectedItem.aws_url}
+                  className="item-image"
+                  sx={{ marginBottom: '50px' }}
+                />
+                {inEditMode ? <Typography variant="h5">Title: <input value={editsInput.title}/></Typography> : <Typography variant="h5">
+                  Title: {selectedItem.title}
+                </Typography>}
+                <Typography variant="body1">
+                  Notes: {selectedItem.notes}
+                </Typography>
+                <Typography variant="body1">
+                  Location: {selectedItem.location}
+                </Typography>
+              </div>
+              <div style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: "10px",
+              }}
               >
-
                 <Chip
                   icon={<CreateIcon />}
                   label="Edit"
@@ -238,7 +248,7 @@ function Admin() {
                 <Chip
                   icon={<DeleteForeverIcon />}
                   label="Delete"
-                  onClick={() => openDeleteConfirmation(selectedItem)}
+                  onClick={() => openDeleteConfirmModal(selectedItem)}
                   style={{ cursor: "pointer" }}
                 />
               </div>
