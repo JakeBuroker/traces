@@ -43,7 +43,22 @@ function Admin() {
 
   const toggleIsPublic = (id) => {
     axios.put(`/api/evidence/clearance/${id}`)
-    .then(() => {
+      .then(() => {
+        fetchEvidence()
+      }).catch(err => {
+        console.log(err);
+      })
+  }
+
+  const makeAllPublic = (bool) => {
+    let route
+    if (bool) {
+      route = 'makeAllPublic'
+    } else {
+      route = 'makeAllSecret'
+    }
+    axios.put(`/api/evidence/${route}`)
+    .then(response => {
       fetchEvidence()
     }).catch(err => {
       console.log(err);
@@ -102,7 +117,7 @@ function Admin() {
             }}
             startIcon={<InfoIcon />}
           >
-    
+
           </Button>
         </div>
       ),
@@ -113,7 +128,7 @@ function Admin() {
       sortable: false,
       width: 150,
       renderCell: (params) => (
-        <div> 
+        <div>
           <Button
             onClick={() => toggleIsPublic(params.row.id)}
             style={{
@@ -133,7 +148,7 @@ function Admin() {
       sortable: false,
       width: 150,
       renderCell: (params) => (
-        <div> 
+        <div>
           <Button
             onClick={() => openDeleteConfirmModal(params.row)}
             style={{
@@ -143,7 +158,7 @@ function Admin() {
             startIcon={<DeleteIcon />}
             color="error"
           >
-     
+
           </Button>
         </div>
       ),
@@ -164,6 +179,10 @@ function Admin() {
   return (
     <div style={{ height: 400, width: "100%" }}>
       <h1>Evidence Administration</h1>
+      <div>
+        <Button variant="outlined" onClick={() => makeAllPublic(true)}>Make All Public</Button>
+        <Button variant="outlined" onClick={() => makeAllPublic(false)}>Make All Private</Button>
+      </div>
 
       <DataGrid
         rows={rows}
@@ -176,7 +195,7 @@ function Admin() {
 
       {/* Details Modal */}
       <Dialog
-        open={detailsModalOpen} onClose={closeModal} 
+        open={detailsModalOpen} onClose={closeModal}
         fullWidth
         maxWidth="md"
       >
@@ -190,15 +209,15 @@ function Admin() {
                 {selectedItem.notes}
               </Typography>
               <CardMedia
-                  component="img"
-                  src={selectedItem.aws_url}
-                  className="item-image"
-                  sx={{
-                    width: "80%",
-                    objectFit: "cover",
-                    alignSelf: "center",
-                  }}
-                />
+                component="img"
+                src={selectedItem.aws_url}
+                className="item-image"
+                sx={{
+                  width: "80%",
+                  objectFit: "cover",
+                  alignSelf: "center",
+                }}
+              />
               <Typography variant="body1" style={{ textAlign: "center" }}>
                 Location: {selectedItem.location}
               </Typography>
@@ -209,7 +228,7 @@ function Admin() {
                   gap: "10px",
                 }}
               >
-              
+
                 <Chip
                   icon={<CreateIcon />}
                   label="Edit"
