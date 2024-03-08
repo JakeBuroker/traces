@@ -31,6 +31,10 @@ function EvidencePage() {
     notes: '',
     location: '',
    });
+   const file = formState.file;
+   const title = formState.title;
+   const notes = formState.notes;
+
 
    useEffect(() => {
     fetchEvidence();
@@ -61,8 +65,12 @@ function EvidencePage() {
 
   const editEvidence = (info) => {
     console.log("Inside of editEvidence", info);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("title", title);
+    formData.append("notes", notes);
     axios.put(
-      `/api/evidence/update/${info.id}`, info)
+      `/api/evidence/update/${info.id}`, formData)
       .then(() => {
         fetchEvidence()
       }).catch((error) => {
@@ -93,9 +101,7 @@ function EvidencePage() {
     // Update the item in your state or backend
     // For example, to update in state:
     console.log("formState", formState);
-    // const updatedEvidence = evidence.map((item) =>
-    //    item.id === editItem.id ? { ...item, ...formState } : item
-    // );
+
     editEvidence(formState);
     setIsEditing(false);
     detailsModalClose();
@@ -286,6 +292,12 @@ function EvidencePage() {
     <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
     <DialogTitle>Edit Item</DialogTitle>
     <DialogContent>
+    <input
+        onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
+        type="file"
+        id="fileInput"
+        multiple
+          />
       <TextField
         autoFocus
         margin="dense"
