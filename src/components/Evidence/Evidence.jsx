@@ -30,6 +30,9 @@ function EvidencePage() {
     title: '',
     notes: '',
    });
+   const file = formState.file;
+   const title = formState.title;
+   const notes = formState.notes;
 
   useEffect(() => {
     fetchEvidence();
@@ -60,8 +63,12 @@ function EvidencePage() {
 
   const editEvidence = (info) => {
     console.log("Inside of editEvidence", info);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("title", title);
+    formData.append("notes", notes);
     axios.put(
-      `/api/evidence/update/${info.id}`, info)
+      `/api/evidence/update/${info.id}`, formData)
       .then(() => {
         fetchEvidence()
       }).catch((error) => {
@@ -100,7 +107,7 @@ function EvidencePage() {
     setIsEditing(false)
     detailsModalClose();
    }
-
+   
 
   const deleteEvidence = (itemId) => {
     axios.delete(`/api/evidence/delete/${itemId}`)
