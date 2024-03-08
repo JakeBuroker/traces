@@ -46,7 +46,7 @@ const handleSubmit = async (event) => {
   return (
     <div>
       <h2>Add Details for Your Evidence</h2>
-      {previewUrl && ( // Render the image preview if the URL is available
+      {previewUrl && ( 
         <div>
           <h3>Preview:</h3>
           <img src={previewUrl} alt="Preview" style={{ maxWidth: "100%", height: "auto" }} />
