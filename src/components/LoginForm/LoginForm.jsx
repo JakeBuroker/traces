@@ -24,7 +24,7 @@ function LoginForm() {
     } else {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
-  }; 
+  };
 
   return (
     <div className="login-container">
@@ -41,9 +41,9 @@ function LoginForm() {
           </h3>
         )}
         <div className="input-container">
-        <h4 htmlFor="username">
+          <h4 htmlFor="username">
             Username:
-            </h4>
+          </h4>
           <input
             type="text"
             name="username"
