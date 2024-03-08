@@ -32,9 +32,9 @@ function EvidencePage() {
     location: '',
    });
 
-  useEffect(() => {
+   useEffect(() => {
     fetchEvidence();
-  }, []);
+  }, [dispatch, count]);
 
 
   const fetchEvidence = () => {

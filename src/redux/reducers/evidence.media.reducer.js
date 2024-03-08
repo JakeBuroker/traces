@@ -4,7 +4,9 @@ const mediaReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_MEDIA":
       return action.payload; // Payload is now an array of files
-    default:
+    case "CLEAR_MEDIA":
+        return state = []; // Payload is now an array of files
+      default:
       return state;
   }
 };
