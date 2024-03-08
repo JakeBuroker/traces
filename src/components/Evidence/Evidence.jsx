@@ -26,17 +26,15 @@ function EvidencePage() {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
   const [formState, setFormState] = useState({
-    id: '',
+    user_id: '',
     title: '',
     notes: '',
+    location: '',
    });
-   const file = formState.file;
-   const title = formState.title;
-   const notes = formState.notes;
 
    useEffect(() => {
     fetchEvidence();
-  }, [dispatch, count]);
+  }, [evidence.length]);
 
 
   const fetchEvidence = () => {
@@ -63,12 +61,8 @@ function EvidencePage() {
 
   const editEvidence = (info) => {
     console.log("Inside of editEvidence", info);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("title", title);
-    formData.append("notes", notes);
     axios.put(
-      `/api/evidence/update/${info.id}`, formData)
+      `/api/evidence/update/${info.id}`, info)
       .then(() => {
         fetchEvidence()
       }).catch((error) => {
@@ -89,7 +83,8 @@ function EvidencePage() {
       id: item.id,
        title: item.title,
        notes: item.notes,
-
+      //  date_posted: DateTime.fromISO(item.date_posted).toISO(),
+       location: item.location,
     });
     setIsEditing(true);
 
@@ -98,6 +93,9 @@ function EvidencePage() {
     // Update the item in your state or backend
     // For example, to update in state:
     console.log("formState", formState);
+    // const updatedEvidence = evidence.map((item) =>
+    //    item.id === editItem.id ? { ...item, ...formState } : item
+    // );
     editEvidence(formState);
     setIsEditing(false);
     detailsModalClose();
@@ -107,7 +105,7 @@ function EvidencePage() {
     setIsEditing(false)
     detailsModalClose();
    }
-   
+
 
   const deleteEvidence = (itemId) => {
     axios.delete(`/api/evidence/delete/${itemId}`)
@@ -288,12 +286,6 @@ function EvidencePage() {
     <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
     <DialogTitle>Edit Item</DialogTitle>
     <DialogContent>
-      <input
-        onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
-        type="file"
-        id="fileInput"
-        multiple
-          />
       <TextField
         autoFocus
         margin="dense"
@@ -312,6 +304,16 @@ function EvidencePage() {
         value={formState.notes}
         onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
       />
+      <TextField
+        autoFocus
+        margin="dense"
+        label="Location"
+        type="text"
+        fullWidth
+        value={formState.location}
+        onChange={(e) => setFormState({ ...formState, location: e.target.value })}
+      />
+
     </DialogContent>
     <DialogActions>
       <Button onClick={() => handleCancel()} color="primary">

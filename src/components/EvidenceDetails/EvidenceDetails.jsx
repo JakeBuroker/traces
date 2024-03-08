@@ -19,29 +19,34 @@ export default function EvidenceDetails() {
     }
   }, [file]);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("title", title);
-    formData.append("notes", notes);
-    // Dispatch the action and wait for it to complete
-     dispatch({
-      type: "ENTER_EVIDENCE",
-      payload: formData,
-    });
-    // Optionally, dispatch any cleanup actions
-    dispatch({
-      type: "CLEAR_MEDIA",
-    });
-    // Navigate after the action is complete and the state is updated
-    history.push('./Evidence');
-  };
+  
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("title", title);
+  formData.append("notes", notes);
+
+  // Assuming ENTER_EVIDENCE action returns a promise
+  await dispatch({
+    type: "ENTER_EVIDENCE",
+    payload: formData,
+  });
+
+  // Optionally, dispatch any cleanup actions
+  dispatch({
+    type: "CLEAR_MEDIA",
+  });
+
+  // Navigate after the action is complete and the state is updated
+  history.push('./Evidence');
+};
 
   return (
     <div>
       <h2>Add Details for Your Evidence</h2>
-      {previewUrl && ( // Render the image preview if the URL is available
+      {previewUrl && ( 
         <div>
           <h3>Preview:</h3>
           <img src={previewUrl} alt="Preview" style={{ maxWidth: "100%", height: "auto" }} />
