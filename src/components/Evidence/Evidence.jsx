@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
-import { Dialog, DialogContent, DialogActions, DialogTitle} from "@mui/material";
+import { Dialog, DialogContent, DialogActions, DialogTitle } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { DateTime } from "luxon";
@@ -16,34 +15,26 @@ import EvidenceUploadButton from "../EvidenceUploadRender/EvidenceUploadButton";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-
-
 function EvidencePage() {
   const evidence = useSelector((store) => store.evidence);
+  const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState(null);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [editItem, setEditItem] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-  const dispatch = useDispatch();
   const [formState, setFormState] = useState({
     user_id: '',
     title: '',
     notes: '',
     location: '',
-   });
-   const file = formState.file;
-   const title = formState.title;
-   const notes = formState.notes;
+  });
 
-
-   useEffect(() => {
+  useEffect(() => {
     fetchEvidence();
   }, [evidence.length]);
 
-
   const fetchEvidence = () => {
-    axios
-      .get("/api/evidence")
+    axios.get("/api/evidence")
       .then((response) => {
         dispatch({ type: "SET_EVIDENCE", payload: response.data });
       })
@@ -63,179 +54,108 @@ function EvidencePage() {
     setDetailsModalOpen(false);
   };
 
-  const editEvidence = (info) => {
-    console.log("Inside of editEvidence", info);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("title", title);
-    formData.append("notes", notes);
-    axios.put(
-      `/api/evidence/update/${info.id}`, formData)
-      .then(() => {
-        fetchEvidence()
-      }).catch((error) => {
-        console.log("Error in the PUT", error);
-      })
-  }
-
-  const startEdit = (item) => {
-    handleEdit(item)
-    openModal()
-  }
-
   const handleEdit = (item) => {
-    // Implement edit functionality here
-    console.log("Edit button was clicked", item);
     setEditItem(item);
     setFormState({
       id: item.id,
-       title: item.title,
-       notes: item.notes,
-      //  date_posted: DateTime.fromISO(item.date_posted).toISO(),
-       location: item.location,
+      title: item.title,
+      notes: item.notes,
+      location: item.location,
     });
     setIsEditing(true);
-
   };
-  const handleSave = () => {
-    // Update the item in your state or backend
-    // For example, to update in state:
-    console.log("formState", formState);
 
+  const handleSave = () => {
     editEvidence(formState);
     setIsEditing(false);
     detailsModalClose();
-   };
+  };
 
-   const handleCancel = () => {
-    setIsEditing(false)
+  const handleCancel = () => {
+    setIsEditing(false);
     detailsModalClose();
-   }
+  };
 
+  const editEvidence = (info) => {
+    axios.put(`/api/evidence/update/${info.id}`, info)
+      .then(() => fetchEvidence())
+      .catch((error) => console.error("Error updating evidence:", error));
+  };
 
   const deleteEvidence = (itemId) => {
     axios.delete(`/api/evidence/delete/${itemId}`)
-      .then(() => {
-        fetchEvidence();
-      })
-      .catch((error) => {
-        console.error("Error deleting evidence:", console.log(itemId));
-        if (error.response) {
-          alert(`Could not delete evidence: ${error.response.data.message}`);
-        } else if (error.request) {
-          console.log(error.request);
-          alert("No response from server on delete attempt");
-        } else {
-          console.log('Error', error.message);
-          alert("Error deleting evidence");
-        }
-      });
+      .then(() => fetchEvidence())
+      .catch((error) => console.error("Error deleting evidence:", error));
   };
 
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState(null); 
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const handleDelete = (item) => {
-    setItemToDelete(item); 
-    setDeleteConfirmationOpen(true); 
+    setItemToDelete(item);
+    setDeleteConfirmationOpen(true);
   };
 
   const confirmDelete = () => {
-    if (itemToDelete) {
-      deleteEvidence(itemToDelete.id);
-      setDeleteConfirmationOpen(false); 
-      setItemToDelete(null);
-    }
+    deleteEvidence(itemToDelete.id);
+    setDeleteConfirmationOpen(false);
+    setItemToDelete(null);
   };
 
   const cancelDelete = () => {
     setDeleteConfirmationOpen(false);
     setItemToDelete(null);
   };
+
+  const isVideo = (mediaType) => {
+    return mediaType === 3;
+  };
+
+  const hasMedia = (mediaType) => {
+    return mediaType === 2 || mediaType === 3;
+  };
+
   return (
     <main>
       <div className="container">
         <Grid container spacing={2} justifyContent="center">
           {evidence.map((item) => (
-            <Grid key={item.id} item xs={12} sm={8} md={6} lg={3}>
-              <Card
-                className="item-card"
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  position: "relative",
-                  height: 450,
-                }}
-              >
-                {/* Title */}
-                <Typography
-                  variant="h5"
-                  component="div"
-                  sx={{ textAlign: "center", margin: "16px 0" }}
-                >
+            <Grid key={item.id} item xs={12} sm={8} md={6} lg={4}>
+              <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative" }}>
+                <Typography variant="h5" component="div" sx={{ textAlign: "center", margin: "16px 0" }}>
                   {item.title}
                 </Typography>
-
-                {/* Image */}
-                <CardMedia
-                  component="img"
-                  src={item.aws_url}
-                  className="item-image"
-                  onClick={() => openModal(item)}
-                  sx={{
-                    height: 160,
-                    width: "80%",
-                    objectFit: "cover",
-                    alignSelf: "center",
-                  }}
-                />
-
-                <CardContent sx={{ flexGrow: 1, width: "100%" }}>
-                  {/* Notes */}
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ marginBottom: 2 }}
-                  >
+                {/* Conditionally render CardMedia for images or videos, skip for text-only */}
+                {hasMedia(item.media_type) && (
+                  isVideo(item.media_type) ? (
+                    <video
+                      src={item.aws_url}
+                      controls
+                      style={{ height: 160, width: "100%", objectFit: "cover" }}
+                      onClick={() => openModal(item)}
+                    />
+                  ) : (
+                    <img
+                      src={item.aws_url}
+                      alt={item.title}
+                      style={{ height: 160, width: "100%", objectFit: "cover" }}
+                      onClick={() => openModal(item)}
+                    />
+                  )
+                )}
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 2 }}>
                     {item.notes}
                   </Typography>
-
-                  {/* Buttons */}
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      gap: "20px",
-                    }}
-                  >
-                    <Chip
-                      icon={<CreateIcon />}
-                      label="Edit"
-                      onClick={() => startEdit(item)}
-                    />
-                    <Chip
-                      icon={<DeleteForeverIcon />}
-                      label="Delete"
-                      onClick={() => handleDelete(item)}
-                    />
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <Chip icon={<CreateIcon />} label="Edit" onClick={() => handleEdit(item)} />
+                    <Chip icon={<DeleteForeverIcon />} label="Delete" onClick={() => handleDelete(item)} />
                   </div>
                 </CardContent>
-
-                {/* Date - Bottom Left */}
-                <Typography
-                  variant="body2"
-                  sx={{ position: "absolute", bottom: 10, left: 10 }}
-                >
-                  {DateTime.fromISO(item.date_posted).toLocaleString(
-                    DateTime.DATETIME_MED
-                  )}
+                <Typography variant="body2" sx={{ position: "absolute", bottom: 10, left: 10 }}>
+                  {DateTime.fromISO(item.date_posted).toLocaleString(DateTime.DATETIME_MED)}
                 </Typography>
-
-                {/* Location - Bottom Right */}
-                <Typography
-                  variant="body2"
-                  sx={{ position: "absolute", bottom: 10, right: 10 }}
-                >
+                <Typography variant="body2" sx={{ position: "absolute", bottom: 10, right: 10 }}>
                   {item.location}
                 </Typography>
               </Card>
