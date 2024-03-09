@@ -1,0 +1,56 @@
+.user-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .edit-form, .info-display {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-group input, .form-group select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .save-btn, .edit-btn, .logout-btn {
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .save-btn:hover, .edit-btn:hover {
+    background-color: #45a049;
+  }
+  
+  .logout-btn {
+    background-color: #f44336;
+  }
+  
+  .logout-btn:hover {
+    background-color: #e53935;
+  }
+  
+  .user-avi {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
