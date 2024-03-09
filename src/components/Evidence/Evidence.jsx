@@ -54,34 +54,54 @@ function EvidencePage() {
     setDetailsModalOpen(false);
   };
 
+  useEffect(() => {
+    fetchEvidence();
+  }, [evidence.length]); 
+
+
   const handleEdit = (item) => {
+    setSelectedItem(item);
     setEditItem(item);
     setFormState({
       id: item.id,
       title: item.title,
       notes: item.notes,
       location: item.location,
+      file: null, 
     });
     setIsEditing(true);
-    setDetailsModalOpen(true)
-    
+    setDetailsModalOpen(true);
   };
 
   const handleSave = () => {
-    editEvidence(formState);
+    // Adjusted for potential file uploads
+    const formData = new FormData();
+    formData.append("title", formState.title);
+    formData.append("notes", formState.notes);
+    formData.append("location", formState.location);
+
+    if (formState.file) { // Only append file if it exists
+      formData.append("file", formState.file);
+    }
+
+    editEvidence(formState.id, formData); // Now passing ID and formData separately
     setIsEditing(false);
-    detailsModalClose();
+    setDetailsModalOpen(false);
+  };
+
+  const editEvidence = (id, formData) => {
+    axios.put(`/api/evidence/update/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(() => fetchEvidence())
+    .catch((error) => console.error("Error updating evidence:", error));
   };
 
   const handleCancel = () => {
     setIsEditing(false);
     detailsModalClose();
-  };
-
-  const editEvidence = (info) => {
-    axios.put(`/api/evidence/update/${info.id}`, info)
-      .then(() => fetchEvidence())
-      .catch((error) => console.error("Error updating evidence:", error));
   };
 
   const deleteEvidence = (itemId) => {
