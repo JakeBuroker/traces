@@ -1,8 +1,9 @@
 /* Primary button styling */
+
 .button-container {
     position: fixed;
-    bottom: 35px;
-    left: 850px;
+    bottom: 1.5vh;
+    left: 90vh;
 }
 
 .button {

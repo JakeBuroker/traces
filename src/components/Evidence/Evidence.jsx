@@ -63,6 +63,8 @@ function EvidencePage() {
       location: item.location,
     });
     setIsEditing(true);
+    setDetailsModalOpen(true)
+    
   };
 
   const handleSave = () => {
@@ -209,53 +211,62 @@ function EvidencePage() {
             </div>
           )}
     {isEditing && (
-    <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
-    <DialogTitle>Edit Item</DialogTitle>
-    <DialogContent>
+      <Dialog
+  open={isEditing}
+  onClose={(event, reason) => {
+    if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
+      setIsEditing(false);
+    }
+  }}
+  fullWidth
+  maxWidth="md"
+  disableEscapeKeyDown // Prevents closing the dialog with the escape key
+>
+  <DialogTitle>Edit Item</DialogTitle>
+  <DialogContent>
     <input
-        onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
-        type="file"
-        id="fileInput"
-        multiple
-          />
-      <TextField
-        autoFocus
-        margin="dense"
-        label="Title"
-        type="text"
-        fullWidth
-        value={formState.title}
-        onChange={(e) => setFormState({ ...formState, title: e.target.value })}
-      />
-      <TextField
-        autoFocus
-        margin="dense"
-        label="Notes"
-        type="text"
-        fullWidth
-        value={formState.notes}
-        onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
-      />
-      <TextField
-        autoFocus
-        margin="dense"
-        label="Location"
-        type="text"
-        fullWidth
-        value={formState.location}
-        onChange={(e) => setFormState({ ...formState, location: e.target.value })}
-      />
-
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={() => handleCancel()} color="primary">
-        Cancel
-      </Button>
-      <Button onClick={handleSave} color="primary">
-        Save
-      </Button>
-    </DialogActions>
-  </Dialog>
+      onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
+      type="file"
+      id="fileInput"
+      multiple
+    />
+    <TextField
+      autoFocus
+      margin="dense"
+      label="Title"
+      type="text"
+      fullWidth
+      value={formState.title}
+      onChange={(e) => setFormState({ ...formState, title: e.target.value })}
+    />
+    <TextField
+      autoFocus
+      margin="dense"
+      label="Notes"
+      type="text"
+      fullWidth
+      value={formState.notes}
+      onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
+    />
+    <TextField
+      autoFocus
+      margin="dense"
+      label="Location"
+      type="text"
+      fullWidth
+      value={formState.location}
+      onChange={(e) => setFormState({ ...formState, location: e.target.value })}
+    />
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => handleCancel()} color="primary">
+      Cancel
+    </Button>
+    <Button onClick={handleSave} color="primary">
+      Save
+    </Button>
+  </DialogActions>
+</Dialog>
 )}
         </DialogContent>
       </Dialog>
@@ -263,6 +274,7 @@ function EvidencePage() {
       <Dialog
         open={deleteConfirmationOpen}
         onClose={cancelDelete}
+
       >
         <DialogTitle>{"Confirm Delete"}</DialogTitle>
         <DialogContent>
