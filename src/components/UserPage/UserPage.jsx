@@ -27,7 +27,6 @@ function UserPage() {
     formData.append('email', email);
     formData.append('phone_number', phoneNumber);
     formData.append('alias', alias);
-    formData.append('fullName', fullName);
     if (userAvi) formData.append('file', userAvi);
 
     try {
@@ -51,7 +50,7 @@ function UserPage() {
           <form className="edit-form" onSubmit={(e) => { e.preventDefault(); saveChanges(); }}>
             <div className="form-group">
               <label htmlFor="fullName">Full Name:</label>
-              <input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+              {fullName}
             </div>
             <div className="form-group">
               <label htmlFor="email">Email:</label>
