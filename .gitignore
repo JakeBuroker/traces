@@ -69,3 +69,6 @@ package-lock.json
 
 # Our personal todos don't need to be seen.
 TODO.md
+
+cert.pem
+key.pem
