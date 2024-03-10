@@ -29,7 +29,6 @@ function EvidencePage() {
     user_id: '',
     title: '',
     notes: '',
-    location: '',
    });
    const file = formState.file;
    const title = formState.title;
@@ -63,6 +62,9 @@ function EvidencePage() {
     setDetailsModalOpen(false);
   };
 
+//? This is the function that allows
+//? the user to edit evidence on screen
+//? This is also how the new information is sent to the server side through an api route
   const editEvidence = (info) => {
     console.log("Inside of editEvidence", info);
     const formData = new FormData();
@@ -77,7 +79,7 @@ function EvidencePage() {
         console.log("Error in the PUT", error);
       })
   }
-
+//** This is a combiner function to make sure that both functions run in sync, the handleEdit function and the openModal fucntion */
   const startEdit = (item) => {
     handleEdit(item)
     openModal()
@@ -91,8 +93,6 @@ function EvidencePage() {
       id: item.id,
        title: item.title,
        notes: item.notes,
-      //  date_posted: DateTime.fromISO(item.date_posted).toISO(),
-       location: item.location,
     });
     setIsEditing(true);
 
@@ -316,7 +316,7 @@ function EvidencePage() {
         value={formState.notes}
         onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
       />
-      <TextField
+      {/* <TextField
         autoFocus
         margin="dense"
         label="Location"
@@ -324,7 +324,7 @@ function EvidencePage() {
         fullWidth
         value={formState.location}
         onChange={(e) => setFormState({ ...formState, location: e.target.value })}
-      />
+      /> */}
 
     </DialogContent>
     <DialogActions>
@@ -337,7 +337,7 @@ function EvidencePage() {
     </DialogActions>
   </Dialog>
 )}
-        </DialogContent>
+    </DialogContent>
       </Dialog>
       <EvidenceUploadButton />
       <Dialog
