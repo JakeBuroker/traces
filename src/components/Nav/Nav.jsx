@@ -16,36 +16,41 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title">Traces</h2>
+        <h2 className="nav-title" style={{color: 'white'}}>Traces</h2>
       </Link>
       <div >
         {/* If no user is logged in, show these links */}
         {!user.id && (
           // If there's no user, show login/registration links
           <>
-          <Box >
-            <Dropdown>
-              <MenuButton sx={{marginRight:"10px",color: "black" }}>
-                <MenuIcon />
-                <Menu sx={{ backgroundColor: "#c40f0f", border: "black" }}>
-                  <MenuItem>
-                    <Link className="navLink" to="/login">
-                      Login / Register
-                    </Link>
-                  </MenuItem>
-                  <MenuItem>
-                    <Link className="navLink" to="/about">
-                      About
-                    </Link>
-                  </MenuItem>
-                  <MenuItem>
-                    <Link className="navLink" to="/gallery">
-                      Gallery
-                    </Link>
-                  </MenuItem>
-                </Menu>
-              </MenuButton>
-            </Dropdown>
+            <Box >
+              <Dropdown>
+                <MenuButton sx={{ marginRight: "10px", color: "black" }}>
+                  <MenuIcon />
+                  <Menu sx={{ backgroundColor: "#c40f0f", border: "black" }}>
+                    <MenuItem>
+                      <Link className='navLink' to='/'>
+                        Home
+                      </Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <Link className="navLink" to="/about">
+                        About
+                      </Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <Link className="navLink" to="/gallery">
+                        Gallery
+                      </Link>
+                    </MenuItem>
+                    <MenuItem>
+                      <Link className="navLink" to="/login">
+                        Login
+                      </Link>
+                    </MenuItem>
+                  </Menu>
+                </MenuButton>
+              </Dropdown>
             </Box>
           </>
         )}
@@ -53,8 +58,8 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            <Dropdown sx={{  bgcolor: "#c40f0f" }}>
-              <MenuButton sx={{marginRight:"10px",color: "black" }}>
+            <Dropdown sx={{ bgcolor: "#c40f0f" }}>
+              <MenuButton sx={{ marginRight: "10px", color: "black" }}>
                 <MenuIcon />
               </MenuButton>
               <Menu sx={{ backgroundColor: "#c40f0f", border: "black" }}>
@@ -65,7 +70,7 @@ function Nav() {
                     },
                   }}
                 >
-                  <Link  className="navLink" to="/user">
+                  <Link className="navLink" to="/user">
                     Home
                   </Link>
                 </MenuItem>
