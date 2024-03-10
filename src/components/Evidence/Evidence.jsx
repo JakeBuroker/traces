@@ -97,6 +97,7 @@ function EvidencePage() {
     setIsEditing(true);
 
   };
+  /** This is the handleSave funciton where it sends the forState(the edited data), to the editEvidence function sets the isEditing to false and closes the modal */
   const handleSave = () => {
     // Update the item in your state or backend
     // For example, to update in state:
@@ -106,7 +107,7 @@ function EvidencePage() {
     setIsEditing(false);
     detailsModalClose();
    };
-
+/** This handleCancel function is meant to close the modal on click and set the editing boolean to false, and closes the modal*/
    const handleCancel = () => {
     setIsEditing(false)
     detailsModalClose();
