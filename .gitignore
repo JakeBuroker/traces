@@ -70,5 +70,6 @@ package-lock.json
 # Our personal todos don't need to be seen.
 TODO.md
 
+#HTTPS Certificates
 cert.pem
 key.pem
