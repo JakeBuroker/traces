@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Button } from '@mui/material';
 import './LandingPage.css';
 
 // CUSTOM COMPONENTS
@@ -26,19 +27,13 @@ function LandingPage() {
   // </script>
 
   return (
-    <div className="container">
+    <div className="container" style={{ marginTop: '50px', }}>
       <h2>{heading}</h2>
-
       <div className="grid">
-        <div className="grid-col grid-col_8">
-          <p>
-          This project involves participants who are equipped with synchronized audio devices, following a narrator's prompts to track the journey of an individual (an actor) as she moves through various real public locations across the city. Participants are instructed to document their observations through audio, video, and photo recordings.
-          </p>
-
-          <p id="websiteLink1">
-            This is where the website link will be.
-          </p>
-         
+        <div className='grid-col grid-col_12'>
+          <img src="/bridge.jpg" alt="An image of a bridge" style={{display:'block', width: '300px', margin: '50px auto', borderRadius: '5px' }} />
+        </div>
+        <div className="grid-col grid-col_12">
           <p>
             Fusce porta diam ac tortor elementum, ut imperdiet metus volutpat.
             Suspendisse posuere dapibus maximus. Aliquam vitae felis libero. In
@@ -48,17 +43,17 @@ function LandingPage() {
             amet nisi.
           </p>
         </div>
-        <div className="grid-col grid-col_4">
-          <RegisterForm />
+      
+          {/* <RegisterForm /> */}
 
-          <center>
-            <h4>If you are participating in the play please login.</h4>
-            <button className="btn btn_sizeSm" onClick={onLogin}>
+         <div className="grid-col grid-col_12" style={{marginTop: '25px'}}></div>
+            <h4>If you are participating in the play, please login.</h4>
+            <Button className="btn" onClick={onLogin}>
               Login
-            </button>
-          </center>
+            </Button>
+        
         </div>
-      </div>
+    
     </div>
   );
 }
