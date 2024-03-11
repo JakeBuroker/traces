@@ -40,11 +40,11 @@ export default function EvidenceDetails() {
     });
 
     // Navigate after the action is complete and the state is updated
-    history.push('./Evidence');
+    history.push('/Evidence');
   };
 
   return (
-    <div>
+    <div style={{ padding:"55px" }}>
       <h2>Add Details for Your Evidence</h2>
       <form onSubmit={handleSubmit}>
         {previewUrl && (

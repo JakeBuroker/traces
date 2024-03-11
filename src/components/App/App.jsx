@@ -15,10 +15,10 @@ import UserPage from "../UserPage/UserPage";
 import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
-import AdminPage from "../Admin/Admin";
-import GalleryPage from "../Gallery/Gallery";
+import AdminPage from "../AdminPage/AdminPage";
+import GalleryPage from "../GalleryPage/GalleryPage";
 import EvidenceUpload from "../EvidenceUploadPage/EvidenceUploadPage";
-import EvidencePage from "../Evidence/Evidence";
+import EvidencePage from "../EvidencePage/EvidencePage";
 import HelpPage from "../HelpPage/HelpPage";
 import EvidenceDetails from "../EvidenceDetailsPage/EvidenceDetailsPage";
 
@@ -32,7 +32,7 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <div >
         <Nav />
         <Switch>
           {/* Visiting localhost:5173 will redirect to localhost:5173/home */}

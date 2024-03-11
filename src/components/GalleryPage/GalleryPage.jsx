@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { DateTime } from "luxon";
-
 import { Grid, Card, Typography, CardMedia, CardContent, Chip } from '@mui/material';
 
 function GalleryPage() {
-
     const [publicEvidence, setPublicEvidence] = useState([])
 
     useEffect(() => {
@@ -24,7 +22,7 @@ function GalleryPage() {
     }
 
     return (
-        <div>
+        <div style={{ padding:"65px" }}>
             <h2>Here is the Gallery</h2>
             {/* <p>This is where the media will be rendered</p> */}
             <Grid container spacing={2} justifyContent="center">
@@ -66,24 +64,6 @@ function GalleryPage() {
                                 >
                                     {item.notes}
                                 </Typography>
-                                {/* <div
-                                    style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        gap: "20px",
-                                    }}
-                                >
-                                    <Chip
-                                        icon={<CreateIcon />}
-                                        label="Edit"
-                                        onClick={() => handleEdit(item)}
-                                    />
-                                    <Chip
-                                        icon={<DeleteForeverIcon />}
-                                        label="Delete"
-                                        onClick={() => openDeleteConfirmation(item)}
-                                    />
-                                </div> */}
                             </CardContent>
                             <Typography
                                 variant="body2"

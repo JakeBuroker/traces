@@ -8,7 +8,7 @@ html, body {
 /* Primary button styling */
 .button-container {
     position: fixed;
-    bottom: 1.5vh;
+    bottom: 2.5vh;
     right: -43.5vw;
 }
 
@@ -16,11 +16,11 @@ html, body {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: #4CAF50; /* Green background */
+    background-color: #4CAF50;
     color: white;
     text-align: center;
-    line-height: 100px; /* Centers the "+" icon vertically */
-    font-size: 60px; /* Size of the "+" icon */
+    line-height: 100px;
+    font-size: 60px;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
