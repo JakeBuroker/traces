@@ -7,8 +7,10 @@ import axios from "axios"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min"
 import { useSelector } from "react-redux"
 import AudioUploadElement from "./AudioUploadElement"
+// import { Tracks as tracksfun} from "../../Data_practice/tracks"
 import AudioPlayer from "../AudioPlayerElement/AudioPlayer"
 export default function EvidenceUpload() {
+    // console.log('tracks fun', tracksfun);
     const history = useHistory()
     const evidenceType = useSelector(store => store.evidenceUploadReducer)
     console.log('evidence type', evidenceType);
