@@ -1,4 +1,5 @@
 import React from 'react';
+import {text} from './AboutPage.text'
 
 // This is one of our simplest components
 // It doesn't have local state,
@@ -6,14 +7,25 @@ import React from 'react';
 // or even care what the redux state is'
 
 function AboutPage() {
+  const headers = text.english.aboutPageHeaders
+  const body = text.english.aboutPageBodies
+
+  const style = {margin: '10px auto'}
   return (
     <div className="container">
       <div>
-        <h2>About the Play</h2>
-        {/* This is where the image will go */}
-        <p>This project involves participants who are equipped with synchronized audio devices, following a narrator's prompts to track the journey of an individual (an actor) as she moves through various real public locations across the city. Participants are instructed to document their observations through audio, video, and photo recordings.</p>
-        <h2>About the Artist</h2>
-        <p>This is where we put information about the artist.</p>
+        {/* About Traces */}
+        <h2 style={style}>{headers.header1}</h2>
+        <img src="/street.jpg" alt="An image of a busy street." style={{borderRadius: '5px'}}/>
+        <p style={style}>{body.body1}</p>
+        {/* About the Artists */}
+        <h2 style={style}>{headers.header2}</h2>
+        {/* Rachel */}
+        <h3 style={style}>{headers.header3}</h3>
+        <p style={style}>{body.body2}</p>
+        {/* Ivan */}
+        <h3 style={style}>{headers.header4}</h3>
+        <p style={style}>{body.body3}</p>
       </div>
     </div>
   );
