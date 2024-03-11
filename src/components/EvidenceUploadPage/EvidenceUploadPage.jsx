@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import AudioUploadElement from "./AudioUploadElement";
+import AudioPlayer from "../AudioPlayerElement/AudioPlayer";
 
 export default function EvidenceUpload() {
   const history = useHistory();
@@ -67,8 +69,43 @@ export default function EvidenceUpload() {
               />
               <br />
             </form>
+
           </div>
         );
+      } else if (actualType == "audiobutton") {
+        const handleSubmit = () => {
+            console.log("submitting audio evidence");
+        }
+        return (
+            <div>
+                <button onClick={goBack}> Go Back</button>
+
+                <>This is where you upload audio</>
+                <br />
+                <br />
+                <form>
+                    <label>Audio Name</label>
+                    <input 
+                    onChange={(event) => {changeName(event)}}
+              
+                    />
+                    <br />
+                    <br />
+                    <textarea 
+                    onChange={(event) => {changeInfo(event)}}
+                 
+                    placeholder="Optional Notes" />
+                     <br/>
+                    <button onClick={handleSubmit}>Upload Evidence</button>
+                    <input 
+                    type="file" id="fileInput" multiple />
+                </form>
+                <AudioPlayer/>
+
+                <AudioUploadElement/>
+            </div>
+        );
+        
     
     
   } else {

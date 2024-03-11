@@ -1,48 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Chip from "@mui/material/Chip";
-import { Dialog, DialogContent, DialogActions, DialogTitle} from "@mui/material";
-import CreateIcon from "@mui/icons-material/Create";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { DateTime } from "luxon";
-import "./Evidence.css";
+import {
+  Dialog,
+  DialogContent,
+  DialogActions,
+  DialogTitle,
+  Button,
+  TextField,
+  Typography,
+} from "@mui/material";
+import "./Evidence.css"
 import EvidenceUploadButton from "../EvidenceUploadRender/EvidenceUploadButton";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-
-
+import EvidenceCard from "../EvidenceCard/EvidenceCard";
+import EvidenceDetailsModal from "../EvidenceDetailsModal/EvidenceDetailsModal";
 
 function EvidencePage() {
   const evidence = useSelector((store) => store.evidence);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
-  const [editItem, setEditItem] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
-  const [formState, setFormState] = useState({
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false); 
+  const [editItem, setEditItem] = useState(null); // Stores the evidence item currently being edited.
+  const [isEditing, setIsEditing] = useState(false); // Flag to indicate whether the user is in edit mode.
+  const [formState, setFormState] = useState({ // Form state for adding or editing evidence.
     user_id: '',
     title: '',
     notes: '',
-   });
-   const file = formState.file;
-   const title = formState.title;
-   const notes = formState.notes;
+    location: '',
+  });
+  // State and functions for handling the deletion confirmation dialog.
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
-
-   useEffect(() => {
+  // Fetches evidence when component mounts or the evidence list changes.
+  useEffect(() => {
     fetchEvidence();
   }, [evidence.length]);
 
-
   const fetchEvidence = () => {
-    axios
-      .get("/api/evidence")
+    axios.get("/api/evidence")
       .then((response) => {
         dispatch({ type: "SET_EVIDENCE", payload: response.data });
       })
@@ -62,285 +59,104 @@ function EvidencePage() {
     setDetailsModalOpen(false);
   };
 
-//? This is the function that allows
-//? the user to edit evidence on screen
-//? This is also how the new information is sent to the server side through an api route
-  const editEvidence = (info) => {
-    console.log("Inside of editEvidence", info);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("title", title);
-    formData.append("notes", notes);
-    axios.put(
-      `/api/evidence/update/${info.id}`, formData)
-      .then(() => {
-        fetchEvidence()
-      }).catch((error) => {
-        console.log("Error in the PUT", error);
-      })
-  }
-//** This is a combiner function to make sure that both functions run in sync, the handleEdit function and the openModal fucntion */
-  const startEdit = (item) => {
-    handleEdit(item)
-    openModal()
-  }
-
+  // Initiates the edit process for an evidence item.
   const handleEdit = (item) => {
-    // Implement edit functionality here
-    console.log("Edit button was clicked", item);
+    setSelectedItem(item);
     setEditItem(item);
-    setFormState({
+    setFormState({ // Prepares the form with the item's current data.
       id: item.id,
-       title: item.title,
-       notes: item.notes,
+      title: item.title,
+      notes: item.notes,
+      location: item.location,
+      file: null,
     });
-    setIsEditing(true);
-
+    setIsEditing(true); // Enters edit mode.
+    setDetailsModalOpen(true); // Opens the modal in edit mode.
   };
-  /** This is the handleSave funciton where it sends the forState(the edited data), to the editEvidence function sets the isEditing to false and closes the modal */
-  const handleSave = () => {
-    // Update the item in your state or backend
-    // For example, to update in state:
-    console.log("formState", formState);
 
-    editEvidence(formState);
+  // Handles the save action after editing an evidence item.
+  const handleSave = () => {
+    const formData = new FormData(); // Prepares form data for HTTP submission, including file uploads.
+    formData.append("title", formState.title);
+    formData.append("notes", formState.notes);
+    formData.append("location", formState.location);
+    if (formState.file) {
+      formData.append("file", formState.file); // Includes the file in the form data if present.
+    }
+    editEvidence(formState.id, formData); // Submits the edited evidence data.
+    setIsEditing(false); // Exits edit mode.
+    setDetailsModalOpen(false); // Closes the modal.
+  };
+
+  // Submits the edited evidence data to the server.
+  const editEvidence = (id, formData) => {
+    axios.put(`/api/evidence/update/${id}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(() => fetchEvidence())
+    .catch((error) => console.error("Error updating evidence:", error));
+  };
+
+  // Cancels the editing process and closes the modal.
+  const handleCancel = () => {
     setIsEditing(false);
     detailsModalClose();
-   };
-/** This handleCancel function is meant to close the modal on click and set the editing boolean to false, and closes the modal*/
-   const handleCancel = () => {
-    setIsEditing(false)
-    detailsModalClose();
-   }
-
+  };
 
   const deleteEvidence = (itemId) => {
     axios.delete(`/api/evidence/delete/${itemId}`)
-      .then(() => {
-        fetchEvidence();
-      })
-      .catch((error) => {
-        console.error("Error deleting evidence:", console.log(itemId));
-        if (error.response) {
-          alert(`Could not delete evidence: ${error.response.data.message}`);
-        } else if (error.request) {
-          console.log(error.request);
-          alert("No response from server on delete attempt");
-        } else {
-          console.log('Error', error.message);
-          alert("Error deleting evidence");
-        }
-      });
+      .then(() => fetchEvidence()) // Refreshes the evidence list on success.
+      .catch((error) => console.error("Error deleting evidence:", error));
   };
 
-  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [itemToDelete, setItemToDelete] = useState(null); 
-
+  // Prepares to delete an evidence item by opening the confirmation dialog.
   const handleDelete = (item) => {
-    setItemToDelete(item); 
-    setDeleteConfirmationOpen(true); 
+    setItemToDelete(item);
+    setDeleteConfirmationOpen(true);
   };
 
+  // Confirms the deletion of the selected evidence item.
   const confirmDelete = () => {
-    if (itemToDelete) {
-      deleteEvidence(itemToDelete.id);
-      setDeleteConfirmationOpen(false); 
-      setItemToDelete(null);
-    }
+    deleteEvidence(itemToDelete.id);
+    setDeleteConfirmationOpen(false);
+    setItemToDelete(null);
   };
 
+  // Cancels the deletion process and closes the confirmation dialog.
   const cancelDelete = () => {
     setDeleteConfirmationOpen(false);
     setItemToDelete(null);
   };
+
   return (
     <main>
+      {/* Main container for displaying evidence cards. */}
       <div className="container">
         <Grid container spacing={2} justifyContent="center">
           {evidence.map((item) => (
-            <Grid key={item.id} item xs={12} sm={8} md={6} lg={3}>
-              <Card
-                className="item-card"
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  position: "relative",
-                  height: 450,
-                }}
-              >
-                {/* Title */}
-                <Typography
-                  variant="h5"
-                  component="div"
-                  sx={{ textAlign: "center", margin: "16px 0" }}
-                >
-                  {item.title}
-                </Typography>
-
-                {/* Image */}
-                <CardMedia
-                  component="img"
-                  src={item.aws_url}
-                  className="item-image"
-                  onClick={() => openModal(item)}
-                  sx={{
-                    height: 160,
-                    width: "80%",
-                    objectFit: "cover",
-                    alignSelf: "center",
-                  }}
-                />
-
-                <CardContent sx={{ flexGrow: 1, width: "100%" }}>
-                  {/* Notes */}
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ marginBottom: 2 }}
-                  >
-                    {item.notes}
-                  </Typography>
-
-                  {/* Buttons */}
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      gap: "20px",
-                    }}
-                  >
-                    <Chip
-                      icon={<CreateIcon />}
-                      label="Edit"
-                      onClick={() => startEdit(item)}
-                    />
-                    <Chip
-                      icon={<DeleteForeverIcon />}
-                      label="Delete"
-                      onClick={() => handleDelete(item)}
-                    />
-                  </div>
-                </CardContent>
-
-                {/* Date - Bottom Left */}
-                <Typography
-                  variant="body2"
-                  sx={{ position: "absolute", bottom: 10, left: 10 }}
-                >
-                  {DateTime.fromISO(item.date_posted).toLocaleString(
-                    DateTime.DATETIME_MED
-                  )}
-                </Typography>
-
-                {/* Location - Bottom Right */}
-                <Typography
-                  variant="body2"
-                  sx={{ position: "absolute", bottom: 10, right: 10 }}
-                >
-                  {item.location}
-                </Typography>
-              </Card>
-            </Grid>
+            <EvidenceCard
+              key={item.id}
+              item={item}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onOpenModal={openModal}
+            />
           ))}
         </Grid>
       </div>
-      <Dialog
-        open={detailsModalOpen}
+      {/* The details modal for viewing or editing evidence. */}
+      <EvidenceDetailsModal
+        selectedItem={selectedItem}
+        isOpen={detailsModalOpen}
         onClose={detailsModalClose}
-        fullWidth
-        maxWidth="md"
-      >
-        <DialogContent>
-          {selectedItem && (
-            <div>
-              <img
-                src={selectedItem.aws_url}
-                alt="item"
-                style={{ width: "100%", height: "auto", objectFit: "cover" }}
-              />
-              <Typography variant="h5" style={{ textAlign: "center" }}>
-                {selectedItem.title}
-              </Typography>
-              <Typography variant="body1" style={{ textAlign: "center" }}>
-                {selectedItem.notes}
-              </Typography>
-              <Typography variant="body1" style={{ textAlign: "center" }}>
-                Location: {selectedItem.location}
-              </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "10px",
-                }}
-              >
-                <Chip
-                  icon={<CreateIcon />}
-                  label="Edit"
-                  onClick={() => handleEdit(selectedItem)}
-                  style={{ cursor: "pointer" }}
-                />
-                <Chip
-                  icon={<DeleteForeverIcon />}
-                  label="Delete"
-                  onClick={() => handleDelete(selectedItem)}
-                  style={{ cursor: "pointer" }}
-                />
-              </div>
-            </div>
-          )}
-    {isEditing && (
-    <Dialog open={isEditing} onClose={() => setIsEditing(false)}>
-    <DialogTitle>Edit Item</DialogTitle>
-    <DialogContent>
-    <input
-        onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
-        type="file"
-        id="fileInput"
-        multiple
-          />
-      <TextField
-        autoFocus
-        margin="dense"
-        label="Title"
-        type="text"
-        fullWidth
-        value={formState.title}
-        onChange={(e) => setFormState({ ...formState, title: e.target.value })}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
       />
-      <TextField
-        autoFocus
-        margin="dense"
-        label="Notes"
-        type="text"
-        fullWidth
-        value={formState.notes}
-        onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
-      />
-      {/* <TextField
-        autoFocus
-        margin="dense"
-        label="Location"
-        type="text"
-        fullWidth
-        value={formState.location}
-        onChange={(e) => setFormState({ ...formState, location: e.target.value })}
-      /> */}
-
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={() => handleCancel()} color="primary">
-        Cancel
-      </Button>
-      <Button onClick={handleSave} color="primary">
-        Save
-      </Button>
-    </DialogActions>
-  </Dialog>
-)}
-    </DialogContent>
-      </Dialog>
+      {/* Button for uploading new evidence. */}
       <EvidenceUploadButton />
+      {/* Confirmation dialog for deleting evidence. */}
       <Dialog
         open={deleteConfirmationOpen}
         onClose={cancelDelete}
@@ -356,6 +172,65 @@ function EvidencePage() {
           </Button>
         </DialogActions>
       </Dialog>
+      {/* Modal for editing an evidence item. */}
+      {isEditing && (
+        <Dialog
+          open={isEditing}
+          onClose={(event, reason) => {
+            // Prevents modal close on backdrop click or escape key press.
+            if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
+              setIsEditing(false);
+            }
+          }}
+          fullWidth
+          maxWidth="md"
+          disableEscapeKeyDown
+        >
+          <DialogTitle>Edit Item</DialogTitle>
+          <DialogContent>
+            {/* Form inputs for editing evidence details, including a file upload. */}
+            <input
+              onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
+              type="file"
+              id="fileInput"
+              multiple
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              label="Title"
+              type="text"
+              fullWidth
+              value={formState.title}
+              onChange={(e) => setFormState({ ...formState, title: e.target.value })}
+            />
+            <TextField
+              margin="dense"
+              label="Notes"
+              type="text"
+              fullWidth
+              value={formState.notes}
+              onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
+            />
+            <TextField
+              margin="dense"
+              label="Location"
+              type="text"
+              fullWidth
+              value={formState.location}
+              onChange={(e) => setFormState({ ...formState, location: e.target.value })}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCancel} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleSave} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </main>
   );
 }

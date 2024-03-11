@@ -12,14 +12,14 @@ import SaveIcon from "@mui/icons-material/Save";
 export default function EvidenceDetails() {
   const [title, setTitle] = useState("");
   const [notes, setNotes] = useState("");
-  const [previewUrl, setPreviewUrl] = useState(""); // State to hold the image preview URL
+  const [previewUrl, setPreviewUrl] = useState(""); // State to hold the preview URL
   const file = useSelector((state) => state.media[0]);
   const dispatch = useDispatch();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const timer = useRef();
-  const acceptedImageTypes = ["image/png", "image/jpeg", "image/gif"];
+  const acceptedImageTypes = ["image/png", "image/jpeg", "image/gif", "image/heif", "image/webp"];
 
   useEffect(() => {
     if (file) {
@@ -30,7 +30,8 @@ export default function EvidenceDetails() {
     }
   }, [file]);
 
-  const buttonSx = {
+  const isVideo = file?.type?.startsWith("video");
+    const buttonSx = {
     ...(success && {
       bgcolor: green[500],
       "&:hover": {
@@ -38,64 +39,65 @@ export default function EvidenceDetails() {
       },
     }),
   };
-  /** This function does a lot of things but most notably it sets the loading at the bottom of the page to start and stop once all parts of the function have been gone through and then sends the user over to the evidence page */
-  const handleButtonClick = async (event) => {
-    event.preventDefault();
-    //Checks if loading has started yet and if the file.type is an image
-    if (!loading && acceptedImageTypes.includes(file.type)) {
-      setSuccess(false);
-      setLoading(true);
 
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("title", title);
-      formData.append("notes", notes);
-
-      // Assuming ENTER_EVIDENCE action returns a promise
-      await dispatch({
-        type: "ENTER_EVIDENCE",
-        payload: formData,
-      });
-
-      // Optionally, dispatch any cleanup actions
-      dispatch({
-        type: "CLEAR_MEDIA",
-      });
-      //when the timer runs out the button will show success, it will set loading to false and it will push the user over to the evidence page after 2 seconds
-      timer.current = setTimeout(() => {
-        setSuccess(true);
-        setLoading(false);
-        history.push("./Evidence");
-      }, 2000);
-    }
-    //this else statement is catching if the file.type is a video and is set to stay loading on the page for 5 seconds
-    else if (!loading && file.type === "video/quicktime") {
-      setSuccess(false);
-      setLoading(true);
-
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("title", title);
-      formData.append("notes", notes);
-
-      // Assuming ENTER_EVIDENCE action returns a promise
-      await dispatch({
-        type: "ENTER_EVIDENCE",
-        payload: formData,
-      });
-
-      // Optionally, dispatch any cleanup actions
-      dispatch({
-        type: "CLEAR_MEDIA",
-      });
-
-      timer.current = setTimeout(() => {
-        setSuccess(true);
-        setLoading(false);
-        history.push("./Evidence");
-      }, 5000);
-    }
-  };
+    /** This function does a lot of things but most notably it sets the loading at the bottom of the page to start and stop once all parts of the function have been gone through and then sends the user over to the evidence page */
+    const handleButtonClick = async (event) => {
+      event.preventDefault();
+      //Checks if loading has started yet and if the file.type is an image
+      if (!loading && acceptedImageTypes.includes(file.type)) {
+        setSuccess(false);
+        setLoading(true);
+  
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("title", title);
+        formData.append("notes", notes);
+  
+        // Assuming ENTER_EVIDENCE action returns a promise
+        await dispatch({
+          type: "ENTER_EVIDENCE",
+          payload: formData,
+        });
+  
+        // Optionally, dispatch any cleanup actions
+        dispatch({
+          type: "CLEAR_MEDIA",
+        });
+        //when the timer runs out the button will show success, it will set loading to false and it will push the user over to the evidence page after 2 seconds
+        timer.current = setTimeout(() => {
+          setSuccess(true);
+          setLoading(false);
+          history.push("./Evidence");
+        }, 2000);
+      }
+      //this else statement is catching if the file.type is a video and is set to stay loading on the page for 5 seconds
+      else if (!loading && file.type === "video/quicktime") {
+        setSuccess(false);
+        setLoading(true);
+  
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("title", title);
+        formData.append("notes", notes);
+  
+        // Assuming ENTER_EVIDENCE action returns a promise
+        await dispatch({
+          type: "ENTER_EVIDENCE",
+          payload: formData,
+        });
+  
+        // Optionally, dispatch any cleanup actions
+        dispatch({
+          type: "CLEAR_MEDIA",
+        });
+  
+        timer.current = setTimeout(() => {
+          setSuccess(true);
+          setLoading(false);
+          history.push("./Evidence");
+        }, 5000);
+      }
+    };
 
   // const handleSubmit = async (event) => {
   //   event.preventDefault();
@@ -116,23 +118,23 @@ export default function EvidenceDetails() {
   //   });
 
   //   // Navigate after the action is complete and the state is updated
-  //   // history.push('./Evidence');
+  //   history.push('./Evidence');
   // };
 
   return (
     <div>
       <h2>Add Details for Your Evidence</h2>
-      {previewUrl && (
-        <div>
-          <h3>Preview:</h3>
-          <img
-            src={previewUrl}
-            alt="Preview"
-            style={{ maxWidth: "100%", height: "auto" }}
-          />
-        </div>
-      )}
       <form>
+        {previewUrl && (
+          <div>
+            <h3>Preview:</h3>
+            {isVideo ? (
+              <iframe src={previewUrl} alt="Preview" controls style={{ maxWidth: "100%", height: "auto" }} />
+            ) : (
+              <img src={previewUrl} alt="Preview" style={{ maxWidth: "100%", height: "auto" }} />
+            )}
+          </div>
+        )}
         <div>
           <label htmlFor="title">Title:</label>
           <input
@@ -151,7 +153,6 @@ export default function EvidenceDetails() {
             onChange={(e) => setNotes(e.target.value)}
           />
         </div>
-
         {/* <button type="submit">Upload Evidence</button> */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Box sx={{ m: 1, position: "relative" }}>

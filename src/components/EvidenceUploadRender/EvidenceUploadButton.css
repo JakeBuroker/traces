@@ -1,83 +1,112 @@
-/* CSS for the button */
+/* Reset margins and paddings */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Primary button styling */
 .button-container {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    /* background-color:black; */
-    width: 305px;
-    height: 215px;
-    
-  }
+    bottom: 1.5vh;
+    right: -43.5vw;
+}
 
 .button {
-    position: fixed; /* or 'absolute' if you want it relative to a parent container */
-    bottom: 20px;
-    right: 20px;
-    width: 100px; /* Adjust as needed for the size of your button */
-    height: 100px; /* Should be equal to width for a perfect circle */
-    border-radius: 50%; /* This creates a circle */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     background-color: #4CAF50; /* Green background */
     color: white;
     text-align: center;
-    line-height: 100px; /* Vertically centers text */
-    font-size: 60px;
+    line-height: 100px; /* Centers the "+" icon vertically */
+    font-size: 60px; /* Size of the "+" icon */
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
-/* Hover effect */
 .button:hover {
-    background-color: #45a049; /* Darker green */
+    background-color: #45a049; /* Slightly darker green on hover */
 }
 
-/* Active effect */
 .button:active {
-    background-color:blue;
+    background-color: blue; /* Blue color when the button is clicked */
 }
 
-/* CSS for the additional buttons */
-.additional-buttons-container {
-    /* position: relative; */
+/* Additional buttons container */
+.additional-buttons {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    transform: rotate(-90deg); /* Rotates the layout for a vertical presentation */
+    transform-origin: bottom right;
+}
 
-    top: -100000px;
-    left: 25px;
-
-  }
-
+/* Styling for the additional action buttons */
 .additional-button {
-    /* display:block; */
-    /* position: fixed; */
-    
-    bottom: 20px;
-    right: 20px;
-    width: 100px; /* Adjust as needed for the size of your button */
-    height: 100px; /* Adjust as needed */
-    border-radius: 50%; /* This creates a circle */
+    margin: 0;
+    width: 60px; /* Smaller size for the additional buttons */
+    height: 60px;
+    border-radius: 50%; /* Circle shape */
     background-color: #4CAF50; /* Green background */
     color: white;
     text-align: center;
-    line-height: 100px; /* Vertically centers text */
-    font-size: 60px;
+    line-height: 60px; /* Centers the icon vertically */
+    font-size: 30px; /* Icon size */
     cursor: pointer;
-    transition: opacity 5.0s ease-in-out; /* Add a smooth transition effect */
+    position: absolute;
+    bottom: 100px; /* Distance from the main button */
+    transition: transform 0.3s ease-in-out; /* Smooth transition for hover effects */
 }
 
-/* Show the additional buttons when the main button is clicked */
-.additional-button.show {
-    display:flex;
-}
-
-/* Additional buttons positioned in a semi-circle */
+/* Individual positioning of additional buttons for a semi-circle layout */
 #cambutton {
-    top: 510px;
-    left: 160px;
-}
-#audiobutton {
-    top: 540px;
-    left: 120px;
-}
-#notesbutton {
-    top: 3400px;
-    left: 270px;
+    right: 54%;
+    top: 8%; 
 }
 
+#audiobutton {
+    right: 51%;
+}
+
+#notesbutton {
+    right: 46%;
+}
+
+@media (max-width: 600px) {
+    .button-container {
+        right: -36vw; /* Place it closer to the right edge, adjust as necessary */
+    }
+
+    .button {
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        font-size: 50px; /* Adjust the font size if you're using text/icon inside the button */
+    }
+
+    /* Make additional buttons slightly smaller than the main button */
+    .additional-button {
+        width: 60px; /* Smaller than the main button */
+        height: 60px;
+        line-height: 60px; /* Adjust line height for vertical centering */
+        font-size: 30px; /* Adjust font size for the icons/text inside the buttons */
+    }
+
+    /* Adjust the positions of the additional buttons */
+    #cambutton {
+        right: 62%; /* Adjust position as needed */
+        top: 32.5%; /* Move up for semi-circle layout, adjust percentage as needed */
+    }
+
+    #audiobutton {
+        right: 57%; /* Slightly to the left of cambutton */
+        top: -51%; /* Further up, adjust percentage as needed */
+    }
+
+    #notesbutton {
+        right: 40%; /* Slightly to the left of audiobutton for semi-circle layout */
+        top: -81%; /* Even further up, adjust percentage as needed */
+    }
+}
