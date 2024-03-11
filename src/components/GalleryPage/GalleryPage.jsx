@@ -19,16 +19,23 @@ function GalleryPage() {
         axios.get('/api/evidence/public')
             .then(response => {
                 // console.log("Gallery page", response.data);
-                let pages
-                let pageCount = 1
+                let pages = {
+                    page1: [],
+                }
+                let currentPage = 1
                 for (let item of response.data) {
-                    if (pages[pageCount].length < 4) {
-                        
+                    if (pages[`page${currentPage}`].length < 4) {
+                        pages[`page${currentPage}`].push(item)
+                    } else {
+                        currentPage++
+                        pages = { ...pages, [`page${currentPage}`]: [] }
+                        pages[`page${currentPage}`].push(item)
                     }
-                    
                 }
 
-                setPublicEvidence(response.data)
+                console.log('Pages:', pages);
+
+                setPublicEvidence(pages)
             }).catch(err => {
                 console.log(err);
             })
@@ -40,8 +47,8 @@ function GalleryPage() {
     // Map for the specific page.
 
     // ! RETURN
-    if (publicEvidence.length === 0) {
-        return <h2 style={{ textAlign: 'center' }}>All Evidence To Be Declassified Soon.</h2>
+    if (publicEvidence.page1.length === 0) {
+        return (<div><h2 style={{ textAlign: 'center' }}>All Evidence To Be Declassified Soon.</h2><p>{JSON.stringify(publicEvidence)}</p></div>)
     } else {
 
         return (
@@ -49,12 +56,12 @@ function GalleryPage() {
                 <h2>Here is the Gallery</h2>
                 {/* <p>This is where the media will be rendered</p> */}
                 <Grid container spacing={2} justifyContent="center">
-                    {publicEvidence.map((item) => (
+                    {publicEvidence[`page${page}`]?.map((item) => (
                         <GalleryPageEvCard item={item} key={item.id} />
                     ))}
                 </Grid>
                 <Grid container spacing={2} justifyContent="center">
-                    <Stack spacing={2}>
+                    <Stack spacing={2} style={{ marginTop: '50px' }}>
                         <Typography>Page: {page}</Typography>
                         <Pagination count={Math.ceil(publicEvidence.length / 4)} page={page} onChange={handleChange} />
                     </Stack>
