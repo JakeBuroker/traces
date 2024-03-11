@@ -1,6 +1,3 @@
-
-
-
 export const tracks = [
   {
     title: 'some practice audio',

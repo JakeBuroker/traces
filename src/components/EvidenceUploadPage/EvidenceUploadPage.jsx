@@ -1,44 +1,46 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
+// Custom components for audio uploading and playing functionalities.
 import AudioUploadElement from "./AudioUploadElement";
 import AudioPlayer from "../AudioPlayerElement/AudioPlayer";
 
 export default function EvidenceUpload() {
   const history = useHistory();
   const evidenceType = useSelector((store) => store.evidenceUploadReducer);
-  console.log("evidence type", evidenceType);
   const actualType = evidenceType.evidenceUploadReducer;
   const dispatch = useDispatch();
 
+  // Function to navigate back to the previous page.
   const goBack = () => {
     history.goBack();
   };
 
+  // Handler for file input change event. Dispatches an action with selected files and navigates to '/evidence-details'.
   const changeFiles = (event) => {
     event.preventDefault();
-    const files = event.target.files; // This is a FileList object, not an array
-    const selectedFilesArray = Array.from(files); // Convert FileList to an array
+    const files = event.target.files; // This is a FileList object, not an array.
+    const selectedFilesArray = Array.from(files); // Convert FileList to an array.
     console.log("selectedFiles", selectedFilesArray, "selectedFiles type", typeof selectedFilesArray);
     dispatch({ type: 'SET_MEDIA', payload: selectedFilesArray });
-    history.push('/evidence-details');
+    history.push('/evidence-details'); 
   };
 
-  // Returns no input fields if the user hasn't specified an evidence type
+  // Conditional rendering based on the selected evidence type.
   if (actualType == null) {
+    // If no evidence type is selected, prompt the user to go back and select a type.
     return (
       <div>
         <button onClick={goBack}>Go Back</button>
         <p>No type has been chosen</p>
       </div>
     );
-  } else if (actualType === "cambutton") {
-    // Returns input fields for submitting an image/video
+  } else if (actualType === "cambutton" || actualType === "notesbutton") {
+    // For image or video uploads, display a file input.
     return (
-      <div>
+      <div style={{ padding:"55px" }}>
         <button onClick={goBack}>Go Back</button>
         <p>This is where you upload images or videos</p>
-        <br />
         <form>
           <input
             onChange={(event) => {
@@ -48,68 +50,37 @@ export default function EvidenceUpload() {
             id="fileInput"
             multiple
           />
-          <br />
         </form>
       </div>
-    ); } else if (actualType === "notesbutton") {
-        // Returns input fields for submitting an image/video
-        return (
-          <div>
-            <button onClick={goBack}>Go Back</button>
-            <p>This is where you upload images or videos</p>
-            <br />
+    );
+  } else if (actualType == "audiobutton") {
+    // For audio uploads, provide additional inputs for audio name and optional notes.
+    const handleSubmit = () => {
+      console.log("submitting audio evidence");
+    }
+    return (
+        <div style={{ padding:"55px" }}>
+            <button onClick={goBack}> Go Back</button>
+            <p>This is where you upload audio</p>
             <form>
-              <input
-                onChange={(event) => {
-                  changeFiles(event);
-                }}
-                type="file"
-                id="fileInput"
-                multiple
-              />
-              <br />
+                {/* Input for audio name and notes not fully implemented. */}
+                <label>Audio Name</label>
+                <input 
+                onChange={(event) => {changeName(event)}} // `changeName` function not defined in the provided code.
+                />
+                <textarea 
+                onChange={(event) => {changeInfo(event)}} // `changeInfo` function not defined in the provided code.
+                placeholder="Optional Notes" />
+                <button onClick={handleSubmit}>Upload Evidence</button>
+                <input 
+                type="file" id="fileInput" multiple />
             </form>
-
-          </div>
-        );
-      } else if (actualType == "audiobutton") {
-        const handleSubmit = () => {
-            console.log("submitting audio evidence");
-        }
-        return (
-            <div>
-                <button onClick={goBack}> Go Back</button>
-
-                <>This is where you upload audio</>
-                <br />
-                <br />
-                <form>
-                    <label>Audio Name</label>
-                    <input 
-                    onChange={(event) => {changeName(event)}}
-              
-                    />
-                    <br />
-                    <br />
-                    <textarea 
-                    onChange={(event) => {changeInfo(event)}}
-                 
-                    placeholder="Optional Notes" />
-                     <br/>
-                    <button onClick={handleSubmit}>Upload Evidence</button>
-                    <input 
-                    type="file" id="fileInput" multiple />
-                </form>
-                <AudioPlayer/>
-
-                <AudioUploadElement/>
-            </div>
-        );
-        
-    
-    
+            <AudioPlayer/>
+            <AudioUploadElement/>
+        </div>
+    );
   } else {
-    // Handles other types of evidence similarly or provides a fallback
+    // Fallback case if the evidence type is unrecognized.
     return (
       <div>
         <button onClick={goBack}>Go Back</button>

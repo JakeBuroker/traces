@@ -1,18 +1,15 @@
-html,
-body,
-#react-root {
+html, body, #react-root {
   height: 100%;
 }
-
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: 60px;
+  margin-top: 60px; /* Adjust if navbar height > 60px */
 }
-
 img {
   display: inline-block;
   max-width: 100%;
 }
+
 
 /* --------------------------------------------------------------------------------
 Container

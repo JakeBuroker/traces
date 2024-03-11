@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { DateTime } from "luxon";
+import { DateTime } from "luxon"
 import {
   CardMedia,
   Typography,
@@ -9,7 +9,7 @@ import {
   Dialog,
   DialogContent,
   Button,
-} from "@mui/material"
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
@@ -17,16 +17,16 @@ import CreateIcon from "@mui/icons-material/Create";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import './AdminPage.css'
 
-
-function Admin() {
+function AdminPage() {
   const dispatch = useDispatch();
-  const evidenceList = useSelector((store) => store.evidence);
-  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [inEditMode, setInEditMode] = useState(false)
-  const [editsInput, setEditsInput] = useState({})
+  const evidenceList = useSelector((store) => store.evidence); // Access evidence data from the Redux store.
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false); // State for controlling the visibility of the details modal.
+  const [selectedItem, setSelectedItem] = useState(null); // State for tracking the currently selected item for details or editing.
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false); // State for controlling the visibility of the delete confirmation modal.
+  const [inEditMode, setInEditMode] = useState(false); // State to toggle between view and edit modes in the modal.
+  const [editsInput, setEditsInput] = useState({}); // State for managing inputs in the edit form.
 
   useEffect(() => {
     fetchEvidence();
@@ -43,58 +43,54 @@ function Admin() {
       });
   };
 
+  // Function to toggle the public/private status of an evidence item.
   const toggleIsPublic = (id) => {
     axios.put(`/api/evidence/clearance/${id}`)
       .then(() => {
-        fetchEvidence()
+        fetchEvidence();
       }).catch(err => {
         console.log(err);
-      })
-  }
+      });
+  };
 
+  // Function to make all evidence items either public or private, based on the provided boolean value.
   const makeAllPublic = (bool) => {
-    let route
-    if (bool) {
-      route = 'makeAllPublic'
-    } else {
-      route = 'makeAllSecret'
-    }
+    let route = bool ? 'makeAllPublic' : 'makeAllSecret';
     axios.put(`/api/evidence/${route}`)
-      .then(response => {
-        fetchEvidence()
+      .then(() => {
+        fetchEvidence();
       }).catch(err => {
         console.log(err);
-      })
-  }
+      });
+  };
 
+  // Function to prepare and set the selected item for editing.
   const handleEdit = (item) => {
     setEditsInput({
       id: item.id,
       title: item.title,
       notes: item.notes,
-    })
-    setSelectedItem(item)
-    console.log(item);
-    setInEditMode(true)
-  }
+    });
+    setSelectedItem(item);
+    setInEditMode(true);
+  };
 
+  // Function to update the edited item's details on the server.
   const handleUpdate = (item) => {
-    console.log(item);
     axios.put(`/api/evidence/update/${item.id}`, {
       title: item.title,
       notes: item.notes,
-    }).then(response => {
-      setInEditMode(false)
-      fetchEvidence()
-      setSelectedItem({...selectedItem, title: item.title, notes: item.notes})
+    }).then(() => {
+      setInEditMode(false);
+      fetchEvidence();
+      setSelectedItem({...selectedItem, title: item.title, notes: item.notes});
     }).catch(err => {
       console.log(err);
-    })
-  }
+    });
+  };
 
   const deleteEvidence = (evidenceId) => {
-    axios
-      .delete(`/api/evidence/delete/${evidenceId}`)
+    axios.delete(`/api/evidence/delete/${evidenceId}`)
       .then(() => {
         fetchEvidence();
         setDeleteModalOpen(false);
@@ -106,21 +102,24 @@ function Admin() {
       });
   };
 
+  // Function to open the details modal for a selected item.
   const openModal = (item) => {
     setSelectedItem(item);
     setDetailsModalOpen(true);
   };
 
+  // Function to close any open modal and reset the edit mode.
   const closeModal = () => {
     setSelectedItem(null);
     setDetailsModalOpen(false);
-    setInEditMode(false)
+    setInEditMode(false);
   };
 
+  // Function to open the delete confirmation modal for a selected item.
   const openDeleteConfirmModal = (item) => {
     setSelectedItem(item);
     setDeleteModalOpen(true);
-    setInEditMode(false)
+    setInEditMode(false);
   };
 
   // Defines columns for the DataGrid component to display evidence information
@@ -193,7 +192,8 @@ function Admin() {
       ),
     },
   ];
-
+  
+// Render the Admin component UI, including buttons, DataGrid, and modals for details and delete confirmation.
   const rows = evidenceList.map((item) => ({
     id: item.id,
     title: item.title,
@@ -206,7 +206,7 @@ function Admin() {
   }));
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{     padding: "70px", height: 500, width: "100%",  }}>
       <h1>Evidence Administration</h1>
       <div>
         <Button variant="outlined" onClick={() => makeAllPublic(true)}>Make All Public</Button>
@@ -291,4 +291,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default AdminPage;
