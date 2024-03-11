@@ -71,7 +71,7 @@ export default function EvidenceDetails() {
         }, 2000);
       }
       //this else statement is catching if the file.type is a video and is set to stay loading on the page for 5 seconds
-      else if (!loading && file.type === "video/quicktime") {
+      else if (!loading && file.type === "2") {
         setSuccess(false);
         setLoading(true);
   

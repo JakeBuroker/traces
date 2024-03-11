@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import { Dialog, DialogTitle, DialogContent, TextField } from '@mui/material';
 import './UserPage.css'; 
+import { WashOutlined } from '@mui/icons-material';
 
 
 function UserPage() {
@@ -16,7 +17,7 @@ function UserPage() {
   const [email, setEmail] = useState(user.email || '');
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || '');
   const [alias, setAlias] = useState(user.alias || '');
-  const [Waiver,, setWaiver] = useState(user.waiver_acknowledged || null);
+  const [Waiver, setWaiver] = useState(user.waiver_acknowledged);
   const [userAvi, setUserAvi] = useState(null); 
 
   const handleFileChange = (event) => {
@@ -28,7 +29,7 @@ function UserPage() {
     formData.append('email', email);
     formData.append('phone_number', phoneNumber);
     formData.append('alias', alias);
-    formData.append('waiver_acknowledged', waiver_acknowledged,);
+    formData.append('waiver_acknowledged', Waiver,);
     if (userAvi) formData.append('file', userAvi);
 
     try {
@@ -82,16 +83,6 @@ function UserPage() {
     />
     <label htmlFor="waiverYes">Yes</label>
   </div>
-  <div>
-    <input
-      type="radio"
-      id="waiverNo"
-      name="waiver"
-      value="false"
-      onChange={(e) => setWaiver(e.target.value === 'false')}
-    />
-    <label htmlFor="waiverNo">No</label>
-  </div>
 </div>
             <button type="submit" className="save-btn">Save Changes</button>
           </form>
@@ -117,8 +108,13 @@ function UserPage() {
               <label>User Avatar:</label>
               {user.user_avi && <img src={user.user_avi} alt="User Avatar" className="user-avi" />}
             </div>
+            <div className="form-group">
+              <label>Waiver Signed:</label>
+              <div>{JSON.stringify(Waiver)}</div>
+            </div>
             <button onClick={() => setEditMode(true)} className="edit-btn">Edit Profile</button>
           </div>
+          
         )}
         <LogOutButton className="logout-btn" />
       </div>
