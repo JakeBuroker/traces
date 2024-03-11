@@ -4,6 +4,7 @@ import user from './user.reducer';
 import evidence from './evidence.reducer'
 import evidenceUploadReducer from './evidence.upload.reducer';
 import mediaReducer from './evidence.media.reducer'
+import audioReducer from './audio.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   evidence,
   evidenceUploadReducer,
  media: mediaReducer,
+ audioReducer
 
 });
 
