@@ -166,16 +166,14 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   SET 
   "email" = $1, 
   "phone_number" = $2,
-  "alias" = $3,
-  "waiver_acknowledged" = $4
-  WHERE "id" = $5
+  "alias" = $3
+  WHERE "id" = $4
   RETURNING "avatar_url";
   `
   const queryParams = [
     req.body.email,
     req.body.phone_number,
     req.body.alias,
-    req.body.waiver_acknowledged,
     req.user.id
   ]
   const connection = await pool.connect()
