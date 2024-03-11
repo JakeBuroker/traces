@@ -66,7 +66,7 @@ function LoginForm() {
         </div>
         <div>
           <Button className="btn" type="submit" name="submit" value="Log In">Login </Button>
-          <Button className="btn" type="button" onClick={() => (history.push("/registration"))}>Register</Button>
+          {/* <Button className="btn" type="button" onClick={() => (history.push("/registration"))}>Register</Button> */}
         </div>
       </form>
     </div>
