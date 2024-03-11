@@ -61,6 +61,38 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+router.put('/waiver/:id', rejectUnauthenticated, async (req, res) => {
+  const queryText = `
+    UPDATE "user"
+    SET "waiver_acknowledged" = true
+    WHERE "id" = $1;
+  `;
+  const queryParams = [req.user.id]; // Assuming req.user.id holds the authenticated user's ID
+
+  const connection = await pool.connect();
+
+  try {
+    await connection.query("BEGIN");
+    const result = await connection.query(queryText, queryParams);
+
+    // Optional: Check if the update was successful, i.e., if any row was actually updated
+    if (result.rowCount === 0) {
+      // No row updated, possibly because the user ID was not found
+      throw new Error('User not found or waiver already acknowledged.');
+    }
+
+    await connection.query("COMMIT");
+    res.send(result.rows[0]); // Send back the updated user info, for example
+  } catch (error) {
+    console.error('Error acknowledging waiver:', error);
+    await connection.query("ROLLBACK");
+    res.status(500).send({ error: "Failed to acknowledge waiver. Please try again." });
+  } finally {
+    connection.release();
+  }
+});
+
+
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful

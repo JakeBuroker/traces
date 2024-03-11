@@ -10,7 +10,7 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal }) => {
 
   return (
     <Grid item xs={12} sm={8} md={6} lg={4}>
-      <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative" }}>
+      <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative", boxShadow: 10}}>
         <Typography variant="h5" component="div" sx={{ textAlign: "center", margin: "16px 0" }}>
           {item.title}
         </Typography>
