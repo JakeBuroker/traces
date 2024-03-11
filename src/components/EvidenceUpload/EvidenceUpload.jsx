@@ -19,6 +19,7 @@ export default function EvidenceUpload() {
 let [evidenceName, setEvidenceName] = useState("")
 let [evidenceInfo, setEvidenceInfo] = useState("")
 let [selectedFiles, setSelectedFiles] = useState([])
+let [audioImage, setAudioImage ] = useState()
 const dispatch = useDispatch()
 // * This on change function responds to the change of the input box for evidence name, and
 // * updates the useState so that it can be passed into the submit function
@@ -40,6 +41,14 @@ const changeFiles = (event) => {
     let theFiles = event.target.closest("input").files
     console.log("theFiles", theFiles, "theFiles type", typeof(theFiles));
     setSelectedFiles(theFiles[0])
+    //  console.log( typeof(selectedFiles) )
+}
+const changeAudioImage = (event) => {
+    event.preventDefault()
+    let theFiles = event.target.closest("input").files
+    console.log("this is the image for the audio", theFiles, "theFiles type", typeof(theFiles));
+    setSelectedFiles(theFiles[0])
+    dispatch({type:"SET_AUDIO_IMAGE", payload: theFiles})
     //  console.log( typeof(selectedFiles) )
 }
 // * Returns no input fields if the user hasn't specified an evidence type
@@ -168,6 +177,7 @@ const changeFiles = (event) => {
             setEvidenceName(" ")
             setEvidenceInfo(" ")
         }
+
         return (
             <div>
                 <button onClick={goBack}> Go Back</button>
@@ -189,8 +199,12 @@ const changeFiles = (event) => {
                     placeholder="Optional Notes" />
                      <br/>
                     <button onClick={handleSubmit}>Upload Evidence</button>
+// ? This input is going to be used to give the option to add an image to an 
+// ? audio evidence input to make it easier to find on the evidence page
                     <input 
+                    onChange={(event) => changeAudioImage(event)}
                     type="file" id="fileInput" multiple />
+                    {/* <img src={}/> */}
                 </form>
                 <AudioPlayer/>
 
