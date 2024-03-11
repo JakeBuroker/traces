@@ -31,7 +31,20 @@ const s3 = new aws.S3Client({
 // Gets all evidence that is public.
 router.get("/public", (req, res) => {
   pool
-    .query('SELECT * from "evidence" WHERE "is_public" = true;')
+    .query(`
+    SELECT 
+    "evidence".id,
+    "evidence"."location",
+    "evidence".title,
+    "evidence".notes,
+    "evidence".aws_key,
+    "evidence".date_posted,
+    "evidence".media_type,
+    "user".username
+    FROM "evidence"
+    JOIN "user" ON "evidence".user_id = "user".id
+    WHERE "evidence".is_public = true;
+    `)
     .then(async (result) => {
       const awsGetResult = await awsGet.awsGetURLs(result)
       res.send(awsGetResult)
