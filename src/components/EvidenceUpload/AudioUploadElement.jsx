@@ -44,10 +44,7 @@ export default function AudioUploadElement() {
     dispatch({type:'SET_AUDIO', payload: blob})
   };
 
-  const finishRecording = (blob) => {
-
-    console.log('blob', blob);
-  }
+ 
 
   return(
     <div>

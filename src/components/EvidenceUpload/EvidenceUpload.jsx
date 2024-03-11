@@ -13,6 +13,7 @@ export default function EvidenceUpload() {
     // console.log('tracks fun', tracksfun);
     const history = useHistory()
     const evidenceType = useSelector(store => store.evidenceUploadReducer)
+    const audioBlob = useSelector(store => store.audioReducer.audioReducer)
     console.log('evidence type', evidenceType);
     console.log(evidenceType.evidenceUploadReducer);
     const actualType = evidenceType.evidenceUploadReducer
@@ -170,12 +171,27 @@ const changeAudioImage = (event) => {
     }
 // * Returns the input fields for submitting audio evidence
     else if (actualType == "audiobutton") {
-        const handleSubmit = () => {
+
+        const handleSubmit = (event) => {
+            event.preventDefault()
             console.log("submitting audio evidence");
             console.log("evidence Name", evidenceName);
             console.log("evidence Info", evidenceInfo);
-            setEvidenceName(" ")
-            setEvidenceInfo(" ")
+            console.log("audio blob", audioBlob);
+            // setEvidenceName(" ")
+            // setEvidenceInfo(" ")
+// ? Here is where we create the payload for the axios post for visual evidence
+            const formData = new FormData()
+            formData.append('title', evidenceName)
+            formData.append('notes', evidenceInfo)
+            formData.append('file', audioBlob)
+            console.log("submitting audio evidence");
+            // console.log(renderImageSource);
+            postNewEvidence(formData)
+        }
+
+        const postNewEvidence = (evidence) => {
+            dispatch({type:'ENTER_EVIDENCE', payload:evidence})
         }
 
         return (
@@ -198,12 +214,12 @@ const changeAudioImage = (event) => {
                     value={evidenceInfo}
                     placeholder="Optional Notes" />
                      <br/>
-                    <button onClick={handleSubmit}>Upload Evidence</button>
-// ? This input is going to be used to give the option to add an image to an 
-// ? audio evidence input to make it easier to find on the evidence page
-                    <input 
+                    <button onClick={(event) => handleSubmit(event)}>Upload Evidence</button>
+{/* // ? This input is going to be used to give the option to add an image to an */}
+{/* // ? audio evidence input to make it easier to find on the evidence page */}
+                    {/* <input 
                     onChange={(event) => changeAudioImage(event)}
-                    type="file" id="fileInput" multiple />
+                    type="file" id="fileInput" multiple /> */}
                     {/* <img src={}/> */}
                 </form>
                 <AudioPlayer/>
