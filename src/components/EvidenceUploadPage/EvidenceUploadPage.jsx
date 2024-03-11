@@ -55,8 +55,8 @@ export default function EvidenceUpload() {
     );
   } else if (actualType == "audiobutton") {
     // For audio uploads, provide additional inputs for audio name and optional notes.
-    const handleSubmit = () => {
-      console.log("submitting audio evidence");
+    const handleSubmit = (event) => {
+      console.log("submitting audio evidence", files);
     }
     return (
         <div style={{ padding:"55px" }}>
@@ -64,16 +64,14 @@ export default function EvidenceUpload() {
             <p>This is where you upload audio</p>
             <form>
                 {/* Input for audio name and notes not fully implemented. */}
-                <label>Audio Name</label>
-                <input 
-                onChange={(event) => {changeName(event)}} // `changeName` function not defined in the provided code.
-                />
-                <textarea 
-                onChange={(event) => {changeInfo(event)}} // `changeInfo` function not defined in the provided code.
-                placeholder="Optional Notes" />
-                <button onClick={handleSubmit}>Upload Evidence</button>
-                <input 
-                type="file" id="fileInput" multiple />
+            <input
+            onChange={(event) => {
+              changeFiles(event);
+            }}
+            type="file"
+            id="fileInput"
+            multiple
+            />
             </form>
             <AudioPlayer/>
             <AudioUploadElement/>
