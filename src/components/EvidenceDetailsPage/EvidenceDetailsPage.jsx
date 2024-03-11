@@ -19,7 +19,6 @@ export default function EvidenceDetails() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const timer = useRef();
-  const acceptedImageTypes = ["image/png", "image/jpeg", "image/gif", "image/heif", "image/webp"];
 
   useEffect(() => {
     if (file) {
@@ -44,7 +43,7 @@ export default function EvidenceDetails() {
     const handleButtonClick = async (event) => {
       event.preventDefault();
       //Checks if loading has started yet and if the file.type is an image
-      if (!loading && acceptedImageTypes.includes(file.type)) {
+      if (!loading && file?.type?.startsWith("image")) {
         setSuccess(false);
         setLoading(true);
   
@@ -71,7 +70,7 @@ export default function EvidenceDetails() {
         }, 2000);
       }
       //this else statement is catching if the file.type is a video and is set to stay loading on the page for 5 seconds
-      else if (!loading && file.type?.startsWith("")) {
+      else if (!loading && file?.type?.startsWith("video")) {
         setSuccess(false);
         setLoading(true);
   
