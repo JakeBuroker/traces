@@ -19,7 +19,12 @@ function GalleryPage() {
         axios.get('/api/evidence/public')
             .then(response => {
                 // console.log("Gallery page", response.data);
+                let pages
+                let pageCount = 1
                 for (let item of response.data) {
+                    if (pages[pageCount].length < 4) {
+                        
+                    }
                     
                 }
 
