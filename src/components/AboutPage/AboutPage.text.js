@@ -3,7 +3,8 @@ export const text = {
         aboutPageHeaders: {
             header1: "About Traces",
             header2: "About the Artist",
-            header3: "Rachel Jendrzejewski"
+            header3: "Rachel Jendrzejewski",
+            header4: "Ivan Talijancić",
         },
         aboutPageBodies: {
             body1: "Traces is an immersive play inspired by French artist Sophie Calle, who often engages in controversial, “famously first-person” feats, such as impersonating fictional characters in real-life situations. In this experimental work, audiences will receive audio devices and be prompted to follow a performer through real public locations, recording and uploading their actions to a website where they can peruse and compare notes with the journeys of others.",
