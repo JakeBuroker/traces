@@ -16,6 +16,7 @@ function UserPage() {
   const [email, setEmail] = useState(user.email || '');
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || '');
   const [alias, setAlias] = useState(user.alias || '');
+  const [Waiver,, setWaiver] = useState(user.waiver_acknowledged || null);
   const [userAvi, setUserAvi] = useState(null); 
 
   const handleFileChange = (event) => {
@@ -27,6 +28,7 @@ function UserPage() {
     formData.append('email', email);
     formData.append('phone_number', phoneNumber);
     formData.append('alias', alias);
+    formData.append('waiver_acknowledged', waiver_acknowledged,);
     if (userAvi) formData.append('file', userAvi);
 
     try {
@@ -68,6 +70,29 @@ function UserPage() {
               <label htmlFor="userAvi">User Avatar:</label>
               <input type="file" id="userAvi" onChange={handleFileChange} />
             </div>
+            <div className="form-group">
+  <label>Waiver:</label>
+  <div>
+    <input
+      type="radio"
+      id="waiverYes"
+      name="waiver"
+      value="true"
+      onChange={(e) => setWaiver(e.target.value === 'true')}
+    />
+    <label htmlFor="waiverYes">Yes</label>
+  </div>
+  <div>
+    <input
+      type="radio"
+      id="waiverNo"
+      name="waiver"
+      value="false"
+      onChange={(e) => setWaiver(e.target.value === 'false')}
+    />
+    <label htmlFor="waiverNo">No</label>
+  </div>
+</div>
             <button type="submit" className="save-btn">Save Changes</button>
           </form>
         ) : (
