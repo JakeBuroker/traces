@@ -6,7 +6,7 @@ function RegisterPage() {
   const history = useHistory();
 
   return (
-    <div>
+    <div style={{padding: "50px"}}>
       <RegisterForm />
 
       {/* <center>
