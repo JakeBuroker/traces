@@ -52,6 +52,7 @@ function UserPage() {
       }
       alert('User updated successfully.');
       setEditMode(false);
+
     } catch (error) {
       alert('Error updating user.');
       console.error('Error updating user:', error);
@@ -63,7 +64,7 @@ function UserPage() {
       const response = await axios.put(`/api/user/waiver/${user.id}`);
       if (response.status === 200) {
         setWaiverAcknowledged(true);
-        setOpenModal(false);
+        setOpenModal(false); // Ensure modal is closed upon acknowledgment
       } else {
         throw new Error('Failed to update waiver acknowledgment.');
       }
