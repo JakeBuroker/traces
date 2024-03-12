@@ -121,7 +121,7 @@ export default function EvidenceDetails() {
   // };
 
   return (
-    <div>
+    <div style={{padding:"60px"}} >
       <h2>Add Details for Your Evidence</h2>
       <form>
         {previewUrl && (

@@ -52,7 +52,7 @@ function GalleryPage() {
     } else {
 
         return (
-            <div>
+            <div style={{padding:"65px"}} >
                 <h2>Here is the Gallery</h2>
                 {/* <p>This is where the media will be rendered</p> */}
                 <Grid container spacing={2} justifyContent="center">
