@@ -58,7 +58,7 @@ function Nav() {
         {/* If a user is logged in, show these links */}
         {user.id && (
           <>
-            <Dropdown sx={{ bgcolor: "#c40f0f" }}>
+            <Dropdown>
               <MenuButton sx={{ marginRight: "10px", color: "black" }}>
                 <MenuIcon />
               </MenuButton>
