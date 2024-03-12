@@ -10,43 +10,59 @@ import {
   Button,
   TextField,
   Typography,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
-import "./EvidencePage.css"
+import "./EvidencePage.css";
 import EvidenceUploadButton from "../EvidenceUploadRender/EvidenceUploadButton";
 import EvidenceCard from "../EvidenceCard/EvidenceCard";
 import EvidenceDetailsModal from "../EvidenceDetailsModal/EvidenceDetailsModal";
+import MediaFilter from "../MediaFilter/MediaFilter";
 
 function EvidencePage() {
-  const evidence = useSelector((store) => store.evidence);
   const dispatch = useDispatch();
+  const evidence = useSelector((store) => store.evidence);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [detailsModalOpen, setDetailsModalOpen] = useState(false); 
-  const [editItem, setEditItem] = useState(null); // Stores the evidence item currently being edited.
-  const [isEditing, setIsEditing] = useState(false); // Flag to indicate whether the user is in edit mode.
-  const [formState, setFormState] = useState({ // Form state for adding or editing evidence.
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
+  const [editItem, setEditItem] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formState, setFormState] = useState({
     user_id: '',
     title: '',
     notes: '',
     location: '',
   });
-  // State and functions for handling the deletion confirmation dialog.
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [selectedMediaType, setSelectedCategories] = useState("all");
 
-  // Fetches evidence when component mounts or the evidence list changes.
   useEffect(() => {
-    fetchEvidence();
+    if (evidence.length === 0) {
+      fetchEvidence();
+    }
   }, [evidence.length]);
 
   const fetchEvidence = () => {
-    axios.get("/api/evidence")
+    axios.get('/api/evidence')
       .then((response) => {
         dispatch({ type: "SET_EVIDENCE", payload: response.data });
       })
       .catch((error) => {
         console.error(error);
-        alert("Could not fetch evidence!");
+        alert('Could not fetch evidence!');
       });
+  };
+
+  const handleMediaFilterChange = (event, newMediaType) => {
+    setSelectedCategories(newMediaType);
+  };
+
+  const getFilteredEvidence = () => {
+    if (selectedMediaType === 'all') {
+      return evidence;
+    }
+    const mediaTypeInt = parseInt(selectedMediaType, 10);
+    return evidence.filter(item => item.media_type === mediaTypeInt);
   };
 
   const openModal = (item) => {
@@ -59,36 +75,33 @@ function EvidencePage() {
     setDetailsModalOpen(false);
   };
 
-  // Initiates the edit process for an evidence item.
   const handleEdit = (item) => {
     setSelectedItem(item);
     setEditItem(item);
-    setFormState({ // Prepares the form with the item's current data.
+    setFormState({
       id: item.id,
       title: item.title,
       notes: item.notes,
       location: item.location,
       file: null,
     });
-    setIsEditing(true); // Enters edit mode.
-    setDetailsModalOpen(true); // Opens the modal in edit mode.
+    setIsEditing(true);
+    setDetailsModalOpen(true);
   };
 
-  // Handles the save action after editing an evidence item.
   const handleSave = () => {
-    const formData = new FormData(); // Prepares form data for HTTP submission, including file uploads.
+    const formData = new FormData();
     formData.append("title", formState.title);
     formData.append("notes", formState.notes);
     formData.append("location", formState.location);
     if (formState.file) {
-      formData.append("file", formState.file); // Includes the file in the form data if present.
+      formData.append("file", formState.file);
     }
-    editEvidence(formState.id, formData); // Submits the edited evidence data.
-    setIsEditing(false); // Exits edit mode.
-    setDetailsModalOpen(false); // Closes the modal.
+    editEvidence(formState.id, formData);
+    setIsEditing(false);
+    setDetailsModalOpen(false);
   };
 
-  // Submits the edited evidence data to the server.
   const editEvidence = (id, formData) => {
     axios.put(`/api/evidence/update/${id}`, formData, {
       headers: {
@@ -99,7 +112,6 @@ function EvidencePage() {
     .catch((error) => console.error("Error updating evidence:", error));
   };
 
-  // Cancels the editing process and closes the modal.
   const handleCancel = () => {
     setIsEditing(false);
     detailsModalClose();
@@ -107,24 +119,21 @@ function EvidencePage() {
 
   const deleteEvidence = (itemId) => {
     axios.delete(`/api/evidence/delete/${itemId}`)
-      .then(() => fetchEvidence()) // Refreshes the evidence list on success.
+      .then(() => fetchEvidence())
       .catch((error) => console.error("Error deleting evidence:", error));
   };
 
-  // Prepares to delete an evidence item by opening the confirmation dialog.
   const handleDelete = (item) => {
     setItemToDelete(item);
     setDeleteConfirmationOpen(true);
   };
 
-  // Confirms the deletion of the selected evidence item.
   const confirmDelete = () => {
     deleteEvidence(itemToDelete.id);
     setDeleteConfirmationOpen(false);
     setItemToDelete(null);
   };
 
-  // Cancels the deletion process and closes the confirmation dialog.
   const cancelDelete = () => {
     setDeleteConfirmationOpen(false);
     setItemToDelete(null);
@@ -132,52 +141,45 @@ function EvidencePage() {
 
   return (
     <main>
-      {/* Main container for displaying evidence cards. */}
+    <MediaFilter
+      selectedMediaType={selectedMediaType}
+      onMediaTypeChange={handleMediaFilterChange}
+    />
       <div className="container">
         <Grid container spacing={2} justifyContent="center">
-          {evidence.map((item) => (
+          {getFilteredEvidence().map((item) => (
             <EvidenceCard
               key={item.id}
               item={item}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onOpenModal={openModal}
+              onEdit={() => handleEdit(item)}
+              onDelete={() => handleDelete(item)}
+              onOpenModal={() => openModal(item)}
             />
           ))}
         </Grid>
       </div>
-      {/* The details modal for viewing or editing evidence. */}
       <EvidenceDetailsModal
         selectedItem={selectedItem}
         isOpen={detailsModalOpen}
         onClose={detailsModalClose}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
+        onEdit={() => handleEdit(selectedItem)}
+        onDelete={() => handleDelete(selectedItem)}
       />
-      {/* Button for uploading new evidence. */}
       <EvidenceUploadButton />
-      {/* Confirmation dialog for deleting evidence. */}
-      <Dialog
-        open={deleteConfirmationOpen}
-        onClose={cancelDelete}
-      >
-        <DialogTitle>{"Confirm Delete"}</DialogTitle>
+      <Dialog open={deleteConfirmationOpen} onClose={cancelDelete}>
+        <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
           <Typography>Are you sure you want to delete this evidence?</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={cancelDelete}>Cancel</Button>
-          <Button onClick={confirmDelete} color="primary" autoFocus>
-            Confirm
-          </Button>
+          <Button onClick={confirmDelete} color="primary" autoFocus>Confirm</Button>
         </DialogActions>
       </Dialog>
-      {/* Modal for editing an evidence item. */}
       {isEditing && (
         <Dialog
           open={isEditing}
           onClose={(event, reason) => {
-            // Prevents modal close on backdrop click or escape key press.
             if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
               setIsEditing(false);
             }
@@ -188,7 +190,6 @@ function EvidencePage() {
         >
           <DialogTitle>Edit Item</DialogTitle>
           <DialogContent>
-            {/* Form inputs for editing evidence details, including a file upload. */}
             <input
               onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
               type="file"
@@ -222,12 +223,8 @@ function EvidencePage() {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCancel} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={handleSave} color="primary">
-              Save
-            </Button>
+            <Button onClick={handleCancel} color="primary">Cancel</Button>
+            <Button onClick={handleSave} color="primary">Save</Button>
           </DialogActions>
         </Dialog>
       )}
