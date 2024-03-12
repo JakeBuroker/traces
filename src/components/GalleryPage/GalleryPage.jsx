@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { GalleryPageEvCard } from './GalleryPageEvCard';
+import MediaFilter from '../MediaFilter/MediaFilter';
 import { Grid, Pagination, Stack, Typography } from '@mui/material';
 
 function GalleryPage() {
     const [publicEvidence, setPublicEvidence] = useState([])
     const [page, setPage] = useState(1);
+    const [selectedMediaType, setSelectedCategories] = useState("all");
 
     useEffect(() => {
         fetchAllPublic()
@@ -13,6 +15,18 @@ function GalleryPage() {
 
     const handleChange = (event, value) => {
         setPage(value);
+    };
+
+    const handleMediaFilterChange = (event, newMediaType) => {
+        setSelectedCategories(newMediaType);
+    };
+
+    const getFilteredEvidence = () => {
+        if (selectedMediaType === 'all') {
+            return evidence;
+        }
+        const mediaTypeInt = parseInt(selectedMediaType, 10);
+        return evidence.filter(item => item.media_type === mediaTypeInt);
     };
 
     const fetchAllPublic = () => {
@@ -53,6 +67,9 @@ function GalleryPage() {
 
         return (
             <div>
+                <MediaFilter
+                selectedMediaType={selectedMediaType}
+                onMediaTypeChange={handleMediaFilterChange} />
                 <h2>Here is the Gallery</h2>
                 {/* <p>This is where the media will be rendered</p> */}
                 <Grid container spacing={2} justifyContent="center">
