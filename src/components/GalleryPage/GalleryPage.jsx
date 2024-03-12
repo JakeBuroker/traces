@@ -1,29 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-import { DateTime } from "luxon";
-import { Grid, Card, Typography, CardMedia, CardContent, Chip } from '@mui/material';
+import { GalleryPageEvCard } from './GalleryPageEvCard';
+import { Grid, Pagination, Stack, Typography } from '@mui/material';
 
 function GalleryPage() {
     const [publicEvidence, setPublicEvidence] = useState([])
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         fetchAllPublic()
     }, [])
 
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
+
     const fetchAllPublic = () => {
         axios.get('/api/evidence/public')
             .then(response => {
                 // console.log("Gallery page", response.data);
-                setPublicEvidence(response.data)
+                let pages = {
+                    page1: [],
+                }
+                let currentPage = 1
+                for (let item of response.data) {
+                    if (pages[`page${currentPage}`].length < 4) {
+                        pages[`page${currentPage}`].push(item)
+                    } else {
+                        currentPage++
+                        pages = { ...pages, [`page${currentPage}`]: [] }
+                        pages[`page${currentPage}`].push(item)
+                    }
+                }
+
+                console.log('Pages:', pages);
+
+                setPublicEvidence(pages)
             }).catch(err => {
                 console.log(err);
             })
     }
 
+    // I want four per page. When I get the response data, I need a way to split it up by page.
+    // Calculate the number of keys needed (Math.ceil(lengh / #of entries per page)) 
+    // Create a key for each page and push items into the array for each one
+    // Map for the specific page.
+
     // ! RETURN
-    if (publicEvidence.length === 0) {
-        return <h2 style={{ textAlign: 'center' }}>All Evidence To Be Declassified Soon.</h2>
+    if (publicEvidence.page1 && publicEvidence.page1.length === 0) {
+        return (<div><h2 style={{ textAlign: 'center' }}>All Evidence To Be Declassified Soon.</h2><p>{JSON.stringify(publicEvidence)}</p></div>)
     } else {
 
         return (
@@ -31,70 +56,16 @@ function GalleryPage() {
                 <h2>Here is the Gallery</h2>
                 {/* <p>This is where the media will be rendered</p> */}
                 <Grid container spacing={2} justifyContent="center">
-                    {publicEvidence.map((item) => (
-                        <Grid key={item.id} item xs={12} sm={10} md={6} lg={3}>
-                            <Card
-                                className="item-card"
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    position: "relative",
-                                    height: 450,
-                                }}
-                            >
-                                <Typography
-                                    variant="h5"
-                                    component="div"
-                                    sx={{ textAlign: "center", margin: "16px 0" }}
-                                >
-                                    {item.title}
-                                </Typography>
-                                <CardMedia
-                                    component="img"
-                                    src={item.aws_url}
-                                    className="item-image"
-                                    // onClick={() => openModal(item)}
-                                    sx={{
-                                        height: 160,
-                                        width: "80%",
-                                        objectFit: "cover",
-                                        alignSelf: "center",
-                                    }}
-                                />
-                                <CardContent sx={{ flexGrow: 1, width: "100%" }}>
-                                    <Typography
-                                        variant="body2"
-                                        color="text.secondary"
-                                        sx={{ marginBottom: 2 }}
-                                    >
-                                        {item.notes}
-                                    </Typography>
-                                </CardContent>
-                                <Typography
-                                    variant="body2"
-                                    sx={{ position: "absolute", bottom: 30, left: 10 }}
-                                >
-                                    Submitted by: {item.username}
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    sx={{ position: "absolute", bottom: 10, left: 10 }}
-                                >
-                                    {DateTime.fromISO(item.date_posted).toLocaleString(
-                                        DateTime.DATETIME_MED
-                                    )}
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    sx={{ position: "absolute", bottom: 10, right: 10 }}
-                                >
-                                    {item.location}
-                                </Typography>
-                            </Card>
-                        </Grid>
+                    {publicEvidence[`page${page}`]?.map((item) => (
+                        <GalleryPageEvCard item={item} key={item.id} />
                     ))}
                 </Grid>
-
+                <Grid container spacing={2} justifyContent="center">
+                    <Stack spacing={2} style={{ marginTop: '50px' }}>
+                        <Typography>Page: {page}</Typography>
+                        <Pagination count={Math.ceil(publicEvidence.length / 4)} page={page} onChange={handleChange} />
+                    </Stack>
+                </Grid>
             </div>
         )
     }
