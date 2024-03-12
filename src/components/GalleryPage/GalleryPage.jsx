@@ -23,33 +23,35 @@ function GalleryPage() {
 
     const getFilteredEvidence = () => {
         if (selectedMediaType === 'all') {
-            return evidence;
+            return paginateResults(publicEvidence);
         }
         const mediaTypeInt = parseInt(selectedMediaType, 10);
-        return evidence.filter(item => item.media_type === mediaTypeInt);
+        return paginateResults(publicEvidence.filter(item => item.media_type === mediaTypeInt));
     };
+
+    const paginateResults = (array) => {
+        let pages = {
+            page1: [],
+        }
+        let currentPage = 1
+        for (let item of array) {
+            if (pages[`page${currentPage}`].length < 4) {
+                pages[`page${currentPage}`].push(item)
+            } else {
+                currentPage++
+                pages = { ...pages, [`page${currentPage}`]: [] }
+                pages[`page${currentPage}`].push(item)
+            }
+        }
+        console.log('Pages:', pages);
+        return pages
+    }
 
     const fetchAllPublic = () => {
         axios.get('/api/evidence/public')
             .then(response => {
-                // console.log("Gallery page", response.data);
-                let pages = {
-                    page1: [],
-                }
-                let currentPage = 1
-                for (let item of response.data) {
-                    if (pages[`page${currentPage}`].length < 4) {
-                        pages[`page${currentPage}`].push(item)
-                    } else {
-                        currentPage++
-                        pages = { ...pages, [`page${currentPage}`]: [] }
-                        pages[`page${currentPage}`].push(item)
-                    }
-                }
-
-                console.log('Pages:', pages);
-
-                setPublicEvidence(pages)
+                // const pages = paginateResults(response.data)
+                setPublicEvidence(response.data)
             }).catch(err => {
                 console.log(err);
             })
@@ -73,14 +75,14 @@ function GalleryPage() {
                 <h2>Here is the Gallery</h2>
                 {/* <p>This is where the media will be rendered</p> */}
                 <Grid container spacing={2} justifyContent="center">
-                    {publicEvidence[`page${page}`]?.map((item) => (
+                    {getFilteredEvidence()[`page${page}`]?.map((item) => (
                         <GalleryPageEvCard item={item} key={item.id} />
                     ))}
                 </Grid>
                 <Grid container spacing={2} justifyContent="center">
                     <Stack spacing={2} style={{ marginTop: '50px' }}>
                         <Typography>Page: {page}</Typography>
-                        <Pagination count={Math.ceil(publicEvidence.length / 4)} page={page} onChange={handleChange} />
+                        <Pagination count={Math.ceil(getFilteredEvidence().length / 4)} page={page} onChange={handleChange} />
                     </Stack>
                 </Grid>
             </div>
