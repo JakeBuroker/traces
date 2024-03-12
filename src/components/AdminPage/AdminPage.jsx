@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { DateTime } from "luxon"
+import { DateTime } from "luxon";
 import {
   CardMedia,
   Typography,
@@ -15,18 +15,21 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import './AdminPage.css'
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import "./AdminPage.css";
 
 function AdminPage() {
   const dispatch = useDispatch();
-  const evidenceList = useSelector((store) => store.evidence); // Access evidence data from the Redux store.
-  const [detailsModalOpen, setDetailsModalOpen] = useState(false); // State for controlling the visibility of the details modal.
-  const [selectedItem, setSelectedItem] = useState(null); // State for tracking the currently selected item for details or editing.
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false); // State for controlling the visibility of the delete confirmation modal.
-  const [inEditMode, setInEditMode] = useState(false); // State to toggle between view and edit modes in the modal.
-  const [editsInput, setEditsInput] = useState({}); // State for managing inputs in the edit form.
+  const evidenceList = useSelector((store) => store.evidence);
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [inEditMode, setInEditMode] = useState(false);
+  const [editsInput, setEditsInput] = useState({});
+  const [publicConfirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [allPublicConfirmModalOpen, setAllPublicConfirmModalOpen] = useState(false);
+  const [makeAllPublic, setMakeAllPublic] = useState(true);
 
   useEffect(() => {
     fetchEvidence();
@@ -43,7 +46,6 @@ function AdminPage() {
       });
   };
 
-  // Function to toggle the public/private status of an evidence item.
   const toggleIsPublic = (id) => {
     axios.put(`/api/evidence/clearance/${id}`)
       .then(() => {
@@ -53,18 +55,17 @@ function AdminPage() {
       });
   };
 
-  // Function to make all evidence items either public or private, based on the provided boolean value.
-  const makeAllPublic = (bool) => {
+  const handleMakeAllPublic = (bool) => {
     let route = bool ? 'makeAllPublic' : 'makeAllSecret';
     axios.put(`/api/evidence/${route}`)
       .then(() => {
         fetchEvidence();
+        setAllPublicConfirmModalOpen(false);
       }).catch(err => {
         console.log(err);
       });
   };
 
-  // Function to prepare and set the selected item for editing.
   const handleEdit = (item) => {
     setEditsInput({
       id: item.id,
@@ -75,7 +76,6 @@ function AdminPage() {
     setInEditMode(true);
   };
 
-  // Function to update the edited item's details on the server.
   const handleUpdate = (item) => {
     axios.put(`/api/evidence/update/${item.id}`, {
       title: item.title,
@@ -102,34 +102,39 @@ function AdminPage() {
       });
   };
 
-  // Function to open the details modal for a selected item.
   const openModal = (item) => {
     setSelectedItem(item);
     setDetailsModalOpen(true);
   };
 
-  // Function to close any open modal and reset the edit mode.
   const closeModal = () => {
     setSelectedItem(null);
     setDetailsModalOpen(false);
     setInEditMode(false);
   };
 
-  // Function to open the delete confirmation modal for a selected item.
   const openDeleteConfirmModal = (item) => {
     setSelectedItem(item);
     setDeleteModalOpen(true);
     setInEditMode(false);
   };
 
-  // Defines columns for the DataGrid component to display evidence information
+  const openPublicConfirmModal = (item) => {
+    setSelectedItem(item);
+    setConfirmModalOpen(true);
+  };
+
+  const openAllPublicModal = (bool) => {
+    setMakeAllPublic(bool);
+    setAllPublicConfirmModalOpen(true);
+  };
+
   const columns = [
     { field: "title", headerName: "Evidence Title", width: 150 },
     { field: "location", headerName: "Location", width: 150 },
     { field: "datePosted", headerName: "Date Posted", width: 200 },
     { field: "notes", headerName: "Notes", width: 200 },
     { field: "postedBy", headerName: "Post By", width: 200 },
-    // Renders action buttons for details modal and deleting evidence
     {
       field: "actions",
       headerName: "Details",
@@ -139,14 +144,9 @@ function AdminPage() {
         <div>
           <Button
             onClick={() => openModal(params.row)}
-            style={{
-              cursor: "pointer",
-              marginRight: "5px",
-            }}
+            style={{ cursor: "pointer", marginRight: "5px" }}
             startIcon={<InfoIcon />}
-          >
-
-          </Button>
+          />
         </div>
       ),
     },
@@ -158,11 +158,8 @@ function AdminPage() {
       renderCell: (params) => (
         <div>
           <Button
-            onClick={() => toggleIsPublic(params.row.id)}
-            style={{
-              cursor: "pointer",
-              marginRight: "5px",
-            }}
+            onClick={() => openPublicConfirmModal(params.row)}
+            style={{ cursor: "pointer", marginRight: "5px" }}
             startIcon={params.row.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
           >
             {params.row.isPublic ? 'Public' : 'Hidden'}
@@ -179,21 +176,15 @@ function AdminPage() {
         <div>
           <Button
             onClick={() => openDeleteConfirmModal(params.row)}
-            style={{
-              cursor: "pointer",
-              marginRight: "5px",
-            }}
+            style={{ cursor: "pointer", marginRight: "5px" }}
             startIcon={<DeleteIcon />}
             color="error"
-          >
-
-          </Button>
+          />
         </div>
       ),
     },
   ];
-  
-// Render the Admin component UI, including buttons, DataGrid, and modals for details and delete confirmation.
+
   const rows = evidenceList.map((item) => ({
     id: item.id,
     title: item.title,
@@ -206,13 +197,12 @@ function AdminPage() {
   }));
 
   return (
-    <div style={{     padding: "70px", height: 500, width: "100%",  }}>
+    <div style={{ padding: "70px", height: 500, width: "100%" }}>
       <h1>Evidence Administration</h1>
       <div>
-        <Button variant="outlined" onClick={() => makeAllPublic(true)}>Make All Public</Button>
-        <Button variant="outlined" onClick={() => makeAllPublic(false)}>Make All Private</Button>
+        <Button variant="outlined" onClick={() => openAllPublicModal(true)}>Make All Public</Button>
+        <Button variant="outlined" onClick={() => openAllPublicModal(false)}>Make All Private</Button>
       </div>
-
       <DataGrid
         rows={rows}
         columns={columns}
@@ -221,55 +211,54 @@ function AdminPage() {
         checkboxSelection={false}
         disableSelectionOnClick
       />
-
       {/* Details Modal */}
-      <Dialog
-        open={detailsModalOpen} onClose={closeModal}
-        fullWidth
-        maxWidth="md"
-      >
+      <Dialog open={detailsModalOpen} onClose={closeModal} fullWidth maxWidth="md">
         <DialogContent>
           {selectedItem && (
             <div>
-              <div>
-                <CardMedia
-                  component="img"
-                  src={selectedItem.aws_url}
-                  className="item-image"
-                  sx={{ marginBottom: '50px' }}
-                />
-                {inEditMode ? <Typography variant="h5">Title: <input value={editsInput.title} onChange={(e) => setEditsInput({ ...editsInput, title: e.target.value })} /></Typography> : <Typography variant="h5">
-                  Title: {selectedItem.title}
-                </Typography>}
-                {inEditMode ? <Typography variant="h5">Notes: <input value={editsInput.notes} onChange={(e) => setEditsInput({ ...editsInput, notes: e.target.value })} /></Typography> : <Typography variant="body1">
-                  Notes: {selectedItem.notes}
-                </Typography>}
-                <Typography variant="body1">
-                  Location: {selectedItem.location}
+              <CardMedia
+                component="img"
+                src={selectedItem.aws_url}
+                className="item-image"
+                sx={{ marginBottom: '50px' }}
+              />
+              {inEditMode ? (
+                <Typography variant="h5">
+                  Title: <input value={editsInput.title} onChange={(e) => setEditsInput({ ...editsInput, title: e.target.value })} />
                 </Typography>
-              </div>
-              <div style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "10px",
-              }}
-              >
-                {inEditMode ? <Chip
-                  icon={<CreateIcon />}
-                  label="Save"
-                  onClick={() => handleUpdate(editsInput)}
-                  style={{ cursor: "pointer" }}
-                  color="primary"
-                /> : <Chip
-                  icon={<CreateIcon />}
-                  label="Edit"
-                  onClick={() => handleEdit(selectedItem)}
-                  style={{ cursor: "pointer" }}
-                />}
+              ) : (
+                <Typography variant="h5">Title: {selectedItem.title}</Typography>
+              )}
+              {inEditMode ? (
+                <Typography variant="h5">
+                  Notes: <input value={editsInput.notes} onChange={(e) => setEditsInput({ ...editsInput, notes: e.target.value })} />
+                </Typography>
+              ) : (
+                <Typography variant="body1">Notes: {selectedItem.notes}</Typography>
+              )}
+              <Typography variant="body1">Location: {selectedItem.location}</Typography>
+              <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+                {inEditMode ? (
+                  <Chip
+                    icon={<CreateIcon />}
+                    label="Save"
+                    onClick={() => handleUpdate(editsInput)}
+                    color="primary"
+                    style={{ cursor: "pointer" }}
+                  />
+                ) : (
+                  <Chip
+                    icon={<CreateIcon />}
+                    label="Edit"
+                    onClick={() => handleEdit(selectedItem)}
+                    style={{ cursor: "pointer" }}
+                  />
+                )}
                 <Chip
                   icon={<DeleteForeverIcon />}
                   label="Delete"
                   onClick={() => openDeleteConfirmModal(selectedItem)}
+                  color="error"
                   style={{ cursor: "pointer" }}
                 />
               </div>
@@ -277,8 +266,6 @@ function AdminPage() {
           )}
         </DialogContent>
       </Dialog>
-
-
       {/* Delete Confirmation Modal */}
       <Dialog open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
         <DialogContent>
@@ -286,6 +273,22 @@ function AdminPage() {
         </DialogContent>
         <Button onClick={() => deleteEvidence(selectedItem.id)} color="error">Delete</Button>
         <Button onClick={() => setDeleteModalOpen(false)}>Cancel</Button>
+      </Dialog>
+      {/* Public Confirmation Modal */}
+      <Dialog open={publicConfirmModalOpen} onClose={() => setConfirmModalOpen(false)}>
+        <DialogContent>
+          <Typography>Are you sure you want to change the visibility of this evidence?</Typography>
+        </DialogContent>
+        <Button onClick={() => {toggleIsPublic(selectedItem.id); setConfirmModalOpen(false);}} color="primary">Confirm</Button>
+        <Button onClick={() => setConfirmModalOpen(false)}>Cancel</Button>
+      </Dialog>
+      {/* All Public/Private Confirmation Modal */}
+      <Dialog open={allPublicConfirmModalOpen} onClose={() => setAllPublicConfirmModalOpen(false)}>
+        <DialogContent>
+          <Typography>Are you sure you want to change the visibility of all evidence to {makeAllPublic ? 'public' : 'private'}?</Typography>
+        </DialogContent>
+        <Button onClick={() => handleMakeAllPublic(makeAllPublic)} color="primary">Confirm</Button>
+        <Button onClick={() => setAllPublicConfirmModalOpen(false)}>Cancel</Button>
       </Dialog>
     </div>
   );
