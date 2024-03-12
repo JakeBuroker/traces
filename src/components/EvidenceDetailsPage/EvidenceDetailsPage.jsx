@@ -121,29 +121,6 @@ export default function EvidenceDetails() {
         }, 1000);
       }
     };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("title", title);
-  //   formData.append("notes", notes);
-
-  //   // Assuming ENTER_EVIDENCE action returns a promise
-  //   await dispatch({
-  //     type: "ENTER_EVIDENCE",
-  //     payload: formData,
-  //   });
-
-  //   // Optionally, dispatch any cleanup actions
-  //   dispatch({
-  //     type: "CLEAR_MEDIA",
-  //   });
-
-  //   // Navigate after the action is complete and the state is updated
-  //   history.push('./Evidence');
-  // };
-
   return (
     <div style={{padding: "60px"}}>
       <h2>Add Details for Your Evidence</h2>
@@ -178,29 +155,6 @@ export default function EvidenceDetails() {
         </div>
         {/* <button type="submit">Upload Evidence</button> */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {/* <Box sx={{ m: 1, position: "relative" }}>
-            <Fab
-              aria-label="save"
-              color="primary"
-              sx={buttonSx}
-              type="submit"
-              onClick={(event) => handleButtonClick(event)}
-            >
-              {success ? <CheckIcon /> : <SaveIcon />}
-            </Fab>
-            {loading && (
-              <CircularProgress
-                size={68}
-                sx={{
-                  color: green[500],
-                  position: "absolute",
-                  top: -6,
-                  left: -6,
-                  zIndex: 1,
-                }}
-              />
-            )}
-          </Box> */}
           <Box sx={{ m: 1, position: "relative" }}>
             <Button
               variant="contained"

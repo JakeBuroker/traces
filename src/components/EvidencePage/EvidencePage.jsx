@@ -194,6 +194,7 @@ function EvidencePage() {
               onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
               type="file"
               id="fileInput"
+              accept=""
               multiple
             />
             <TextField
