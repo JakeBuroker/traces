@@ -121,6 +121,7 @@ export default function EvidenceDetails() {
         }, 1000);
       }
     };
+
   return (
     <div style={{padding: "60px"}}>
       <h2>Add Details for Your Evidence</h2>

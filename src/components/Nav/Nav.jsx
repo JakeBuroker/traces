@@ -16,20 +16,22 @@ function Nav() {
   return (
     <div className="nav">
       <Link to="/home">
-        <h2 className="nav-title" style={{color: 'white'}}>Traces</h2>
+        <h2 className="nav-title" style={{ color: "white" }}>
+          Traces
+        </h2>
       </Link>
-      <div >
+      <div>
         {/* If no user is logged in, show these links */}
         {!user.id && (
           // If there's no user, show login/registration links
           <>
-            <Box >
+            <Box>
               <Dropdown>
                 <MenuButton sx={{ marginRight: "10px", color: "black" }}>
                   <MenuIcon />
                   <Menu sx={{ backgroundColor: "#c40f0f", border: "black" }}>
                     <MenuItem>
-                      <Link className='navLink' to='/'>
+                      <Link className="navLink" to="/">
                         Home
                       </Link>
                     </MenuItem>
@@ -75,48 +77,40 @@ function Nav() {
                   </Link>
                 </MenuItem>
 
-                <MenuItem
+                {/* Only show this if user.role equals 2 */}
+                {user.role === 2 && (
+                  <MenuItem>
+                    <Link className="navLink" to="/admin">
+                      Admin Page
+                    </Link>
+                  </MenuItem>
+                )}
 
-                >
-                  <Link className="navLink" to="/admin">
-                    Admin Page
-                  </Link>
-                </MenuItem>
-                <MenuItem
-
-                >
+                <MenuItem>
                   <Link className="navLink" to="/about">
                     About
                   </Link>
                 </MenuItem>
 
-                <MenuItem
-
-                >
+                <MenuItem>
                   <Link className="navLink" to="/gallery">
                     Gallery
                   </Link>
                 </MenuItem>
 
-                <MenuItem
-
-                >
+                <MenuItem>
                   <Link className="navLink" to="/Evidence">
                     Evidence
                   </Link>
                 </MenuItem>
 
-                <MenuItem
-
-                >
+                <MenuItem>
                   <Link className="navLink" to="/help">
                     Help
                   </Link>
                 </MenuItem>
 
-                <MenuItem
-
-                >
+                <MenuItem>
                   <LogOutButton className="navLink" />
                 </MenuItem>
               </Menu>

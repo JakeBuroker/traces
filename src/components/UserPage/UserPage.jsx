@@ -86,7 +86,7 @@ function UserPage() {
   };
 
   return (
-    <div className="user-container">
+    <div  style={{padding:"60px"}} className="user-container">
       <h2>Welcome, {user.username}!</h2>
       {editMode ? (
         <form className="edit-form" onSubmit={(e) => { e.preventDefault(); saveChanges(); }}>
@@ -102,7 +102,7 @@ function UserPage() {
           <Button onClick={() => setEditMode(false)} variant="contained" color="secondary">Cancel</Button>
         </form>
       ) : (
-        <div className="info-display">
+        <div  style={{padding:"60px"}}  className="info-display">
           <p>Full Name: {fullName}</p>
           <p>Email: {email}</p>
           <p>Phone Number: {phoneNumber}</p>
