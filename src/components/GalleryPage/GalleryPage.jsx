@@ -3,10 +3,12 @@ import axios from 'axios';
 import { GalleryPageEvCard } from './GalleryPageEvCard';
 import MediaFilter from '../MediaFilter/MediaFilter';
 import { Grid, Pagination, Stack, Typography } from '@mui/material';
+import { rowsMetaStateInitializer } from '@mui/x-data-grid/internals';
 
 function GalleryPage() {
     const [publicEvidence, setPublicEvidence] = useState([])
     const [page, setPage] = useState(1);
+    const [pageCount, setPageCount] = useState(10)
     const [selectedMediaType, setSelectedCategories] = useState("all");
 
     useEffect(() => {
@@ -43,7 +45,7 @@ function GalleryPage() {
                 pages[`page${currentPage}`].push(item)
             }
         }
-        console.log('Pages:', pages);
+        // console.log('Pages:', pages);
         return pages
     }
 
@@ -52,6 +54,7 @@ function GalleryPage() {
             .then(response => {
                 // const pages = paginateResults(response.data)
                 setPublicEvidence(response.data)
+                setPageCount(Math.ceil(response.data.length / 4))
             }).catch(err => {
                 console.log(err);
             })
@@ -70,8 +73,8 @@ function GalleryPage() {
         return (
             <div style={{padding:"65px"}}>
                 <MediaFilter
-                selectedMediaType={selectedMediaType}
-                onMediaTypeChange={handleMediaFilterChange} />
+                    selectedMediaType={selectedMediaType}
+                    onMediaTypeChange={handleMediaFilterChange} />
                 <h2>Here is the Gallery</h2>
                 {/* <p>This is where the media will be rendered</p> */}
                 <Grid container spacing={2} justifyContent="center">
@@ -82,7 +85,7 @@ function GalleryPage() {
                 <Grid container spacing={2} justifyContent="center">
                     <Stack spacing={2} style={{ marginTop: '50px' }}>
                         <Typography>Page: {page}</Typography>
-                        <Pagination count={Math.ceil(getFilteredEvidence().length / 4)} page={page} onChange={handleChange} />
+                        <Pagination count={pageCount} page={page} onChange={handleChange} />
                     </Stack>
                 </Grid>
             </div>

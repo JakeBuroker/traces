@@ -7,6 +7,7 @@ const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 const dotenv = require('dotenv')
 dotenv.config()
+const crypto = require('crypto')
 
 const awsGet = require('../modules/get.evidence')
 
@@ -122,7 +123,7 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
     let awsReference
     if (req.file) {
       mediaType = await checkMediaType(req.file.mimetype)
-      awsReference = req.file.originalname
+      awsReference = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`
     } else {
       mediaType = 1
       awsReference = req.body.title
@@ -134,7 +135,7 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
     if (req.file) {
       const params = {
         Bucket: bucketName,
-        Key: req.file.originalname,
+        Key: awsReference,
         Body: req.file.buffer,
         ContentType: req.file.mimetype,
       }

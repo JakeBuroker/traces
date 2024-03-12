@@ -37,9 +37,7 @@ function EvidencePage() {
   const [selectedMediaType, setSelectedCategories] = useState("all");
 
   useEffect(() => {
-  {
       fetchEvidence();
-    }
   }, [evidence.length]);
 
   const fetchEvidence = () => {
