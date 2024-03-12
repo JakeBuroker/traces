@@ -68,7 +68,7 @@ function GalleryPage() {
     } else {
 
         return (
-            <div>
+            <div style={{padding:"65px"}}>
                 <MediaFilter
                 selectedMediaType={selectedMediaType}
                 onMediaTypeChange={handleMediaFilterChange} />

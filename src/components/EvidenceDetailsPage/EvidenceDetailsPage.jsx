@@ -122,28 +122,6 @@ export default function EvidenceDetails() {
       }
     };
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("title", title);
-  //   formData.append("notes", notes);
-
-  //   // Assuming ENTER_EVIDENCE action returns a promise
-  //   await dispatch({
-  //     type: "ENTER_EVIDENCE",
-  //     payload: formData,
-  //   });
-
-  //   // Optionally, dispatch any cleanup actions
-  //   dispatch({
-  //     type: "CLEAR_MEDIA",
-  //   });
-
-  //   // Navigate after the action is complete and the state is updated
-  //   history.push('./Evidence');
-  // };
-
   return (
     <div style={{padding: "60px"}}>
       <h2>Add Details for Your Evidence</h2>
