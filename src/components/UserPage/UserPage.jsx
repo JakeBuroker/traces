@@ -12,26 +12,25 @@ function UserPage() {
   const history = useHistory();
 
   // State for managing user editable details
-  const [editMode, setEditMode] = useState(false);
+  const [editMode, setEditMode] = useState(!user.alias); // Automatically enter edit mode if no alias
   const [fullName, setFullName] = useState(user.full_name || '');
   const [email, setEmail] = useState(user.email || '');
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || '');
   const [alias, setAlias] = useState(user.alias || '');
   const [userAvi, setUserAvi] = useState(null);
-
-  // State for handling the waiver acknowledgment modal
   const [waiverAcknowledged, setWaiverAcknowledged] = useState(user.waiver_acknowledged);
-  const [openModal, setOpenModal] = useState(!user.waiver_acknowledged);
+  const [openModal, setOpenModal] = useState(false);
+
 
   useEffect(() => {
-    if (!user.waiver_acknowledged) {
+    if (user.alias && !user.waiver_acknowledged && !alias) {
       setOpenModal(true);
     }
-  }, [user.waiver_acknowledged]);
-
+  }, [user.alias, user.waiver_acknowledged, alias]);
+  
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
-  };
+  }; [user.waiver_acknowledged, user.alias]
 
   const saveChanges = async () => {
     const formData = new FormData();
@@ -48,8 +47,12 @@ function UserPage() {
           'Content-Type': 'multipart/form-data',
         },
       });
+      if (!user.waiver_acknowledged){
+        setOpenModal(true)
+      }
       alert('User updated successfully.');
       setEditMode(false);
+
     } catch (error) {
       alert('Error updating user.');
       console.error('Error updating user:', error);
@@ -58,11 +61,10 @@ function UserPage() {
 
   const acknowledgeWaiver = async () => {
     try {
-      // Dynamically include the user's ID in the URL path
       const response = await axios.put(`/api/user/waiver/${user.id}`);
       if (response.status === 200) {
-        setWaiverAcknowledged(true); 
-        setOpenModal(false);
+        setWaiverAcknowledged(true);
+        setOpenModal(false); // Ensure modal is closed upon acknowledgment
       } else {
         throw new Error('Failed to update waiver acknowledgment.');
       }
@@ -70,7 +72,6 @@ function UserPage() {
       console.error('Error acknowledging waiver:', error);
     }
   };
-  
   
   // Modal style
   const style = {
