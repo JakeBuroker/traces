@@ -19,8 +19,8 @@ const EvidenceUploadOnclick = (event) => {
     setEvidenceType(uploadType)
     dispatch({type:'SET_EVIDENCE_TYPE', payload:uploadType})
     history.push('/evidenceupload')
-
 }
+
 const EvidenceDetails = (event) => {
   event.preventDefault()
   let uploadType = event.target.closest('button').id

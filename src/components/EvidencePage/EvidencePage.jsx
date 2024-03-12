@@ -138,7 +138,7 @@ function EvidencePage() {
   };
 
   return (
-    <main>
+    <main style={{padding:"60px"}} >
     <MediaFilter
       selectedMediaType={selectedMediaType}
       onMediaTypeChange={handleMediaFilterChange}
