@@ -95,33 +95,35 @@ export default function EvidenceDetails() {
           setLoading(false);
           history.push("./Evidence");
         }, 5000);
+      } else if(!loading && !file) {
+        setSuccess(false);
+        setLoading(true);
+  
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("notes", notes);
+  
+        // Assuming ENTER_EVIDENCE action returns a promise
+        await dispatch({
+          type: "ENTER_EVIDENCE",
+          payload: formData,
+        });
+  
+        // Optionally, dispatch any cleanup actions
+        dispatch({
+          type: "CLEAR_MEDIA",
+        });
+  
+        timer.current = setTimeout(() => {
+          setSuccess(true);
+          setLoading(false);
+          history.push("./Evidence");
+        }, 1000);
       }
     };
 
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   const formData = new FormData();
-  //   formData.append("file", file);
-  //   formData.append("title", title);
-  //   formData.append("notes", notes);
-
-  //   // Assuming ENTER_EVIDENCE action returns a promise
-  //   await dispatch({
-  //     type: "ENTER_EVIDENCE",
-  //     payload: formData,
-  //   });
-
-  //   // Optionally, dispatch any cleanup actions
-  //   dispatch({
-  //     type: "CLEAR_MEDIA",
-  //   });
-
-  //   // Navigate after the action is complete and the state is updated
-  //   history.push('./Evidence');
-  // };
-
   return (
-    <div style={{padding:"60px"}} >
+    <div style={{padding: "60px"}}>
       <h2>Add Details for Your Evidence</h2>
       <form>
         {previewUrl && (
@@ -154,7 +156,7 @@ export default function EvidenceDetails() {
         </div>
         {/* <button type="submit">Upload Evidence</button> */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box sx={{ m: 1, position: "relative" }}>
+          {/* <Box sx={{ m: 1, position: "relative" }}>
             <Fab
               aria-label="save"
               color="primary"
@@ -176,7 +178,7 @@ export default function EvidenceDetails() {
                 }}
               />
             )}
-          </Box>
+          </Box> */}
           <Box sx={{ m: 1, position: "relative" }}>
             <Button
               variant="contained"
