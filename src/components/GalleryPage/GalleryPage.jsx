@@ -7,6 +7,7 @@ import { Grid, Pagination, Stack, Typography } from '@mui/material';
 function GalleryPage() {
     const [publicEvidence, setPublicEvidence] = useState([])
     const [page, setPage] = useState(1);
+    const [pageCount, setPageCount] = useState(0)
     const [selectedMediaType, setSelectedCategories] = useState("all");
 
     useEffect(() => {
@@ -43,8 +44,13 @@ function GalleryPage() {
                 pages[`page${currentPage}`].push(item)
             }
         }
-        console.log('Pages:', pages);
+        // console.log('Pages:', pages);
         return pages
+    }
+
+    const calculatePageCount = (array) => {
+        console.log(Math.ceil(array.length / 4));
+        return Math.ceil(array.length / 4)
     }
 
     const fetchAllPublic = () => {
@@ -82,7 +88,7 @@ function GalleryPage() {
                 <Grid container spacing={2} justifyContent="center">
                     <Stack spacing={2} style={{ marginTop: '50px' }}>
                         <Typography>Page: {page}</Typography>
-                        <Pagination count={Math.ceil(getFilteredEvidence().length / 4)} page={page} onChange={handleChange} />
+                        <Pagination count={Math.ceil(publicEvidence.length / 4)} page={page} onChange={handleChange} />
                     </Stack>
                 </Grid>
             </div>
