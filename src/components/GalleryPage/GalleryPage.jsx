@@ -47,7 +47,7 @@ function GalleryPage() {
     // Map for the specific page.
 
     // ! RETURN
-    if (publicEvidence.page1.length === 0) {
+    if (publicEvidence.page1 && publicEvidence.page1.length === 0) {
         return (<div><h2 style={{ textAlign: 'center' }}>All Evidence To Be Declassified Soon.</h2><p>{JSON.stringify(publicEvidence)}</p></div>)
     } else {
 
