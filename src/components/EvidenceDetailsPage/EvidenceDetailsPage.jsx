@@ -156,29 +156,6 @@ export default function EvidenceDetails() {
         </div>
         {/* <button type="submit">Upload Evidence</button> */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {/* <Box sx={{ m: 1, position: "relative" }}>
-            <Fab
-              aria-label="save"
-              color="primary"
-              sx={buttonSx}
-              type="submit"
-              onClick={(event) => handleButtonClick(event)}
-            >
-              {success ? <CheckIcon /> : <SaveIcon />}
-            </Fab>
-            {loading && (
-              <CircularProgress
-                size={68}
-                sx={{
-                  color: green[500],
-                  position: "absolute",
-                  top: -6,
-                  left: -6,
-                  zIndex: 1,
-                }}
-              />
-            )}
-          </Box> */}
           <Box sx={{ m: 1, position: "relative" }}>
             <Button
               variant="contained"
