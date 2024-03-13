@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
+import { Button, Select, MenuItem, FormControl } from '@mui/material';
 
 
 function RegisterForm() {
@@ -24,7 +24,7 @@ function RegisterForm() {
         email: email,
         phone_number: phoneNumber,
         full_name: fullName,
-        role: 2 // TODO Change this to update with a selection.
+        role: role 
       },
     });
   }; // end registerUser
@@ -100,8 +100,7 @@ function RegisterForm() {
             </label>
           </div>
           <div>
-            <FormControl required sx={{width: 280, }}>
-              {/* <InputLabel id="roleInput-label">Role:</InputLabel> */}
+            <FormControl required sx={{width: "100%", }}>
               <label htmlFor="roleInpute" style={{marginBottom: '10px'}}>Roll: </label>
               <Select
                 sx={{border: 1, borderRadius: 4, height: 52}}

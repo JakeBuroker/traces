@@ -3,7 +3,7 @@ import RegisterForm from '../RegisterForm/RegisterForm';
 
 function RegisterPage() {
   return (
-    <div style={{padding: "50px"}}>
+    <div style={{padding: "60px 20px"}}>
       <RegisterForm />
     </div>
   );
