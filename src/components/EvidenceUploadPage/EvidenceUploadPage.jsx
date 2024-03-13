@@ -1,84 +1,75 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-// Custom components for audio uploading and playing functionalities.
-import AudioUploadElement from "./AudioUploadElement";
-import AudioPlayer from "../AudioPlayerElement/AudioPlayer";
+// Import your audio recording and playing components
+import AudioUploadElement from './AudioUploadElement';
 
 export default function EvidenceUpload() {
   const history = useHistory();
-  const evidenceType = useSelector((store) => store.evidenceUploadReducer);
-  const actualType = evidenceType.evidenceUploadReducer;
   const dispatch = useDispatch();
-  
+  const evidenceType = useSelector((store) => store.evidenceUploadReducer.evidenceUploadReducer);
 
-  // Function to navigate back to the previous page.
+  // Function to navigate back to the previous page
   const goBack = () => {
     history.goBack();
   };
 
-  // Handler for file input change event. Dispatches an action with selected files and navigates to '/evidence-details'.
-  const changeFiles = (event) => {
+  // Handle file input change for audio uploads
+  const changeAudio = (event) => {
     event.preventDefault();
     const files = event.target.files; // This is a FileList object, not an array.
     const selectedFilesArray = Array.from(files); // Convert FileList to an array.
     console.log("selectedFiles", selectedFilesArray, "selectedFiles type", typeof selectedFilesArray);
+    // Dispatch the action with the selected files
     dispatch({ type: 'SET_MEDIA', payload: selectedFilesArray });
-    history.push('/evidence-details'); 
   };
 
-  // Conditional rendering based on the selected evidence type.
-  if (actualType == null) {
-    // If no evidence type is selected, prompt the user to go back and select a type.
+  // Navigate to evidence details page
+  const pushAudio = () => {
+    history.push('/evidence-details');
+  };
+
+  // Render component based on the selected evidence type
+  if (evidenceType == null) {
     return (
       <div>
         <button onClick={goBack}>Go Back</button>
         <p>No type has been chosen</p>
       </div>
     );
-  } else if (actualType === "cambutton" || actualType === "notesbutton") {
-    // For image or video uploads, display a file input.
+  } else if (evidenceType === "cambutton" || evidenceType === "notesbutton") {
     return (
-      <div style={{ padding:"55px" }}>
+      <div style={{ padding: "55px" }}>
         <button onClick={goBack}>Go Back</button>
         <p>This is where you upload images or videos</p>
-        <form>
         <input
-  onChange={changeFiles}
-  type="file"
-  id="fileInput"
-  multiple
-  accept="image/png, image/jpeg" // This line restricts the file input to PNG and JPEG images only
-/>
-        </form>
+          onChange={changeAudio} // Use the same handler for simplicity
+          type="file"
+          id="fileInput"
+          multiple
+        />
       </div>
     );
-  } else if (actualType == "audiobutton") {
-    // For audio uploads, provide additional inputs for audio name and optional notes.
-    const handleSubmit = (event) => {
-      console.log("submitting audio evidence", files);
-    }
+  } else if (evidenceType === "audiobutton") {
+    // For audio uploads, provide a file input and the AudioUploadElement for recording
     return (
-        <div style={{ padding:"55px" }}>
-            <button onClick={goBack}> Go Back</button>
-            <p>This is where you upload audio</p>
-            <form>
-                {/* Input for audio name and notes not fully implemented. */}
-            <input
-            onChange={(event) => {
-              changeFiles(event);
-            }}
-            type="file"
-            id="fileInput"
-            multiple
-            
-            />
-            </form>
-            <AudioUploadElement/>
-        </div>
+      <div style={{ padding: "55px" }}>
+        <button onClick={goBack}>Go Back</button>
+        <p>This is where you upload audio</p>
+        <input
+          onChange={changeAudio}
+          type="file"
+          id="fileInput"
+          multiple
+          accept="audio/*" // Ensure only audio files can be uploaded
+        />
+        <AudioUploadElement />
+        <button onClick={pushAudio}>Use Audio</button>
+      </div>
     );
   } else {
-    // Fallback case if the evidence type is unrecognized.
+    // Fallback case if the evidence type is unrecognized
     return (
       <div>
         <button onClick={goBack}>Go Back</button>
