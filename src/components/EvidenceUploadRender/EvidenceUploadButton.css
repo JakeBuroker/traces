@@ -10,6 +10,7 @@ html, body {
     position: fixed;
     bottom: 1.5vh; 
     right: -45%; 
+    z-index: 1000;
 }
 .button {
     width: 100px;

@@ -147,6 +147,7 @@ function EvidencePage() {
         />
       </div>
       <div className="container">
+      <EvidenceUploadButton/>
         <Grid container spacing={2} justifyContent="center">
           {getFilteredEvidence().map((item) => (
             <EvidenceCard
@@ -247,6 +248,7 @@ function EvidencePage() {
             </Button>
           </DialogActions>
         </Dialog>
+        
       )}
     </main>
   );
