@@ -5,13 +5,13 @@ html, body {
     overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-/* Primary button styling */
+/* Primary button styling, adjusted for bottom-right positioning */
 .button-container {
     position: fixed;
-    bottom: 2.5vh;
-    right: -43.5vw;
+    bottom: 1.5vh; 
+    right: -45%; 
+    pointer-events: none; /* Prevents the container from intercepting clicks */
 }
-
 .button {
     width: 100px;
     height: 100px;
