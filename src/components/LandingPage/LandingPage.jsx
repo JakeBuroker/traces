@@ -27,7 +27,7 @@ function LandingPage() {
   // </script>
 
   return (
-    <div className="container" style={{ marginTop: '50px', }}>
+    <div className="container" style={{ padding: '60px', }}>
       <h2>{heading}</h2>
       <div className="grid">
         <div className='grid-col grid-col_12'>
