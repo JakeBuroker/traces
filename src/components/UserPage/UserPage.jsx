@@ -23,11 +23,22 @@ function UserPage() {
 
 
   useEffect(() => {
-    if (user.alias && !user.waiver_acknowledged && !alias) {
-      setOpenModal(true);
-    }
-  }, [user.alias, user.waiver_acknowledged, alias]);
+    const fetchUserDetails = async () => {
+      try {
+        const { data } = await axios.get('/api/user');
+        if (data.alias && !data.waiver_acknowledged) {
+          setOpenModal(true);
+        } else {
+          setOpenModal(false);
+        }
+      } catch (error) {
+        console.error('Failed to fetch user details:', error);
+      }
+    };
   
+    fetchUserDetails();
+  }, [])
+
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
   }; [user.waiver_acknowledged, user.alias]

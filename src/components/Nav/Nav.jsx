@@ -12,7 +12,7 @@ import { Box } from "@mui/material";
 
 function Nav() {
   const user = useSelector((store) => store.user);
-
+  const isLoggedInAndWaiverSigned = user.id && user.waiver_acknowledged;
   return (
     <div className="nav">
       <Link to="/home">
@@ -56,6 +56,9 @@ function Nav() {
             </Box>
           </>
         )}
+
+
+        
 
         {/* If a user is logged in, show these links */}
         {user.id && (
