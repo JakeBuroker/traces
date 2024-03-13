@@ -15,6 +15,19 @@ export default function EvidenceUpload() {
   const goBack = () => {
     history.goBack();
   };
+  const practiceFun = () => {
+    console.log("hey we're practicing adding audio");
+  }
+  const changeAudio = (event) => {
+    event.preventDefault();
+    const files = event.target.files; // This is a FileList object, not an array.
+    const selectedFilesArray = Array.from(files); // Convert FileList to an array.
+    console.log("selectedFiles", selectedFilesArray, "selectedFiles type", typeof selectedFilesArray);
+    dispatch({ type: 'SET_MEDIA', payload: selectedFilesArray });
+  };
+  const pushAudio = () => {
+    history.push('/evidence-details')
+  }
 
   // Handler for file input change event. Dispatches an action with selected files and navigates to '/evidence-details'.
   const changeFiles = (event) => {
@@ -59,23 +72,27 @@ export default function EvidenceUpload() {
       console.log("submitting audio evidence", files);
     }
     return (
-        <div style={{ padding:"55px" }}>
-            <button onClick={goBack}> Go Back</button>
-            <p>This is where you upload audio</p>
-            <form>
-                {/* Input for audio name and notes not fully implemented. */}
-            <input
-            onChange={(event) => {
-              changeFiles(event);
-            }}
-            type="file"
-            id="fileInput"
-            multiple
-            />
-            </form>
-            <AudioPlayer/>
-            <AudioUploadElement/>
-        </div>
+         <div style={{ padding:"55px" }}>
+      <button onClick={goBack}> Go Back</button>
+      <p>This is where you upload audio</p>
+      <form>
+          {/* Input for audio name and notes not fully implemented. */}
+      <input
+      onChange={(event) => {
+        changeAudio(event);
+      }}
+      type="file"
+      id="fileInput"
+      multiple
+      />
+      </form>
+      {/* <AudioPlayer/> */}
+      <AudioUploadElement
+      funPractice = {practiceFun}/>
+
+      <button
+      onClick = {pushAudio}> Use Audio</button>
+  </div>
     );
   } else {
     // Fallback case if the evidence type is unrecognized.
