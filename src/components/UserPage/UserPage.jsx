@@ -52,6 +52,7 @@ function UserPage() {
       }
       alert('User updated successfully.');
       setEditMode(false);
+      dispatch({type: "FETCH_USER"})
 
     } catch (error) {
       alert('Error updating user.');
