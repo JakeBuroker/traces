@@ -166,31 +166,7 @@ function EvidencePage() {
         onEdit={() => handleEdit(selectedItem)}
         onDelete={() => handleDelete(selectedItem)}
       />
-      {selectedItem && selectedItem.media_type === 1 && (
-        <Dialog open={detailsModalOpen} onClose={detailsModalClose}>
-          <DialogTitle>View Evidence</DialogTitle>
-          <DialogContent>
-            <Typography>Title: {selectedItem.title}</Typography>
-            <Typography>Notes: {selectedItem.notes}</Typography>
-            <Typography>Location: {selectedItem.location}</Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={detailsModalClose}>Close</Button>
-          </DialogActions>
-        </Dialog>
-      )}
-      {!isEditing && selectedItem && selectedItem.media_type !== 1 && (
-        <Dialog open={detailsModalOpen} onClose={detailsModalClose}>
-          <DialogTitle>{selectedItem.media_type === 1 ? 'View Evidence' : 'Upload Evidence'}</DialogTitle>
-          <DialogContent>
-            {selectedItem.media_type !== 1 && <EvidenceUploadButton />}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={detailsModalClose}>Close</Button>
-          </DialogActions>
-        </Dialog>
-      )}
-  
+
       <Dialog open={deleteConfirmationOpen} onClose={cancelDelete}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
