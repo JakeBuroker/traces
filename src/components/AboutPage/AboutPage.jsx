@@ -10,7 +10,7 @@ function AboutPage() {
   const headers = text.english.aboutPageHeaders
   const body = text.english.aboutPageBodies
 
-  const style = {margin: '10px auto'}
+  const style = {margin: '60px auto'}
   return (
     <div className="container">
       <div>
