@@ -74,7 +74,6 @@ export default function EvidenceUpload() {
             
             />
             </form>
-            <AudioPlayer/>
             <AudioUploadElement/>
         </div>
     );
