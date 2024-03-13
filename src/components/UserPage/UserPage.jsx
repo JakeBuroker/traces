@@ -8,8 +8,8 @@ import './UserPage.css';
 
 function UserPage() {
   const user = useSelector((store) => store.user);
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
+  const history = useHistory()
   const [editMode, setEditMode] = useState(!user.alias);
   const [fullName, setFullName] = useState(user.full_name || '');
   const [email, setEmail] = useState(user.email || '');
@@ -18,7 +18,7 @@ function UserPage() {
   const [userAvi, setUserAvi] = useState(null);
   const [waiverAcknowledged, setWaiverAcknowledged] = useState(user.waiver_acknowledged);
   const [openModal, setOpenModal] = useState(false);
-  const [showPostWaiverModal, setShowPostWaiverModal] = useState(false); // New state for post-waiver modal
+  const [showPostWaiverModal, setShowPostWaiverModal] = useState(false); 
 
   useEffect(() => {
     if (user.alias && !user.waiver_acknowledged) {
@@ -31,10 +31,9 @@ function UserPage() {
   };
 
   const saveChanges = async () => {
-    // Check if the alias is empty
     if (!alias.trim()) {
       alert('Alias is required. Please provide an alias before saving.');
-      return; // Exit the function to prevent further execution
+      return;
     }
   
     const formData = new FormData();
@@ -55,7 +54,6 @@ function UserPage() {
         alert('User updated successfully.');
         setEditMode(false);
         dispatch({type: "FETCH_USER"})
-        // Only show the post-waiver modal if the waiver has not been acknowledged
         if (!waiverAcknowledged) {
           setOpenModal(true);
         }
@@ -84,20 +82,15 @@ function UserPage() {
     }
   };
 
-  const attemptToSetEditMode = (shouldEdit) => {
-    if (shouldEdit) {
-      setEditMode(true); // Always allow entering edit mode
-    } else {
-      // Only allow exiting edit mode if an alias is provided
-      if (!alias) {
-        alert('Alias is required to exit editing. Please provide an alias.');
-        return; // Early return to prevent exiting editing without an alias
-      }
+  // Ensure this function prevents exiting edit mode without an alias
+  const attemptToExitEditMode = () => {
+    if (alias.trim()) {
       setEditMode(false);
+    } else {
+      alert('Alias is required to exit editing. Please provide an alias.');
     }
   };
 
-  // Common Modal style
   const style = {
     position: 'absolute',
     top: '50%',
@@ -110,6 +103,10 @@ function UserPage() {
     p: 4,
   };
 
+  function activateTutorial(){
+    setShowPostWaiverModal(false)
+    history.push('/evidence')
+  }
 
   return (
     <div style={{ padding: "60px 10px" }} className="user-container">
@@ -122,14 +119,10 @@ function UserPage() {
           <TextField label="Full Name" variant="outlined" fullWidth margin="dense" value={fullName} onChange={(e) => setFullName(e.target.value)} />
           <TextField label="Email" type="email" variant="outlined" fullWidth margin="dense" value={email} onChange={(e) => setEmail(e.target.value)} />
           <TextField label="Phone Number" variant="outlined" fullWidth margin="dense" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-          <TextField label="Alias" variant="outlined" fullWidth margin="dense" value={alias} onChange={(e) => setAlias(e.target.value)} />
-          {/* <div>
-            <label htmlFor="userAvi">User Avatar:</label>
-            <input type="file" id="userAvi" onChange={handleFileChange} />
-          </div> */}
+          <TextField label="Alias" variant="outlined" fullWidth margin="dense" value={alias} onChange={(e) => setAlias(e.target.value)} required />
           <UploadButton btnName={'Upload Avatar'} style={{marginTop: '10px'}} setter={setUserAvi} color={userAvi ? 'success' : 'primary'}/>
           <Button type="submit" variant="contained" color="primary" style={{margin: '40px 0 10px 0'}}>Save Changes</Button>
-          <Button onClick={() => {setEditMode(false); setUserAvi(null)}} variant="contained" color="secondary">Cancel</Button>
+          <Button onClick={attemptToExitEditMode} variant="contained" color="secondary">Cancel</Button>
         </form>
       ) : (
         <div style={{ padding: "20px", display: 'flex', flexDirection: 'column', gap: '10px', }} className="info-display">
@@ -139,7 +132,7 @@ function UserPage() {
           <p>Alias: {alias}</p>
           <p>User Avatar: {user.user_avi && <img src={user.user_avi} alt="User Avatar" style={{ width: '100px', height: '100px' }} />}</p>
           <p>Waiver Signed: {JSON.stringify(waiverAcknowledged)}</p>
-          <Button onClick={() => attemptToSetEditMode(true)} variant="contained" color="primary">Edit Profile</Button>
+          <Button onClick={() => setEditMode(true)} variant="contained" color="primary">Edit Profile</Button>
           <Button onClick={() => dispatch({type: "LOGOUT"})} color='warning' variant='outlined'>Log Out</Button>
         </div>
       )}
@@ -181,7 +174,7 @@ function UserPage() {
             <source src="your-video-url.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          <Button onClick={() => setShowPostWaiverModal(false)} variant="contained" color="primary" style={{ marginTop: '20px' }}>
+          <Button onClick={() => activateTutorial()} variant="contained" color="primary" style={{ marginTop: '20px' }}>
             Close
           </Button>
         </Box>

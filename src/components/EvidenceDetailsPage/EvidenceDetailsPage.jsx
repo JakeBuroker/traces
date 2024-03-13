@@ -22,14 +22,14 @@ export default function EvidenceDetails() {
   const blob = useSelector((store) => store.media)
 console.log('blob type', blob.type);
 
-  useEffect(() => {
-    if (file) {
-      const objectUrl = URL.createObjectURL(file); // Create an object URL for the file
-      setPreviewUrl(objectUrl);
-      // Clean up the object URL on component unmount
-      return () => URL.revokeObjectURL(objectUrl);
-    }
-  }, [file]);
+useEffect(() => {
+  if (file) {
+    // Use the file object directly from the Redux store
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
+    return () => URL.revokeObjectURL(objectUrl);
+  }
+}, [file]);
 
   const isVideo = file?.type?.startsWith("video");
     const buttonSx = {
@@ -159,16 +159,21 @@ console.log('blob type', blob.type);
     <div style={{padding: "60px"}}>
       <h2>Add Details for Your Evidence</h2>
       <form>
-        {previewUrl && (
-          <div>
-            <h3>Preview:</h3>
-            {isVideo ? (
-              <iframe src={previewUrl} alt="Preview" controls style={{ maxWidth: "100%", height: "auto" }} />
-            ) : (
-              <img src={previewUrl} alt="Preview" style={{ maxWidth: "100%", height: "auto" }} />
-            )}
-          </div>
-        )}
+   {previewUrl && (
+  <div>
+    <h3>Preview:</h3>
+    {file?.type.startsWith("audio") ? (
+      <audio controls>
+        <source src={previewUrl} type={file.type} /> {/* Use the file's type directly */}
+        Your browser does not support the audio element.
+      </audio>
+    ) : file?.type.startsWith("video") ? (
+      <video src={previewUrl} alt="Preview" controls style={{ maxWidth: "100%", height: "auto" }}></video>
+    ) : (
+      <img src={previewUrl} alt="Preview" style={{ maxWidth: "100%", height: "auto" }} />
+    )}
+  </div>
+)}
         <div>
           <label htmlFor="title">Title:</label>
           <input
