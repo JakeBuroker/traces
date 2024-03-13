@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
+import BackButton from '../BackButton/BackButton';
 // Import your audio recording and playing components
 import AudioUploadElement from './AudioUploadElement';
 
@@ -10,10 +10,7 @@ export default function EvidenceUpload() {
   const dispatch = useDispatch();
   const evidenceType = useSelector((store) => store.evidenceUploadReducer.evidenceUploadReducer);
 
-  // Function to navigate back to the previous page
-  const goBack = () => {
-    history.goBack();
-  };
+  
 
   // Handle file input change for audio uploads
   const changeAudio = (event) => {
@@ -23,6 +20,7 @@ export default function EvidenceUpload() {
     console.log("selectedFiles", selectedFilesArray, "selectedFiles type", typeof selectedFilesArray);
     // Dispatch the action with the selected files
     dispatch({ type: 'SET_MEDIA', payload: selectedFilesArray });
+    history.push('/evidence-details');
   };
 
   // Navigate to evidence details page
@@ -41,7 +39,7 @@ export default function EvidenceUpload() {
   } else if (evidenceType === "cambutton" || evidenceType === "notesbutton") {
     return (
       <div style={{ padding: "55px" }}>
-        <button onClick={goBack}>Go Back</button>
+        <BackButton/>
         <p>This is where you upload images or videos</p>
         <input
           onChange={changeAudio} // Use the same handler for simplicity
@@ -55,7 +53,7 @@ export default function EvidenceUpload() {
     // For audio uploads, provide a file input and the AudioUploadElement for recording
     return (
       <div style={{ padding: "55px" }}>
-        <button onClick={goBack}>Go Back</button>
+        <BackButton/>
         <p>This is where you upload audio</p>
         <input
           onChange={changeAudio}
@@ -65,7 +63,6 @@ export default function EvidenceUpload() {
           accept="audio/*" // Ensure only audio files can be uploaded
         />
         <AudioUploadElement />
-        <button onClick={pushAudio}>Use Audio</button>
       </div>
     );
   } else {

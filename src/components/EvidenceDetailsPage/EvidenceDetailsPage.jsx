@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import CheckIcon from "@mui/icons-material/Check";
 import SaveIcon from "@mui/icons-material/Save";
+import BackButton from "../BackButton/BackButton";
 
 export default function EvidenceDetails() {
   const [title, setTitle] = useState("");
@@ -20,7 +21,6 @@ export default function EvidenceDetails() {
   const [success, setSuccess] = useState(false);
   const timer = useRef();
   const blob = useSelector((store) => store.media)
-console.log('blob type', blob.type);
 
 useEffect(() => {
   if (file) {
@@ -74,10 +74,37 @@ useEffect(() => {
         }, 2000);
       }
       //this else statement is catching if the file.type is a video and is set to stay loading on the page for 5 seconds
-      else if (!loading && file?.type?.startsWith("video")) {
+      else if (!loading && file?.type?.startsWith("video/qui")) {
         setSuccess(false);
         setLoading(true);
         console.log('video');
+  
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("title", title);
+        formData.append("notes", notes);
+  
+        // Assuming ENTER_EVIDENCE action returns a promise
+        await dispatch({
+          type: "ENTER_EVIDENCE",
+          payload: formData,
+        });
+  
+        // Optionally, dispatch any cleanup actions
+        dispatch({
+          type: "CLEAR_MEDIA",
+        });
+  
+        timer.current = setTimeout(() => {
+          setSuccess(true);
+          setLoading(false);
+          history.push("./Evidence");
+        }, 5000);
+      }
+      else if (!loading && file?.type?.startsWith("video/webm")) {
+        setSuccess(false);
+        setLoading(true);
+        console.log('audio');
   
         const formData = new FormData();
         formData.append("file", file);
@@ -157,6 +184,7 @@ useEffect(() => {
 
   return (
     <div style={{padding: "60px"}}>
+      <BackButton/>
       <h2>Add Details for Your Evidence</h2>
       <form>
    {previewUrl && (
