@@ -2,8 +2,10 @@ import * as React from 'react';
 import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function AudioUploadElement() {
+  const history = useHistory()
   const dispatch = useDispatch()
   // navigator.mediaDevices
   // .getUserMedia(audio)
@@ -42,6 +44,7 @@ export default function AudioUploadElement() {
     document.body.appendChild(audio);
     console.log('audio source', audio.src);
     dispatch({type:'SET_MEDIA', payload: blob})
+    history.push('/evidence-details');
   };
 
   const finishRecording = (blob) => {

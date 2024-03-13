@@ -10,8 +10,6 @@ import {
   Button,
   TextField,
   Typography,
-  ToggleButtonGroup,
-  ToggleButton,
 } from "@mui/material";
 import "./EvidencePage.css";
 import EvidenceUploadButton from "../EvidenceUploadRender/EvidenceUploadButton";
@@ -38,7 +36,7 @@ function EvidencePage() {
   const [mediaTyping, setMediaTyping] = useState()
 
   useEffect(() => {
-      fetchEvidence();
+    fetchEvidence();
   }, [evidence.length]);
 
   
@@ -48,20 +46,21 @@ function EvidencePage() {
       return 'image/*'
     }else if(mediaTyping === 3){
       return 'video/*'
-    } else {
+    } else if (mediaTyping === 4){
       return 'audio/*'
     }
   }
 
 
   const fetchEvidence = () => {
-    axios.get('/api/evidence')
+    axios
+      .get("/api/evidence")
       .then((response) => {
         dispatch({ type: "SET_EVIDENCE", payload: response.data });
       })
       .catch((error) => {
         console.error(error);
-        alert('Could not fetch evidence!');
+        alert("Could not fetch evidence!");
       });
   };
 
@@ -70,11 +69,11 @@ function EvidencePage() {
   };
 
   const getFilteredEvidence = () => {
-    if (selectedMediaType === 'all') {
+    if (selectedMediaType === "all") {
       return evidence;
     }
     const mediaTypeInt = parseInt(selectedMediaType, 10);
-    return evidence.filter(item => item.media_type === mediaTypeInt);
+    return evidence.filter((item) => item.media_type === mediaTypeInt);
   };
 
   const openModal = (item) => {
@@ -121,13 +120,14 @@ function EvidencePage() {
   };
 
   const editEvidence = (id, formData) => {
-    axios.put(`/api/evidence/update/${id}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-    .then(() => fetchEvidence())
-    .catch((error) => console.error("Error updating evidence:", error));
+    axios
+      .put(`/api/evidence/update/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(() => fetchEvidence())
+      .catch((error) => console.error("Error updating evidence:", error));
   };
 
   const handleCancel = () => {
@@ -136,7 +136,8 @@ function EvidencePage() {
   };
 
   const deleteEvidence = (itemId) => {
-    axios.delete(`/api/evidence/delete/${itemId}`)
+    axios
+      .delete(`/api/evidence/delete/${itemId}`)
       .then(() => fetchEvidence())
       .catch((error) => console.error("Error deleting evidence:", error));
   };
@@ -158,13 +159,13 @@ function EvidencePage() {
   };
 
   return (
-      <main >
-        <div style={{ display: "flex", flexDirection: "column", padding:'60px'}}>
-          <MediaFilter
-            selectedMediaType={selectedMediaType}
-            onMediaTypeChange={handleMediaFilterChange}
-          />
-        </div>
+    <main>
+      <div style={{ display: "flex", flexDirection: "column", padding: "60px" }}>
+        <MediaFilter
+          selectedMediaType={selectedMediaType}
+          onMediaTypeChange={handleMediaFilterChange}
+        />
+      </div>
       <div className="container">
         <Grid container spacing={2} justifyContent="center">
           {getFilteredEvidence().map((item) => (
@@ -185,22 +186,26 @@ function EvidencePage() {
         onEdit={() => handleEdit(selectedItem)}
         onDelete={() => handleDelete(selectedItem)}
       />
-      <EvidenceUploadButton />
+
       <Dialog open={deleteConfirmationOpen} onClose={cancelDelete}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to delete this evidence?</Typography>
+          <Typography>
+            Are you sure you want to delete this evidence?
+          </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={cancelDelete}>Cancel</Button>
-          <Button onClick={confirmDelete} color="primary" autoFocus>Confirm</Button>
+          <Button onClick={confirmDelete} color="primary" autoFocus>
+            Confirm
+          </Button>
         </DialogActions>
       </Dialog>
       {isEditing && (
         <Dialog
           open={isEditing}
           onClose={(event, reason) => {
-            if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
+            if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
               setIsEditing(false);
             }
           }}
@@ -210,13 +215,17 @@ function EvidencePage() {
         >
           <DialogTitle>Edit Item</DialogTitle>
           <DialogContent>          
-            <input
-              onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
-              type="file"
-              id="fileInput"
-              accept={acceptValue}
-              multiple
-            />
+            {selectedItem.media_type !== 1 && ( 
+              <input
+                onChange={(e) =>
+                  setFormState({ ...formState, file: e.target.files[0] })
+                }
+                type="file"
+                id="fileInput"
+                accept={acceptValue}
+                multiple
+              />
+            )}
             <TextField
               autoFocus
               margin="dense"
@@ -224,7 +233,9 @@ function EvidencePage() {
               type="text"
               fullWidth
               value={formState.title}
-              onChange={(e) => setFormState({ ...formState, title: e.target.value })}
+              onChange={(e) =>
+                setFormState({ ...formState, title: e.target.value })
+              }
             />
             <TextField
               margin="dense"
@@ -232,7 +243,9 @@ function EvidencePage() {
               type="text"
               fullWidth
               value={formState.notes}
-              onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
+              onChange={(e) =>
+                setFormState({ ...formState, notes: e.target.value })
+              }
             />
             {/* <TextField
               margin="dense"
@@ -240,17 +253,24 @@ function EvidencePage() {
               type="text"
               fullWidth
               value={formState.location}
-              onChange={(e) => setFormState({ ...formState, location: e.target.value })}
+              onChange={(e) =>
+                setFormState({ ...formState, location: e.target.value })
+              }
             /> */}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCancel} color="primary">Cancel</Button>
-            <Button onClick={handleSave} color="primary">Save</Button>
+            <Button onClick={handleCancel} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={handleSave} color="primary">
+              Save
+            </Button>
           </DialogActions>
         </Dialog>
       )}
     </main>
   );
+  
 }
 
 export default EvidencePage;
