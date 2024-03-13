@@ -30,7 +30,6 @@ function EvidencePage() {
     user_id: '',
     title: '',
     notes: '',
-    location: '',
   });
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
@@ -80,7 +79,7 @@ function EvidencePage() {
       id: item.id,
       title: item.title,
       notes: item.notes,
-      location: item.location,
+      // location: item.location,
       file: null,
     });
     setIsEditing(true);
@@ -212,14 +211,14 @@ function EvidencePage() {
               value={formState.notes}
               onChange={(e) => setFormState({ ...formState, notes: e.target.value })}
             />
-            <TextField
+            {/* <TextField
               margin="dense"
               label="Location"
               type="text"
               fullWidth
               value={formState.location}
               onChange={(e) => setFormState({ ...formState, location: e.target.value })}
-            />
+            /> */}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCancel} color="primary">Cancel</Button>
