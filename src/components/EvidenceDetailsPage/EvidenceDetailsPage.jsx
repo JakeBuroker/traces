@@ -19,6 +19,8 @@ export default function EvidenceDetails() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const timer = useRef();
+  const blob = useSelector((store) => store.media)
+
 
   useEffect(() => {
     if (file) {
@@ -119,6 +121,33 @@ export default function EvidenceDetails() {
           setLoading(false);
           history.push("./Evidence");
         }, 1000);
+      }
+          else if (!loading && blob?.type?.startsWith("audio")) {
+        console.log("it's a blobbb");
+        setSuccess(false);
+        setLoading(true);
+
+        const formData = new FormData();
+        formData.append("file", blob);
+        formData.append("title", title);
+        formData.append("notes", notes);
+        console.log("form data", formData);
+
+        await dispatch({
+          type: "ENTER_EVIDENCE",
+          payload: formData,
+        });
+
+        dispatch({
+          type: "CLEAR_MEDIA",
+        });
+
+        timer.current = setTimeout(() => {
+          setSuccess(true);
+          setLoading(false);
+          history.push("./Evidence");
+        }, 3000);
+
       }
     };
 

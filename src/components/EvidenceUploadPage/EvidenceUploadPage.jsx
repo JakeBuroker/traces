@@ -59,23 +59,27 @@ export default function EvidenceUpload() {
       console.log("submitting audio evidence", files);
     }
     return (
-        <div style={{ padding:"55px" }}>
-            <button onClick={goBack}> Go Back</button>
-            <p>This is where you upload audio</p>
-            <form>
-                {/* Input for audio name and notes not fully implemented. */}
-            <input
-            onChange={(event) => {
-              changeFiles(event);
-            }}
-            type="file"
-            id="fileInput"
-            multiple
-            />
-            </form>
-            <AudioPlayer/>
-            <AudioUploadElement/>
-        </div>
+         <div style={{ padding:"55px" }}>
+      <button onClick={goBack}> Go Back</button>
+      <p>This is where you upload audio</p>
+      <form>
+          {/* Input for audio name and notes not fully implemented. */}
+      <input
+      onChange={(event) => {
+        changeAudio(event);
+      }}
+      type="file"
+      id="fileInput"
+      multiple
+      />
+      </form>
+      {/* <AudioPlayer/> */}
+      <AudioUploadElement
+      funPractice = {practiceFun}/>
+
+      <button
+      onClick = {pushAudio}> Use Audio</button>
+  </div>
     );
   } else {
     // Fallback case if the evidence type is unrecognized.
