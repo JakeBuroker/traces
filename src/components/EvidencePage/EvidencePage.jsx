@@ -25,18 +25,32 @@ function EvidencePage() {
   const [editItem, setEditItem] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [formState, setFormState] = useState({
-    user_id: "",
-    title: "",
-    notes: "",
-    location: "",
+    user_id: '',
+    title: '',
+    notes: '',
   });
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [selectedMediaType, setSelectedCategories] = useState("all");
+  const [acceptValue, setAcceptValue] = useState('');
+  const [mediaTyping, setMediaTyping] = useState()
 
   useEffect(() => {
     fetchEvidence();
   }, [evidence.length]);
+
+  
+  const acceptionsMedia = (item) => {
+    console.log("inside acceptionsmedia", mediaTyping);
+    if(mediaTyping === 2){
+      return 'image/*'
+    }else if(mediaTyping === 3){
+      return 'video/*'
+    } else if (mediaTyping === 4){
+      return 'audio/*'
+    }
+  }
+
 
   const fetchEvidence = () => {
     axios
@@ -73,17 +87,23 @@ function EvidencePage() {
   };
 
   const handleEdit = (item) => {
+    console.log("item", item);
+    acceptionsMedia(item)
+    setMediaTyping(item.media_type)
     setSelectedItem(item);
     setEditItem(item);
     setFormState({
       id: item.id,
       title: item.title,
       notes: item.notes,
-      location: item.location,
+      // location: item.location,
       file: null,
     });
     setIsEditing(true);
     setDetailsModalOpen(true);
+    setAcceptValue(acceptionsMedia())
+    console.log(acceptValue);
+    
   };
 
   const handleSave = () => {
@@ -195,7 +215,7 @@ function EvidencePage() {
           disableEscapeKeyDown
         >
           <DialogTitle>Edit Item</DialogTitle>
-          <DialogContent>
+          <DialogContent>          
             {selectedItem.media_type !== 1 && ( 
               <input
                 onChange={(e) =>
@@ -203,7 +223,7 @@ function EvidencePage() {
                 }
                 type="file"
                 id="fileInput"
-                accept=""
+                accept={acceptValue}
                 multiple
               />
             )}
@@ -228,7 +248,7 @@ function EvidencePage() {
                 setFormState({ ...formState, notes: e.target.value })
               }
             />
-            <TextField
+            {/* <TextField
               margin="dense"
               label="Location"
               type="text"
@@ -237,7 +257,7 @@ function EvidencePage() {
               onChange={(e) =>
                 setFormState({ ...formState, location: e.target.value })
               }
-            />
+            /> */}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCancel} color="primary">
