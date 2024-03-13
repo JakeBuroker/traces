@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import Fab from "@mui/material/Fab";
 import CheckIcon from "@mui/icons-material/Check";
 import SaveIcon from "@mui/icons-material/Save";
+import BackButton from "../BackButton/BackButton";
 
 export default function EvidenceDetails() {
   const [title, setTitle] = useState("");
@@ -183,6 +184,7 @@ useEffect(() => {
 
   return (
     <div style={{padding: "60px"}}>
+      <BackButton/>
       <h2>Add Details for Your Evidence</h2>
       <form>
    {previewUrl && (
