@@ -128,6 +128,7 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
       mediaType = 1
       awsReference = req.body.title
     }
+    console.log('req.file', req.file);
 
     await connection.query(queryText, [req.body.title, req.body.notes, awsReference, req.user.id, mediaType])
 
@@ -369,7 +370,11 @@ const checkMediaType = async (mimetype) => {
   const allMediaTypes = result.rows
   for (let type of allMediaTypes) {
     if (mimetype.includes(type.type)) {
-      console.log(type.id);
+      console.log('type.id', type.id);
+      if (mimetype == 'video/webm'){
+        type.id = 4
+        return type.id
+      }
       return type.id
     }
   }
