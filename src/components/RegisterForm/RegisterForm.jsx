@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Select, MenuItem } from '@mui/material';
+import { Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 
 
 function RegisterForm() {
@@ -9,7 +9,7 @@ function RegisterForm() {
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [fullName, setFullName] = useState('')
-  const [role, setRole] = useState('')
+  const [role, setRole] = useState(1)
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -100,18 +100,22 @@ function RegisterForm() {
             </label>
           </div>
           <div>
-            <Select
-              labelId="roleInput-label"
-              id="roleInput"
-              value={role}
-              label="Role"
-              onChange={(e) => setRole(e.value)}
-            >
-              <MenuItem value={1}>Audience Member</MenuItem>
-              <MenuItem value={2}>Administrator</MenuItem>
-            </Select>
+            <FormControl required sx={{width: 280, }}>
+              {/* <InputLabel id="roleInput-label">Role:</InputLabel> */}
+              <label htmlFor="roleInpute" style={{marginBottom: '10px'}}>Roll: </label>
+              <Select
+                sx={{border: 1, borderRadius: 4, height: 52}}
+                size='small'
+                labelId="roleInput-label"
+                id="roleInput"
+                value={role}
+                onChange={(e) => setRole(Number(e.target.value))}
+              >
+                <MenuItem value={1}>Audience Member</MenuItem>
+                <MenuItem value={2}>Administrator</MenuItem>
+              </Select>
+            </FormControl>
           </div>
-          {/* // Todo add a input for role. */}
         </div>
         <div>
 
