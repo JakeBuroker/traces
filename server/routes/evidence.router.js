@@ -188,7 +188,7 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
       if (result.rows[0].avatar_url) {
         avatarUrl = result.rows[0].avatar_url
       } else {
-        avatarUrl = req.file.originalname
+        avatarUrl = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`
       }
       // ? Seems to not replace the old avatar image, but adds another.
       await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [avatarUrl, req.user.id])

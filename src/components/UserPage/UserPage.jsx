@@ -27,10 +27,10 @@ function UserPage() {
       setOpenModal(true);
     }
   }, [user.alias, user.waiver_acknowledged, alias]);
-  
+
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
-  }; [user.waiver_acknowledged, user.alias]
+  };[user.waiver_acknowledged, user.alias]
 
   const saveChanges = async () => {
     const formData = new FormData();
@@ -38,7 +38,7 @@ function UserPage() {
     formData.append('phone_number', phoneNumber);
     formData.append('alias', alias);
     if (userAvi) {
-      formData.append('user_avi', userAvi);
+      formData.append('file', userAvi);
     }
 
     try {
@@ -47,7 +47,7 @@ function UserPage() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      if (!user.waiver_acknowledged){
+      if (!user.waiver_acknowledged) {
         setOpenModal(true)
       }
       alert('User updated successfully.');
@@ -72,7 +72,7 @@ function UserPage() {
       console.error('Error acknowledging waiver:', error);
     }
   };
-  
+
   // Modal style
   const style = {
     position: 'absolute',
@@ -87,7 +87,10 @@ function UserPage() {
   };
 
   return (
-    <div  style={{padding:"60px"}} className="user-container">
+    <div style={{ padding: "60px" }} className="user-container">
+      {user.avatar_url ?
+        <img src={user.avatar_AWS_URL} alt="An avatar for the user." /> :
+        <img src="./default_avi.jpeg" alt='The default avatar'></img>}
       <h2>Welcome, {user.username}!</h2>
       {editMode ? (
         <form className="edit-form" onSubmit={(e) => { e.preventDefault(); saveChanges(); }}>
@@ -103,7 +106,7 @@ function UserPage() {
           <Button onClick={() => setEditMode(false)} variant="contained" color="secondary">Cancel</Button>
         </form>
       ) : (
-        <div  style={{padding:"60px"}}  className="info-display">
+        <div style={{ padding: "60px" }} className="info-display">
           <p>Full Name: {fullName}</p>
           <p>Email: {email}</p>
           <p>Phone Number: {phoneNumber}</p>
@@ -117,7 +120,7 @@ function UserPage() {
 
       <Modal
         open={openModal}
-        onClose={() => {}}
+        onClose={() => { }}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
