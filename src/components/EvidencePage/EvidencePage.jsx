@@ -138,11 +138,13 @@ function EvidencePage() {
   };
 
   return (
-    <main style={{padding:"60px"}} >
-    <MediaFilter
-      selectedMediaType={selectedMediaType}
-      onMediaTypeChange={handleMediaFilterChange}
-    />
+      <main >
+        <div style={{ display: "flex", flexDirection: "column", padding:'60px'}}>
+          <MediaFilter
+            selectedMediaType={selectedMediaType}
+            onMediaTypeChange={handleMediaFilterChange}
+          />
+        </div>
       <div className="container">
         <Grid container spacing={2} justifyContent="center">
           {getFilteredEvidence().map((item) => (

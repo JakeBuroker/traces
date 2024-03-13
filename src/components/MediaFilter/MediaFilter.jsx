@@ -2,19 +2,19 @@ import React from 'react';
 import { Typography, ToggleButtonGroup, ToggleButton } from '@mui/material';
 
 function MediaFilter({ selectedMediaType, onMediaTypeChange }) {
-
-  
   return (
-    <div style={{ paddingLeft: "15px", textAlign: "center", width: "16%" }}>
-      <Typography variant="h6" sx={{ marginBottom: 2 }}>
-        <b>Media Type</b>
-      </Typography>
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      flexWrap: "wrap",
+      gap: "10px",
+      alignItems: "center"
+    }}>
       <ToggleButtonGroup
-        orientation="vertical"
         value={selectedMediaType}
         exclusive
         onChange={onMediaTypeChange}
-        sx={{ display: "flex", flexDirection: "column", gap: 1 }}
+        sx={{ display: "flex", flexDirection: "row", gap: 1 }}
       >
         <ToggleButton key="all" value="all"><b>All</b></ToggleButton>
         <ToggleButton key="1" value="1"><b>Notes</b></ToggleButton>

@@ -6,16 +6,25 @@ import { DateTime } from 'luxon';
 
 const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal }) => {
   const isVideo = (mediaType) => mediaType === 3;
-  const hasMedia = (mediaType) => mediaType === 2 || mediaType === 3;
+  const isAudio = (mediaType) => mediaType === 4; // Check if the media type indicates audio
+  const hasMedia = (mediaType) => mediaType === 2 || mediaType === 3 || mediaType === 4; // Include audio in the media check
 
   return (
     <Grid item xs={12} sm={8} md={6} lg={4}>
-      <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative", boxShadow: 10}}>
+      <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative", boxShadow: 10 }}>
         <Typography variant="h5" component="div" sx={{ textAlign: "center", margin: "16px 0" }}>
           {item.title}
         </Typography>
         {hasMedia(item.media_type) && (
-          isVideo(item.media_type) ? (
+          isAudio(item.media_type) ? (
+            // Render an audio element for audio files
+            <audio
+              src={item.aws_url}
+              controls
+              style={{ width: "100%" }}
+            />
+          ) : isVideo(item.media_type) ? (
+            // Render a video element for video files
             <video
               src={item.aws_url}
               controls
@@ -23,6 +32,7 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal }) => {
               onClick={() => onOpenModal(item)}
             />
           ) : (
+            // Render an img element for image files
             <img
               src={item.aws_url}
               alt={item.title}
