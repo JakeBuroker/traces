@@ -23,6 +23,7 @@ export default function EvidenceUpload() {
     console.log("selectedFiles", selectedFilesArray, "selectedFiles type", typeof selectedFilesArray);
     // Dispatch the action with the selected files
     dispatch({ type: 'SET_MEDIA', payload: selectedFilesArray });
+    history.push('/evidence-details');
   };
 
   // Navigate to evidence details page
@@ -65,7 +66,6 @@ export default function EvidenceUpload() {
           accept="audio/*" // Ensure only audio files can be uploaded
         />
         <AudioUploadElement />
-        <button onClick={pushAudio}>Use Audio</button>
       </div>
     );
   } else {
