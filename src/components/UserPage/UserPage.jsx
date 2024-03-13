@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom'; // Import useHistory for redirection
-import LogOutButton from '../LogOutButton/LogOutButton';
+import UploadButton from '../UploadButton/UploadButton';
 import { Button, Modal, Box, Typography, TextField } from '@mui/material';
 import './UserPage.css';
 
@@ -88,26 +88,27 @@ function UserPage() {
   };
 
   return (
-    <div style={{ padding: "60px" }} className="user-container">
+    <div style={{ padding: "60px 10px" }} className="user-container">
       {user.avatar_url ?
-        <img src={user.avatar_AWS_URL} alt="An avatar for the user." /> :
-        <img src="./default_avi.jpeg" alt='The default avatar'></img>}
-      <h2>Welcome, {user.username}!</h2>
+        <img src={user.avatar_AWS_URL} alt="An avatar for the user." style={{borderRadius: '5px'}}/> :
+        <img src="./default_avi.jpeg" alt='The default avatar' style={{borderRadius: '5px'}} />}
+      <Typography variant='h4' sx={{textAlign: 'center'}}>{user.full_name}</Typography>
       {editMode ? (
         <form className="edit-form" onSubmit={(e) => { e.preventDefault(); saveChanges(); }}>
           <TextField label="Full Name" variant="outlined" fullWidth margin="dense" value={fullName} onChange={(e) => setFullName(e.target.value)} />
           <TextField label="Email" type="email" variant="outlined" fullWidth margin="dense" value={email} onChange={(e) => setEmail(e.target.value)} />
           <TextField label="Phone Number" variant="outlined" fullWidth margin="dense" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
           <TextField label="Alias" variant="outlined" fullWidth margin="dense" value={alias} onChange={(e) => setAlias(e.target.value)} />
-          <div>
+          {/* <div>
             <label htmlFor="userAvi">User Avatar:</label>
             <input type="file" id="userAvi" onChange={handleFileChange} />
-          </div>
-          <Button type="submit" variant="contained" color="primary">Save Changes</Button>
-          <Button onClick={() => setEditMode(false)} variant="contained" color="secondary">Cancel</Button>
+          </div> */}
+          <UploadButton btnName={'Upload Avatar'} style={{marginTop: '10px'}} setter={setUserAvi} color={userAvi ? 'success' : 'primary'}/>
+          <Button type="submit" variant="contained" color="primary" style={{margin: '40px 0 10px 0'}}>Save Changes</Button>
+          <Button onClick={() => {setEditMode(false); setUserAvi(null)}} variant="contained" color="secondary">Cancel</Button>
         </form>
       ) : (
-        <div style={{ padding: "60px" }} className="info-display">
+        <div style={{ padding: "20px", display: 'flex', flexDirection: 'column', gap: '10px', }} className="info-display">
           <p>Full Name: {fullName}</p>
           <p>Email: {email}</p>
           <p>Phone Number: {phoneNumber}</p>
@@ -115,9 +116,9 @@ function UserPage() {
           <p>User Avatar: {user.user_avi && <img src={user.user_avi} alt="User Avatar" style={{ width: '100px', height: '100px' }} />}</p>
           <p>Waiver Signed: {JSON.stringify(waiverAcknowledged)}</p>
           <Button onClick={() => setEditMode(true)} variant="contained" color="primary">Edit Profile</Button>
+          <Button onClick={() => dispatch({type: "LOGOUT"})} color='warning' variant='outlined'>Log Out</Button>
         </div>
       )}
-      <LogOutButton />
 
       <Modal
         open={openModal}
