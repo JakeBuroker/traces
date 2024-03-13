@@ -20,7 +20,7 @@ export default function EvidenceDetails() {
   const [success, setSuccess] = useState(false);
   const timer = useRef();
   const blob = useSelector((store) => store.media)
-
+console.log('blob type', blob.type);
 
   useEffect(() => {
     if (file) {
@@ -43,11 +43,13 @@ export default function EvidenceDetails() {
 
     /** This function does a lot of things but most notably it sets the loading at the bottom of the page to start and stop once all parts of the function have been gone through and then sends the user over to the evidence page */
     const handleButtonClick = async (event) => {
+      console.log('submitting evidence');
       event.preventDefault();
       //Checks if loading has started yet and if the file.type is an image
       if (!loading && file?.type?.startsWith("image")) {
         setSuccess(false);
         setLoading(true);
+        console.log('image');
   
         const formData = new FormData();
         formData.append("file", file);
@@ -75,6 +77,7 @@ export default function EvidenceDetails() {
       else if (!loading && file?.type?.startsWith("video")) {
         setSuccess(false);
         setLoading(true);
+        console.log('video');
   
         const formData = new FormData();
         formData.append("file", file);
@@ -97,32 +100,8 @@ export default function EvidenceDetails() {
           setLoading(false);
           history.push("./Evidence");
         }, 5000);
-      } else if(!loading && !file) {
-        setSuccess(false);
-        setLoading(true);
-  
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("notes", notes);
-  
-        // Assuming ENTER_EVIDENCE action returns a promise
-        await dispatch({
-          type: "ENTER_EVIDENCE",
-          payload: formData,
-        });
-  
-        // Optionally, dispatch any cleanup actions
-        dispatch({
-          type: "CLEAR_MEDIA",
-        });
-  
-        timer.current = setTimeout(() => {
-          setSuccess(true);
-          setLoading(false);
-          history.push("./Evidence");
-        }, 1000);
       }
-          else if (!loading && blob?.type?.startsWith("audio")) {
+      else if (!loading && blob?.type?.startsWith("audio")) {
         console.log("it's a blobbb");
         setSuccess(false);
         setLoading(true);
@@ -146,8 +125,33 @@ export default function EvidenceDetails() {
           setSuccess(true);
           setLoading(false);
           history.push("./Evidence");
-        }, 3000);
+        }, 5000);
 
+      }
+       else if(!loading && !file && !blob?.type) {
+        setSuccess(false);
+        setLoading(true);
+  
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("notes", notes);
+  
+        // Assuming ENTER_EVIDENCE action returns a promise
+        await dispatch({
+          type: "ENTER_EVIDENCE",
+          payload: formData,
+        });
+  
+        // Optionally, dispatch any cleanup actions
+        dispatch({
+          type: "CLEAR_MEDIA",
+        });
+  
+        timer.current = setTimeout(() => {
+          setSuccess(true);
+          setLoading(false);
+          history.push("./Evidence");
+        }, 1000);
       }
     };
 

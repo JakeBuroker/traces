@@ -10,7 +10,6 @@ html, body {
     position: fixed;
     bottom: 1.5vh; 
     right: -45%; 
-    pointer-events: none; /* Prevents the container from intercepting clicks */
 }
 .button {
     width: 100px;

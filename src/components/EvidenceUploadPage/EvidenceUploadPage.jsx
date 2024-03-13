@@ -15,6 +15,19 @@ export default function EvidenceUpload() {
   const goBack = () => {
     history.goBack();
   };
+  const practiceFun = () => {
+    console.log("hey we're practicing adding audio");
+  }
+  const changeAudio = (event) => {
+    event.preventDefault();
+    const files = event.target.files; // This is a FileList object, not an array.
+    const selectedFilesArray = Array.from(files); // Convert FileList to an array.
+    console.log("selectedFiles", selectedFilesArray, "selectedFiles type", typeof selectedFilesArray);
+    dispatch({ type: 'SET_MEDIA', payload: selectedFilesArray });
+  };
+  const pushAudio = () => {
+    history.push('/evidence-details')
+  }
 
   // Handler for file input change event. Dispatches an action with selected files and navigates to '/evidence-details'.
   const changeFiles = (event) => {
