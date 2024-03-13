@@ -8,7 +8,7 @@ import './UserPage.css';
 
 function UserPage() {
   const user = useSelector((store) => store.user);
-  const history = useHistory();
+  const dispatch = useDispatch()
 
   const [editMode, setEditMode] = useState(!user.alias);
   const [fullName, setFullName] = useState(user.full_name || '');
