@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Select, MenuItem, FormControl } from '@mui/material';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { Button, Select, MenuItem, FormControl, Snackbar, Alert } from '@mui/material';
 
 
 function RegisterForm() {
@@ -10,8 +11,10 @@ function RegisterForm() {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [fullName, setFullName] = useState('')
   const [role, setRole] = useState(1)
+  const [snackBarOpen, setSnackBarOpen] = useState(false)
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
+  const history = useHistory()
 
   const registerUser = (event) => {
     event.preventDefault();
@@ -24,10 +27,28 @@ function RegisterForm() {
         email: email,
         phone_number: phoneNumber,
         full_name: fullName,
-        role: role 
+        role: role
       },
     });
+    setSnackBarOpen(true)
+    resetState()
   }; // end registerUser
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setSnackBarOpen(false);
+  };
+
+  const resetState = () => {
+    setUsername('')
+    setPassword('')
+    setEmail('')
+    setPhoneNumber('')
+    setFullName('')
+    setRole(1)
+  }
 
   return (
     <div className="login-container">
@@ -100,10 +121,10 @@ function RegisterForm() {
             </label>
           </div>
           <div>
-            <FormControl required sx={{width: "100%", }}>
-              <label htmlFor="roleInpute" style={{marginBottom: '10px'}}>Roll: </label>
+            <FormControl required sx={{ width: "100%", }}>
+              <label htmlFor="roleInpute" style={{ marginBottom: '10px' }}>Roll: </label>
               <Select
-                sx={{border: 1, borderRadius: 4, height: 52}}
+                sx={{ border: 1, borderRadius: 4, height: 52 }}
                 size='small'
                 labelId="roleInput-label"
                 id="roleInput"
@@ -121,9 +142,26 @@ function RegisterForm() {
         </div>
         <div>
           <Button className='btn' type='submit' name='submit' value='Register'>Register</Button>
+          <Button className='btn' type='reset' onClick={() => history.push('/admin')}>Back to Admin Page</Button>
           {/* <input className="btn" type="submit" name="submit" value="Register" /> */}
         </div>
       </form>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        open={snackBarOpen}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      // message="New User Created"
+      >
+        <Alert
+          onClose={handleClose}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          New User Created!
+        </Alert>
+      </Snackbar>
     </div>
 
   );

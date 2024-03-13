@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
 import { DateTime } from "luxon";
 import {
@@ -21,6 +22,7 @@ import "./AdminPage.css";
 
 function AdminPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const evidenceList = useSelector((store) => store.evidence);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -83,7 +85,7 @@ function AdminPage() {
     }).then(() => {
       setInEditMode(false);
       fetchEvidence();
-      setSelectedItem({...selectedItem, title: item.title, notes: item.notes});
+      setSelectedItem({ ...selectedItem, title: item.title, notes: item.notes });
     }).catch(err => {
       console.log(err);
     });
@@ -199,9 +201,12 @@ function AdminPage() {
   return (
     <div style={{ padding: "70px", height: 500, width: "100%" }}>
       <h1>Evidence Administration</h1>
-      <div>
-        <Button variant="outlined" onClick={() => openAllPublicModal(true)}>Make All Public</Button>
-        <Button variant="outlined" onClick={() => openAllPublicModal(false)}>Make All Private</Button>
+      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+        <div>
+          <Button variant="outlined" onClick={() => openAllPublicModal(true)}>Make All Public</Button>
+          <Button variant="outlined" onClick={() => openAllPublicModal(false)}>Make All Private</Button>
+        </div>
+        <Button variant="outlined" onClick={() => history.push('/registration')}>Register New User</Button>
       </div>
       <DataGrid
         rows={rows}
@@ -279,7 +284,7 @@ function AdminPage() {
         <DialogContent>
           <Typography>Are you sure you want to change the visibility of this evidence?</Typography>
         </DialogContent>
-        <Button onClick={() => {toggleIsPublic(selectedItem.id); setConfirmModalOpen(false);}} color="primary">Confirm</Button>
+        <Button onClick={() => { toggleIsPublic(selectedItem.id); setConfirmModalOpen(false); }} color="primary">Confirm</Button>
         <Button onClick={() => setConfirmModalOpen(false)}>Cancel</Button>
       </Dialog>
       {/* All Public/Private Confirmation Modal */}
