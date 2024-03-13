@@ -41,7 +41,7 @@ export default function AudioUploadElement() {
     audio.controls = true;
     document.body.appendChild(audio);
     console.log('audio source', audio.src);
-    dispatch({type:'SET_AUDIO', payload: blob})
+    dispatch({type:'SET_MEDIA', payload: blob})
   };
 
   const finishRecording = (blob) => {
