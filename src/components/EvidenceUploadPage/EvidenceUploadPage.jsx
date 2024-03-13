@@ -48,6 +48,7 @@ export default function EvidenceUpload() {
           type="file"
           id="fileInput"
           multiple
+          accept='video/*, image/*'
         />
       </div>
     );

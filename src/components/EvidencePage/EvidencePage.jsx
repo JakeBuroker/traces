@@ -34,10 +34,25 @@ function EvidencePage() {
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
   const [selectedMediaType, setSelectedCategories] = useState("all");
+  const [acceptValue, setAcceptValue] = useState('');
+  const [mediaTyping, setMediaTyping] = useState()
 
   useEffect(() => {
       fetchEvidence();
   }, [evidence.length]);
+
+  
+  const acceptionsMedia = (item) => {
+    console.log("inside acceptionsmedia", mediaTyping);
+    if(mediaTyping === 2){
+      return 'image/*'
+    }else if(mediaTyping === 3){
+      return 'video/*'
+    } else {
+      return 'audio/*'
+    }
+  }
+
 
   const fetchEvidence = () => {
     axios.get('/api/evidence')
@@ -73,6 +88,9 @@ function EvidencePage() {
   };
 
   const handleEdit = (item) => {
+    console.log("item", item);
+    acceptionsMedia(item)
+    setMediaTyping(item.media_type)
     setSelectedItem(item);
     setEditItem(item);
     setFormState({
@@ -84,6 +102,9 @@ function EvidencePage() {
     });
     setIsEditing(true);
     setDetailsModalOpen(true);
+    setAcceptValue(acceptionsMedia())
+    console.log(acceptValue);
+    
   };
 
   const handleSave = () => {
@@ -188,12 +209,12 @@ function EvidencePage() {
           disableEscapeKeyDown
         >
           <DialogTitle>Edit Item</DialogTitle>
-          <DialogContent>
+          <DialogContent>          
             <input
               onChange={(e) => setFormState({ ...formState, file: e.target.files[0] })}
               type="file"
               id="fileInput"
-              accept=""
+              accept={acceptValue}
               multiple
             />
             <TextField
