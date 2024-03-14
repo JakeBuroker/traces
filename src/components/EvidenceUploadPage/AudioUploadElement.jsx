@@ -3,19 +3,11 @@ import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import "./EvidenceUploadPage.css"
 
-export default function AudioUploadElement() {
+export default function AudioUploadElement(props) {
   const history = useHistory()
   const dispatch = useDispatch()
-  // navigator.mediaDevices
-  // .getUserMedia(audio)
-  // .then((stream) => {
-  //   /* use the stream */
-  // })
-  // .catch((err) => {
-  //   /* handle the error */
-  // });
-  //   getUserMedia()
   const {
     startRecording,
     stopRecording,
@@ -47,16 +39,14 @@ export default function AudioUploadElement() {
     history.push('/evidence-details');
   };
 
-  const finishRecording = (blob) => {
 
-    console.log('blob', blob);
-  }
+
 
   return(
     <div>
 
       <AudioRecorder 
-      classes={"audioRecorder"}
+      style={{backgroundColor:"blue"}}
       onClick={console.log('clicking audio record')}
          onRecordingComplete={(blob) => addAudioElement(blob)}
          recorderControls={recorderControls}

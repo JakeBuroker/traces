@@ -87,7 +87,7 @@ My custom choose file label
       <div 
       style={{ padding: "55px" }}
       className = "basicBackground">
-        <BackButton/>
+        {/* <BackButton/> */}
         <input
          id = "fileInput"
           className = 'fileInput'
@@ -100,7 +100,8 @@ My custom choose file label
         className = 'fileButton'
         onClick= {clickFile} 
         />
-        <AudioUploadElement />
+        <AudioUploadElement 
+        className="audioRecorder"/>
       </div>
     );
   } else {

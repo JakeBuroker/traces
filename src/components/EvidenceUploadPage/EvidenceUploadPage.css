@@ -53,7 +53,8 @@ body{
 
 .audioRecorder{
     position: fixed; /* Position the button relative to the viewport */
-    bottom: 20px; /* Distance from the bottom of the viewport */
+    bottom: 100px; /* Distance from the bottom of the viewport */
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Adjust horizontally to center */
+    background-color: aqua;
 }
