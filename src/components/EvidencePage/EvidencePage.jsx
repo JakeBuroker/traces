@@ -42,13 +42,13 @@ function EvidencePage() {
 
   return (
     <main>
-      <div style={{ display: "flex", flexDirection: "column", padding: "60px 10px" }}>
+      <div style={{ display: "flex", flexDirection: "column", padding: "60px" }}>
         <MediaFilter
           selectedMediaType={selectedMediaType}
           onMediaTypeChange={handleMediaFilterChange}
         />
       </div>
-      <div className="container">
+      <div>
         <EvidenceUploadButton />
         <Grid container spacing={2} justifyContent="center">
           {getFilteredEvidence().map((item) => (

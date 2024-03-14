@@ -87,8 +87,8 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
   }
 
   return (
-    <Grid item xs={3} sm={3} md={6} lg={4}>
-      <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative", boxShadow: 10, width: '175px' }}>
+    <Grid item xs={2} sm={2} md={6} lg={4}>
+      <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative", boxShadow: 10, width: '170px', height: '230px' }}>
         {hasMedia(item.media_type) && (
           isAudio(item.media_type) ? (
             // Render an audio element for audio files
@@ -116,10 +116,10 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
             />
           )
         )}
-        <Typography variant="h5" component="div" sx={{ textAlign: "center", margin: "16px 0" }}>
+        <Typography variant="h5" component="div" sx={{ textAlign: "center", margin: "16px 0", fontFamily: 'Caveat', fontSize: '30px'}}>
           {item.title}
         </Typography>
-        <CardContent sx={{ flexGrow: 1 }}>
+        {/* <CardContent sx={{ flexGrow: 1 }}>
           <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 2 }}>
             {item.notes}
           </Typography>
@@ -133,7 +133,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
         </Typography>
         <Typography variant="body2" sx={{ position: "absolute", bottom: 10, right: 10 }}>
           {item.location}
-        </Typography>
+        </Typography> */}
       </Card>
 
       <EvidenceDetailsModal
