@@ -96,6 +96,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
           isAudio(item.media_type) ? (
             // Render an audio element for audio files
             <audio
+            onClick={() => onOpenModal(item)}
               src={item.aws_url}
               controls
               style={{ width: "100%" }}

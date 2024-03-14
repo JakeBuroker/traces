@@ -136,7 +136,7 @@ function AdminPage() {
     { field: "location", headerName: "Location", width: 150 },
     { field: "datePosted", headerName: "Date Posted", width: 200 },
     { field: "notes", headerName: "Notes", width: 200 },
-    { field: "postedBy", headerName: "Post By", width: 200 },
+    { field: "postedBy", headerName: "Posted By", width: 200 },
     {
       field: "actions",
       headerName: "Details",
@@ -196,17 +196,45 @@ function AdminPage() {
     aws_url: item.aws_url,
     postedBy: item.full_name,
     isPublic: item.is_public,
+    media_type: item.media_type, // Assuming this property exists
   }));
-
   return (
-    <div style={{ padding: "70px", height: 500, width: "100%" }}>
+    <div style={{ padding: "65px", height: 500, width: "100%" }}>
       <h1>Evidence Administration</h1>
-      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-        <div>
-          <Button variant="outlined" onClick={() => openAllPublicModal(true)}>Make All Public</Button>
-          <Button variant="outlined" onClick={() => openAllPublicModal(false)}>Make All Private</Button>
+      <div style={{padding: '30px', display: 'flex', justifyContent: 'space-between'}}>
+        <div style={{display: 'flex', gap: '20px'}}> {/* Added gap for spacing */}
+          <Button 
+            variant="contained" // Changed to "contained" for a solid background
+            onClick={() => openAllPublicModal(true)}
+            style={{
+              backgroundColor: "red", // Set the background color to red
+              color: "white", // Set the text color to white
+              marginRight: "10px", // Optional: Adds space to the right of the button
+            }}
+          >
+            Make All Public
+          </Button>
+          <Button 
+            variant="contained" 
+            onClick={() => openAllPublicModal(false)}
+            style={{
+              backgroundColor: "red", 
+              color: "white",
+            }}
+          >
+            Make All Private
+          </Button>
         </div>
-        <Button variant="outlined" onClick={() => history.push('/registration')}>Register New User</Button>
+        <Button 
+          variant="contained" 
+          onClick={() => history.push('/registration')}
+          style={{
+            backgroundColor: "red", 
+            color: "white",
+          }}
+        >
+          Register New User
+        </Button>
       </div>
       <DataGrid
         rows={rows}
@@ -215,18 +243,36 @@ function AdminPage() {
         rowsPerPageOptions={[5]}
         checkboxSelection={false}
         disableSelectionOnClick
+        style={{ height: 550, width: '100%', backgroundColor: 'white' }} // Increased height and adjusted style
+      
+
       />
       {/* Details Modal */}
       <Dialog open={detailsModalOpen} onClose={closeModal} fullWidth maxWidth="md">
         <DialogContent>
           {selectedItem && (
             <div>
-              <CardMedia
-                component="img"
-                src={selectedItem.aws_url}
-                className="item-image"
-                sx={{ marginBottom: '50px' }}
-              />
+              {/* Conditional rendering for audio, video, or image */}
+              {selectedItem.media_type === 4 ? (
+                <audio
+                  src={selectedItem.aws_url}
+                  controls
+                  style={{ width: '100%' }}
+                />
+              ) : selectedItem.media_type === 3 ? (
+                <video
+                  src={selectedItem.aws_url}
+                  controls
+                  style={{ width: '100%' }}
+                />
+              ) : (
+                <CardMedia
+                  component="img"
+                  src={selectedItem.aws_url}
+                  className="item-image"
+                  sx={{ marginBottom: '50px' }}
+                />
+              )}
               {inEditMode ? (
                 <Typography variant="h5">
                   Title: <input value={editsInput.title} onChange={(e) => setEditsInput({ ...editsInput, title: e.target.value })} />
@@ -275,25 +321,25 @@ function AdminPage() {
       <Dialog open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
         <DialogContent>
           <Typography>Are you sure you want to delete this evidence?</Typography>
+          <Button onClick={() => deleteEvidence(selectedItem.id)} color="error">Delete</Button>
+          <Button onClick={() => setDeleteModalOpen(false)}>Cancel</Button>
         </DialogContent>
-        <Button onClick={() => deleteEvidence(selectedItem.id)} color="error">Delete</Button>
-        <Button onClick={() => setDeleteModalOpen(false)}>Cancel</Button>
       </Dialog>
       {/* Public Confirmation Modal */}
       <Dialog open={publicConfirmModalOpen} onClose={() => setConfirmModalOpen(false)}>
         <DialogContent>
           <Typography>Are you sure you want to change the visibility of this evidence?</Typography>
+          <Button onClick={() => { toggleIsPublic(selectedItem.id); setConfirmModalOpen(false); }} color="primary">Confirm</Button>
+          <Button onClick={() => setConfirmModalOpen(false)}>Cancel</Button>
         </DialogContent>
-        <Button onClick={() => { toggleIsPublic(selectedItem.id); setConfirmModalOpen(false); }} color="primary">Confirm</Button>
-        <Button onClick={() => setConfirmModalOpen(false)}>Cancel</Button>
       </Dialog>
       {/* All Public/Private Confirmation Modal */}
       <Dialog open={allPublicConfirmModalOpen} onClose={() => setAllPublicConfirmModalOpen(false)}>
         <DialogContent>
           <Typography>Are you sure you want to change the visibility of all evidence to {makeAllPublic ? 'public' : 'private'}?</Typography>
+          <Button onClick={() => handleMakeAllPublic(makeAllPublic)} color="primary">Confirm</Button>
+          <Button onClick={() => setAllPublicConfirmModalOpen(false)}>Cancel</Button>
         </DialogContent>
-        <Button onClick={() => handleMakeAllPublic(makeAllPublic)} color="primary">Confirm</Button>
-        <Button onClick={() => setAllPublicConfirmModalOpen(false)}>Cancel</Button>
       </Dialog>
     </div>
   );

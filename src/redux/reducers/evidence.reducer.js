@@ -11,6 +11,9 @@ const evidenceReducer = (state = [], action) => {
     case 'ENTER_EVIDENCE_FAILURE':
       console.error(action.error);
       return state;
+      case 'RESET_EVIDENCE':
+        console.error(action.error);
+        return state = [];
     default:
       return state;
   }
