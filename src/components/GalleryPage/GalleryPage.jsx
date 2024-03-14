@@ -3,7 +3,6 @@ import axios from 'axios';
 import { GalleryPageEvCard } from './GalleryPageEvCard';
 import MediaFilter from '../MediaFilter/MediaFilter';
 import { Grid, Pagination, Stack, Typography } from '@mui/material';
-import { rowsMetaStateInitializer } from '@mui/x-data-grid/internals';
 
 function GalleryPage() {
     const [publicEvidence, setPublicEvidence] = useState([])
@@ -66,16 +65,16 @@ function GalleryPage() {
     // Map for the specific page.
 
     // ! RETURN
-    if (publicEvidence.page1 && publicEvidence.page1.length === 0) {
-        return (<div><h2 style={{ textAlign: 'center' }}>All Evidence To Be Declassified Soon.</h2><p>{JSON.stringify(publicEvidence)}</p></div>)
+    if (publicEvidence.length === 0) {
+        return (<div><h2 style={{ textAlign: 'center', paddingTop: '120px' }}>All Evidence To Be Declassified Soon.</h2></div>)
     } else {
-
         return (
-            <div style={{padding:"65px"}}>
+            <div style={{ padding: "65px" }}>
+                {/* //Todo: style header */}
+                <h2>Evidence Gallery: Declassified</h2>
                 <MediaFilter
                     selectedMediaType={selectedMediaType}
                     onMediaTypeChange={handleMediaFilterChange} />
-                <h2>Here is the Gallery</h2>
                 {/* <p>This is where the media will be rendered</p> */}
                 <Grid container spacing={2} justifyContent="center">
                     {getFilteredEvidence()[`page${page}`]?.map((item) => (
@@ -84,7 +83,7 @@ function GalleryPage() {
                 </Grid>
                 <Grid container spacing={2} justifyContent="center">
                     <Stack spacing={2} style={{ marginTop: '50px' }}>
-                        <Typography>Page: {page}</Typography>
+                        {/* <Typography>Page: {page}</Typography> */}
                         <Pagination count={pageCount} page={page} onChange={handleChange} />
                     </Stack>
                 </Grid>

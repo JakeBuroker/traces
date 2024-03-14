@@ -89,7 +89,7 @@ export const GalleryPageEvCard = ({ item }) => {
                     >
                         Submitted by: {item.username}
                     </Typography>
-                    <Avatar alt={item.username} /> 
+                    <Avatar alt={item.username} src={item.avatar_AWS_URL} sizes="small" sx={{position: 'absolute', bottom: 55, left: 11}}/> 
                     <Typography
                         variant="body2"
                         sx={{ position: "absolute", bottom: 10, left: 10 }}
