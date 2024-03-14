@@ -41,6 +41,7 @@ export default function EvidenceUpload() {
       <div style={{ padding: "55px" }}>
         <BackButton/>
         <p>This is where you upload images or videos</p>
+{/* //? This input allows the user to upload a photo or video from their file directory or photo album */}
         <input
           onChange={changeAudio} // Use the same handler for simplicity
           type="file"
@@ -48,6 +49,8 @@ export default function EvidenceUpload() {
           multiple
           accept='video/*, image/*'
         />
+{/* //? This input immediately opens the users camera and gives them the option to either take a photo ore record a video */}
+        <input type="file" accept="image/*" capture="camera"></input>
       </div>
     );
   } else if (evidenceType === "audiobutton") {
