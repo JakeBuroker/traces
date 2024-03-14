@@ -55,7 +55,9 @@ export default function AudioUploadElement() {
   return(
     <div>
 
-      <AudioRecorder onClick={console.log('clicking audio record')}
+      <AudioRecorder 
+      classes={"audioRecorder"}
+      onClick={console.log('clicking audio record')}
          onRecordingComplete={(blob) => addAudioElement(blob)}
          recorderControls={recorderControls}
         audioTrackConstraints={{

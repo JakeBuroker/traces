@@ -1,0 +1,13 @@
+.BackButton{
+    height: 40px;
+    width: 120px;
+    color: aliceblue;
+    font-size: large;
+    background-color: black;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    position: fixed; /* Position the button relative to the viewport */
+    top: 60px; /* Distance from the bottom of the viewport */
+    left: 17%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontally to center */
+}
