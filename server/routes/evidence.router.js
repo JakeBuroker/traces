@@ -304,7 +304,7 @@ router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (r
       if (req.file) {
         console.log('in req.file');
         const mediaType = await checkMediaType(req.file.mimetype)
-        await connection.query(`UPDATE "evidence" SET "media_type" = $1;`, [mediaType])
+        await connection.query(`UPDATE "evidence" SET "media_type" = $1 WHERE "id" = $2;`, [mediaType, req.params.id])
         let awsKey = result.rows[0].aws_key
         const params = {
           Bucket: bucketName,
