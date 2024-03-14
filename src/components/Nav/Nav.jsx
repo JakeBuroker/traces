@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "@mui/joy/Dropdown";
 import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
@@ -13,10 +13,16 @@ import { useHistory } from 'react-router-dom'; // Import useHistory
 function Nav() {
   const user = useSelector((store) => store.user);
   const history = useHistory(); 
+  const dispatch = useDispatch()
 
   const navigateTo = (path) => {
     history.push(path);
   };
+
+  function Logout() {
+    history.push('/')
+    dispatch({type: "LOGOUT"})
+  }
 
   return (
     <div className="nav">
@@ -72,8 +78,8 @@ function Nav() {
               <MenuItem onClick={() => navigateTo('/help')} sx={{ color: "black",'&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important" } }}>
                 Help
               </MenuItem>
-              <MenuItem sx={{ color: "black", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important" } }}>
-                <LogOutButton/>
+              <MenuItem  onClick={() => Logout()} sx={{ color: "black", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important" } }}>
+      Logout
               </MenuItem>
             </Menu>
           </Dropdown>
