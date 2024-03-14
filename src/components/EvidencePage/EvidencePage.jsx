@@ -48,7 +48,7 @@ function EvidencePage() {
           onMediaTypeChange={handleMediaFilterChange}
         />
       </div>
-      <div className="container">
+      <div>
         <EvidenceUploadButton />
         <Grid container spacing={2} justifyContent="center">
           {getFilteredEvidence().map((item) => (

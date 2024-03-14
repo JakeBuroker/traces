@@ -87,16 +87,13 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
   }
 
   return (
-    <Grid item xs={12} sm={8} md={6} lg={4}>
-      <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative", boxShadow: 10 }}>
-        <Typography variant="h5" component="div" sx={{ textAlign: "center", margin: "16px 0" }}>
-          {item.title}
-        </Typography>
+    <Grid item xs={2} sm={2} md={6} lg={4}>
+      <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative", boxShadow: 10, width: '170px', height: '230px' }}>
         {hasMedia(item.media_type) && (
           isAudio(item.media_type) ? (
             // Render an audio element for audio files
             <video
-            onClick={() => onOpenModal(item)}
+              onClick={() => onOpenModal(item)}
               src={item.aws_url}
               controls
               style={{ width: "100%" }}
@@ -114,12 +111,15 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
             <img
               src={item.aws_url}
               alt={item.title}
-              style={{ height: 160, width: "100%", objectFit: "cover" }}
+              style={{ height: 160, width: 160, objectFit: "cover", marginTop: '5px' }}
               onClick={() => setIsOpen(true)}
             />
           )
         )}
-        <CardContent sx={{ flexGrow: 1 }}>
+        <Typography variant="h5" component="div" sx={{ textAlign: "center", margin: "16px 0", fontFamily: 'Caveat', fontSize: '30px'}}>
+          {item.title}
+        </Typography>
+        {/* <CardContent sx={{ flexGrow: 1 }}>
           <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 2 }}>
             {item.notes}
           </Typography>
@@ -133,7 +133,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
         </Typography>
         <Typography variant="body2" sx={{ position: "absolute", bottom: 10, right: 10 }}>
           {item.location}
-        </Typography>
+        </Typography> */}
       </Card>
 
       <EvidenceDetailsModal
@@ -180,7 +180,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
               }
               type="file"
               id="fileInput"
-            accept={acceptedMedia(item.media_type)}
+              accept={acceptedMedia(item.media_type)}
             />
           )}
           <TextField

@@ -130,7 +130,6 @@ function UserPage() {
           <p>Email: {email}</p>
           <p>Phone Number: {phoneNumber}</p>
           <p>Alias: {alias}</p>
-          <p>User Avatar: {user.user_avi && <img src={user.user_avi} alt="User Avatar" style={{ width: '100px', height: '100px' }} />}</p>
           <p>Waiver Signed: {JSON.stringify(waiverAcknowledged)}</p>
           <Button onClick={() => setEditMode(true)} variant="contained" color="primary">Edit Profile</Button>
           <Button onClick={() => dispatch({type: "LOGOUT"})} color='warning' variant='outlined'>Log Out</Button>

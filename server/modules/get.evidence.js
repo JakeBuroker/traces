@@ -20,22 +20,40 @@ const s3 = new aws.S3Client({
 })
 
 const awsGetURLs = async (result) => {
-    for (let e of result.rows) {
-        console.log(e.media_type);
-        if (e.media_type !== 1) { // If the media_type isn't text, then...
-            const command = new aws.GetObjectCommand({
-                Bucket: bucketName,
-                Key: e.aws_key,
-            })
-            const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
-            console.log('url:', url);
-            e.aws_url = url
-        }
-        // TODO : Add an else case to get a generic text image for when media type is text
+  for (let e of result.rows) {
+    console.log(e.media_type);
+    if (e.media_type !== 1) { // If the media_type isn't text, then...
+      const command = new aws.GetObjectCommand({
+        Bucket: bucketName,
+        Key: e.aws_key,
+      })
+      const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
+      console.log('url:', url);
+      e.aws_url = url
     }
-    console.log(result.rows);
-    return result.rows
+    // TODO : Add an else case to get a generic text image for when media type is text
+  }
+  console.log(result.rows);
+  return result.rows
 }
 
-module.exports = {awsGetURLs}
+const awsGetAvatarULRs = async (result) => {
+  console.log('RESULT:', result);
+  for (let j of result) {
+    // console.log(e.media_type);
+    if (j.avatar_url) {
+      const command = new aws.GetObjectCommand({
+        Bucket: bucketName,
+        Key: j.avatar_url, // this is the key for the avatar saved in the DB
+      })
+      const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
+      console.log('url:', url);
+      j.avatar_AWS_URL = url
+    }
+  }
+  // console.log(result);
+  return result
+}
+
+module.exports = { awsGetURLs, awsGetAvatarULRs }
 
