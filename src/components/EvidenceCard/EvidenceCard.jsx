@@ -8,6 +8,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  TextField,
   Typography,
   Chip,
   Grid
@@ -17,17 +18,30 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { DateTime } from 'luxon';
 import EvidenceDetailsModal from '../EvidenceDetailsModal/EvidenceDetailsModal';
 
-const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal, fetchEvidence }) => {
+const EvidenceCard = ({ item, fetchEvidence }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [formState, setFormState] = useState({
+    user_id: item.id,
+    title: item.title,
+    notes: item.notes,
+  });
   const isVideo = (mediaType) => mediaType === 3;
   const isAudio = (mediaType) => mediaType === 4; // Check if the media type indicates audio
   const hasMedia = (mediaType) => mediaType === 2 || mediaType === 3 || mediaType === 4; // Include audio in the media check
 
-  const onClose = () => {
-    setIsOpen(false)
-  }
 
+  const editEvidence = (id, formData) => {
+    axios
+      .put(`/api/evidence/update/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(() => fetchEvidence())
+      .catch((error) => console.error("Error updating evidence:", error));
+  };
 
   const deleteEvidence = (itemId) => {
     axios
@@ -39,9 +53,37 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal, fetchEvidence }) =>
       .catch((error) => console.error("Error deleting evidence:", error));
   };
 
+  const onClose = () => {
+    setIsOpen(false)
+  }
+
+  const handleSave = (id) => {
+    const formData = new FormData();
+    formData.append("title", formState.title);
+    formData.append("notes", formState.notes);
+    if (formState.file) {
+      formData.append("file", formState.file);
+    }
+    setIsEditing(false);
+    // function for PUT request
+    editEvidence(id, formData)
+    onClose()
+  };
+
   const handleDelete = (id) => {
     deleteEvidence(id)
     setDeleteModalOpen(false)
+  }
+
+  const acceptedMedia = (typeNo) => {
+    // console.log("inside acceptionsmedia");
+    if (typeNo === 2) {
+      return 'image/*'
+    } else if (typeNo === 3) {
+      return 'video/*'
+    } else if (typeNo === 4) {
+      return 'audio/*'
+    }
   }
 
   return (
@@ -81,7 +123,7 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal, fetchEvidence }) =>
             {item.notes}
           </Typography>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Chip icon={<CreateIcon />} label="Edit" onClick={() => onEdit(item)} />
+            <Chip icon={<CreateIcon />} label="Edit" onClick={() => setIsEditing(true)} />
             <Chip icon={<DeleteForeverIcon />} label="Delete" onClick={() => setDeleteModalOpen(true)} />
           </div>
         </CardContent>
@@ -97,8 +139,9 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal, fetchEvidence }) =>
         selectedItem={item}
         isOpen={isOpen}
         onClose={onClose}
-        fetchEvidence={fetchEvidence}
+        editEvidence={editEvidence}
         deleteEvidence={deleteEvidence}
+        acceptedMedia={acceptedMedia}
       />
 
       <Dialog open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
@@ -112,6 +155,61 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal, fetchEvidence }) =>
           <Button onClick={() => setDeleteModalOpen(false)} autoFocus>Cancel</Button>
           <Button onClick={() => handleDelete(item.id)} color="warning">
             Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog
+        open={isEditing}
+        onClose={(event, reason) => {
+          if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
+            setIsEditing(false);
+          }
+        }}
+        fullWidth
+        maxWidth="md"
+        disableEscapeKeyDown
+      >
+        <DialogTitle>Edit Item</DialogTitle>
+        <DialogContent>
+          {item.media_type !== 1 && (
+            <input
+              onChange={(e) =>
+                setFormState({ ...formState, file: e.target.files[0] })
+              }
+              type="file"
+              id="fileInput"
+            accept={acceptedMedia(item.media_type)}
+            />
+          )}
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Title"
+            type="text"
+            fullWidth
+            value={formState.title}
+            onChange={(e) =>
+              setFormState({ ...formState, title: e.target.value })
+            }
+          />
+          <TextField
+            margin="dense"
+            label="Notes"
+            type="text"
+            fullWidth
+            value={formState.notes}
+            onChange={(e) =>
+              setFormState({ ...formState, notes: e.target.value })
+            }
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setIsEditing(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => handleSave(item.id)} color="primary">
+            Save
           </Button>
         </DialogActions>
       </Dialog>
