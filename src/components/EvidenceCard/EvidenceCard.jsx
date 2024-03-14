@@ -95,7 +95,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
         {hasMedia(item.media_type) && (
           isAudio(item.media_type) ? (
             // Render an audio element for audio files
-            <audio
+            <video
             onClick={() => onOpenModal(item)}
               src={item.aws_url}
               controls
