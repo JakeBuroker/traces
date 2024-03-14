@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { DateTime } from "luxon";
 import {
+    Avatar,
     Grid,
     Card,
     Typography,
@@ -88,6 +89,7 @@ export const GalleryPageEvCard = ({ item }) => {
                     >
                         Submitted by: {item.username}
                     </Typography>
+                    <Avatar alt={item.username} /> 
                     <Typography
                         variant="body2"
                         sx={{ position: "absolute", bottom: 10, left: 10 }}

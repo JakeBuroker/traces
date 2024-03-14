@@ -41,13 +41,16 @@ router.get("/public", (req, res) => {
     "evidence".aws_key,
     "evidence".date_posted,
     "evidence".media_type,
-    "user".username
+    "user".username,
+    "user".avatar_url
     FROM "evidence"
     JOIN "user" ON "evidence".user_id = "user".id
     WHERE "evidence".is_public = true;
     `)
     .then(async (result) => {
-      const awsGetResult = await awsGet.awsGetURLs(result)
+      let awsGetResult = await awsGet.awsGetURLs(result)
+      console.log(awsGetResult);
+      awsGetResult = await awsGet.awsGetAvatarULRs(awsGetResult)
       res.send(awsGetResult)
     })
     .catch((error) => {
