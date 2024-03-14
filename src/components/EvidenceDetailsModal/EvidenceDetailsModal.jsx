@@ -58,8 +58,8 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
             <div>
               <img
                 src={selectedItem.aws_url}
-                alt="item"
-                style={{ width: "100%", height: "auto", objectFit: "cover" }}
+                alt={selectedItem.title}
+                style={{ width: "100%", height: "auto", objectFit: "cover", border: "solid" }}
               />
               <Typography variant="h5" style={{ textAlign: "center" }}>
                 {selectedItem.title}
@@ -81,12 +81,14 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
                   icon={<CreateIcon />}
                   label="Edit"
                   onClick={() => setIsEditing(true)}
+                  color="default"
                   style={{ cursor: "pointer" }}
                 />
                 <Chip
                   icon={<DeleteForeverIcon />}
                   label="Delete"
                   onClick={() => setDeleteModalOpen(true)}
+                  color="error"
                   style={{ cursor: "pointer" }}
                 />
               </div>
@@ -119,6 +121,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
         fullWidth
         maxWidth="md"
         disableEscapeKeyDown
+        sx={{border:"solid"}}
       >
         <DialogTitle>Edit Item</DialogTitle>
         <DialogContent>
@@ -155,7 +158,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setIsEditing(false)} color="primary">
+          <Button onClick={() => setIsEditing(false)} color="error">
             Cancel
           </Button>
           <Button onClick={() => handleSave(selectedItem.id)} color="primary">
