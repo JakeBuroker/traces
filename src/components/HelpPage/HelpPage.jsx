@@ -11,8 +11,8 @@ function HelpPage() {
         {/* Placeholder content */}
         <p>Video Coming Soon!</p>
       </div>
-      <Button sx={{    backgroundColor: "red",
-    color: "black",
+      <Button sx={{    backgroundColor: "#c40f0f",
+    color: "white",
     padding: "10px"}}>Tutorial</Button>
       <h2 style={{padding:"30px"}}>FAQ</h2>
       <ul>
