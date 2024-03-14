@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { DateTime } from "luxon";
 import {
     Grid,
@@ -8,11 +8,14 @@ import {
     CardContent,
     Chip
 } from '@mui/material';
-import  GalleryEnlargeModal  from './GalleryEnlargeModal'
+import GalleryEnlargeModal from './GalleryEnlargeModal';
 
 export const GalleryPageEvCard = ({ item }) => {
-    const [isOpen, setIsOpen] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
 
+    // Determine if the item is a video or audio
+    const isVideo = item.media_type === 3;
+    const isAudio = item.media_type === 4;
 
     return (
         <>
@@ -33,18 +36,43 @@ export const GalleryPageEvCard = ({ item }) => {
                     >
                         {item.title}
                     </Typography>
-                    <CardMedia
-                        component="img"
-                        src={item.aws_url}
-                        className="item-image"
-                        onClick={() => setIsOpen(true)}
-                        sx={{
-                            height: 160,
-                            width: "80%",
-                            objectFit: "cover",
-                            alignSelf: "center",
-                        }}
-                    />
+                    {/* Conditional rendering based on media_type */}
+                    {isAudio ? (
+                        <audio
+                            src={item.aws_url}
+                            controls
+                            style={{
+                                width: "80%",
+                                alignSelf: "center",
+                            }}
+                            onClick={() => setIsOpen(true)}
+                        />
+                    ) : isVideo ? (
+                        <video
+                            src={item.aws_url}
+                            controls
+                            style={{
+                                height: 160,
+                                width: "80%",
+                                objectFit: "cover",
+                                alignSelf: "center",
+                            }}
+                            onClick={() => setIsOpen(true)}
+                        />
+                    ) : (
+                        <CardMedia
+                            component="img"
+                            src={item.aws_url}
+                            className="item-image"
+                            onClick={() => setIsOpen(true)}
+                            sx={{
+                                height: 160,
+                                width: "80%",
+                                objectFit: "cover",
+                                alignSelf: "center",
+                            }}
+                        />
+                    )}
                     <CardContent sx={{ flexGrow: 1, width: "100%" }}>
                         <Typography
                             variant="body2"
@@ -79,5 +107,5 @@ export const GalleryPageEvCard = ({ item }) => {
 
             <GalleryEnlargeModal isOpen={isOpen} setIsOpen={setIsOpen} selectedItem={item} />
         </>
-    )
-}
+    );
+};
