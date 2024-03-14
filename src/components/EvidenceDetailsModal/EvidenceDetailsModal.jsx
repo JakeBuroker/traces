@@ -4,23 +4,19 @@ import {Button, Dialog, DialogContent, DialogTitle, DialogActions, Typography, C
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
-const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, onEdit, fetchEvidence }) => {
+const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, onEdit, fetchEvidence, deleteEvidence }) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
-  
-  const deleteEvidence = (itemId) => {
-    axios
-      .delete(`/api/evidence/delete/${itemId}`)
-      .then(() => {
-        fetchEvidence();
-        setDeleteModalOpen(false)
-        onClose()
-      })
-      .catch((error) => console.error("Error deleting evidence:", error));
-  };
+
 
   const cancelDelete = () => {
     setDeleteModalOpen(false)
   };
+
+  const handleDelete = (id) => {
+    deleteEvidence(id)
+    setDeleteModalOpen(false)
+    onClose()
+  }
 
   return (
     <>
@@ -80,7 +76,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, onEdit, fetchEvid
         </DialogContent>
         <DialogActions>
           <Button onClick={cancelDelete} autoFocus>Cancel</Button>
-          <Button onClick={() => deleteEvidence(selectedItem.id)} color="warning">
+          <Button onClick={() => handleDelete(selectedItem.id)} color="warning">
             Confirm
           </Button>
         </DialogActions>

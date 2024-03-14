@@ -1,5 +1,17 @@
+import axios from 'axios';
 import React, { useState } from 'react';
-import { Card, CardContent, Typography, Chip, Grid } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardContent,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+  Chip,
+  Grid
+} from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { DateTime } from 'luxon';
@@ -7,12 +19,29 @@ import EvidenceDetailsModal from '../EvidenceDetailsModal/EvidenceDetailsModal';
 
 const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal, fetchEvidence }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const isVideo = (mediaType) => mediaType === 3;
   const isAudio = (mediaType) => mediaType === 4; // Check if the media type indicates audio
   const hasMedia = (mediaType) => mediaType === 2 || mediaType === 3 || mediaType === 4; // Include audio in the media check
 
   const onClose = () => {
     setIsOpen(false)
+  }
+
+
+  const deleteEvidence = (itemId) => {
+    axios
+      .delete(`/api/evidence/delete/${itemId}`)
+      .then(() => {
+        fetchEvidence();
+        onClose()
+      })
+      .catch((error) => console.error("Error deleting evidence:", error));
+  };
+
+  const handleDelete = (id) => {
+    deleteEvidence(id)
+    setDeleteModalOpen(false)
   }
 
   return (
@@ -53,7 +82,7 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal, fetchEvidence }) =>
           </Typography>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Chip icon={<CreateIcon />} label="Edit" onClick={() => onEdit(item)} />
-            <Chip icon={<DeleteForeverIcon />} label="Delete" onClick={() => onDelete(item)} />
+            <Chip icon={<DeleteForeverIcon />} label="Delete" onClick={() => setDeleteModalOpen(true)} />
           </div>
         </CardContent>
         <Typography variant="body2" sx={{ position: "absolute", bottom: 10, left: 10 }}>
@@ -63,12 +92,29 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal, fetchEvidence }) =>
           {item.location}
         </Typography>
       </Card>
+
       <EvidenceDetailsModal
         selectedItem={item}
         isOpen={isOpen}
         onClose={onClose}
         fetchEvidence={fetchEvidence}
-         />
+        deleteEvidence={deleteEvidence}
+      />
+
+      <Dialog open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Are you sure you want to delete this evidence?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteModalOpen(false)} autoFocus>Cancel</Button>
+          <Button onClick={() => handleDelete(item.id)} color="warning">
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 };
