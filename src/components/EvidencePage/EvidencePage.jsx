@@ -39,14 +39,14 @@ function EvidencePage() {
     fetchEvidence();
   }, [evidence.length]);
 
-  
-  const acceptionsMedia = (item) => {
-    console.log("inside acceptionsmedia", mediaTyping);
-    if(mediaTyping === 2){
+
+  const acceptedMedia = () => {
+    console.log("inside acceptionsmedia");
+    if (mediaTyping === 2) {
       return 'image/*'
-    }else if(mediaTyping === 3){
+    } else if (mediaTyping === 3) {
       return 'video/*'
-    } else if (mediaTyping === 4){
+    } else if (mediaTyping === 4) {
       return 'audio/*'
     }
   }
@@ -88,22 +88,21 @@ function EvidencePage() {
 
   const handleEdit = (item) => {
     console.log("item", item);
-    acceptionsMedia(item)
     setMediaTyping(item.media_type)
+    setAcceptValue(acceptedMedia(item.media_type))
+    // acceptedMedia(item) // does nothing
     setSelectedItem(item);
-    setEditItem(item);
+    // setEditItem(item); // never read
     setFormState({
       id: item.id,
       title: item.title,
       notes: item.notes,
       // location: item.location,
-      file: null,
+      // file: null,
     });
     setIsEditing(true);
     setDetailsModalOpen(true);
-    setAcceptValue(acceptionsMedia())
-    console.log(acceptValue);
-    
+    // console.log(acceptValue);
   };
 
   const handleSave = () => {
@@ -135,12 +134,12 @@ function EvidencePage() {
     detailsModalClose();
   };
 
-  const deleteEvidence = (itemId) => {
-    axios
-      .delete(`/api/evidence/delete/${itemId}`)
-      .then(() => fetchEvidence())
-      .catch((error) => console.error("Error deleting evidence:", error));
-  };
+  // const deleteEvidence = (itemId) => {
+  //   axios
+  //     .delete(`/api/evidence/delete/${itemId}`)
+  //     .then(() => fetchEvidence())
+  //     .catch((error) => console.error("Error deleting evidence:", error));
+  // };
 
   const handleDelete = (item) => {
     setItemToDelete(item);
@@ -167,26 +166,29 @@ function EvidencePage() {
         />
       </div>
       <div className="container">
-      <EvidenceUploadButton/>
+        {JSON.stringify(selectedItem)}
+        <EvidenceUploadButton />
         <Grid container spacing={2} justifyContent="center">
           {getFilteredEvidence().map((item) => (
-            <EvidenceCard
-              key={item.id}
-              item={item}
-              onEdit={() => handleEdit(item)}
-              onDelete={() => handleDelete(item)}
-              onOpenModal={() => openModal(item)}
-            />
+            <Grid item key={item.id}>
+              <EvidenceCard 
+                item={item}
+                onEdit={handleEdit}
+                onDelete={() => handleDelete(item)}
+                onOpenModal={() => openModal(item)}
+                fetchEvidence={fetchEvidence}
+              />
+              {/* <EvidenceDetailsModal
+                selectedItem={item}
+                isOpen={detailsModalOpen}
+                onClose={detailsModalClose}
+                onEdit={() => handleEdit(item)}
+                onDelete={() => handleDelete(item)}
+              /> */}
+            </Grid>
           ))}
         </Grid>
       </div>
-      <EvidenceDetailsModal
-        selectedItem={selectedItem}
-        isOpen={detailsModalOpen}
-        onClose={detailsModalClose}
-        onEdit={() => handleEdit(selectedItem)}
-        onDelete={() => handleDelete(selectedItem)}
-      />
 
       <Dialog open={deleteConfirmationOpen} onClose={cancelDelete}>
         <DialogTitle>Confirm Delete</DialogTitle>
@@ -215,8 +217,8 @@ function EvidencePage() {
           disableEscapeKeyDown
         >
           <DialogTitle>Edit Item</DialogTitle>
-          <DialogContent>          
-            {selectedItem.media_type !== 1 && ( 
+          <DialogContent>
+            {selectedItem.media_type !== 1 && (
               <input
                 onChange={(e) =>
                   setFormState({ ...formState, file: e.target.files[0] })
@@ -224,7 +226,6 @@ function EvidencePage() {
                 type="file"
                 id="fileInput"
                 accept={acceptValue}
-                multiple
               />
             )}
             <TextField
@@ -248,16 +249,6 @@ function EvidencePage() {
                 setFormState({ ...formState, notes: e.target.value })
               }
             />
-            {/* <TextField
-              margin="dense"
-              label="Location"
-              type="text"
-              fullWidth
-              value={formState.location}
-              onChange={(e) =>
-                setFormState({ ...formState, location: e.target.value })
-              }
-            /> */}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCancel} color="primary">
@@ -268,11 +259,11 @@ function EvidencePage() {
             </Button>
           </DialogActions>
         </Dialog>
-        
+
       )}
     </main>
   );
-  
+
 }
 
 export default EvidencePage;

@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, Typography, Chip, Grid } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { DateTime } from 'luxon';
+import EvidenceDetailsModal from '../EvidenceDetailsModal/EvidenceDetailsModal';
 
-const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal }) => {
+const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal, fetchEvidence }) => {
+  const [isOpen, setIsOpen] = useState(false)
   const isVideo = (mediaType) => mediaType === 3;
   const isAudio = (mediaType) => mediaType === 4; // Check if the media type indicates audio
   const hasMedia = (mediaType) => mediaType === 2 || mediaType === 3 || mediaType === 4; // Include audio in the media check
+
+  const onClose = () => {
+    setIsOpen(false)
+  }
 
   return (
     <Grid item xs={12} sm={8} md={6} lg={4}>
@@ -29,7 +35,7 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal }) => {
               src={item.aws_url}
               controls
               style={{ height: 160, width: "100%", objectFit: "cover" }}
-              onClick={() => onOpenModal(item)}
+              onClick={() => setIsOpen(true)}
             />
           ) : (
             // Render an img element for image files
@@ -37,7 +43,7 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal }) => {
               src={item.aws_url}
               alt={item.title}
               style={{ height: 160, width: "100%", objectFit: "cover" }}
-              onClick={() => onOpenModal(item)}
+              onClick={() => setIsOpen(true)}
             />
           )
         )}
@@ -57,6 +63,12 @@ const EvidenceCard = ({ item, onEdit, onDelete, onOpenModal }) => {
           {item.location}
         </Typography>
       </Card>
+      <EvidenceDetailsModal
+        selectedItem={item}
+        isOpen={isOpen}
+        onClose={onClose}
+        fetchEvidence={fetchEvidence}
+         />
     </Grid>
   );
 };
