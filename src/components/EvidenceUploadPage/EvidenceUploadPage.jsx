@@ -87,16 +87,21 @@ My custom choose file label
       <div 
       style={{ padding: "55px" }}
       className = "basicBackground">
-        <BackButton/>
-        <p>This is where you upload audio</p>
+        {/* <BackButton/> */}
         <input
+         id = "fileInput"
+          className = 'fileInput'
           onChange={changeMedia}
           type="file"
-          id="fileInput"
           multiple
           accept="audio/*" // Ensure only audio files can be uploaded
         />
-        <AudioUploadElement />
+          <button
+        className = 'fileButton'
+        onClick= {clickFile} 
+        />
+        <AudioUploadElement 
+        className="audioRecorder"/>
       </div>
     );
   } else {
