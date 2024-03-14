@@ -198,16 +198,43 @@ function AdminPage() {
     isPublic: item.is_public,
     media_type: item.media_type, // Assuming this property exists
   }));
-
   return (
-    <div style={{ padding: "70px", height: 500, width: "100%" }}>
+    <div style={{ padding: "65px", height: 500, width: "100%" }}>
       <h1>Evidence Administration</h1>
-      <div style={{ display: 'flex', justifyContent: 'space-between'}}>
-        <div>
-          <Button variant="outlined" onClick={() => openAllPublicModal(true)}>Make All Public</Button>
-          <Button variant="outlined" onClick={() => openAllPublicModal(false)}>Make All Private</Button>
+      <div style={{padding: '30px', display: 'flex', justifyContent: 'space-between'}}>
+        <div style={{display: 'flex', gap: '20px'}}> {/* Added gap for spacing */}
+          <Button 
+            variant="contained" // Changed to "contained" for a solid background
+            onClick={() => openAllPublicModal(true)}
+            style={{
+              backgroundColor: "red", // Set the background color to red
+              color: "white", // Set the text color to white
+              marginRight: "10px", // Optional: Adds space to the right of the button
+            }}
+          >
+            Make All Public
+          </Button>
+          <Button 
+            variant="contained" 
+            onClick={() => openAllPublicModal(false)}
+            style={{
+              backgroundColor: "red", 
+              color: "white",
+            }}
+          >
+            Make All Private
+          </Button>
         </div>
-        <Button variant="outlined" onClick={() => history.push('/registration')}>Register New User</Button>
+        <Button 
+          variant="contained" 
+          onClick={() => history.push('/registration')}
+          style={{
+            backgroundColor: "red", 
+            color: "white",
+          }}
+        >
+          Register New User
+        </Button>
       </div>
       <DataGrid
         rows={rows}
@@ -216,6 +243,9 @@ function AdminPage() {
         rowsPerPageOptions={[5]}
         checkboxSelection={false}
         disableSelectionOnClick
+        style={{ height: 550, width: '100%', backgroundColor: 'white' }} // Increased height and adjusted style
+      
+
       />
       {/* Details Modal */}
       <Dialog open={detailsModalOpen} onClose={closeModal} fullWidth maxWidth="md">
