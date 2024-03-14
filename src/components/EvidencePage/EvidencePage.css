@@ -6,16 +6,16 @@
   box-sizing: border-box;
 }
 
-.container {
+/* .container {
   margin: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
 
-}
+} */
 
-.item-card {
+/* .item-card {
   display: flex;
   flex-direction: column;
   align-items: center; 
@@ -35,5 +35,5 @@
     display: flex;
     flex-direction: column;
   }
-}
+} */
 
