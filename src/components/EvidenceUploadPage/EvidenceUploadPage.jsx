@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import BackButton from '../BackButton/BackButton';
 // Import your audio recording and playing components
 import AudioUploadElement from './AudioUploadElement';
+import './EvidenceUploadPage.css'
 
 export default function EvidenceUpload() {
   const history = useHistory();
@@ -23,15 +24,16 @@ export default function EvidenceUpload() {
     history.push('/evidence-details');
   };
 
-  // Navigate to evidence details page
-  const pushAudio = () => {
-    history.push('/evidence-details');
-  };
+const clickCamera = () => {
+  console.log('clicking camera');
+  document.getElementById('cameraInput').click()
+}
+const clickFile = () => {
+  console.log('clicking camera');
+  document.getElementById('fileInput').click()
+}
 
-  // Navigate to previous page
-  const goBack = () => {
-    history.push('/back')
-  }
+
 
   // Render component based on the selected evidence type
   if (evidenceType == null) {
@@ -43,30 +45,48 @@ export default function EvidenceUpload() {
     );
   } else if (evidenceType === "cambutton" || evidenceType === "notesbutton") {
     return (
-      <div style={{ padding: "55px" }}>
+      <div 
+      style={{ padding: "55px" }}
+      className='basicBackground'
+      >
         <BackButton/>
-        <p>This is where you upload images or videos</p>
 {/* //? This input allows the user to upload a photo or video from their file directory or photo album */}
         <input
+          id = "fileInput"
+          className = 'fileInput'
           onChange={changeMedia} // Use the same handler for simplicity
           type="file"
-          id="fileInput"
           multiple
           accept='video/*, image/*'
         />
+        <button
+        className = 'fileButton'
+        onClick= {clickFile} 
+        />
+        {/* <label htmlFor="cameraButton" style={{ background:"grey", padding:"5px 10px" }}>
+My custom choose file label
+</label> */}
 {/* //? This input immediately opens the users camera and gives them the option to either take a photo ore record a video */}
-        <input 
+        <input
+        id='cameraInput'
+        className= 'cameraInput'
         onChange={changeMedia}
         type="file" 
         accept="image/*, video/*" 
         capture="camera"
-        ></input>
+        />
+        <button
+        className = 'cameraButton'
+        onClick= {clickCamera}
+        />
       </div>
     );
   } else if (evidenceType === "audiobutton") {
     // For audio uploads, provide a file input and the AudioUploadElement for recording
     return (
-      <div style={{ padding: "55px" }}>
+      <div 
+      style={{ padding: "55px" }}
+      className = "basicBackground">
         <BackButton/>
         <p>This is where you upload audio</p>
         <input
