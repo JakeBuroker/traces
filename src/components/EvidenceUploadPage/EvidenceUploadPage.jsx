@@ -13,7 +13,7 @@ export default function EvidenceUpload() {
   
 
   // Handle file input change for audio uploads
-  const changeAudio = (event) => {
+  const changeMedia = (event) => {
     event.preventDefault();
     const files = event.target.files; // This is a FileList object, not an array.
     const selectedFilesArray = Array.from(files); // Convert FileList to an array.
@@ -37,7 +37,7 @@ export default function EvidenceUpload() {
   if (evidenceType == null) {
     return (
       <div>
-        <button onClick={goBack}>Go Back</button>
+        <BackButton/>
         <p>No type has been chosen</p>
       </div>
     );
@@ -46,13 +46,21 @@ export default function EvidenceUpload() {
       <div style={{ padding: "55px" }}>
         <BackButton/>
         <p>This is where you upload images or videos</p>
+{/* //? This input allows the user to upload a photo or video from their file directory or photo album */}
         <input
-          onChange={changeAudio} // Use the same handler for simplicity
+          onChange={changeMedia} // Use the same handler for simplicity
           type="file"
           id="fileInput"
           multiple
           accept='video/*, image/*'
         />
+{/* //? This input immediately opens the users camera and gives them the option to either take a photo ore record a video */}
+        <input 
+        onChange={changeMedia}
+        type="file" 
+        accept="image/*, video/*" 
+        capture="camera"
+        ></input>
       </div>
     );
   } else if (evidenceType === "audiobutton") {
@@ -62,7 +70,7 @@ export default function EvidenceUpload() {
         <BackButton/>
         <p>This is where you upload audio</p>
         <input
-          onChange={changeAudio}
+          onChange={changeMedia}
           type="file"
           id="fileInput"
           multiple
@@ -75,7 +83,6 @@ export default function EvidenceUpload() {
     // Fallback case if the evidence type is unrecognized
     return (
       <div>
-        <button onClick={goBack}>Go Back</button>
         <p>I'm not sure what's going on</p>
       </div>
     );
