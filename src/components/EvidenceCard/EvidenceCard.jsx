@@ -206,7 +206,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setIsEditing(false)} color="primary">
+          <Button onClick={() => setIsEditing(false)} color="error">
             Cancel
           </Button>
           <Button onClick={() => handleSave(item.id)} color="primary">

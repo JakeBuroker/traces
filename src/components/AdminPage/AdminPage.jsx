@@ -95,7 +95,8 @@ function AdminPage() {
     axios.delete(`/api/evidence/delete/${evidenceId}`)
       .then(() => {
         fetchEvidence();
-        setDeleteModalOpen(false);
+        setDeleteModalOpen(false); // Closes the delete confirmation modal
+        closeModal(); // Closes the details/edit modal
         alert("Evidence deleted successfully!");
       })
       .catch((error) => {
@@ -207,9 +208,9 @@ function AdminPage() {
             variant="contained" // Changed to "contained" for a solid background
             onClick={() => openAllPublicModal(true)}
             style={{
-              backgroundColor: "red", // Set the background color to red
-              color: "white", // Set the text color to white
-              marginRight: "10px", // Optional: Adds space to the right of the button
+              backgroundColor: "#c40f0f", // Set the background color to red
+              color: "white", 
+              marginRight: "10px", 
             }}
           >
             Make All Public
@@ -218,7 +219,7 @@ function AdminPage() {
             variant="contained" 
             onClick={() => openAllPublicModal(false)}
             style={{
-              backgroundColor: "red", 
+              backgroundColor: "#c40f0f", 
               color: "white",
             }}
           >
@@ -229,7 +230,7 @@ function AdminPage() {
           variant="contained" 
           onClick={() => history.push('/registration')}
           style={{
-            backgroundColor: "red", 
+            backgroundColor: "#c40f0f", 
             color: "white",
           }}
         >
@@ -318,13 +319,13 @@ function AdminPage() {
         </DialogContent>
       </Dialog>
       {/* Delete Confirmation Modal */}
-      <Dialog open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)}>
-        <DialogContent>
-          <Typography>Are you sure you want to delete this evidence?</Typography>
-          <Button onClick={() => deleteEvidence(selectedItem.id)} color="error">Delete</Button>
-          <Button onClick={() => setDeleteModalOpen(false)}>Cancel</Button>
-        </DialogContent>
-      </Dialog>
+      <Dialog open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false); setInEditMode(false); }}>
+  <DialogContent>
+    <Typography>Are you sure you want to delete this evidence?</Typography>
+    <Button onClick={() => deleteEvidence(selectedItem.id)} color="error">Delete</Button>
+    <Button onClick={() => { setDeleteModalOpen(false); setInEditMode(false); }}>Cancel</Button>
+  </DialogContent>
+</Dialog>
       {/* Public Confirmation Modal */}
       <Dialog open={publicConfirmModalOpen} onClose={() => setConfirmModalOpen(false)}>
         <DialogContent>

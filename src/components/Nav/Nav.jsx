@@ -1,124 +1,88 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import LogOutButton from "../LogOutButton/LogOutButton";
-import "./Nav.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "@mui/joy/Dropdown";
 import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box } from "@mui/material";
+import LogOutButton from "../LogOutButton/LogOutButton";
+import "./Nav.css";
+import { useHistory } from 'react-router-dom'; // Import useHistory
 
 function Nav() {
   const user = useSelector((store) => store.user);
-  const isLoggedInAndWaiverSigned = user.id && user.waiver_acknowledged;
+  const history = useHistory(); 
+  const dispatch = useDispatch()
+
+  const navigateTo = (path) => {
+    history.push(path);
+  };
+
+  function Logout() {
+    history.push('/')
+    dispatch({type: "LOGOUT"})
+  }
+
   return (
     <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title" style={{ color: "white" }}>
-          Traces
-        </h2>
-      </Link>
+      <div className="nav-title" onClick={() => navigateTo("/home")} style={{ color: "white", cursor: "pointer" }}>
+        Traces
+      </div>
       <div>
-        {/* If no user is logged in, show these links */}
-        {!user.id && (
-          // If there's no user, show login/registration links
-          <>
-            <Box>
-              <Dropdown>
-                <MenuButton sx={{ marginRight: "10px", color: "black" }}>
-                  <MenuIcon />
-                  <Menu sx={{ backgroundColor: "#c40f0f", border: "black" }}>
-                    <MenuItem>
-                      <Link className="navLink" to="/">
-                        Home
-                      </Link>
-                    </MenuItem>
-                    <MenuItem>
-                      <Link className="navLink" to="/about">
-                        About
-                      </Link>
-                    </MenuItem>
-                    <MenuItem>
-                      <Link className="navLink" to="/gallery">
-                        Gallery
-                      </Link>
-                    </MenuItem>
-                    <MenuItem>
-                      <Link className="navLink" to="/login">
-                        Login
-                      </Link>
-                    </MenuItem>
-                  </Menu>
-                </MenuButton>
-              </Dropdown>
-            </Box>
-          </>
-        )}
-
-
-        
-
-        {/* If a user is logged in, show these links */}
-        {user.id && user.alias && (
-          <>
+        {!user.id ? (
+          <Box>
             <Dropdown>
-              <MenuButton sx={{ marginRight: "10px", color: "black" }}>
+              <MenuButton sx={{ marginRight: "10px", color: "white" }}>
                 <MenuIcon />
               </MenuButton>
-              <Menu sx={{ backgroundColor: "#c40f0f", border: "black" }}>
-                <MenuItem
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "#c40f0 !important",
-                    },
-                  }}
-                >
-                  <Link className="navLink" to="/user">
-                    Home
-                  </Link>
+              <Menu sx={{  padding:"20px", color: "white", fontSize:"20px", backgroundColor: "#c40f0f", border: "black" }}>
+                <MenuItem onClick={() => navigateTo('/')} sx={{color: "white",  '&:hover': {backgroundColor: "hsl(0, 85.78%, 45%) !important",color: "white !important"  } }}>
+                  Home
                 </MenuItem>
-
-                {/* Only show this if user.role equals 2 */}
-                {user.role === 2 && (
-                  <MenuItem>
-                    <Link className="navLink" to="/admin">
-                      Admin Page
-                    </Link>
-                  </MenuItem>
-                )}
-
-                <MenuItem>
-                  <Link className="navLink" to="/about">
-                    About
-                  </Link>
+                <MenuItem onClick={() => navigateTo('/about')} sx={{color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important",color: "white !important"   } }}>
+                  About
                 </MenuItem>
-
-                <MenuItem>
-                  <Link className="navLink" to="/gallery">
-                    Gallery
-                  </Link>
+                <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "white",'&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important",color: "white !important"  } }}>
+                  Gallery
                 </MenuItem>
-
-                <MenuItem>
-                  <Link className="navLink" to="/Evidence">
-                    Evidence
-                  </Link>
-                </MenuItem>
-
-                <MenuItem>
-                  <Link className="navLink" to="/help">
-                    Help
-                  </Link>
-                </MenuItem>
-
-                <MenuItem>
-                  <LogOutButton className="navLink" />
+                <MenuItem onClick={() => navigateTo('/login')} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important",color: "white !important" } }}>
+                  Login
                 </MenuItem>
               </Menu>
             </Dropdown>
-          </>
+          </Box>
+        ) : (
+          <Dropdown>
+            <MenuButton sx={{ marginRight: "10px",border: "white 2px solid", color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important",color: "white" }}}>
+              <MenuIcon />
+            </MenuButton>
+            <Menu sx={{  padding:"20px", fontSize:"20px", backgroundColor: "#c40f0f", border: "black" }}>
+              <MenuItem onClick={() => navigateTo('/user')} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important",color: "white !important"  } }}>
+                Home
+              </MenuItem>
+              {user.role === 2 && (
+                <MenuItem onClick={() => navigateTo('/admin')} sx={{ color: "white",'&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important",color: "white !important" } }}>
+                  Admin Page
+                </MenuItem>
+              )}
+              <MenuItem onClick={() => navigateTo('/about')} sx={{ color: "white",'&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important",color: "white !important"  } }}>
+                About
+              </MenuItem>
+              <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "white",'&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important",color: "white !important"  } }}>
+                Gallery
+              </MenuItem>
+              <MenuItem onClick={() => navigateTo('/evidence')} sx={{ color: "white",'&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important",color: "white !important"   } }}>
+                Evidence
+              </MenuItem>
+              <MenuItem onClick={() => navigateTo('/help')} sx={{ color: "white",'&:hover': { backgroundColor: "hsl(0, 85.78%, 45%)!important",color: "white !important"  } }}>
+                Help
+              </MenuItem>
+              <MenuItem  onClick={() => Logout()} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important",color: "white !important"  } }}>
+      Logout
+              </MenuItem>
+            </Menu>
+          </Dropdown>
         )}
       </div>
     </div>
