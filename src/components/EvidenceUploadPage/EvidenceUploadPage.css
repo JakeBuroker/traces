@@ -1,0 +1,52 @@
+body{
+    background-color: rgb(188, 188, 188);
+}
+
+.cameraButton {
+    width: 150px; /* Set the width of the button */
+    height: 150px; /* Set the height of the button */
+    border-radius: 50%; /* Make the button a circle */
+    background-color: black; /* Set the background color to black */
+    background-image: url('/CameraIcon.jpg'); /* Set the image as the background */
+    background-size: 450px; /* Cover the entire background with the image */
+    background-position: center; /* Center the image within the button */
+    border: none; /* Remove border */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    outline: none; /* Remove default focus outline */
+    position: fixed; /* Position the button relative to the viewport */
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontally to center */
+}
+
+.fileButton {
+    width: 130px; /* Set the width of the button */
+    height: 130px; /* Set the height of the button */
+    border-radius: 50%; /* Make the button a circle */
+    background-color:gray; /* Set the background color to black */
+    background-image: url('/FileIcon.jpg'); /* Set the image as the background */
+    background-size: 420px; /* Cover the entire background with the image */
+    background-position: center; /* Center the image within the button */
+    border: none; /* Remove border */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    outline: none; /* Remove default focus outline */
+    position: fixed; /* Position the button relative to the viewport */
+    top: 200px; /* Distance from the bottom of the viewport */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontally to center */
+}
+
+.cameraInput{
+    opacity: 0;
+    position: fixed; /* Position the button relative to the viewport */
+    bottom: 20px; /* Distance from the bottom of the viewport */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontally to center */
+}
+.fileInput{
+    opacity: 0;
+    position: fixed; /* Position the button relative to the viewport */
+    top: 200px; /* Distance from the bottom of the viewport */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontally to center */
+}
