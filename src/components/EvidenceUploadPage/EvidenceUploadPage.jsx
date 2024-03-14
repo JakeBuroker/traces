@@ -28,6 +28,11 @@ export default function EvidenceUpload() {
     history.push('/evidence-details');
   };
 
+  // Navigate to previous page
+  const goBack = () => {
+    history.push('/back')
+  }
+
   // Render component based on the selected evidence type
   if (evidenceType == null) {
     return (
