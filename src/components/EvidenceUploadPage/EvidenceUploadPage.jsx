@@ -32,6 +32,10 @@ const clickFile = () => {
   console.log('clicking camera');
   document.getElementById('fileInput').click()
 }
+const recordVideo = () => {
+  console.log('recording video');
+  document.getElementById('videoInput').click()
+}
 
 
 
@@ -39,7 +43,7 @@ const clickFile = () => {
   if (evidenceType == null) {
     return (
       <div>
-        <BackButton/>
+        {/* <BackButton/> */}
         <p>No type has been chosen</p>
       </div>
     );
@@ -72,12 +76,24 @@ My custom choose file label
         className= 'cameraInput'
         onChange={changeMedia}
         type="file" 
-        accept="image/*, video/*" 
+        accept="image/*" 
+        capture="camera"
+        />
+        <input
+        id='videoInput'
+        className= 'videoInput'
+        onChange={changeMedia}
+        type="file" 
+        accept="video/*" 
         capture="camera"
         />
         <button
         className = 'cameraButton'
         onClick= {clickCamera}
+        />
+        <button
+        className='recordButton'
+        onClick={recordVideo}
         />
       </div>
     );

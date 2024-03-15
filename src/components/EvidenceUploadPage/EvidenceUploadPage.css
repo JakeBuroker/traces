@@ -35,6 +35,19 @@ body{
     left: 50%; /* Center horizontally */
     transform: translateX(-50%); /* Adjust horizontally to center */
 }
+.recordButton{
+    width: 100px; /* Set the width of the button */
+    height: 100px; /* Set the height of the button */
+    border-width: 10px;
+    background-color: red;
+    border-color: black;
+    border-radius: 50%; /* Make the button a circle */
+    position: fixed; /* Position the button relative to the viewport */
+    bottom: 50px; /* Distance from the bottom of the viewport */
+    left: 85%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontally to center */
+
+}
 
 .cameraInput{
     opacity: 0;
@@ -44,6 +57,13 @@ body{
     transform: translateX(-50%); /* Adjust horizontally to center */
 }
 .fileInput{
+    opacity: 0;
+    position: fixed; /* Position the button relative to the viewport */
+    top: 200px; /* Distance from the bottom of the viewport */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontally to center */
+}
+.videoInput{
     opacity: 0;
     position: fixed; /* Position the button relative to the viewport */
     top: 200px; /* Distance from the bottom of the viewport */
