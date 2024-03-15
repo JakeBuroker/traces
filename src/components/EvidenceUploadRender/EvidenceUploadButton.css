@@ -16,7 +16,9 @@ html, body {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: #4CAF50;
+    background-color: whitesmoke; /* Green background */
+    border-width: 5px;
+    border-color: black;
     color: white;
     text-align: center;
     line-height: 100px;
@@ -26,7 +28,7 @@ html, body {
 }
 
 .button:hover {
-    background-color: #45a049; /* Slightly darker green on hover */
+    background-color: red; /* Slightly darker green on hover */
 }
 
 .button:active {
@@ -46,10 +48,12 @@ html, body {
 /* Styling for the additional action buttons */
 .additional-button {
     margin: 0;
-    width: 60px; /* Smaller size for the additional buttons */
-    height: 60px;
+    width: 80px; /* Smaller size for the additional buttons */
+    height: 80px;
     border-radius: 50%; /* Circle shape */
-    background-color: #4CAF50; /* Green background */
+    background-color: whitesmoke; /* Green background */
+    border-width: 5px;
+    border-color: black;
     color: white;
     text-align: center;
     line-height: 60px; /* Centers the icon vertically */
@@ -61,18 +65,20 @@ html, body {
 }
 
 /* Individual positioning of additional buttons for a semi-circle layout */
-#cambutton {
+/* #cambutton {
     right: 54%;
     top: 8%; 
 }
 
 #audiobutton {
     right: 51%;
+    top: 8%;
 }
 
 #notesbutton {
     right: 46%;
-}
+    top: 8%;
+} */
 
 @media (max-width: 600px) {
     .button-container {
@@ -88,8 +94,8 @@ html, body {
 
     /* Make additional buttons slightly smaller than the main button */
     .additional-button {
-        width: 60px; /* Smaller than the main button */
-        height: 60px;
+        width: 75px; /* Smaller than the main button */
+        height: 75px;
         line-height: 60px; /* Adjust line height for vertical centering */
         font-size: 30px; /* Adjust font size for the icons/text inside the buttons */
     }
@@ -97,16 +103,16 @@ html, body {
     /* Adjust the positions of the additional buttons */
     #cambutton {
         right: 62%; /* Adjust position as needed */
-        top: 32.5%; /* Move up for semi-circle layout, adjust percentage as needed */
+        top: 8%; /* Move up for semi-circle layout, adjust percentage as needed */
     }
 
     #audiobutton {
-        right: 57%; /* Slightly to the left of cambutton */
-        top: -51%; /* Further up, adjust percentage as needed */
+        right: 81%; /* Slightly to the left of cambutton */
+        top: 8%; /* Further up, adjust percentage as needed */
     }
 
     #notesbutton {
-        right: 40%; /* Slightly to the left of audiobutton for semi-circle layout */
-        top: -81%; /* Even further up, adjust percentage as needed */
+        right: 100%; /* Slightly to the left of audiobutton for semi-circle layout */
+        top: 8%; /* Even further up, adjust percentage as needed */
     }
 }
