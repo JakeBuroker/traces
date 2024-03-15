@@ -13,7 +13,6 @@ import GalleryEnlargeModal from './GalleryEnlargeModal';
 
 export const GalleryPageEvCard = ({ item }) => {
     const [isOpen, setIsOpen] = useState(false);
-
     // Determine if the item is a video or audio
     const isVideo = item.media_type === 3;
     const isAudio = item.media_type === 4;

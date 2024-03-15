@@ -109,7 +109,7 @@ function UserPage() {
   }
 
   return (
-    <div style={{ padding: "60px 10px" }} className="user-container">
+    <div style={{ padding: "65px 10px" }} className="user-container">
       {user.avatar_url ?
         <img src={user.avatar_AWS_URL} alt="An avatar for the user." style={{borderRadius: '5px'}}/> :
         <img src="./default_avi.jpeg" alt='The default avatar' style={{borderRadius: '5px'}} />}
