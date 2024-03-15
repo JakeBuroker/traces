@@ -3,9 +3,11 @@
     width: 120px;
     color: aliceblue;
     font-size: large;
-    background-color: black;
+    background-color: gray;
     border-top-left-radius: 50%;
     border-bottom-left-radius: 50%;
+    border-color: black;
+    border-width: 5px;
     position: fixed; /* Position the button relative to the viewport */
     top: 60px; /* Distance from the bottom of the viewport */
     left: 17%; /* Center horizontally */

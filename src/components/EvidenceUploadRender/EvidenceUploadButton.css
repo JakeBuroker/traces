@@ -107,12 +107,12 @@ html, body {
     }
 
     #audiobutton {
-        right: 81%; /* Slightly to the left of cambutton */
+        right: 82%; /* Slightly to the left of cambutton */
         top: 8%; /* Further up, adjust percentage as needed */
     }
 
     #notesbutton {
-        right: 100%; /* Slightly to the left of audiobutton for semi-circle layout */
+        right: 102%; /* Slightly to the left of audiobutton for semi-circle layout */
         top: 8%; /* Even further up, adjust percentage as needed */
     }
 }
