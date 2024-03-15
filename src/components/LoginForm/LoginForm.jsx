@@ -31,7 +31,7 @@ function LoginForm() {
       <form className="formPanel" onSubmit={login}>
         <div className="image-container">
           {/* Assuming you want to include an image at the top, you can use an img tag here */}
-          <img src="/krib.jpg" alt="Login" style={{ width: 200, height: 200 }} />
+          <img className="pageIcon" src="/fillerIconTwo.jpg" alt="Login" style={{ width: 200, height: 200 }} />
 
         </div>
 
