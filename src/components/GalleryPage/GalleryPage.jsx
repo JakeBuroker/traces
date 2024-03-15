@@ -82,7 +82,7 @@ function GalleryPage() {
                     ))}
                 </Grid>
                 <Grid container spacing={2} justifyContent="center">
-                    <Stack spacing={2} style={{ marginTop: '50px' }}>
+                    <Stack spacing={2} style={{ padding: '50px' }}>
                         {/* <Typography>Page: {page}</Typography> */}
                         <Pagination count={pageCount} page={page} onChange={handleChange} />
                     </Stack>
