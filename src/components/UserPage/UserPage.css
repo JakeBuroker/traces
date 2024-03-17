@@ -1,56 +1,94 @@
+/* Base styles for mobile */
 .user-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-  }
+  max-width: 250px;
+  margin: auto;
+  padding: 20px;
   
+}
+
+.edit-form, .info-display {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  
+}
+
+.form-group input, .form-group select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  
+}
+
+.save-btn, .edit-btn, .logout-btn {
+  padding: 10px;
+  font-size: 16px;
+  color: hsl(0, 0%, 97%);
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.save-btn:hover, .edit-btn:hover {
+  background-color: #45a049;
+}
+
+.logout-btn {
+  background-color: #f44336;
+}
+
+.logout-btn:hover {
+  background-color: #e53935;
+}
+
+.user-avi {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+/* Desktop-specific styles */
+@media (min-width: 768px) {
+  .user-container {
+    max-width: 350px; /* Keep your preference or adjust as needed */
+  }
+
   .edit-form, .info-display {
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start; /* Align items at the start of the container */
   }
-  
+
   .form-group {
-    margin-bottom: 15px;
+    flex-basis: 48%; /* This allows for a two-column layout */
   }
-  
-  .form-group label {
-    margin-bottom: 5px;
-    font-weight: bold;
+
+  /* Additional styling for desktop to manage spacing and alignment */
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%; /* Ensure the container takes full width */
+    margin-top: 20px; /* Add some margin on top */
   }
-  
-  .form-group input, .form-group select {
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .save-btn, .edit-btn, .logout-btn {
-    padding: 10px;
-    font-size: 16px;
-    color: white;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 20px;
-  }
-  
-  .save-btn:hover, .edit-btn:hover {
-    background-color: #45a049;
-  }
-  
-  .logout-btn {
-    background-color: #f44336;
-  }
-  
-  .logout-btn:hover {
-    background-color: #e53935;
-  }
-  
+
   .user-avi {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 15px;
+    width: 150px; /* Adjusted for a larger display */
+    height: 150px;
   }
+}
