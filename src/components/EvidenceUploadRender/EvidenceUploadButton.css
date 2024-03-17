@@ -16,10 +16,10 @@ html, body {
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background-color: whitesmoke; /* Green background */
+    background-color: hsl(0, 0%, 97%); /* Green background */
     border-width: 5px;
     border-color: black;
-    color: white;
+    color: hsl(0, 0%, 97%);
     text-align: center;
     line-height: 100px;
     font-size: 60px;
@@ -51,10 +51,10 @@ html, body {
     width: 80px; /* Smaller size for the additional buttons */
     height: 80px;
     border-radius: 50%; /* Circle shape */
-    background-color: whitesmoke; /* Green background */
+    background-color: "hsl(0, 0%, 97%)"smoke; /* Green background */
     border-width: 5px;
     border-color: black;
-    color: white;
+    color: "hsl(0, 0%, 97%)";
     text-align: center;
     line-height: 60px; /* Centers the icon vertically */
     font-size: 30px; /* Icon size */
