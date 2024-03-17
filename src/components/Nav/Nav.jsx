@@ -36,7 +36,7 @@ function Nav() {
           <MenuButton sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white" } }}>
             <MenuIcon />
           </MenuButton>
-          <Menu sx={{ padding:"20px", color: "white", fontSize:"20px", backgroundColor: "#c40f0f", border: "black" }}>
+          <Menu sx={{ padding:"20px", color: "white", fontSize:"20px", backgroundColor: "#18245A", border: "black" }}>
             {!user.id ? (
               <>
                 <MenuItem onClick={() => navigateTo('/home')}  sx={{color: "white", '&:hover': {backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>

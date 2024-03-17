@@ -69,7 +69,7 @@ function GalleryPage() {
         return (<div><h2 style={{ textAlign: 'center', paddingTop: '120px' }}>All Evidence To Be Declassified Soon.</h2></div>)
     } else {
         return (
-            <div style={{ padding: "65px" }}>
+            <div style={{ padding: "65px 0" }}>
                 {/* //Todo: style header */}
                 <h2>Evidence Gallery: Declassified</h2>
                 <MediaFilter

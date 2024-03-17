@@ -45,6 +45,44 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
     onClose()
   };
 
+  const renderImageForMediaItem = ({media_type, aws_url, title}) => {
+    if (media_type === 4) {
+      return ( // Render an audio element for audio files
+      <video
+        src={aws_url}
+        controls
+        style={{ width: '100%', height: 'auto', objectFit: "cover", margin: '5px 0' }}
+        poster='./audio_placeholder.jpeg'
+      />)
+    } else if (media_type === 3) {
+      return (
+        // Render a video element for video files
+        <video
+        src={aws_url}
+        controls
+        style={{ width: '100%', height: 'auto', objectFit: "cover", margin: '5px 0' }}
+        poster='./video_placeholder.jpeg'
+      />
+      )
+    } else if (media_type === 2) {
+      return (
+        <img
+        src={aws_url}
+        alt={title}
+        style={{ width: '100%', height: 'auto', objectFit: "cover", margin: '5px 0' }}
+      />
+      )
+    }
+    // console.log('rendering...', item);
+    // return (
+    //   <img
+    //   src='./text_placeholder.jpeg'
+    //   alt={'A circle with a T in it as a placeholder.'}
+    //   style={{ width: '100%', height: 'auto', objectFit: "cover", margin: '5px 0' }}
+    // />
+    // )
+  }
+
   return (
     <>
       <Dialog
@@ -56,11 +94,12 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
         <DialogContent>
           {selectedItem && (
             <div>
-              <img
+              {renderImageForMediaItem(selectedItem)}
+              {/* <img
                 src={selectedItem.aws_url}
                 alt={selectedItem.title}
                 style={{ width: "100%", height: "auto", objectFit: "cover", border: "solid" }}
-              />
+              /> */}
               <Typography variant="h5" style={{ textAlign: "center" }}>
                 {selectedItem.title}
               </Typography>
