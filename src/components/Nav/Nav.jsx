@@ -3,6 +3,7 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Typography } from "@mui/material";
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import "./Nav.css";
@@ -24,7 +25,8 @@ function Nav() {
   return (
     <div className="nav">
       <div className="nav-title" onClick={() => navigateTo("/")}>
-        Traces
+        <img src="./traces_logo_01.jpg" alt="Traces Logo" />
+        {/* <Typography>TRACES</Typography> */}
       </div>
       <div className="nav-controls">
         {user.id && (

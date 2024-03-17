@@ -15,12 +15,13 @@
 }
 
 .nav-title {
-  font-size: 34px;
-  font-weight: 700;
-  color: white;
-  padding-left: 15px;
+  /* font-size: 34px; */
+  /* font-weight: 700; */
+  /* color: white; */
+  /* padding-left: 15px; */
   cursor: pointer;
-  margin-bottom: 7px;
+  /* margin-bottom: 7px; */
+  width: 175px;
 }
 
 .nav-controls {
