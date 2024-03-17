@@ -42,7 +42,7 @@ function EvidencePage() {
 
   return (
     <main>
-      <div style={{ display: "flex", flexDirection: "column", padding: "65px" }}>
+      <div style={{ display: "flex", flexDirection: "column", padding: "65px 0 10px 0" }}>
         <MediaFilter
           selectedMediaType={selectedMediaType}
           onMediaTypeChange={handleMediaFilterChange}

@@ -85,7 +85,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
       />
       )
     }
-    console.log('rendering...', item);
+    // console.log('rendering...', item);
     return (
       <img
       src='./text_placeholder.jpeg'
