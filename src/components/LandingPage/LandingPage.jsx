@@ -37,10 +37,7 @@ function LandingPage() {
             Login
           </Button>
         </div>
-
-
       </div>
-
     </div >
   );
 }
