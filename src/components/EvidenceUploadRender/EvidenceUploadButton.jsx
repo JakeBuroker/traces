@@ -37,13 +37,13 @@ const toggleAdditionalButtons = () => {
 return (
   <div className='button-container'>
     <button 
-    className="button" onClick={toggleAdditionalButtons}>📕</button>
+    className="button" onClick={toggleAdditionalButtons}><img className='images' src="/evidenceInputIcon.jpg"/></button>
 
     {showAdditionalButtons && (
       <div >
-        <button onClick = {EvidenceUploadOnclick} className="additional-button" id="cambutton">📸</button>
-        <button onClick = {EvidenceUploadOnclick} className="additional-button" id="audiobutton">🎤</button>
-        <button onClick = {EvidenceDetails} className="additional-button" id="notesbutton">📝</button>
+        <button onClick = {EvidenceUploadOnclick} className="additional-button" id="cambutton"><img className='images' src="/cameraInputIcon.jpg"/></button>
+        <button onClick = {EvidenceUploadOnclick} className="additional-button" id="audiobutton"><img className='images' src="/recordInputIcon.jpg"/></button>
+        <button onClick = {EvidenceDetails} className="additional-button" id="notesbutton"><img className='images' src="/notesInputIcon.jpg"/></button>
       </div>
     )}
   </div>
