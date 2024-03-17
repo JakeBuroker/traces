@@ -40,7 +40,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
   }
 
   const formatLongTitles = (title) => {
-    if (title.length > 8) { // returns the first 5 characters and elipses
+    if (title?.length > 8) { // returns the first word and elipses
       return title.split(' ').filter((word, i) => i < 1).toSpliced(1, 0, '. . .').join(' ')
     }
     return title
@@ -59,23 +59,33 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
 
   return (
     <Grid item xs={2} sm={2} md={6} lg={4}>
-      <Card className="item-card" sx={{ display: "flex", flexDirection: "column", position: "relative", boxShadow: 10, width: '170px', height: '230px' }}>
+      <Card
+        className="item-card"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          position: "relative",
+          boxShadow: 10,
+          width: '170px',
+          height: '230px'
+        }}
+        onClick={() => setIsOpen(true)}>
         {hasMedia(item.media_type) && (
           isAudio(item.media_type) ? (
             // Render an audio element for audio files
             <video
-              onClick={() => onOpenModal(item)}
               src={item.aws_url}
               controls
-              style={{ width: "100%" }}
+              style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
+              poster='./audio_placeholder.jpeg'
             />
           ) : isVideo(item.media_type) ? (
             // Render a video element for video files
             <video
               src={item.aws_url}
               controls
-              style={{ height: 160, width: "100%", objectFit: "cover" }}
-              onClick={() => setIsOpen(true)}
+              style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
+              poster='./video_placeholder.jpeg'
             />
           ) : (
             // Render an img element for image files
@@ -83,7 +93,6 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
               src={item.aws_url}
               alt={item.title}
               style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
-              onClick={() => setIsOpen(true)}
             />
           )
         )}

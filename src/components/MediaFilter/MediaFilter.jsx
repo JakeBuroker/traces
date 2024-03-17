@@ -14,7 +14,7 @@ function MediaFilter({ selectedMediaType, onMediaTypeChange }) {
         value={selectedMediaType}
         exclusive
         onChange={onMediaTypeChange}
-        sx={{ display: "flex", flexDirection: "row", gap: 1 }}
+        sx={{ display: "flex", flexDirection: "row", bgcolor: 'white'}}
       >
         <ToggleButton key="all" value="all"><b>All</b></ToggleButton>
         <ToggleButton key="1" value="1"><b>Notes</b></ToggleButton>
