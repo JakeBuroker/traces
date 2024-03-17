@@ -2,46 +2,36 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
-  margin: 0 0 30px;
+  height: 58px;
+  margin-bottom: 30px;
   background-color: #c40f0f;
   overflow: hidden;
-  position: fixed; /* Set the navbar to fixed position */
-  width: 100%; /* Full width */
+  position: fixed;
+  width: 100%;
+  top: 0; /* Ensure the nav bar sticks to the top */
+  left: 0; /* Align to the left edge */
   z-index: 2000;
-}
-.main-content {
-  padding-top: 50px; 
-}
-.nav a {
-  text-decoration: none;
 }
 
 .nav-title {
   font-size: 34px;
   font-weight: 700;
-  color: #000000;
-  padding-left: 15px;
-  padding-bottom: 5px;
-  margin: 0;
-}
-
-.navLink {
-  display: inline-block;
   color: white;
-  background-color: #c40f0f;
-  text-align: center;
-  padding: 24px 10px;
-  text-decoration: none;
-  font-size: 15px;
-  
-  /* these last two make the logout button in
-  the nav bar look like another link */
-  border: none;
+  padding-left: 15px;
   cursor: pointer;
-  outline: 0;
+  margin-bottom: 7px;
 }
 
-.navLink:hover {
-  background-color: #c40f0f;
+.nav-controls {
+  display: flex;
+  align-items: center;
+  margin-right: 17.5px;
+}
+
+.nav-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 20px; 
+  cursor: pointer;
 }

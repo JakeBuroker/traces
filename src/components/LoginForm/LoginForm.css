@@ -72,3 +72,6 @@
     text-align: center;
     margin-right: 0px !important;
   }
+  .pageIcon{
+    border-radius: 50%;
+  }
