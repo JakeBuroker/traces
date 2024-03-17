@@ -11,7 +11,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
   const [isOpen, setIsOpen] = useState(false)
   const isVideo = (mediaType) => mediaType === 3;
   const isAudio = (mediaType) => mediaType === 4; // Check if the media type indicates audio
-  const hasMedia = (mediaType) => mediaType === 2 || mediaType === 3 || mediaType === 4; // Include audio in the media check
+  const hasMedia = (mediaType) => mediaType; // Include audio in the media check
 
 
   const editEvidence = (id, formData) => {
@@ -57,6 +57,44 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
     }
   }
 
+  const renderImageForMediaItem = ({media_type, aws_url, title}) => {
+    if (isAudio(media_type)) {
+      return ( // Render an audio element for audio files
+      <video
+        src={aws_url}
+        controls
+        style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
+        poster='./audio_placeholder.jpeg'
+      />)
+    } else if (isVideo(media_type)) {
+      return (
+        // Render a video element for video files
+        <video
+        src={aws_url}
+        controls
+        style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
+        poster='./video_placeholder.jpeg'
+      />
+      )
+    } else if (media_type === 2) {
+      return (
+        <img
+        src={aws_url}
+        alt={title}
+        style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
+      />
+      )
+    }
+    console.log('rendering...', item);
+    return (
+      <img
+      src='./text_placeholder.jpeg'
+      alt={'A circle with a T in it as a placeholder.'}
+      style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
+    />
+    )
+  }
+
   return (
     <Grid item xs={2} sm={2} md={6} lg={4}>
       <Card
@@ -70,32 +108,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
           height: '230px'
         }}
         onClick={() => setIsOpen(true)}>
-        {hasMedia(item.media_type) && (
-          isAudio(item.media_type) ? (
-            // Render an audio element for audio files
-            <video
-              src={item.aws_url}
-              controls
-              style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
-              poster='./audio_placeholder.jpeg'
-            />
-          ) : isVideo(item.media_type) ? (
-            // Render a video element for video files
-            <video
-              src={item.aws_url}
-              controls
-              style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
-              poster='./video_placeholder.jpeg'
-            />
-          ) : (
-            // Render an img element for image files
-            <img
-              src={item.aws_url}
-              alt={item.title}
-              style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
-            />
-          )
-        )}
+        {hasMedia(item.media_type) && renderImageForMediaItem(item)}
         <Typography variant="h5" component="div" sx={{ textAlign: "center", fontFamily: 'Caveat', fontSize: '30px' }}>
           {formatLongTitles(item.title)}
         </Typography>
