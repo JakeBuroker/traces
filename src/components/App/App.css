@@ -4,11 +4,15 @@ html, body, #react-root {
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin-top: 60px; /* Adjust if navbar height > 60px */
+  /* background-color: #18245A; */
+  background-color: #646464;
+  /* background-color: rgb(188, 188, 188); */
 }
 img {
   display: inline-block;
   max-width: 100%;
 }
+
 
 
 /* --------------------------------------------------------------------------------
