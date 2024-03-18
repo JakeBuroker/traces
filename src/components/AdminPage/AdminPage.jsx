@@ -200,7 +200,7 @@ function AdminPage() {
     media_type: item.media_type, // Assuming this property exists
   }));
   return (
-    <div style={{ padding: "65px", height: 500, width: "100%" }}>
+    <div style={{ padding: "75px", height: 500, width: "100%" }}>
       <h1>Evidence Administration</h1>
       <div style={{padding: '30px', display: 'flex', justifyContent: 'space-between'}}>
         <div style={{display: 'flex', gap: '20px'}}> {/* Added gap for spacing */}
@@ -264,14 +264,14 @@ function AdminPage() {
                 <video
                   src={selectedItem.aws_url}
                   controls
-                  style={{ width: '100%' }}
+                  style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "contain" }}
                 />
               ) : (
                 <CardMedia
                   component="img"
                   src={selectedItem.aws_url}
                   className="item-image"
-                  sx={{ marginBottom: '50px' }}
+                  style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "contain" }}
                 />
               )}
               {inEditMode ? (
@@ -347,3 +347,6 @@ function AdminPage() {
 }
 
 export default AdminPage;
+
+
+
