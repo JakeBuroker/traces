@@ -39,6 +39,7 @@ export const GalleryPageEvCard = ({ item }) => {
                         position: "relative",
                         height: 450,
                     }}
+                    onClick={() => setIsOpen(true)} // Add this line
                 >
                     <Typography
                         variant="h5"
@@ -63,7 +64,8 @@ export const GalleryPageEvCard = ({ item }) => {
                                 controls
                                 style={{ width: "60%", alignSelf: "center", marginTop: "10px" }}
                             />
-                            <hr style={{ width: '100%', alignSelf: 'center', marginTop: '5px' }} />
+                            <hr style={{ width: '100%', alignSelf: 'center', 
+                             }} />
                         </>
                     )}
                     {isVideo && (
@@ -78,7 +80,9 @@ export const GalleryPageEvCard = ({ item }) => {
                                     alignSelf: "center",
                                 }}
                             />
-                            <hr style={{ width: '100%', alignSelf: 'center', marginTop: '5px' }} />
+                            <hr style={{ width: '100%', alignSelf: 'center', 
+                            
+                             }} />
                         </>
                     )}
                     {!isAudio && !isVideo && !isNote && (
