@@ -51,6 +51,22 @@ function UserPage() {
     }
   }, [user.alias, user.waiver_acknowledged]);
 
+  useEffect(() => {
+    // Prevent navigation away from the page without acknowledging the waiver
+    const handleBeforeUnload = (event) => {
+      if (!waiverAcknowledged) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [waiverAcknowledged]);
+
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
   };
@@ -286,6 +302,8 @@ function UserPage() {
         <Modal
           open={openModal}
           onClose={() => setOpenModal(false)}
+          disableBackdropClick
+          disableEscapeKeyDown
           aria-labelledby="modal-title"
           aria-describedby="modal-description"
         >
@@ -301,8 +319,11 @@ function UserPage() {
             <Button
               onClick={acknowledgeWaiver}
               variant="contained"
-              color="primary"
-              style={{ marginTop: "20px" }}
+              style={{
+                marginTop:"20px",
+                backgroundColor: "#c40f0f",
+                color: "hsl(0, 0%, 97%)",
+              }}
             >
               Acknowledge Waiver and Continue
             </Button>
@@ -312,6 +333,8 @@ function UserPage() {
         <Modal
           open={showPostWaiverModal}
           onClose={() => setShowPostWaiverModal(false)}
+          disableBackdropClick
+          disableEscapeKeyDown
           aria-labelledby="post-waiver-modal-title"
           aria-describedby="post-waiver-modal-description"
         >
