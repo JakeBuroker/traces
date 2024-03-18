@@ -39,7 +39,7 @@ function LandingPage() {
           </Typography>
         </div>
         <div className="grid-col grid-col_12" style={{ marginTop: '25px' }}>
-          <h4>If you are participating in the play, please login.</h4>
+          <h4 style={{color: 'white'}}>If you are participating in the play, please login.</h4>
           <Button className="btn" onClick={onLogin}>
             Login
           </Button>

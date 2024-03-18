@@ -86,14 +86,14 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
       )
     }
     // console.log('rendering...', item);
-    return (
+    // return (
     //   <img
     //   src='./text_placeholder.jpeg'
     //   alt={'A circle with a T in it as a placeholder.'}
     //   style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
     // />
-    <p>{title}</p>
-    )
+    // <p>{title}</p>
+    // )
   }
 
   return (
