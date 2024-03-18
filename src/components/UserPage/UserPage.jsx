@@ -294,9 +294,10 @@ function UserPage() {
               Waiver Acknowledgment
             </Typography>
             <Typography id="modal-description" sx={{ mt: 2 }}>
-              Please watch the video below and acknowledge the waiver before
-              continuing.
+              Clicking 'Acknowledge' indicates that you have read and agree to the content in the Media Release and Liability Waivers.
             </Typography>
+            <p><a href="/">Media Release Waiver</a></p>
+            <a href="/">Liability Waiver</a>
 
             <Button
               onClick={acknowledgeWaiver}
@@ -304,7 +305,7 @@ function UserPage() {
               color="primary"
               style={{ marginTop: "20px" }}
             >
-              Acknowledge Waiver and Continue
+              Acknowledge Waivers and Continue
             </Button>
           </Box>
         </Modal>
@@ -317,12 +318,10 @@ function UserPage() {
         >
           <Box sx={style}>
             <Typography id="post-waiver-modal-title" variant="h6" component="h2">
-              Welcome to the Community!
+              Welcome to TRACES
             </Typography>
             <Typography id="post-waiver-modal-description" sx={{ mt: 2 }}>
-              Thank you for acknowledging the waiver. You're now ready to explore
-              and contribute to our community. If you have any questions, feel
-              free to reach out to us.
+              It is important that you watch the following instructional video. It covers important information about how your mobile device will be used in this experience. 
             </Typography>
             <video controls style={{ width: "100%", marginTop: "20px" }}>
               <source src="your-video-url.mp4" type="video/mp4" />
