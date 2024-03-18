@@ -25,7 +25,7 @@ function Nav() {
   return (
     <div className="nav">
       <div className="nav-title" onClick={() => navigateTo("/")}>
-        <img src="./traces_logo_01.jpg" alt="Traces Logo" />
+        <img src="./traces_logo_01.jpg" alt="Traces Logo" style={{marginTop: '8px'}} />
         {/* <Typography>TRACES</Typography> */}
       </div>
       <div className="nav-controls">
