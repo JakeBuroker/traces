@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { DateTime } from "luxon";
 import {
     Avatar,
     Grid,
     Card,
     Typography,
-    CardMedia,
-    CardContent,
-    Chip
+    CardContent
 } from '@mui/material';
 import GalleryEnlargeModal from './GalleryEnlargeModal';
 
 export const GalleryPageEvCard = ({ item }) => {
     const [isOpen, setIsOpen] = useState(false);
-    // Determine if the item is a video or audio
+    const audioRef = useRef(null); // Reference to the audio element
+
+    // Determine if the item is a video, audio, or note
     const isVideo = item.media_type === 3;
     const isAudio = item.media_type === 4;
+    const isNote = item.media_type === 1;
+
+    // Styles for notes with ellipsis
+    const noteStyles = {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        display: '-webkit-box',
+        WebkitLineClamp: 3, // Number of lines you want to display
+        WebkitBoxOrient: 'vertical',
+        fontSize: '1rem', // Larger font size
+    };
 
     return (
         <>
@@ -32,52 +43,64 @@ export const GalleryPageEvCard = ({ item }) => {
                     <Typography
                         variant="h5"
                         component="div"
-                        sx={{ textAlign: "center", margin: "16px 0" }}
+                        sx={{ textAlign: "center", margin: "12px 0" }}
                     >
                         {item.title}
                     </Typography>
-                    {/* Conditional rendering based on media_type */}
-                    {isAudio ? (
-                        <audio
-                            src={item.aws_url}
-                            controls
-                            style={{
-                                width: "80%",
-                                alignSelf: "center",
-                            }}
-                            onClick={() => setIsOpen(true)}
-                        />
-                    ) : isVideo ? (
-                        <video
-                            src={item.aws_url}
-                            controls
-                            style={{
-                                height: 160,
-                                width: "80%",
-                                objectFit: "cover",
-                                alignSelf: "center",
-                            }}
-                            onClick={() => setIsOpen(true)}
-                        />
-                    ) : (
-                        <CardMedia
-                            component="img"
-                            src={item.aws_url}
-                            className="item-image"
-                            onClick={() => setIsOpen(true)}
-                            sx={{
-                                height: 160,
-                                width: "80%",
-                                objectFit: "cover",
-                                alignSelf: "center",
-                            }}
-                        />
+                    <hr style={{ width: '100%', alignSelf: 'center' }} />
+                    {isAudio && (
+                        <>
+                            <div style={{ width: "55%", alignSelf: "center", marginBottom: "-40px" }}>
+                                <img
+                                    src='./audio_placeholder.jpeg'
+                                    alt="Audio Placeholder"
+                                    style={{ width: "100%", height: 130, objectFit: "cover" }}
+                                />
+                            </div>
+                            <audio
+                                ref={audioRef}
+                                src={item.aws_url}
+                                controls
+                                style={{ width: "60%", alignSelf: "center", marginTop: "10px" }}
+                            />
+                            <hr style={{ width: '100%', alignSelf: 'center', marginTop: '5px' }} />
+                        </>
+                    )}
+                    {isVideo && (
+                        <>
+                            <video
+                                src={item.aws_url}
+                                controls
+                                style={{
+                                    height: 160,
+                                    width: "80%",
+                                    objectFit: "cover",
+                                    alignSelf: "center",
+                                }}
+                            />
+                            <hr style={{ width: '100%', alignSelf: 'center', marginTop: '5px' }} />
+                        </>
+                    )}
+                    {!isAudio && !isVideo && !isNote && (
+                        <>
+                            <img
+                                src={item.aws_url}
+                                alt={item.title}
+                                style={{
+                                    height: 160,
+                                    width: "80%",
+                                    objectFit: "cover",
+                                    alignSelf: "center",
+                                }}
+                            />
+                            <hr style={{ width: '100%', alignSelf: 'center' }} />
+                        </>
                     )}
                     <CardContent sx={{ flexGrow: 1, width: "100%" }}>
                         <Typography
                             variant="body2"
                             color="text.secondary"
-                            sx={{ marginBottom: 2 }}
+                            sx={noteStyles} // Apply custom styles for ellipsis and larger font
                         >
                             {item.notes}
                         </Typography>
@@ -88,14 +111,17 @@ export const GalleryPageEvCard = ({ item }) => {
                     >
                         Submitted by: {item.username}
                     </Typography>
-                    <Avatar alt={item.username} src={item.avatar_AWS_URL} sizes="small" sx={{position: 'absolute', bottom: 55, left: 11}}/> 
+                    <Avatar
+                        alt={item.username}
+                        src={item.avatar_AWS_URL || "./default_avi.jpeg"}
+                        sizes="small"
+                        sx={{ position: 'absolute', bottom: 55, left: 11 }}
+                    />
                     <Typography
                         variant="body2"
                         sx={{ position: "absolute", bottom: 10, left: 10 }}
                     >
-                        {DateTime.fromISO(item.date_posted).toLocaleString(
-                            DateTime.DATETIME_MED
-                        )}
+                        {DateTime.fromISO(item.date_posted).toLocaleString(DateTime.DATETIME_MED)}
                     </Typography>
                     <Typography
                         variant="body2"

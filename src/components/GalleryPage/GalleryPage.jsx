@@ -76,7 +76,7 @@ function GalleryPage() {
                     selectedMediaType={selectedMediaType}
                     onMediaTypeChange={handleMediaFilterChange} />
                 {/* <p>This is where the media will be rendered</p> */}
-                <Grid container spacing={2} justifyContent="center">
+                <Grid container spacing={2} justifyContent="center" style={{padding:"20px"}}>
                     {getFilteredEvidence()[`page${page}`]?.map((item) => (
                         <GalleryPageEvCard item={item} key={item.id} />
                     ))}
