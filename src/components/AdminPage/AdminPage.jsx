@@ -209,7 +209,7 @@ function AdminPage() {
             onClick={() => openAllPublicModal(true)}
             style={{
               backgroundColor: "#c40f0f", // Set the background color to red
-              color: "white", 
+              color: "hsl(0, 0%, 97%)", 
               marginRight: "10px", 
             }}
           >
@@ -220,7 +220,7 @@ function AdminPage() {
             onClick={() => openAllPublicModal(false)}
             style={{
               backgroundColor: "#c40f0f", 
-              color: "white",
+              color: "hsl(0, 0%, 97%)",
             }}
           >
             Make All Private
@@ -231,7 +231,7 @@ function AdminPage() {
           onClick={() => history.push('/registration')}
           style={{
             backgroundColor: "#c40f0f", 
-            color: "white",
+            color: "hsl(0, 0%, 97%)",
           }}
         >
           Register New User
@@ -244,7 +244,7 @@ function AdminPage() {
         rowsPerPageOptions={[5]}
         checkboxSelection={false}
         disableSelectionOnClick
-        style={{ height: 550, width: '100%', backgroundColor: 'white' }} // Increased height and adjusted style
+        style={{ height: 550, width: '100%', backgroundColor: 'hsl(0, 0%, 97%)' }} // Increased height and adjusted style
       
 
       />

@@ -35,45 +35,45 @@ function Nav() {
             <img onClick={() => navigateTo('/user')} src="./default_avi.jpeg" alt='The default avatar' className="nav-avatar" />
         )}
         <Dropdown>
-          <MenuButton sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white" } }}>
+          <MenuButton sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%)" } }}>
             <MenuIcon />
           </MenuButton>
-          <Menu sx={{ padding:"20px", color: "white", fontSize:"20px", backgroundColor: "#c40f0f", border: "black" }}>
+          <Menu sx={{ padding:"20px", color: "hsl(0, 0%, 97%)", fontSize:"20px", backgroundColor: "#c40f0f", border: "black" }}>
             {!user.id ? (
               <>
-                <MenuItem onClick={() => navigateTo('/home')}  sx={{color: "white", '&:hover': {backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                <MenuItem onClick={() => navigateTo('/home')}  sx={{color: "hsl(0, 0%, 97%)", '&:hover': {backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                   Home
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/about')} sx={{color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                <MenuItem onClick={() => navigateTo('/about')} sx={{color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                   About
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                   Gallery
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/login')} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                <MenuItem onClick={() => navigateTo('/login')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                   Login
                 </MenuItem>
               </>
             ) : (
               <>
-                <MenuItem onClick={() => navigateTo('/home')} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                <MenuItem onClick={() => navigateTo('/home')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                   Home
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/evidence')} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                <MenuItem onClick={() => navigateTo('/evidence')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                     Evidence
                   </MenuItem>
                 {user.role === 2 && (
-                  <MenuItem onClick={() => navigateTo('/admin')} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                  <MenuItem onClick={() => navigateTo('/admin')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                     Admin Page
                   </MenuItem>
                 )}
-                <MenuItem onClick={() => navigateTo('/about')} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                <MenuItem onClick={() => navigateTo('/about')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                   About
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                   Gallery
                 </MenuItem>
-                <MenuItem onClick={() => Logout()} sx={{ color: "white", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "white !important" }}}>
+                <MenuItem onClick={() => Logout()} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" }}}>
                   Logout
                 </MenuItem>
               </>

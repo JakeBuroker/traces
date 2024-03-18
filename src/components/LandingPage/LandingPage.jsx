@@ -17,13 +17,20 @@ function LandingPage() {
           <img src="/bridge.jpg" alt="An image of a bridge" style={{ display: 'block', width: '300px', margin: '25px auto', borderRadius: '5px' }} />
         </div>
         <div className="grid-col grid-col_12">
-          <Button className="btn" onClick={onLogin} sx={{marginTop: 0}}>
-            Login
-          </Button>
+        <Button 
+          variant="contained" 
+          onClick={() => history.push('/registration772237')}
+          style={{
+            backgroundColor: "#c40f0f", 
+            color: "hsl(0, 0%, 97%)",
+          }}
+        >
+          Register
+        </Button>
         </div>
 
         <div className="grid-col grid-col_12">
-          <Typography variant='body1' sx={{color: 'white'}}>
+          <Typography variant='body1' sx={{color: 'hsl(0, 0%, 97%)'}}>
             Welcome to Traces, the premier private investigator company where mysteries unravel and secrets are uncovered.
             With our cutting-edge technology, keen intuition, and unwavering dedication to justice, Traces is renowned for solving the unsolvable.
             Whether it's tracking down elusive suspects, delving into clandestine affairs, or unearthing hidden truths,

@@ -12,7 +12,7 @@ function HelpPage() {
         <p>Video Coming Soon!</p>
       </div>
       <Button sx={{    backgroundColor: "#c40f0f",
-    color: "white",
+    color: "hsl(0, 0%, 97%)",
     padding: "10px"}}>Tutorial</Button>
       <h2 style={{padding:"30px"}}>FAQ</h2>
       <ul>
