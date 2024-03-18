@@ -51,7 +51,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
       <video
         src={aws_url}
         controls
-        style={{ width: '100%', height: 'auto', objectFit: "cover", margin: '5px 0' }}
+        style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "cover", margin: '5px 0' }}
         poster='./audio_placeholder.jpeg'
       />)
     } else if (media_type === 3) {
@@ -60,7 +60,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
         <video
         src={aws_url}
         controls
-        style={{ width: '100%', height: 'auto', objectFit: "cover", margin: '5px 0' }}
+        style={{maxHeight: "500px", maxWidth: "100%", objectFit: "cover", margin: '5px 0' }}
         poster='./video_placeholder.jpeg'
       />
       )
@@ -69,7 +69,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
         <img
         src={aws_url}
         alt={title}
-        style={{ width: '100%', height: 'auto', objectFit: "cover", margin: '5px 0' }}
+        style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "cover", margin: '5px 0' }}
       />
       )
     }
@@ -89,11 +89,11 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
         open={isOpen}
         onClose={onClose}
         fullWidth
-        maxWidth="md"
+        maxWidth="sm"
       >
         <DialogContent>
           {selectedItem && (
-            <div>
+            <div style={{display: 'flex', flexDirection: 'column', alignContent: 'center'}}>
               {renderImageForMediaItem(selectedItem)}
               {/* <img
                 src={selectedItem.aws_url}

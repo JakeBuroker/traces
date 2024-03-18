@@ -41,7 +41,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
 
   const formatLongTitles = (title) => {
     if (title?.length > 8) { // returns the first word and elipses
-      return title.split(' ').filter((word, i) => i < 1).toSpliced(1, 0, '. . .').join(' ')
+      return title.split('').filter((word, i) => i < 8).toSpliced(8, 0, ' ...').join('')
     }
     return title
   }
