@@ -28,6 +28,13 @@ export default function EvidenceUploadButton() {
         history.push('/evidenceupload'); // Navigating to the evidence upload page
     };
 
+    const handleNotesUpload = (event) => {
+        event.preventDefault(); // Preventing default behavior of the button
+        setEvidenceType(1); // Setting the evidence type state variable
+        dispatch({ type: 'SET_EVIDENCE_TYPE', payload: 1 }); // Dispatching an action to store the evidence type in Redux state
+        history.push('/evidence-details'); // Navigating to the evidence upload page
+    };
+
     // JSX return
     return (
         <div className='button-container'>
@@ -48,7 +55,7 @@ export default function EvidenceUploadButton() {
                         <img className='images' src="/recordInputIcon.jpg" alt="Audio Upload" />
                     </button>
                     {/* Button for notes uploads */}
-                    <button onClick={handleEvidenceUpload} className="additional-button" id="notesbutton">
+                    <button onClick={handleNotesUpload} className="additional-button" id="notesbutton">
                         <img className='images' src="/notesInputIcon.jpg" alt="Notes Upload" />
                     </button>
                 </div>
