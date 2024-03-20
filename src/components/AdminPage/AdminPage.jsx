@@ -201,7 +201,7 @@ function AdminPage() {
   }));
   return (
     <div style={{ padding: "75px", height: 500, width: "100%" }}>
-      <h1>Evidence Administration</h1>
+      <h1 style={{fontFamily: 'Merriweather', color: 'white'}}>Evidence Administration</h1>
       <div style={{padding: '30px', display: 'flex', justifyContent: 'space-between'}}>
         <div style={{display: 'flex', gap: '20px'}}> {/* Added gap for spacing */}
           <Button 
