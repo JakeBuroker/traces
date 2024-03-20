@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'; // For the back button
 import './EvidenceDetailsPage.css'; // Ensure this CSS file contains your desired styles
 import { green, red } from "@mui/material/colors";
+import BackButton from "../BackButton/BackButton";
 
 export default function EvidenceDetails() {
   const [title, setTitle] = useState("");
@@ -56,6 +57,7 @@ export default function EvidenceDetails() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "auto", maxWidth: "600px", padding: "20px" }}>
+      <BackButton/>
       <Button
         startIcon={<ArrowBackIosNewIcon />}
         onClick={() => history.push('/evidence')}

@@ -36,6 +36,10 @@ const recordVideo = () => {
   console.log('recording video');
   document.getElementById('videoInput').click()
 }
+const audioClick = () => {
+  console.log('clicking audio');
+
+}
 
 
 
@@ -102,8 +106,9 @@ My custom choose file label
     return (
       <div 
       style={{ padding: "55px" }}
-      className = "basicBackground">
-        {/* <BackButton/> */}
+      className = "basicBackground"
+      onClick={audioClick}>
+        <BackButton/>
         <input
          id = "fileInput"
           className = 'fileInput'
@@ -116,8 +121,10 @@ My custom choose file label
         className = 'fileButton'
         onClick= {clickFile} 
         />
+        <div className = "audioRecorderDiv">
         <AudioUploadElement 
         className="audioRecorder"/>
+        </div>
       </div>
     );
   } else {
