@@ -1,7 +1,9 @@
 import React from 'react';
 import { Dialog, DialogContent, Typography } from '@mui/material';
 
+// Functional component for enlarging gallery items in a modal
 const GalleryEnlargeModal = ({ selectedItem, isOpen, setIsOpen }) => {
+    // Function to handle modal close
     const onClose = () => setIsOpen(false);
 
     // Function to determine and render content based on media type
@@ -35,6 +37,7 @@ const GalleryEnlargeModal = ({ selectedItem, isOpen, setIsOpen }) => {
         }
     };
 
+    // JSX for rendering the modal
     return (
         <Dialog open={isOpen} onClose={onClose} fullWidth maxWidth="md">
             <DialogContent style={{ padding: 0 }}>{selectedItem && renderContent()}</DialogContent>
@@ -42,4 +45,4 @@ const GalleryEnlargeModal = ({ selectedItem, isOpen, setIsOpen }) => {
     );
 };
 
-export default GalleryEnlargeModal;
+export default GalleryEnlargeModal; // Exporting the component

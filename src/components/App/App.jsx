@@ -26,13 +26,6 @@ function App() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
 
-
-  // const theme = createTheme({
-  //   typography: {
-  //     h1: 'Merriweather, serif'
-  //   },
-  // })
-
   useEffect(() => {
     dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
@@ -124,10 +117,8 @@ function App() {
           </Route>
 
           <Route exact path="/home">
-           
-              // Otherwise, show the Landing page
-              <LandingPage />
-            
+            {/* Otherwise, show the Landing page */}
+            <LandingPage />
           </Route>
 
           <Route
