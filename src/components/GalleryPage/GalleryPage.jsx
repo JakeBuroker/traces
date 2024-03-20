@@ -10,18 +10,22 @@ function GalleryPage() {
     const [pageCount, setPageCount] = useState(0); // Initialize as 0
     const [selectedMediaType, setSelectedCategories] = useState("all");
 
+    // Fetch public evidence on component mount
     useEffect(() => {
         fetchAllPublic();
     }, []);
 
+    // Function to handle page change in pagination
     const handleChange = (event, value) => {
         setPage(value);
     };
 
+    // Function to handle media filter change
     const handleMediaFilterChange = (event, newMediaType) => {
         setSelectedCategories(newMediaType);
     };
 
+    // Function to filter evidence based on selected media type and paginate results
     const getFilteredEvidence = () => {
         if (selectedMediaType === 'all') {
             return paginateResults(publicEvidence);
@@ -30,11 +34,10 @@ function GalleryPage() {
         return paginateResults(publicEvidence.filter(item => item.media_type === mediaTypeInt));
     };
 
-    // Adjusted to fit 2 rows of 4 cards each
+    // Function to paginate results
     const paginateResults = (array) => {
         const itemsPerPage = 8; // 2 rows of 4
         let pages = {};
-        let currentPage = 1;
         
         array.forEach((item, index) => {
             const page = Math.floor(index / itemsPerPage) + 1;
@@ -47,6 +50,7 @@ function GalleryPage() {
         return pages;
     }
 
+    // Function to fetch all public evidence
     const fetchAllPublic = () => {
         axios.get('/api/evidence/public')
             .then(response => {
@@ -57,26 +61,22 @@ function GalleryPage() {
             });
     }
 
-    if (publicEvidence.length === 0) {
-        return (<div><h2 style={{ textAlign: 'center', paddingTop: '120px' }}>All Evidence To Be Declassified Soon.</h2></div>);
-    } else {
-        return (
-            <div style={{ padding: "65px" }}>
-                {/* <h2 style={{ leftPadding: "65px", padding: "5px" }} >Evidence Gallery: Declassified</h2> */}
-                <MediaFilter selectedMediaType={selectedMediaType} onMediaTypeChange={handleMediaFilterChange} />
-                <Grid container spacing={2} justifyContent="center" style={{ padding: "20px" }}>
-                    {getFilteredEvidence()[`page${page}`]?.map((item) => (
-                        <GalleryPageEvCard item={item} key={item.id} />
-                    ))}
-                </Grid>
-                <Grid container spacing={2} justifyContent="center">
-                    <Stack spacing={2} style={{ padding: '50px' }}>
-                        <Pagination count={pageCount} page={page} onChange={handleChange} />
-                    </Stack>
-                </Grid>
-            </div>
-        );
-    }
+    // Render gallery page
+    return (
+        <div style={{ padding: "65px" }}>
+            <MediaFilter selectedMediaType={selectedMediaType} onMediaTypeChange={handleMediaFilterChange} />
+            <Grid container spacing={2} justifyContent="center" style={{ padding: "20px" }}>
+                {getFilteredEvidence()[`page${page}`]?.map((item) => (
+                    <GalleryPageEvCard item={item} key={item.id} />
+                ))}
+            </Grid>
+            <Grid container spacing={2} justifyContent="center">
+                <Stack spacing={2} style={{ padding: '50px' }}>
+                    <Pagination count={pageCount} page={page} onChange={handleChange} />
+                </Stack>
+            </Grid>
+        </div>
+    );
 }
 
 export default GalleryPage;

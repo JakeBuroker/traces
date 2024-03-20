@@ -9,6 +9,11 @@ import {
 } from '@mui/material';
 import GalleryEnlargeModal from './GalleryEnlargeModal';
 
+/**
+ * Component to render each evidence item in the gallery.
+ * @param {Object} item - The evidence item to render.
+ * @returns JSX.Element
+ */
 export const GalleryPageEvCard = ({ item }) => {
     const [isOpen, setIsOpen] = useState(false);
     const audioRef = useRef(null); // Reference to the audio element
@@ -39,7 +44,7 @@ export const GalleryPageEvCard = ({ item }) => {
                         position: "relative",
                         height: 450,
                     }}
-                    onClick={() => setIsOpen(true)} // Add this line
+                    onClick={() => setIsOpen(true)}
                 >
                     <Typography
                         variant="h5"
@@ -64,8 +69,7 @@ export const GalleryPageEvCard = ({ item }) => {
                                 controls
                                 style={{ width: "60%", alignSelf: "center", marginTop: "10px" }}
                             />
-                            <hr style={{ width: '100%', alignSelf: 'center', 
-                             }} />
+                            <hr style={{ width: '100%', alignSelf: 'center' }} />
                         </>
                     )}
                     {isVideo && (
@@ -80,9 +84,7 @@ export const GalleryPageEvCard = ({ item }) => {
                                     alignSelf: "center",
                                 }}
                             />
-                            <hr style={{ width: '100%', alignSelf: 'center', 
-                            
-                             }} />
+                            <hr style={{ width: '100%', alignSelf: 'center' }} />
                         </>
                     )}
                     {!isAudio && !isVideo && !isNote && (

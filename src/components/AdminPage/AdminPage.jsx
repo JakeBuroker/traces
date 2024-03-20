@@ -33,10 +33,12 @@ function AdminPage() {
   const [allPublicConfirmModalOpen, setAllPublicConfirmModalOpen] = useState(false);
   const [makeAllPublic, setMakeAllPublic] = useState(true);
 
+  // Fetch evidence on component mount
   useEffect(() => {
     fetchEvidence();
   }, []);
 
+  // Fetch evidence function
   const fetchEvidence = () => {
     axios
       .get("/api/evidence/admin")
@@ -48,6 +50,7 @@ function AdminPage() {
       });
   };
 
+  // Toggle evidence visibility
   const toggleIsPublic = (id) => {
     axios.put(`/api/evidence/clearance/${id}`)
       .then(() => {
@@ -57,6 +60,7 @@ function AdminPage() {
       });
   };
 
+  // Handle making all evidence public/private
   const handleMakeAllPublic = (bool) => {
     let route = bool ? 'makeAllPublic' : 'makeAllSecret';
     axios.put(`/api/evidence/${route}`)
@@ -68,6 +72,7 @@ function AdminPage() {
       });
   };
 
+  // Edit mode handler
   const handleEdit = (item) => {
     setEditsInput({
       id: item.id,
@@ -78,6 +83,7 @@ function AdminPage() {
     setInEditMode(true);
   };
 
+  // Update evidence handler
   const handleUpdate = (item) => {
     axios.put(`/api/evidence/update/${item.id}`, {
       title: item.title,
@@ -91,6 +97,7 @@ function AdminPage() {
     });
   };
 
+  // Delete evidence function
   const deleteEvidence = (evidenceId) => {
     axios.delete(`/api/evidence/delete/${evidenceId}`)
       .then(() => {
@@ -105,39 +112,47 @@ function AdminPage() {
       });
   };
 
+  // Open details modal
   const openModal = (item) => {
     setSelectedItem(item);
     setDetailsModalOpen(true);
   };
 
+  // Close modals and reset edit mode
   const closeModal = () => {
     setSelectedItem(null);
     setDetailsModalOpen(false);
     setInEditMode(false);
   };
 
+  // Open delete confirmation modal
   const openDeleteConfirmModal = (item) => {
     setSelectedItem(item);
     setDeleteModalOpen(true);
     setInEditMode(false);
   };
 
+  // Open public confirmation modal
   const openPublicConfirmModal = (item) => {
     setSelectedItem(item);
     setConfirmModalOpen(true);
   };
 
+  // Open all public/private confirmation modal
   const openAllPublicModal = (bool) => {
     setMakeAllPublic(bool);
     setAllPublicConfirmModalOpen(true);
   };
 
+  // Data grid columns
   const columns = [
     { field: "title", headerName: "Evidence Title", width: 150 },
     { field: "location", headerName: "Location", width: 150 },
     { field: "datePosted", headerName: "Date Posted", width: 200 },
     { field: "notes", headerName: "Notes", width: 200 },
     { field: "postedBy", headerName: "Posted By", width: 200 },
+
+    // Details button
     {
       field: "actions",
       headerName: "Details",
@@ -153,6 +168,8 @@ function AdminPage() {
         </div>
       ),
     },
+
+    // Toggle visibility button
     {
       field: "actions1",
       headerName: "Toggle Secrecy",
@@ -170,6 +187,8 @@ function AdminPage() {
         </div>
       ),
     },
+
+    // Delete button
     {
       field: "actions2",
       headerName: "Delete?",
@@ -188,6 +207,7 @@ function AdminPage() {
     },
   ];
 
+  // Transform evidence data for DataGrid
   const rows = evidenceList.map((item) => ({
     id: item.id,
     title: item.title,
@@ -199,11 +219,16 @@ function AdminPage() {
     isPublic: item.is_public,
     media_type: item.media_type, // Assuming this property exists
   }));
-  return (
+
+
+   // Render the component
+   return (
     <div style={{ padding: "75px", height: 500, width: "100%" }}>
       <h1 style={{fontFamily: 'Merriweather', color: 'white'}}>Evidence Administration</h1>
       <div style={{padding: '30px', display: 'flex', justifyContent: 'space-between'}}>
         <div style={{display: 'flex', gap: '20px'}}> {/* Added gap for spacing */}
+
+          {/* Button to make all evidence public */}
           <Button 
             variant="contained" // Changed to "contained" for a solid background
             onClick={() => openAllPublicModal(true)}
@@ -215,6 +240,8 @@ function AdminPage() {
           >
             Make All Public
           </Button>
+
+          {/* Button to make all evidence private */}
           <Button 
             variant="contained" 
             onClick={() => openAllPublicModal(false)}
@@ -226,6 +253,8 @@ function AdminPage() {
             Make All Private
           </Button>
         </div>
+
+        {/* Button to register new user */}
         <Button 
           variant="contained" 
           onClick={() => history.push('/registration')}
@@ -237,6 +266,8 @@ function AdminPage() {
           Register New User
         </Button>
       </div>
+
+      {/* DataGrid component for displaying evidence */}
       <DataGrid
         rows={rows}
         columns={columns}
@@ -245,14 +276,14 @@ function AdminPage() {
         checkboxSelection={false}
         disableSelectionOnClick
         style={{ height: 550, width: '100%', backgroundColor: 'hsl(0, 0%, 97%)' }} // Increased height and adjusted style
-      
-
       />
+
       {/* Details Modal */}
       <Dialog open={detailsModalOpen} onClose={closeModal} fullWidth maxWidth="md">
         <DialogContent>
           {selectedItem && (
             <div>
+
               {/* Conditional rendering for audio, video, or image */}
               {selectedItem.media_type === 4 ? (
                 <audio
@@ -274,6 +305,8 @@ function AdminPage() {
                   style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "contain" }}
                 />
               )}
+
+              {/* Title */}
               {inEditMode ? (
                 <Typography variant="h5">
                   Title: <input value={editsInput.title} onChange={(e) => setEditsInput({ ...editsInput, title: e.target.value })} />
@@ -281,6 +314,8 @@ function AdminPage() {
               ) : (
                 <Typography variant="h5">Title: {selectedItem.title}</Typography>
               )}
+
+              {/* Notes */}
               {inEditMode ? (
                 <Typography variant="h5">
                   Notes: <input value={editsInput.notes} onChange={(e) => setEditsInput({ ...editsInput, notes: e.target.value })} />
@@ -288,7 +323,11 @@ function AdminPage() {
               ) : (
                 <Typography variant="body1">Notes: {selectedItem.notes}</Typography>
               )}
+
+              {/* Location */}
               <Typography variant="body1">Location: {selectedItem.location}</Typography>
+
+              {/* Edit and delete buttons */}
               <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
                 {inEditMode ? (
                   <Chip
@@ -318,14 +357,16 @@ function AdminPage() {
           )}
         </DialogContent>
       </Dialog>
+
       {/* Delete Confirmation Modal */}
       <Dialog open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false); setInEditMode(false); }}>
-  <DialogContent>
-    <Typography>Are you sure you want to delete this evidence?</Typography>
-    <Button onClick={() => deleteEvidence(selectedItem.id)} color="error">Delete</Button>
-    <Button onClick={() => { setDeleteModalOpen(false); setInEditMode(false); }}>Cancel</Button>
-  </DialogContent>
-</Dialog>
+        <DialogContent>
+          <Typography>Are you sure you want to delete this evidence?</Typography>
+          <Button onClick={() => deleteEvidence(selectedItem.id)} color="error">Delete</Button>
+          <Button onClick={() => { setDeleteModalOpen(false); setInEditMode(false); }}>Cancel</Button>
+        </DialogContent>
+      </Dialog>
+
       {/* Public Confirmation Modal */}
       <Dialog open={publicConfirmModalOpen} onClose={() => setConfirmModalOpen(false)}>
         <DialogContent>
@@ -334,6 +375,7 @@ function AdminPage() {
           <Button onClick={() => setConfirmModalOpen(false)}>Cancel</Button>
         </DialogContent>
       </Dialog>
+
       {/* All Public/Private Confirmation Modal */}
       <Dialog open={allPublicConfirmModalOpen} onClose={() => setAllPublicConfirmModalOpen(false)}>
         <DialogContent>
@@ -347,6 +389,3 @@ function AdminPage() {
 }
 
 export default AdminPage;
-
-
-

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// Import necessary components from Material-UI
 import {
   Button,
   Dialog,
@@ -12,8 +12,9 @@ import {
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
+// Functional component for rendering evidence details modal
 const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, deleteEvidence, acceptedMedia }) => {
-  const [isEditing, setIsEditing] = useState(false)
+  // State variables for managing the modal
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [formState, setFormState] = useState({
     user_id: selectedItem.id,
@@ -21,17 +22,19 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
     notes: selectedItem.notes,
   });
 
-
+  // Function to cancel the deletion operation
   const cancelDelete = () => {
     setDeleteModalOpen(false)
   };
 
+  // Function to handle the deletion of evidence
   const handleDelete = (id) => {
     deleteEvidence(id)
     setDeleteModalOpen(false)
     onClose()
   }
 
+  // Function to handle saving changes to the evidence
   const handleSave = (id) => {
     const formData = new FormData();
     formData.append("title", formState.title);
@@ -39,12 +42,12 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
     if (formState.file) {
       formData.append("file", formState.file);
     }
-    setIsEditing(false);
     // function for PUT request
     editEvidence(id, formData)
     onClose()
   };
 
+  // Function to render different media types
   const renderImageForMediaItem = ({media_type, aws_url, title}) => {
     if (media_type === 4) {
       return ( // Render an audio element for audio files
@@ -66,6 +69,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
       )
     } else if (media_type === 2) {
       return (
+        // Render an image for image files
         <img
         src={aws_url}
         alt={title}
@@ -73,18 +77,12 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
       />
       )
     }
-    // console.log('rendering...', item);
-    // return (
-    //   <img
-    //   src='./text_placeholder.jpeg'
-    //   alt={'A circle with a T in it as a placeholder.'}
-    //   style={{ width: '100%', height: 'auto', objectFit: "cover", margin: '5px 0' }}
-    // />
-    // )
   }
 
+  // Return statement for rendering the evidence details modal
   return (
     <>
+      {/* Dialog for displaying evidence details */}
       <Dialog
         open={isOpen}
         onClose={onClose}
@@ -95,20 +93,19 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
           {selectedItem && (
             <div style={{display: 'flex', flexDirection: 'column', alignContent: 'center'}}>
               {renderImageForMediaItem(selectedItem)}
-              {/* <img
-                src={selectedItem.aws_url}
-                alt={selectedItem.title}
-                style={{ width: "100%", height: "auto", objectFit: "cover", border: "solid" }}
-              /> */}
+              {/* Display evidence title */}
               <Typography variant="h5" style={{ textAlign: "center" }}>
                 {selectedItem.title}
               </Typography>
+              {/* Display evidence notes */}
               <Typography variant="body1" style={{ textAlign: "center" }}>
                 {selectedItem.notes}
               </Typography>
+              {/* Display evidence location */}
               <Typography variant="body1" style={{ textAlign: "center" }}>
                 Location: {selectedItem.location}
               </Typography>
+              {/* Chips for edit and delete actions */}
               <div
                 style={{
                   display: "flex",
@@ -116,6 +113,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
                   gap: "10px",
                 }}
               >
+                {/* Chip for editing evidence */}
                 <Chip
                   icon={<CreateIcon />}
                   label="Edit"
@@ -123,6 +121,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
                   color="default"
                   style={{ cursor: "pointer" }}
                 />
+                {/* Chip for deleting evidence */}
                 <Chip
                   icon={<DeleteForeverIcon />}
                   label="Delete"
@@ -135,21 +134,26 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
           )}
         </DialogContent>
       </Dialog>
+      {/* Dialog for confirming evidence deletion */}
       <Dialog open={deleteModalOpen} onClose={cancelDelete}>
         <DialogTitle>Confirm Delete</DialogTitle>
         <DialogContent>
+          {/* Message for confirming deletion */}
           <Typography>
             Are you sure you want to delete this evidence?
           </Typography>
         </DialogContent>
         <DialogActions>
+          {/* Button to cancel deletion */}
           <Button onClick={cancelDelete} autoFocus>Cancel</Button>
+          {/* Button to confirm deletion */}
           <Button onClick={() => handleDelete(selectedItem.id)} color="warning">
             Confirm
           </Button>
         </DialogActions>
       </Dialog>
 
+      {/* Dialog for editing evidence */}
       <Dialog
         open={isEditing}
         onClose={(event, reason) => {
@@ -204,7 +208,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
             Save
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> 
     </>
   );
 };
