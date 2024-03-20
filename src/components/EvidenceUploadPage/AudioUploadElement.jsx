@@ -3,7 +3,7 @@ import { AudioRecorder, useAudioRecorder } from 'react-audio-voice-recorder';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import "./EvidenceUploadPage.css"
+import './EvidenceUploadPage.css'
 
 export default function AudioUploadElement(props) {
   const history = useHistory()
@@ -18,10 +18,8 @@ export default function AudioUploadElement(props) {
     recordingTime,
     mediaRecorder
   } = useAudioRecorder();
-
   useEffect(() => {
     if (!recordingBlob) return;
-
     // recordingBlob will be present at this point after 'stopRecording' has been called
   }, [recordingBlob])
 
@@ -46,6 +44,7 @@ export default function AudioUploadElement(props) {
     <div>
 
       <AudioRecorder 
+      id = "audioRecorder"
       style={{backgroundColor:"blue"}}
       onClick={console.log('clicking audio record')}
          onRecordingComplete={(blob) => addAudioElement(blob)}

@@ -73,14 +73,6 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
       />
       )
     }
-    // console.log('rendering...', item);
-    // return (
-    //   <img
-    //   src='./text_placeholder.jpeg'
-    //   alt={'A circle with a T in it as a placeholder.'}
-    //   style={{ width: '100%', height: 'auto', objectFit: "cover", margin: '5px 0' }}
-    // />
-    // )
   }
 
   return (
@@ -210,3 +202,4 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
 };
 
 export default EvidenceDetailsModal;
+

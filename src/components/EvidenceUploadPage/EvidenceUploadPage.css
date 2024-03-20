@@ -74,3 +74,60 @@
     transform: translateX(-50%); /* Adjust horizontally to center */
     background-color: aqua;
 }
+
+.audioRecorderDiv{
+    position: fixed;
+    bottom: 50px; /* Distance from the bottom of the viewport */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontally to center */
+    content:icon;
+}
+
+div.audio-recorder {
+    background-color: black;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    align-items: center;
+}
+div.audio-recorder.recording{
+    width: 150px;
+}
+span.audio-recorder-status{
+    background-color: #f0f0f0;
+    position: fixed;
+    bottom: 200px; /* Distance from the bottom of the viewport */
+    left: 40%;
+    transform: translateX(-50%); /* Adjust horizontally to center */
+}
+span.audio-recorder-timer{
+    background-color: #f0f0f0;
+    position: fixed;
+    bottom: 200px;
+    left: 10px; 
+    transform: translateX(-50%); 
+}
+img.audio-recorder-options{
+    background-color: #f0f0f0;
+    position: relative;
+    bottom: 110px;
+    right: -40px; 
+    transform: translateX(-50%);
+}
+.audio-recorder .audio-recorder-mic {
+    border-radius: 50% !important;
+}
+img.audio-recorder-mic{
+    background-color: white;
+    border-color: #f0f0f0;
+    src: url('/FileIcon.jpg') !important; 
+    width: 150px;
+    height: 150px;
+    border-width: 10px;
+    border-color: #f0f0f0;
+    border-radius: 50%;
+}
+
+
+
+

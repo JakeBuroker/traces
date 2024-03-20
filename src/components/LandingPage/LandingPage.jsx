@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Box } from '@mui/material';
 import './LandingPage.css';
 
 function LandingPage() {
   const history = useHistory();
 
-  const onLogin = (event) => {
+  const onLogin = () => {
     history.push('/login');
   };
 
   return (
-    <div className="container" style={{ padding: '60px 20px', }}>
+    <Box className="container" sx={{ padding: '60px 20px' }}>
       <div className="grid">
         <div className='grid-col grid-col_12'>
-          <img src="/bridge.jpg" alt="An image of a bridge" style={{ display: 'block', width: '300px', margin: '25px auto', borderRadius: '5px' }} />
+          <img src="/bridge.jpg" alt="An image of a bridge" sx={{ display: 'block', width: '300px', margin: '25px auto', borderRadius: '5px' }} />
         </div>
         <div className="grid-col grid-col_12">
         <Button className="btn" onClick={onLogin}>
@@ -38,7 +38,7 @@ function LandingPage() {
           </Button>
         </div>
       </div>
-    </div >
+    </Box>
   );
 }
 
