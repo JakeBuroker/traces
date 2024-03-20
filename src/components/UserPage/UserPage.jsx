@@ -14,8 +14,8 @@ const theme = createTheme({
         root: {
           // Default label color
           '&.Mui-focused': {
-            color: 'black', // Color of label text when the input is focused
-          }
+            color: '#f2f2f2', // Color of label text when the input is focused
+          },
         },
       },
     },
@@ -23,7 +23,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black', // Change focus border color to black
+            borderColor: '#f2f2f2', // Change focus border color to black
           },
         },
       },
@@ -49,6 +49,7 @@ function UserPage() {
     if (user.alias && !user.waiver_acknowledged) {
       setOpenModal(true);
     }
+    console.log(theme);
   }, [user.alias, user.waiver_acknowledged]);
 
   useEffect(() => {
@@ -269,7 +270,7 @@ function UserPage() {
               display: "flex",
               flexDirection: "column",
               gap: "10px",
-              color: "hsl(0, 0%, 97%)",
+              color: "#f2f2f2",
             }}
             className="info-display"
           >

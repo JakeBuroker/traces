@@ -61,7 +61,7 @@ function GalleryPage() {
         return (<div><h2 style={{ textAlign: 'center', paddingTop: '120px' }}>All Evidence To Be Declassified Soon.</h2></div>);
     } else {
         return (
-            <div style={{ padding: "65px" }}>
+            <div style={{ padding: "65px 0" }}>
                 {/* <h2 style={{ leftPadding: "65px", padding: "5px" }} >Evidence Gallery: Declassified</h2> */}
                 <MediaFilter selectedMediaType={selectedMediaType} onMediaTypeChange={handleMediaFilterChange} />
                 <Grid container spacing={2} justifyContent="center" style={{ padding: "20px" }}>

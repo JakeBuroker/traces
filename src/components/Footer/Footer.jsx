@@ -7,7 +7,7 @@ import './Footer.css';
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 function Footer() {
-  return <footer>&copy; Traces </footer>;
+  return <footer style={{color: '#f2f2f2'}}>&copy; Traces </footer>;
 }
 
 export default Footer;
