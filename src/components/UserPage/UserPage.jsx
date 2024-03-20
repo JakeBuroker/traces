@@ -16,6 +16,7 @@ const theme = createTheme({
           '&.Mui-focused': {
             color: '#f2f2f2', // Color of label text when the input is focused
           },
+          color: '#f2f2f2',
         },
       },
     },
@@ -152,7 +153,7 @@ function UserPage() {
   return (
     <ThemeProvider theme={theme}>
       <div
-        style={{ padding: "70px 10px", color: "hsl(0, 0%, 97%)" }}
+        style={{ padding: "70px 10px",}}
         className="user-container"
       >
         {user.avatar_url ? (
@@ -183,6 +184,7 @@ function UserPage() {
               InputProps={{
                 style: {
                   color: "hsl(0, 0%, 97%)",
+
                 },
               }}
               label="Full Name"
