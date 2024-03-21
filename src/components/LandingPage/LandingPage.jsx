@@ -17,29 +17,23 @@ function LandingPage() {
           <img src="/bridge.jpg" alt="An image of a bridge" sx={{ display: 'block', width: '300px', margin: '25px auto', borderRadius: '5px' }} />
         </div>
         <div className="grid-col grid-col_12">
-          <Button 
-            variant="contained" 
-            onClick={() => history.push('/registration')}
-            sx={{
-              backgroundColor: "#c40f0f", 
-              color: "hsl(0, 0%, 97%)",
-            }}
-          >
-            Register
+        <Button className="btn" onClick={onLogin}>
+            Login
           </Button>
         </div>
 
         <div className="grid-col grid-col_12">
-          <Typography variant='body1' sx={{ color: 'hsl(0, 0%, 97%)', marginY: 2 }}>
-            Welcome to Traces, the premier private investigator company where mysteries unravel and secrets are uncovered. 
-            {/* Consider breaking this text into smaller paragraphs or sections for better readability */}
+          <Typography variant='body1' sx={{color: '#f2f2f2'}}>
+            Welcome to Traces, the premier private investigator company where mysteries unravel and secrets are uncovered.
+            With our cutting-edge technology, keen intuition, and unwavering dedication to justice, Traces is renowned for solving the unsolvable.
+            Whether it's tracking down elusive suspects, delving into clandestine affairs, or unearthing hidden truths,
+            trust Traces to crack the case and deliver justice served with a twist. Join us on this thrilling journey into the heart of the unknown,
+            where every clue is a piece of the puzzle waiting to be solved.
           </Typography>
         </div>
-        <div className="grid-col grid-col_12" sx={{ marginTop: '25px' }}>
-          <Typography variant="h6" sx={{ color: 'white' }}>
-            If you are participating in the play, please login.
-          </Typography>
-          <Button variant="contained" onClick={onLogin} sx={{ backgroundColor: "#c40f0f", color: "hsl(0, 0%, 97%)" }}>
+        <div className="grid-col grid-col_12" style={{ marginTop: '25px' }}>
+          <h4 style={{color: '#f2f2f2'}}>If you are participating in the play, please login.</h4>
+          <Button className="btn" onClick={onLogin}>
             Login
           </Button>
         </div>

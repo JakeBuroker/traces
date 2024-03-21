@@ -41,7 +41,7 @@ function LoginForm() {
           </h3>
         )}
         <div className="input-container">
-        <h4 htmlFor="username">
+        <h4 htmlFor="username" style={{color: '#f2f2f2'}}>
             Username:
             </h4>
           <input
@@ -53,7 +53,7 @@ function LoginForm() {
           />
         </div>
         <div className="input-container">
-          <h4 htmlFor="password">
+          <h4 htmlFor="password" style={{color: '#f2f2f2'}}>
             Password:
           </h4>
           <input

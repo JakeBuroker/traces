@@ -14,8 +14,9 @@ const theme = createTheme({
         root: {
           // Default label color
           '&.Mui-focused': {
-            color: 'black', // Color of label text when the input is focused
-          }
+            color: '#f2f2f2', // Color of label text when the input is focused
+          },
+          color: '#f2f2f2',
         },
       },
     },
@@ -23,7 +24,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'black', // Change focus border color to black
+            borderColor: '#f2f2f2', // Change focus border color to black
           },
         },
       },
@@ -49,6 +50,7 @@ function UserPage() {
     if (user.alias && !user.waiver_acknowledged) {
       setOpenModal(true);
     }
+    console.log(theme);
   }, [user.alias, user.waiver_acknowledged]);
 
   useEffect(() => {
@@ -151,7 +153,7 @@ function UserPage() {
   return (
     <ThemeProvider theme={theme}>
       <div
-        style={{ padding: "70px 10px", color: "hsl(0, 0%, 97%)" }}
+        style={{ padding: "70px 10px",}}
         className="user-container"
       >
         {user.avatar_url ? (
@@ -182,6 +184,7 @@ function UserPage() {
               InputProps={{
                 style: {
                   color: "hsl(0, 0%, 97%)",
+
                 },
               }}
               label="Full Name"
@@ -269,7 +272,7 @@ function UserPage() {
               display: "flex",
               flexDirection: "column",
               gap: "10px",
-              color: "hsl(0, 0%, 97%)",
+              color: "#f2f2f2",
             }}
             className="info-display"
           >

@@ -61,22 +61,26 @@ function GalleryPage() {
             });
     }
 
-    // Render gallery page
-    return (
-        <div style={{ padding: "65px" }}>
-            <MediaFilter selectedMediaType={selectedMediaType} onMediaTypeChange={handleMediaFilterChange} />
-            <Grid container spacing={2} justifyContent="center" style={{ padding: "20px" }}>
-                {getFilteredEvidence()[`page${page}`]?.map((item) => (
-                    <GalleryPageEvCard item={item} key={item.id} />
-                ))}
-            </Grid>
-            <Grid container spacing={2} justifyContent="center">
-                <Stack spacing={2} style={{ padding: '50px' }}>
-                    <Pagination count={pageCount} page={page} onChange={handleChange} />
-                </Stack>
-            </Grid>
-        </div>
-    );
+    if (publicEvidence.length === 0) {
+        return (<div><h2 style={{ textAlign: 'center', paddingTop: '120px' }}>All Evidence To Be Declassified Soon.</h2></div>);
+    } else {
+        return (
+            <div style={{ padding: "65px 0" }}>
+                {/* <h2 style={{ leftPadding: "65px", padding: "5px" }} >Evidence Gallery: Declassified</h2> */}
+                <MediaFilter selectedMediaType={selectedMediaType} onMediaTypeChange={handleMediaFilterChange} />
+                <Grid container spacing={2} justifyContent="center" style={{ padding: "20px" }}>
+                    {getFilteredEvidence()[`page${page}`]?.map((item) => (
+                        <GalleryPageEvCard item={item} key={item.id} />
+                    ))}
+                </Grid>
+                <Grid container spacing={2} justifyContent="center">
+                    <Stack spacing={2} style={{ padding: '50px' }}>
+                        <Pagination count={pageCount} page={page} onChange={handleChange} />
+                    </Stack>
+                </Grid>
+            </div>
+        );
+    }
 }
 
 export default GalleryPage;
