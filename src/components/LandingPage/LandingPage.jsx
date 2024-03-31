@@ -17,8 +17,8 @@ function LandingPage() {
           <img src="/bridge.jpg" alt="An image of a bridge" sx={{ display: 'block', width: '300px', margin: '25px auto', borderRadius: '5px' }} />
         </div>
         <div className="grid-col grid-col_12">
-        <Button className="btn" onClick={onLogin}>
-            Login
+        <Button className="btn" onClick={() => {history.push('/registration772237')}}>
+            Register
           </Button>
         </div>
 
