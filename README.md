@@ -83,5 +83,11 @@ Generate a strong SERVER_SESSION_SECRET with [Password Generator Plus](https://p
 Database Setup
 Ensure PostgreSQL is running. Create a traces database and use the provided database.sql script to set up the necessary tables.
 
-Contact
-For any inquiries regarding this project, reach out to us at JakeTBuroker@gmail.com.
+### Contact
+For any questions, comments, or inquiries regarding this project, please email me at JakeTBuroker@gmail.com, or connect with our team on LinkedIn!
+
+[![Linkedin: JakeBuroker](https://img.shields.io/badge/-JakeBuroker-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/jakeburoker/)](https://www.linkedin.com/in/jakeburoker/)
+[![Linkedin: GavinPopken](https://img.shields.io/badge/-GavinPopken-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/gavinpopkenart/)](https://www.linkedin.com/in/gavinpopkenart/)
+[![Linkedin: StevieLindsey](https://img.shields.io/badge/-StevieLindsey-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/stevie-lindsey/)](https://www.linkedin.com/in/stevie-lindsey/)
+[![Linkedin: MichaelJancik-Kitowski](https://img.shields.io/badge/-MichaelJancik-Kitowski-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/michael-jancik-kitowski-00aa24114/)](https://www.linkedin.com/in/michael-jancik-kitowski/)
+
