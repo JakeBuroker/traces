@@ -73,10 +73,11 @@ Try out the Traces app live: https://traces-project-b89e883c2e31.herokuapp.com/#
 Include the following in your `.env` file, replacing placeholder text with your actual configuration:
 
 ```plaintext
-BUCKET_NAME=YourS3BucketName
-BUCKET_REGION=YourBucketRegion
-ACCESS_KEY=YourAWSAccessKey
-SECRET
+BUCKET_NAME='your_bucket_name'
+BUCKET_REGION='your_region'
+ACCESS_KEY='your_access_key'
+SECRET_ACCESS_KEY='your_secret_access_key'
+SERVER_SESSION_SECRET='a_strong_random_string'
 ```
 Generate a strong SERVER_SESSION_SECRET with [Password Generator Plus](https://passwordsgenerator.net/).
 
@@ -89,5 +90,4 @@ For any questions, comments, or inquiries regarding this project, please email m
 [![Linkedin: JakeBuroker](https://img.shields.io/badge/-JakeBuroker-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/jakeburoker/)](https://www.linkedin.com/in/jakeburoker/)
 [![Linkedin: GavinPopken](https://img.shields.io/badge/-GavinPopken-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/gavinpopkenart/)](https://www.linkedin.com/in/gavinpopkenart/)
 [![Linkedin: StevieLindsey](https://img.shields.io/badge/-StevieLindsey-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/stevie-lindsey/)](https://www.linkedin.com/in/stevie-lindsey/)
-[![Linkedin: MichaelJancik-Kitowski](https://img.shields.io/badge/-MichaelJancik-Kitowski-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/michael-jancik-kitowski-00aa24114/)](https://www.linkedin.com/in/michael-jancik-kitowski/)
-
+[![Linkedin: MichaelJancik-Kitowski](https://img.shields.io/badge/-MichaelJancik-Kitowski-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/michael-jancik-kitowski-00aa24114/)](https://www.linkedin.com/in/michael-jancik-kitowski-00aa24114/)
