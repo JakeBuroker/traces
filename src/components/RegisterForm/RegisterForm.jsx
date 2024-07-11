@@ -3,10 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button, Select, MenuItem, FormControl, Snackbar, Alert } from '@mui/material';
 
+const styles = {
+  labels: {
+    color: '#f2f2f2',
+    fontWeight: 'bold',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
+}
 
 function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [fullName, setFullName] = useState('')
@@ -27,7 +35,7 @@ function RegisterForm() {
         email: email,
         phone_number: phoneNumber,
         full_name: fullName,
-        role: role
+        role: role // ! default set to 1 (user)
       },
     });
     setSnackBarOpen(true)
@@ -50,10 +58,19 @@ function RegisterForm() {
     setRole(1)
   }
 
+  const validatePasswords = (target) => {
+    setPasswordConfirm(target.value)
+    if (target.value !== password) {
+      target.setCustomeValidity('Passwords Do Not Match.')
+    } else {
+      target.setCustomeValidity('')
+    }
+  }
+
   return (
     <div className="login-container">
       <form className="formPanel" onSubmit={registerUser}>
-        <h2 style={{ marginBottom: '50px' }}>Register User</h2>
+        <h2 style={{ marginBottom: '30px', textAlign: 'center', color: '#f2f2f2' }}>Register User</h2>
         {errors.registrationMessage && (
           <h3 className="alert" role="alert">
             {errors.registrationMessage}
@@ -61,8 +78,8 @@ function RegisterForm() {
         )}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div className="input-container">
-            <label htmlFor="fullName">
-              Full Name:
+            <label htmlFor="fullName" style={styles.labels}>
+              Full Name*
             </label>
             <input
               type="text"
@@ -73,8 +90,8 @@ function RegisterForm() {
             />
           </div>
           <div className="input-container">
-            <label htmlFor="username">
-              Username:
+            <label htmlFor="username" style={styles.labels}>
+              Username*
             </label>
             <input
               type="text"
@@ -85,22 +102,10 @@ function RegisterForm() {
             />
           </div>
           <div className="input-container">
-            <label htmlFor="password">
-              Password:
+            <label htmlFor="email" style={styles.labels}>
+              Email*
               <input
-                type="password"
-                id="password"
-                value={password}
-                required
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </label>
-          </div>
-          <div className="input-container">
-            <label htmlFor="email">
-              Email:
-              <input
-                type="text"
+                type="email"
                 id="email"
                 value={email}
                 required
@@ -109,10 +114,11 @@ function RegisterForm() {
             </label>
           </div>
           <div className="input-container">
-            <label htmlFor="phoneNumber">
-              Phone Number:
+            <label htmlFor="phoneNumber" style={styles.labels}>
+              Phone Number*
               <input
                 type="text"
+                minLength={10}
                 id="phoneNumber"
                 value={phoneNumber}
                 required
@@ -120,9 +126,34 @@ function RegisterForm() {
               />
             </label>
           </div>
-          <div>
+          <div className="input-container">
+            <label htmlFor="password" style={styles.labels}>
+              Password*
+              <input
+                type="password"
+                id="password"
+                value={password}
+                autoComplete='new-password'
+                required
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </label>
+          </div>
+          <div className="input-container">
+            <label htmlFor="password-confirm" style={styles.labels}>
+              Confirm Password*
+              <input
+                type="password"
+                id="password-confirm"
+                value={passwordConfirm}
+                required
+                onChange={(event) => validatePasswords(event.target)}
+              />
+            </label>
+          </div>
+          {/* <div>
             <FormControl required sx={{ width: "100%", }}>
-              <label htmlFor="roleInpute" style={{ marginBottom: '10px' }}>Roll: </label>
+              <label htmlFor="roleInpute" style={{...styles.labels, marginBottom: '10px' }}>Roll: </label>
               <Select
                 sx={{ border: 1, borderRadius: 4, height: 52 }}
                 size='small'
@@ -135,14 +166,14 @@ function RegisterForm() {
                 <MenuItem value={2}>Administrator</MenuItem>
               </Select>
             </FormControl>
-          </div>
+          </div> */}
         </div>
         <div>
 
         </div>
         <div>
-          <Button className='btn' type='submit' name='submit' value='Register'>Register</Button>
-          <Button className='btn' type='reset' onClick={() => history.push('/admin')}>Back to Admin Page</Button>
+          <Button className='btn' type='submit' name='submit' value='Register' style={{ margin: '10px 0px', color: 'blue' }}>Register</Button>
+          {/* <Button className='btn' type='reset' onClick={() => history.push('/admin')}>Back to Admin Page</Button> */}
           {/* <input className="btn" type="submit" name="submit" value="Register" /> */}
         </div>
       </form>
