@@ -45,30 +45,17 @@ function UserPage() {
   const [waiverAcknowledged, setWaiverAcknowledged] = useState(user.waiver_acknowledged);
   const [openModal, setOpenModal] = useState(false);
   const [showPostWaiverModal, setShowPostWaiverModal] = useState(false);
-
   useEffect(() => {
-    if (user.alias && !user.waiver_acknowledged) {
+    if (!user.alias) {
+      alert("Please enter an alias to proceed.");
+      setEditMode(true); // Automatically enable edit mode if alias is missing
+    } else if (!user.waiver_acknowledged) {
       setOpenModal(true);
     }
     console.log(theme);
   }, [user.alias, user.waiver_acknowledged]);
 
-  useEffect(() => {
-    // Prevent navigation away from the page without acknowledging the waiver
-    const handleBeforeUnload = (event) => {
-      if (!waiverAcknowledged) {
-        event.preventDefault();
-        event.returnValue = "";
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [waiverAcknowledged]);
-
+  
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
   };
