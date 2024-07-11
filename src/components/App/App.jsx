@@ -102,18 +102,14 @@ function App() {
           </Route>
 
           <Route exact path="/registration">
-            {user.role === 2 ? (
-              // Otherwise, show the registration page
-              <RegisterPage />
-            ) : (
+            {user.id ? (
               // If the user is already logged in,
               // redirect them to the /user page
               <Redirect to="/user" />
+            ) : (
+              // Otherwise, show the registration page
+              <RegisterPage />
             )}
-          </Route>
-
-          <Route exact path='/registration772237'>
-            <RegisterPage />
           </Route>
 
           <Route exact path="/home">
@@ -138,7 +134,7 @@ function App() {
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
-            <h1>404</h1>
+            <h1 style={{marginTop: '100px'}}>404</h1>
           </Route>
         </Switch>
         <Footer />
