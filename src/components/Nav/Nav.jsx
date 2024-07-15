@@ -38,7 +38,17 @@ function Nav() {
             <img onClick={() => navigateTo('/user')} src="./default_avi.jpeg" alt='The default avatar' className="nav-avatar" />
         )}
         <Dropdown>
-          <MenuButton sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%)" } }}>
+          <MenuButton
+            sx={{
+              color: "hsl(0, 0%, 97%)",
+              '&:hover': {
+                backgroundColor: "hsl(0, 85.78%, 45%) !important",
+                color: "hsl(0, 0%, 97%)"
+              },
+              pointerEvents: user.id && !user.video_watched ? 'none' : 'auto',
+              opacity: user.id && !user.video_watched ? 0.5 : 1
+            }}
+          >
             <MenuIcon />
           </MenuButton>
           <Menu sx={{ padding: "20px", color: "hsl(0, 0%, 97%)", fontSize: "20px", backgroundColor: "#c40f0f", border: "none" }}>
