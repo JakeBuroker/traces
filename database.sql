@@ -8,7 +8,7 @@ CREATE TABLE "user" (
     full_name VARCHAR(100) NOT NULL,
     alias VARCHAR(100),
     avatar_url VARCHAR(200),
-    waiver_acknowledged BOOLEAN DEFAULT FALSE
+    video_watched BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS media (

@@ -59,10 +59,10 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-router.put('/waiver/:id', rejectUnauthenticated, async (req, res) => {
+router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
   const queryText = `
     UPDATE "user"
-    SET "waiver_acknowledged" = true
+    SET "video_watched" = true
     WHERE "id" = $1;
   `;
   const queryParams = [req.user.id]; // Assuming req.user.id holds the authenticated user's ID

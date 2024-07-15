@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -12,7 +12,6 @@ const theme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          // Default label color
           '&.Mui-focused': {
             color: '#f2f2f2', // Color of label text when the input is focused
           },
@@ -36,40 +35,33 @@ function UserPage() {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [editMode, setEditMode] = useState(!user.alias);
+  const videoRef = useRef(null);
+  const [editMode, setEditMode] = useState(false);
   const [fullName, setFullName] = useState(user.full_name || "");
   const [email, setEmail] = useState(user.email || "");
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || "");
-  const [alias, setAlias] = useState(user.alias || "");
   const [userAvi, setUserAvi] = useState(null);
-  const [waiverAcknowledged, setWaiverAcknowledged] = useState(user.waiver_acknowledged);
-  const [openModal, setOpenModal] = useState(false);
-  const [showPostWaiverModal, setShowPostWaiverModal] = useState(false);
+  const [openVideoModal, setOpenVideoModal] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [controlsEnabled, setControlsEnabled] = useState(false);
+
+  const enableControlsAfter = 3; // Time in seconds after which the controls will be enabled
+
   useEffect(() => {
-    if (!user.alias) {
-      alert("Please enter an alias to proceed.");
-      setEditMode(true); // Automatically enable edit mode if alias is missing
-    } else if (!user.waiver_acknowledged) {
-      setOpenModal(true);
+    if (!user.video_watched) {
+      setOpenVideoModal(true);
     }
     console.log(theme);
-  }, [user.alias, user.waiver_acknowledged]);
+  }, [user.video_watched]);
 
-  
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
   };
 
   const saveChanges = async () => {
-    if (!alias.trim()) {
-      alert("Alias is required. Please provide an alias before saving.");
-      return;
-    }
-
     const formData = new FormData();
     formData.append("email", email);
     formData.append("phone_number", phoneNumber);
-    formData.append("alias", alias);
     if (userAvi) {
       formData.append("file", userAvi);
     }
@@ -77,16 +69,13 @@ function UserPage() {
     try {
       const response = await axios.put("/api/evidence/user", formData, {
         headers: {
-          "Content-Type": "multipart/form/data",
+          "Content-Type": "multipart/form-data",
         },
       });
       if (response.status === 200) {
         alert("User updated successfully.");
         setEditMode(false);
         dispatch({ type: "FETCH_USER" });
-        if (!waiverAcknowledged) {
-          setOpenModal(true);
-        }
       } else {
         throw new Error("Failed to update user.");
       }
@@ -96,27 +85,38 @@ function UserPage() {
     }
   };
 
-  const acknowledgeWaiver = async () => {
+  const videoWatched = async () => {
     try {
-      const response = await axios.put(`/api/user/waiver/${user.id}`);
+      const response = await axios.put(`/api/user/watched/${user.id}`);
       if (response.status === 200) {
-        setWaiverAcknowledged(true);
-        setOpenModal(false);
-        setShowPostWaiverModal(true);
-        alert("Waiver acknowledged successfully.");
+        dispatch({ type: "FETCH_USER" });
+        setOpenVideoModal(false);
+        history.push("/evidence");
       } else {
-        throw new Error("Failed to update waiver acknowledgment.");
+        throw new Error("Failed to update video watched status.");
       }
     } catch (error) {
-      console.error("Error acknowledging waiver:", error);
+      console.error("Error updating video watched status:", error);
     }
   };
 
-  const attemptToExitEditMode = () => {
-    if (alias.trim()) {
-      setEditMode(false);
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      videoRef.current.pause();
     } else {
-      alert("Alias is required to exit editing. Please provide an alias.");
+      videoRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleVideoEnd = () => {
+    setIsPlaying(false);
+    videoWatched();
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current.currentTime >= enableControlsAfter) {
+      setControlsEnabled(true);
     }
   };
 
@@ -132,17 +132,9 @@ function UserPage() {
     p: 4,
   };
 
-  function activateTutorial() {
-    setShowPostWaiverModal(false);
-    history.push("/evidence");
-  }
-
   return (
     <ThemeProvider theme={theme}>
-      <div
-        style={{ padding: "70px 10px",}}
-        className="user-container"
-      >
+      <div style={{ padding: "70px 10px" }} className="user-container">
         {user.avatar_url ? (
           <img
             src={user.avatar_AWS_URL}
@@ -157,7 +149,7 @@ function UserPage() {
           />
         )}
         <Typography variant="h4" sx={{ textAlign: "center", padding: "10px", color: "hsl(0, 0%, 97%)" }}>
-          {user.alias}
+          {user.full_name}
         </Typography>
         {editMode ? (
           <form
@@ -171,7 +163,6 @@ function UserPage() {
               InputProps={{
                 style: {
                   color: "hsl(0, 0%, 97%)",
-
                 },
               }}
               label="Full Name"
@@ -208,20 +199,6 @@ function UserPage() {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
-            <TextField
-              InputProps={{
-                style: {
-                  color: "hsl(0, 0%, 97%)",
-                },
-              }}
-              label="Alias"
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              value={alias}
-              onChange={(e) => setAlias(e.target.value)}
-              required
-            />
             <UploadButton
               btnName={"Upload Avatar"}
               style={{
@@ -245,7 +222,7 @@ function UserPage() {
               Save Changes
             </Button>
             <Button
-              onClick={attemptToExitEditMode}
+              onClick={() => setEditMode(false)}
               variant="contained"
               style={{ backgroundColor: "#c40f0f", color: "hsl(0, 0%, 97%)" }}
             >
@@ -288,69 +265,44 @@ function UserPage() {
             </Button>
           </div>
         )}
-
         <Modal
-          open={openModal}
-          onClose={() => setOpenModal(false)}
-          disableBackdropClick
-          disableEscapeKeyDown
-          aria-labelledby="modal-title"
-          aria-describedby="modal-description"
+          open={openVideoModal}
+          onClose={() => {}}
+          aria-labelledby="video-modal-title"
+          aria-describedby="video-modal-description"
         >
           <Box sx={style}>
-            <Typography id="modal-title" variant="h6" component="h2">
-              Waiver Acknowledgment
-            </Typography>
-            <Typography id="modal-description" sx={{ mt: 2 }}>
-              Clicking 'Acknowledge' indicates that you have read and agree to the content in the Media Release and Liability Waivers.
-            </Typography>
-            <p><a href="/">Media Release Waiver</a></p>
-            <a href="/">Liability Waiver</a>
-
-            <Button
-              onClick={acknowledgeWaiver}
-              variant="contained"
-              style={{
-                marginTop:"20px",
-                backgroundColor: "#c40f0f",
-                color: "hsl(0, 0%, 97%)",
-              }}
-            >
-              Acknowledge Waivers and Continue
-            </Button>
-          </Box>
-        </Modal>
-
-        <Modal
-          open={showPostWaiverModal}
-          onClose={() => setShowPostWaiverModal(false)}
-          disableBackdropClick
-          disableEscapeKeyDown
-          aria-labelledby="post-waiver-modal-title"
-          aria-describedby="post-waiver-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="post-waiver-modal-title" variant="h6" component="h2">
+            <Typography id="video-modal-title" variant="h6" component="h2">
               Welcome to TRACES
             </Typography>
-            <Typography id="post-waiver-modal-description" sx={{ mt: 2 }}>
+            <Typography id="video-modal-description" sx={{ mt: 2 }}>
               It is important that you watch the following instructional video. It covers important information about how your mobile device will be used in this experience. 
             </Typography>
-            <video controls style={{ width: "100%", marginTop: "20px" }}>
-              <source src="your-video-url.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <Button
-              onClick={() => activateTutorial()}
-              variant="contained"
-              style={{
-                marginTop: "20px",
-                backgroundColor: "#c40f0f",
-                color: "hsl(0, 0%, 97%)",
-              }}
-            >
-              Close
-            </Button>
+            <div style={{ width: "100%", marginTop: "20px" }}>
+              <video
+                ref={videoRef}
+                style={{ width: "100%" }}
+                onEnded={handleVideoEnd}
+                onTimeUpdate={handleTimeUpdate}
+                controls={controlsEnabled}
+              >
+                <source src="/public/3195394-uhd_3840_2160_25fps.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              {!controlsEnabled && (
+                <Button
+                  onClick={handlePlayPause}
+                  variant="contained"
+                  style={{
+                    marginTop: "10px",
+                    backgroundColor: "#c40f0f",
+                    color: "hsl(0, 0%, 97%)",
+                  }}
+                >
+                  {isPlaying ? "Pause" : "Play"}
+                </Button>
+              )}
+            </div>
           </Box>
         </Modal>
       </div>
