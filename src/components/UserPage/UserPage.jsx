@@ -43,6 +43,9 @@ function UserPage() {
   const [userAvi, setUserAvi] = useState(null);
   const [openVideoModal, setOpenVideoModal] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [controlsEnabled, setControlsEnabled] = useState(false);
+
+  const enableControlsAfter = 3; // Time in seconds after which the controls will be enabled
 
   useEffect(() => {
     if (!user.video_watched) {
@@ -109,6 +112,12 @@ function UserPage() {
   const handleVideoEnd = () => {
     setIsPlaying(false);
     videoWatched();
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current.currentTime >= enableControlsAfter) {
+      setControlsEnabled(true);
+    }
   };
 
   const style = {
@@ -274,21 +283,25 @@ function UserPage() {
                 ref={videoRef}
                 style={{ width: "100%" }}
                 onEnded={handleVideoEnd}
+                onTimeUpdate={handleTimeUpdate}
+                controls={controlsEnabled}
               >
                 <source src="/public/3195394-uhd_3840_2160_25fps.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-              <Button
-                onClick={handlePlayPause}
-                variant="contained"
-                style={{
-                  marginTop: "10px",
-                  backgroundColor: "#c40f0f",
-                  color: "hsl(0, 0%, 97%)",
-                }}
-              >
-                {isPlaying ? "Pause" : "Play"}
-              </Button>
+              {!controlsEnabled && (
+                <Button
+                  onClick={handlePlayPause}
+                  variant="contained"
+                  style={{
+                    marginTop: "10px",
+                    backgroundColor: "#c40f0f",
+                    color: "hsl(0, 0%, 97%)",
+                  }}
+                >
+                  {isPlaying ? "Pause" : "Play"}
+                </Button>
+              )}
             </div>
           </Box>
         </Modal>

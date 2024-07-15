@@ -14,8 +14,10 @@ function Nav() {
   const dispatch = useDispatch();
 
   const navigateTo = (path) => {
-    if (user.video_watched) {
+    if (user.video_watched || !user.id) {
       history.push(path);
+    } else {
+      alert('You must watch the video before navigating.');
     }
   };
 
@@ -28,7 +30,6 @@ function Nav() {
     <div className="nav">
       <div className="nav-title" onClick={() => navigateTo("/")}>
         <img src="./traces_logo_01.jpg" alt="Traces Logo" style={{ marginTop: '8px' }} />
-        {/* <Typography>TRACES</Typography> */}
       </div>
       <div className="nav-controls">
         {user.id && (
