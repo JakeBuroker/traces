@@ -14,7 +14,9 @@ function Nav() {
   const dispatch = useDispatch();
 
   const navigateTo = (path) => {
-    history.push(path);
+    if (user.video_watched) {
+      history.push(path);
+    }
   };
 
   const Logout = () => {
@@ -44,9 +46,6 @@ function Nav() {
                 <MenuItem onClick={() => navigateTo('/home')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" } }}>
                   Home
                 </MenuItem>
-                {/* <MenuItem onClick={() => navigateTo('/about')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" } }}>
-                  About
-                </MenuItem> */}
                 <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" } }}>
                   Gallery
                 </MenuItem>
@@ -79,7 +78,7 @@ function Nav() {
                 <MenuItem onClick={() => navigateTo('/help')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" } }}>
                   Help
                 </MenuItem>
-                <MenuItem onClick={() => Logout()} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" } }}>
+                <MenuItem onClick={Logout} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" } }}>
                   Logout
                 </MenuItem>
               </>
