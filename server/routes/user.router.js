@@ -53,6 +53,23 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
   res.send(req.user);
 });
 
+// Route for admin to delete a user
+router.delete('/:id', rejectUnauthenticated, async (req, res) => {
+  const userId = req.params.id;
+  const queryText = 'DELETE FROM "user" WHERE id = $1 RETURNING *';
+
+  try {
+    const result = await pool.query(queryText, [userId]);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.sendStatus(500);
+  }
+});
+
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted

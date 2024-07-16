@@ -13,7 +13,8 @@ const DataGridComponent = ({
   view,
   openModal,
   openPublicConfirmModal,
-  openDeleteConfirmModal
+  openDeleteConfirmModal,
+  openDeleteUserConfirmModal
 }) => {
   const evidenceColumns = [
     { field: 'title', headerName: 'Evidence Title', width: 150 },
@@ -77,6 +78,22 @@ const DataGridComponent = ({
     { field: 'email', headerName: 'Email', width: 200 },
     { field: 'full_name', headerName: 'Full Name', width: 200 },
     { field: 'phone_number', headerName: 'Phone Number', width: 200 },
+    {
+      field: 'actions',
+      headerName: 'Delete?',
+      sortable: false,
+      width: 150,
+      renderCell: (params) => (
+        <div>
+          <Button
+            onClick={() => openDeleteUserConfirmModal(params.row)}
+            style={{ cursor: 'pointer', marginRight: '5px' }}
+            startIcon={<DeleteIcon />}
+            color='error'
+          />
+        </div>
+      ),
+    },
   ];
 
   const evidenceRows = data.evidence.map((item) => ({
@@ -113,4 +130,3 @@ const DataGridComponent = ({
 };
 
 export default DataGridComponent;
-

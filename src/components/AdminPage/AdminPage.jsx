@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
-import { DateTime } from 'luxon';
 import {
   CardMedia,
   Typography,
@@ -25,6 +24,7 @@ function AdminPage() {
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteUserModalOpen, setDeleteUserModalOpen] = useState(false);
   const [inEditMode, setInEditMode] = useState(false);
   const [editsInput, setEditsInput] = useState({});
   const [publicConfirmModalOpen, setConfirmModalOpen] = useState(false);
@@ -116,6 +116,19 @@ function AdminPage() {
       });
   };
 
+  const deleteUser = (userId) => {
+    axios.delete(`/api/user/${userId}`)
+      .then(() => {
+        fetchUsers();
+        setDeleteUserModalOpen(false);
+        alert('User deleted successfully!');
+      })
+      .catch((error) => {
+        console.error('Error deleting user:', error);
+        alert('Could not delete user!');
+      });
+  };
+
   const openModal = (item) => {
     setSelectedItem(item);
     setDetailsModalOpen(true);
@@ -131,6 +144,11 @@ function AdminPage() {
     setSelectedItem(item);
     setDeleteModalOpen(true);
     setInEditMode(false);
+  };
+
+  const openDeleteUserConfirmModal = (user) => {
+    setSelectedItem(user);
+    setDeleteUserModalOpen(true);
   };
 
   const openPublicConfirmModal = (item) => {
@@ -163,13 +181,6 @@ function AdminPage() {
             Make All Private
           </Button>
         </div>
-        <Button
-          variant='contained'
-          onClick={() => history.push('/registration')}
-          style={{ backgroundColor: '#c40f0f', color: 'hsl(0, 0%, 97%)' }}
-        >
-          Register New User
-        </Button>
       </div>
       <Button
         variant='contained'
@@ -184,6 +195,7 @@ function AdminPage() {
         openModal={openModal}
         openPublicConfirmModal={openPublicConfirmModal}
         openDeleteConfirmModal={openDeleteConfirmModal}
+        openDeleteUserConfirmModal={openDeleteUserConfirmModal}
       />
       <Dialog open={detailsModalOpen} onClose={closeModal} fullWidth maxWidth='md'>
         <DialogContent>
@@ -228,6 +240,13 @@ function AdminPage() {
           <Typography>Are you sure you want to delete this evidence?</Typography>
           <Button onClick={() => deleteEvidence(selectedItem.id)} color='error'>Delete</Button>
           <Button onClick={() => { setDeleteModalOpen(false); setInEditMode(false); }}>Cancel</Button>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={deleteUserModalOpen} onClose={() => setDeleteUserModalOpen(false)}>
+        <DialogContent>
+          <Typography>Are you sure you want to delete this user?</Typography>
+          <Button onClick={() => deleteUser(selectedItem.id)} color='error'>Delete</Button>
+          <Button onClick={() => setDeleteUserModalOpen(false)}>Cancel</Button>
         </DialogContent>
       </Dialog>
       <Dialog open={publicConfirmModalOpen} onClose={() => setConfirmModalOpen(false)}>
