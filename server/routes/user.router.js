@@ -27,6 +27,18 @@ const s3 = new aws.S3Client({
 
 })
 
+// Route for admin to get all users
+router.get('/users', rejectUnauthenticated, async (req, res) => {
+  const queryText = 'SELECT id, username, email, full_name, phone_number, avatar_url FROM "user"';
+  try {
+    const result = await pool.query(queryText);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.sendStatus(500);
+  }
+});
+
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, async (req, res) => {
   // Send back user object from the session (previously queried from the database)
@@ -39,6 +51,23 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
     req.user.avatar_AWS_URL = url
   }
   res.send(req.user);
+});
+
+// Route for admin to delete a user
+router.delete('/:id', rejectUnauthenticated, async (req, res) => {
+  const userId = req.params.id;
+  const queryText = 'DELETE FROM "user" WHERE id = $1 RETURNING *';
+
+  try {
+    const result = await pool.query(queryText, [userId]);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.sendStatus(500);
+  }
 });
 
 // Handles POST request with new user data
