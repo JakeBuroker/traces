@@ -80,9 +80,6 @@ function Nav() {
                     Admin Page
                   </MenuItem>
                 )}
-                <MenuItem onClick={() => navigateTo('/about')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" } }}>
-                  About
-                </MenuItem>
                 <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "hsl(0, 0%, 97%)", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "hsl(0, 0%, 97%) !important" } }}>
                   Gallery
                 </MenuItem>

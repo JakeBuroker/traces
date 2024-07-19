@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Nav from "../Nav/Nav";
 import Footer from "../Footer/Footer";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import AboutPage from "../AboutPage/AboutPage";
 import UserPage from "../UserPage/UserPage";
 import LandingPage from "../LandingPage/LandingPage";
 import LoginPage from "../LoginPage/LoginPage";
@@ -39,13 +38,6 @@ function App() {
           <Redirect exact from="/" to="/home" />
 
           {/* Visiting localhost:5173/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
-            <AboutPage />
-          </Route>
           <Route
             // shows GalleryPage at all times (logged in or not)
             exact
