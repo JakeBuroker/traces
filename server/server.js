@@ -15,6 +15,9 @@ const PORT = process.env.PORT || 5001;
 
 const app = express();
 
+// Trust the first proxy (Heroku)
+app.set('trust proxy', 1);
+
 // Security Middleware
 app.use(helmet());
 
