@@ -23,7 +23,7 @@ function HelpPage() {
       <ul>
         <li>What do I do if the call drops?</li>
         <li>If I don't know where to go, what do I do?</li>
-        {/* <li>Am I getting paid for this?</li>  */}
+        <li>Am I getting paid for this?</li> 
       </ul>
     </div>
   );
