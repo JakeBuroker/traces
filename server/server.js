@@ -56,6 +56,15 @@ app.use((req, res, next) => {
 app.use('/api/user', userRouter);
 app.use('/api/evidence', evidenceRouter);
 
+// Error handling middleware for CSRF token errors
+app.use((err, req, res, next) => {
+  if (err.code === 'EBADCSRFTOKEN') {
+    res.status(403).json({ message: 'Invalid CSRF token' });
+  } else {
+    next(err);
+  }
+});
+
 // Listen Server & Port
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
