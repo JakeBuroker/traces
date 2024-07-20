@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button, Select, MenuItem, FormControl, Snackbar, Alert } from '@mui/material';
+import UploadButton from '../UploadButton/UploadButton';
 
 const styles = {
   labels: {
@@ -9,6 +10,11 @@ const styles = {
     fontWeight: 'bold',
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
+  uploadButton: {
+    marginTop: "10px",
+    backgroundColor: "#c40f0f",
+    color: "hsl(0, 0%, 97%)",
+  }
 }
 
 function RegisterForm() {
@@ -40,6 +46,7 @@ function RegisterForm() {
     });
     setSnackBarOpen(true)
     resetState()
+    history.push('/user')
   }; // end registerUser
 
   const handleClose = (event, reason) => {
@@ -139,7 +146,13 @@ function RegisterForm() {
               />
             </label>
           </div>
-          <div className="input-container">
+          <UploadButton 
+            btnName={"Upload Avatar*"}
+            color={"primary"}
+            setter={() => {}}
+            style={styles.uploadButton}
+          />
+          {/* <div className="input-container">
             <label htmlFor="password-confirm" style={styles.labels}>
               Confirm Password*
               <input
@@ -150,7 +163,7 @@ function RegisterForm() {
                 onChange={(event) => validatePasswords(event.target)}
               />
             </label>
-          </div>
+          </div> */}
           {/* <div>
             <FormControl required sx={{ width: "100%", }}>
               <label htmlFor="roleInpute" style={{...styles.labels, marginBottom: '10px' }}>Roll: </label>
