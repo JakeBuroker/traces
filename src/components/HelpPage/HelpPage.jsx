@@ -1,29 +1,25 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import './HelpPage.css';
 import { Button } from '@mui/material';
 
 function HelpPage() {
-  const history = useHistory();
-
-
   return (
-    <div style={{padding: "50px"}} className="help-page-container">
-      <h2 style={{padding: "30px"}}>Tutorial Video</h2>
-      <div className="video-placeholder">
-        <figure>
-          <figcaption>Video Coming Soon!</figcaption>
-          {/* You might want to include an engaging placeholder image here */}
-        </figure>
+    <div style={{ padding: "50px" }} className="help-page-container">
+      <h2 style={{ padding: "30px" }}>Tutorial Video</h2>
+      <div className="video-container">
+        <video
+          style={{ width: "400px", height: "2`15px" }} // Set the size of the video
+          controls
+        >
+          <source src="https://traces-project.s3.amazonaws.com/hd0903_1080p_12000br.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
-      <Button sx={{backgroundColor: "#c40f0f", color: "hsl(0, 0%, 97%)", padding: "10px"}} onClick={() =>   history.push('/evidence')}>
-        Tutorial
-      </Button>
-      <h2 style={{padding: "30px"}}>FAQ</h2>
+      <h2 style={{ padding: "30px" }}>FAQ</h2>
       <ul>
         <li>What do I do if the call drops?</li>
         <li>If I don't know where to go, what do I do?</li>
-        <li>Am I getting paid for this?</li> 
+        <li>Am I getting paid for this?</li>
       </ul>
     </div>
   );
