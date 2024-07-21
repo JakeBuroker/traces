@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 
 function HelpPage() {
   return (
-    <div style={{ padding: "50px" }} className="help-page-container">
+    <div style={{ padding: "50px", color: "#F7F7F7" }} className="help-page-container">
       <h2 style={{ padding: "30px" }}>Tutorial Video</h2>
       <div className="video-container">
         <video
@@ -15,7 +15,7 @@ function HelpPage() {
           Your browser does not support the video tag.
         </video>
       </div>
-      <h2 style={{ padding: "30px" }}>FAQ</h2>
+      <h3 style={{ padding: "30px" }}>FAQ</h3>
       <ul>
         <li>What do I do if the call drops?</li>
         <li>If I don't know where to go, what do I do?</li>

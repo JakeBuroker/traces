@@ -34,12 +34,12 @@ function LandingPage() {
         </div>
 
         <div className="grid-col grid-col_12">
-          <Typography variant='body1' sx={{ color: '#f2f2f2' }}>
+          <Typography variant='body1' sx={{ color: '#f7f7f7', textAlign: "center" }}>
             {text.english.landingPageBodies.body1}
           </Typography>
         </div>
         <div className="grid-col grid-col_12" style={{ marginTop: '25px' }}>
-          {!user.id && (<h4 style={{ color: '#f2f2f2' }}>If you are participating in the play, please login.</h4>)}
+          {!user.id && (<h4 style={{ color: '#f7f7f7' }}>If you are participating in the play, please login.</h4>)}
         </div>
       </div>
     </Box>

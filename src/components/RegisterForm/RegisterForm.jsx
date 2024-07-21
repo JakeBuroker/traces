@@ -6,7 +6,7 @@ import UploadButton from '../UploadButton/UploadButton';
 
 const styles = {
   labels: {
-    color: '#f2f2f2',
+    color: '#f7f7f7',
     fontWeight: 'bold',
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
@@ -77,7 +77,7 @@ function RegisterForm() {
   return (
     <div className="login-container">
       <form className="formPanel" onSubmit={registerUser}>
-        <h2 style={{ marginBottom: '30px', textAlign: 'center', color: '#f2f2f2' }}>Register User</h2>
+        <h2 style={{ marginBottom: '30px', textAlign: 'center', color: '#f7f7f7' }}>Register User</h2>
         {errors.registrationMessage && (
           <h3 className="alert" role="alert">
             {errors.registrationMessage}
