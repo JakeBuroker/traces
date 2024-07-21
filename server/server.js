@@ -23,8 +23,22 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-// Use Helmet to secure HTTP headers
-app.use(helmet());
+// Use Helmet to secure HTTP headers, disabling specific headers that might interfere with S3
+app.use(
+  helmet({
+    contentSecurityPolicy: false,  // Disable content security policy
+    dnsPrefetchControl: false,     // Disable DNS prefetch control
+    expectCt: false,               // Disable Expect-CT header
+    frameguard: false,             // Disable frameguard
+    hidePoweredBy: true,           // Enable hiding X-Powered-By header
+    hsts: false,                   // Disable HSTS (HTTP Strict Transport Security)
+    ieNoOpen: true,                // Enable IE no open
+    noSniff: true,                 // Enable no-sniff
+    permittedCrossDomainPolicies: false,  // Disable permitted cross-domain policies
+    referrerPolicy: { policy: 'no-referrer' },  // Set referrer policy to no-referrer
+    xssFilter: true,               // Enable XSS filter
+  })
+);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
