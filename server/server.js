@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');  // Import Helmet
 const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT || 5001;
@@ -21,6 +22,9 @@ const limiter = rateLimit({
 });
 
 app.use(limiter);
+
+// Use Helmet to secure HTTP headers
+app.use(helmet());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
