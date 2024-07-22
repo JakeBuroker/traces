@@ -13,9 +13,9 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focused': {
-            color: '#f2f2f2', // Color of label text when the input is focused
+            color: '#f7f7f7', // Color of label text when the input is focused
           },
-          color: '#f2f2f2',
+          color: '#f7f7f7',
         },
       },
     },
@@ -23,7 +23,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#f2f2f2', // Change focus border color to black
+            borderColor: '#f7f7f7', // Change focus border color to black
           },
         },
       },
@@ -236,7 +236,7 @@ function UserPage() {
               display: "flex",
               flexDirection: "column",
               gap: "10px",
-              color: "#f2f2f2",
+              color: "#f7f7f7",
             }}
             className="info-display"
           >
