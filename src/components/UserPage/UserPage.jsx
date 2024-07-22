@@ -42,6 +42,7 @@ function UserPage() {
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || "");
   const [userAvi, setUserAvi] = useState(null);
   const [openVideoModal, setOpenVideoModal] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [controlsEnabled, setControlsEnabled] = useState(false);
 
@@ -90,7 +91,7 @@ function UserPage() {
       const response = await axios.put(`/api/user/watched/${user.id}`);
       if (response.status === 200) {
         dispatch({ type: "FETCH_USER" });
-        setOpenVideoModal(false);
+        setOpenConfirmModal(false);
         history.push("/evidence");
       } else {
         throw new Error("Failed to update video watched status.");
@@ -111,7 +112,7 @@ function UserPage() {
 
   const handleVideoEnd = () => {
     setIsPlaying(false);
-    videoWatched();
+    setOpenConfirmModal(true);
   };
 
   const handleTimeUpdate = () => {
@@ -302,6 +303,43 @@ function UserPage() {
                   {isPlaying ? "Pause" : "Play"}
                 </Button>
               )}
+            </div>
+          </Box>
+        </Modal>
+        <Modal
+          open={openConfirmModal}
+          onClose={() => {}}
+          aria-labelledby="confirm-modal-title"
+          aria-describedby="confirm-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="confirm-modal-title" variant="h6" component="h2">
+              Confirm Understanding
+            </Typography>
+            <Typography id="confirm-modal-description" sx={{ mt: 2 }}>
+              Do you understand the information provided in the video?
+            </Typography>
+            <div style={{ display: "flex", justifyContent: "space-around", marginTop: "20px" }}>
+              <Button
+                onClick={videoWatched}
+                variant="contained"
+                style={{
+                  backgroundColor: "#c40f0f",
+                  color: "hsl(0, 0%, 97%)",
+                }}
+              >
+                Yes
+              </Button>
+              <Button
+                onClick={() => setOpenConfirmModal(false)}
+                variant="contained"
+                style={{
+                  backgroundColor: "#c40f0f",
+                  color: "hsl(0, 0%, 97%)",
+                }}
+              >
+                No
+              </Button>
             </div>
           </Box>
         </Modal>
