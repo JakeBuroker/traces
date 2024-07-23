@@ -6,17 +6,18 @@ const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
 const router = express.Router();
-const dotenv = require('dotenv')
-dotenv.config()
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // ! Set up for AWS
-const aws = require('@aws-sdk/client-s3')
-const signer = require('@aws-sdk/s3-request-presigner')
+const aws = require('@aws-sdk/client-s3');
+const signer = require('@aws-sdk/s3-request-presigner');
 
-const bucketName = process.env.BUCKET_NAME
-const bucketRegion = process.env.BUCKET_REGION
-const accessKey = process.env.ACCESS_KEY
-const secretAccessKey = process.env.SECRET_ACCESS_KEY
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
 
 const s3 = new aws.S3Client({
   credentials: {
@@ -24,18 +25,63 @@ const s3 = new aws.S3Client({
     secretAccessKey: secretAccessKey,
   },
   region: bucketRegion,
+});
 
-})
-
-// Route for admin to get all users
 router.get('/users', rejectUnauthenticated, async (req, res) => {
-  const queryText = 'SELECT id, username, email, full_name, phone_number, avatar_url FROM "user"';
-  try {
-    const result = await pool.query(queryText);
-    res.json(result.rows);
-  } catch (error) {
-    console.error('Error fetching users:', error);
-    res.sendStatus(500);
+  if (req.user.role === 2) {
+    const queryText = 'SELECT id, username, email, full_name, phone_number, avatar_url FROM "user"';
+    try {
+      const result = await pool.query(queryText);
+      const users = result.rows;
+
+      // Generate signed URLs for avatar
+      for (let user of users) {
+        if (user.avatar_url) {
+          const command = new aws.GetObjectCommand({
+            Bucket: bucketName,
+            Key: user.avatar_url,
+          });
+          const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 });
+          user.avatar_AWS_URL = url;
+        }
+      }
+
+      res.json(users);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      res.sendStatus(500);
+    }
+  } else {
+    res.sendStatus(403);
+  }
+});
+
+router.get('/:id/evidence', rejectUnauthenticated, async (req, res) => {
+  if (req.user.role === 2) {  
+    const userId = req.params.id;
+    const queryText = 'SELECT * FROM "evidence" WHERE user_id = $1';
+
+    try {
+      const result = await pool.query(queryText, [userId]);
+      
+      // Generate signed URLs for evidence
+      const evidenceList = result.rows;
+      for (let evidence of evidenceList) {
+        if (evidence.aws_key) {
+          const command = new aws.GetObjectCommand({
+            Bucket: bucketName,
+            Key: evidence.aws_key,
+          });
+          const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 });
+          evidence.aws_url = url;
+        }
+      }
+
+      res.json(evidenceList);
+    } catch (error) {
+      console.error('Error fetching user evidence:', error);
+      res.sendStatus(500);
+    }
   }
 });
 
@@ -46,9 +92,9 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
     const command = new aws.GetObjectCommand({
       Bucket: bucketName,
       Key: req.user.avatar_url,
-    })
-    const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 })
-    req.user.avatar_AWS_URL = url
+    });
+    const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 });
+    req.user.avatar_AWS_URL = url;
   }
   res.send(req.user);
 });
@@ -79,7 +125,7 @@ router.post('/register', (req, res, next) => {
   // Corrected the quotes around the table name `user`
   const queryText = 'INSERT INTO "user" (username, password, email, phone_number, role, full_name) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id';
   pool
-  // TODO : GAVIN: Change the params for what we actually need in register page.
+    // TODO : GAVIN: Change the params for what we actually need in register page.
     .query(queryText, [username, password, req.body.email, req.body.phone_number, req.body.role, req.body.full_name])
     .then(() => res.sendStatus(201))
     .catch((err) => {
@@ -99,7 +145,7 @@ router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
   const connection = await pool.connect();
 
   try {
-    await connection.query("BEGIN");
+    await connection.query('BEGIN');
     const result = await connection.query(queryText, queryParams);
 
     // Optional: Check if the update was successful, i.e., if any row was actually updated
@@ -108,17 +154,16 @@ router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
       throw new Error('User not found or waiver already acknowledged.');
     }
 
-    await connection.query("COMMIT");
+    await connection.query('COMMIT');
     res.send(result.rows[0]); // Send back the updated user info, for example
   } catch (error) {
     console.error('Error acknowledging waiver:', error);
-    await connection.query("ROLLBACK");
-    res.status(500).send({ error: "Failed to acknowledge waiver. Please try again." });
+    await connection.query('ROLLBACK');
+    res.status(500).send({ error: 'Failed to acknowledge waiver. Please try again.' });
   } finally {
     connection.release();
   }
 });
-
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
