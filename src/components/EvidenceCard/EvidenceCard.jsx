@@ -10,16 +10,10 @@ import EvidenceDetailsModal from '../EvidenceDetailsModal/EvidenceDetailsModal';
 const EvidenceCard = ({ item, fetchEvidence }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Function to check if the media type is video
   const isVideo = (mediaType) => mediaType === 3;
-
-  // Function to check if the media type is audio
   const isAudio = (mediaType) => mediaType === 4;
-
-  // Function to check if the evidence has any media attached
   const hasMedia = (mediaType) => mediaType;
 
-  // Function to edit evidence
   const editEvidence = (id, formData) => {
     axios
       .put(`/api/evidence/update/${id}`, formData, {
@@ -27,27 +21,27 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(() => fetchEvidence())
+      .then(() => {
+        fetchEvidence();
+        setIsOpen(false);
+      })
       .catch((error) => console.error("Error updating evidence:", error));
   };
 
-  // Function to delete evidence
   const deleteEvidence = (itemId) => {
     axios
       .delete(`/api/evidence/delete/${itemId}`)
       .then(() => {
         fetchEvidence();
-        onClose();
+        setIsOpen(false);
       })
       .catch((error) => console.error("Error deleting evidence:", error));
   };
 
-  // Function to close the modal
   const onClose = () => {
     setIsOpen(false);
   };
 
-  // Function to format long titles
   const formatLongTitles = (title) => {
     if (title?.length > 8) {
       return title.split('').filter((word, i) => i < 8).join('') + ' ...';
@@ -55,7 +49,6 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
     return title;
   };
 
-  // Function to get accepted media types
   const acceptedMedia = (typeNo) => {
     if (typeNo === 2) {
       return 'image/*';
@@ -66,7 +59,6 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
     }
   };
 
-  // Function to render media item
   const renderImageForMediaItem = ({ media_type, aws_url, title }) => {
     if (isAudio(media_type)) {
       return (

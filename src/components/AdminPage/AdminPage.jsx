@@ -9,10 +9,12 @@ import {
   Dialog,
   DialogContent,
   Button,
+  Grid,
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DataGridComponent from '../DataGridComponent/DataGridComponent';
+import EvidenceCard from '../EvidenceCard/EvidenceCard'; // Import EvidenceCard
 import './AdminPage.css';
 
 function AdminPage() {
@@ -136,7 +138,12 @@ function AdminPage() {
   };
 
   const openUserEvidenceModal = (user) => {
-    axios.get(`/api/user/${user.id}/evidence`)
+    setSelectedItem(user); // Set the user as the selected item first
+    fetchUserEvidence(user.id);
+  };
+
+  const fetchUserEvidence = (userId) => {
+    axios.get(`/api/user/${userId}/evidence`)
       .then((response) => {
         setSelectedUserEvidence(response.data);
         setUserEvidenceModalOpen(true);
@@ -172,6 +179,11 @@ function AdminPage() {
   const openAllPublicModal = (bool) => {
     setMakeAllPublic(bool);
     setAllPublicConfirmModalOpen(true);
+  };
+
+  const handleEvidenceUpdate = () => {
+    fetchUserEvidence(selectedItem.id);
+    fetchEvidence();
   };
 
   return (
@@ -251,21 +263,21 @@ function AdminPage() {
       </Dialog>
       <Dialog open={userEvidenceModalOpen} onClose={closeModal} fullWidth maxWidth='md'>
         <DialogContent>
-          {selectedUserEvidence.map((evidence) => (
-            <div key={evidence.id}>
-              {evidence.media_type === 4 ? (
-                <audio src={evidence.aws_url} controls style={{ width: '100%' }} />
-              ) : evidence.media_type === 3 ? (
-                <video src={evidence.aws_url} controls style={{ maxHeight: '500px', maxWidth: '100%', objectFit: 'contain' }} />
-              ) : (
-                <CardMedia component='img' src={evidence.aws_url} className='item-image' style={{ maxHeight: '500px', maxWidth: '100%', objectFit: 'contain' }} />
-              )}
-              <Typography variant='h5'>Title: {evidence.title}</Typography>
-              <Typography variant='body1'>Notes: {evidence.notes}</Typography>
-              <Typography variant='body1'>Location: {evidence.location}</Typography>
-              <Typography variant='body1'>Date Posted: {evidence.datePosted}</Typography>
-            </div>
-          ))}
+          {selectedUserEvidence.length === 0 ? (
+            <Typography variant="h6" style={{ margin: '20px auto' }}>
+              User has not uploaded any evidence.
+            </Typography>
+          ) : (
+            <Grid container spacing={2}>
+              {selectedUserEvidence.map((item) => (
+                <EvidenceCard
+                  key={item.id}
+                  item={item}
+                  fetchEvidence={handleEvidenceUpdate} // Updated function to fetch user's evidence
+                />
+              ))}
+            </Grid>
+          )}
         </DialogContent>
       </Dialog>
       <Dialog open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false); setInEditMode(false); }}>
