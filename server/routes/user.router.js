@@ -30,6 +30,7 @@ const s3 = new aws.S3Client({
   region: bucketRegion,
 });
 
+// Route to get all users (admin only)
 router.get('/users', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, video_watched FROM "user"';
@@ -37,7 +38,7 @@ router.get('/users', rejectUnauthenticated, async (req, res) => {
       const result = await pool.query(queryText);
       const users = result.rows;
 
-      // Generate signed URLs for avatar
+      // Generate signed URLs for avatars
       for (let user of users) {
         if (user.avatar_url) {
           const command = new aws.GetObjectCommand({
@@ -59,14 +60,15 @@ router.get('/users', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+// Route to get all evidence for a specific user (admin only)
 router.get('/:id/evidence', rejectUnauthenticated, async (req, res) => {
-  if (req.user.role === 2) {  
+  if (req.user.role === 2) {
     const userId = req.params.id;
     const queryText = 'SELECT * FROM "evidence" WHERE user_id = $1';
 
     try {
       const result = await pool.query(queryText, [userId]);
-      
+
       // Generate signed URLs for evidence
       const evidenceList = result.rows;
       for (let evidence of evidenceList) {
@@ -135,13 +137,14 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+// Route to update video watched status
 router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
   const queryText = `
     UPDATE "user"
     SET "video_watched" = true
     WHERE "id" = $1;
   `;
-  const queryParams = [req.user.id]; 
+  const queryParams = [req.user.id];
 
   const connection = await pool.connect();
 
@@ -150,15 +153,15 @@ router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
     const result = await connection.query(queryText, queryParams);
 
     if (result.rowCount === 0) {
-      throw new Error('User not found or waiver already acknowledged.');
+      throw new Error('User not found or video already watched.');
     }
 
     await connection.query('COMMIT');
     res.send(result.rows[0]);
   } catch (error) {
-    console.error('Error acknowledging waiver:', error);
+    console.error('Error updating video watched status:', error);
     await connection.query('ROLLBACK');
-    res.status(500).send({ error: 'Failed to acknowledge waiver. Please try again.' });
+    res.status(500).send({ error: 'Failed to update video watched status. Please try again.' });
   } finally {
     connection.release();
   }
@@ -172,13 +175,13 @@ router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (re
   const queryText = `
     UPDATE "user" 
     SET 
-    "username" = $1,
-    "email" = $2, 
-    "phone_number" = $3,
-    "role" = $4,
-    "full_name" = $5,
-    "alias" = $6,
-    "video_watched" = $7
+      "username" = $1,
+      "email" = $2, 
+      "phone_number" = $3,
+      "role" = $4,
+      "full_name" = $5,
+      "alias" = $6,
+      "video_watched" = $7
     WHERE "id" = $8
     RETURNING "avatar_url";
   `;
@@ -236,7 +239,7 @@ router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
 
-// clear all server session information about this user
+// Clear all server session information about this user
 router.post('/logout', (req, res) => {
   // Use passport's built-in method to log out the user
   req.logout();

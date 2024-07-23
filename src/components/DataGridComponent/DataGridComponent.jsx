@@ -17,6 +17,7 @@ const DataGridComponent = ({
   openUserEvidenceModal,
   openUserInfoModal,
 }) => {
+  // Define columns for the evidence data grid
   const evidenceColumns = [
     { field: 'title', headerName: 'Evidence Title', width: 150 },
     { field: 'location', headerName: 'Location', width: 150 },
@@ -73,6 +74,7 @@ const DataGridComponent = ({
     },
   ];
 
+  // Define columns for the user data grid
   const userColumns = [
     {
       field: 'avatar_AWS_URL',
@@ -135,6 +137,7 @@ const DataGridComponent = ({
     },
   ];
 
+  // Map evidence data to the format expected by the data grid
   const evidenceRows = data.evidence.map((item) => ({
     id: item.id,
     title: item.title,
@@ -147,6 +150,7 @@ const DataGridComponent = ({
     media_type: item.media_type,
   }));
 
+  // Map user data to the format expected by the data grid
   const userRows = data.users.map((user) => ({
     id: user.id,
     avatar_AWS_URL: user.avatar_AWS_URL || './default_avi.jpeg',
@@ -158,6 +162,7 @@ const DataGridComponent = ({
     video_watched: user.video_watched,
   }));
 
+  // Return statement for rendering the data grid with the appropriate columns and rows based on the view
   return (
     <DataGrid
       rows={view === 'evidence' ? evidenceRows : userRows}

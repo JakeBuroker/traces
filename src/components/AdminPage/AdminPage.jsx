@@ -21,9 +21,12 @@ import EvidenceCard from '../EvidenceCard/EvidenceCard';
 import './AdminPage.css';
 
 function AdminPage() {
+  // Redux hooks for dispatching actions and selecting state
   const dispatch = useDispatch();
   const history = useHistory();
   const evidenceList = useSelector((store) => store.evidence);
+
+  // State variables for various modals and data
   const [users, setUsers] = useState([]);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [userEvidenceModalOpen, setUserEvidenceModalOpen] = useState(false);
@@ -39,11 +42,13 @@ function AdminPage() {
   const [makeAllPublic, setMakeAllPublic] = useState(true);
   const [view, setView] = useState('evidence');
 
+  // useEffect to fetch evidence and users data when the component mounts
   useEffect(() => {
     fetchEvidence();
     fetchUsers();
   }, []);
 
+  // Function to fetch evidence data from the server
   const fetchEvidence = () => {
     axios
       .get('/api/evidence/admin')
@@ -55,6 +60,7 @@ function AdminPage() {
       });
   };
 
+  // Function to fetch users data from the server
   const fetchUsers = () => {
     axios
       .get('/api/user/users')
@@ -66,6 +72,7 @@ function AdminPage() {
       });
   };
 
+  // Function to toggle the public status of an evidence item
   const toggleIsPublic = (id) => {
     axios.put(`/api/evidence/clearance/${id}`)
       .then(() => {
@@ -75,6 +82,7 @@ function AdminPage() {
       });
   };
 
+  // Function to handle making all evidence public or private
   const handleMakeAllPublic = (bool) => {
     let route = bool ? 'makeAllPublic' : 'makeAllSecret';
     axios.put(`/api/evidence/${route}`)
@@ -86,6 +94,7 @@ function AdminPage() {
       });
   };
 
+  // Function to handle editing an evidence item
   const handleEdit = (item) => {
     setEditsInput({
       id: item.id,
@@ -96,6 +105,7 @@ function AdminPage() {
     setInEditMode(true);
   };
 
+  // Function to handle updating an evidence item
   const handleUpdate = (item) => {
     axios.put(`/api/evidence/update/${item.id}`, {
       title: item.title,
@@ -109,6 +119,7 @@ function AdminPage() {
     });
   };
 
+  // Function to delete an evidence item
   const deleteEvidence = (evidenceId) => {
     axios.delete(`/api/evidence/delete/${evidenceId}`)
       .then(() => {
@@ -123,6 +134,7 @@ function AdminPage() {
       });
   };
 
+  // Function to delete a user
   const deleteUser = (userId) => {
     axios.delete(`/api/user/${userId}`)
       .then(() => {
@@ -136,16 +148,19 @@ function AdminPage() {
       });
   };
 
+  // Function to open the details modal
   const openModal = (item) => {
     setSelectedItem(item);
     setDetailsModalOpen(true);
   };
 
+  // Function to open the user evidence modal
   const openUserEvidenceModal = (user) => {
     setSelectedItem(user);
     fetchUserEvidence(user.id);
   };
 
+  // Function to fetch evidence data for a specific user
   const fetchUserEvidence = (userId) => {
     axios.get(`/api/user/${userId}/evidence`)
       .then((response) => {
@@ -157,6 +172,7 @@ function AdminPage() {
       });
   };
 
+  // Function to close all modals
   const closeModal = () => {
     setSelectedItem(null);
     setDetailsModalOpen(false);
@@ -165,32 +181,38 @@ function AdminPage() {
     setInEditMode(false);
   };
 
+  // Function to open the delete confirmation modal for evidence
   const openDeleteConfirmModal = (item) => {
     setSelectedItem(item);
     setDeleteModalOpen(true);
     setInEditMode(false);
   };
 
+  // Function to open the delete confirmation modal for users
   const openDeleteUserConfirmModal = (user) => {
     setSelectedItem(user);
     setDeleteUserModalOpen(true);
   };
 
+  // Function to open the public confirmation modal for evidence
   const openPublicConfirmModal = (item) => {
     setSelectedItem(item);
     setConfirmModalOpen(true);
   };
 
+  // Function to open the modal to confirm making all evidence public or private
   const openAllPublicModal = (bool) => {
     setMakeAllPublic(bool);
     setAllPublicConfirmModalOpen(true);
   };
 
+  // Function to handle updating evidence data after changes
   const handleEvidenceUpdate = () => {
     fetchUserEvidence(selectedItem.id);
     fetchEvidence();
   };
 
+  // Function to open the user information modal
   const openUserInfoModal = (user) => {
     setEditsInput({
       id: user.id,
@@ -206,6 +228,7 @@ function AdminPage() {
     setUserInfoModalOpen(true);
   };
 
+  // Function to handle updating user information
   const handleUserUpdate = (user) => {
     axios.put(`/api/user/admin/${user.id}`, {
       username: editsInput.username,
@@ -224,6 +247,7 @@ function AdminPage() {
     });
   };
 
+  // Return statement for rendering the admin page
   return (
     <div style={{ padding: '75px', height: 500, width: '100%' }}>
       <h1 style={{ fontFamily: 'Merriweather', color: 'white' }}>Administration</h1>

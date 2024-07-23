@@ -48,6 +48,7 @@ function UserPage() {
 
   const enableControlsAfter = 3; // Time in seconds after which the controls will be enabled
 
+  // useEffect to check if the user has watched the video
   useEffect(() => {
     if (!user.video_watched) {
       setOpenVideoModal(true);
@@ -55,10 +56,12 @@ function UserPage() {
     console.log(theme);
   }, [user.video_watched]);
 
+  // Handle file change for avatar upload
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
   };
 
+  // Function to save changes to user information
   const saveChanges = async () => {
     const formData = new FormData();
     formData.append("email", email);
@@ -86,6 +89,7 @@ function UserPage() {
     }
   };
 
+  // Function to mark the video as watched
   const videoWatched = async () => {
     try {
       const response = await axios.put(`/api/user/watched/${user.id}`);
@@ -101,6 +105,7 @@ function UserPage() {
     }
   };
 
+  // Handle play/pause button for the video
   const handlePlayPause = () => {
     if (isPlaying) {
       videoRef.current.pause();
@@ -110,17 +115,20 @@ function UserPage() {
     setIsPlaying(!isPlaying);
   };
 
+  // Handle video end event
   const handleVideoEnd = () => {
     setIsPlaying(false);
     setOpenConfirmModal(true);
   };
 
+  // Handle time update event for the video
   const handleTimeUpdate = () => {
     if (videoRef.current.currentTime >= enableControlsAfter) {
       setControlsEnabled(true);
     }
   };
 
+  // Style for the modal
   const style = {
     position: "absolute",
     top: "50%",
@@ -133,6 +141,7 @@ function UserPage() {
     p: 4,
   };
 
+  // Return statement for rendering the user page
   return (
     <ThemeProvider theme={theme}>
       <div style={{ padding: "70px 10px" }} className="user-container">
