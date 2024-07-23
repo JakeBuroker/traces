@@ -8,13 +8,15 @@ import {
   Chip,
   Dialog,
   DialogContent,
+  DialogTitle,
+  Avatar,
   Button,
   Grid,
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DataGridComponent from '../DataGridComponent/DataGridComponent';
-import EvidenceCard from '../EvidenceCard/EvidenceCard'; // Import EvidenceCard
+import EvidenceCard from '../EvidenceCard/EvidenceCard';
 import './AdminPage.css';
 
 function AdminPage() {
@@ -24,6 +26,7 @@ function AdminPage() {
   const [users, setUsers] = useState([]);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [userEvidenceModalOpen, setUserEvidenceModalOpen] = useState(false);
+  const [userInfoModalOpen, setUserInfoModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedUserEvidence, setSelectedUserEvidence] = useState([]);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -138,7 +141,7 @@ function AdminPage() {
   };
 
   const openUserEvidenceModal = (user) => {
-    setSelectedItem(user); // Set the user as the selected item first
+    setSelectedItem(user);
     fetchUserEvidence(user.id);
   };
 
@@ -157,6 +160,7 @@ function AdminPage() {
     setSelectedItem(null);
     setDetailsModalOpen(false);
     setUserEvidenceModalOpen(false);
+    setUserInfoModalOpen(false);
     setInEditMode(false);
   };
 
@@ -184,6 +188,11 @@ function AdminPage() {
   const handleEvidenceUpdate = () => {
     fetchUserEvidence(selectedItem.id);
     fetchEvidence();
+  };
+
+  const openUserInfoModal = (user) => {
+    setSelectedItem(user);
+    setUserInfoModalOpen(true);
   };
 
   return (
@@ -222,6 +231,7 @@ function AdminPage() {
         openDeleteConfirmModal={openDeleteConfirmModal}
         openDeleteUserConfirmModal={openDeleteUserConfirmModal}
         openUserEvidenceModal={openUserEvidenceModal}
+        openUserInfoModal={openUserInfoModal} // Pass handler for user info modal
       />
       <Dialog open={detailsModalOpen} onClose={closeModal} fullWidth maxWidth='md'>
         <DialogContent>
@@ -263,21 +273,18 @@ function AdminPage() {
       </Dialog>
       <Dialog open={userEvidenceModalOpen} onClose={closeModal} fullWidth maxWidth='md'>
         <DialogContent>
-          {selectedUserEvidence.length === 0 ? (
-            <Typography variant="h6" style={{ margin: '20px auto' }}>
-              User has not uploaded any evidence.
-            </Typography>
-          ) : (
-            <Grid container spacing={2}>
-              {selectedUserEvidence.map((item) => (
-                <EvidenceCard
-                  key={item.id}
-                  item={item}
-                  fetchEvidence={handleEvidenceUpdate} // Updated function to fetch user's evidence
-                />
-              ))}
-            </Grid>
-          )}
+          <Grid container spacing={2}>
+            {selectedUserEvidence.map((item) => (
+              <EvidenceCard
+                key={item.id}
+                item={item}
+                fetchEvidence={handleEvidenceUpdate} // Updated function to fetch user's evidence
+              />
+            ))}
+            {selectedUserEvidence.length === 0 && (
+              <Typography variant="body1" style={{ margin: 'auto' }}>User has not uploaded any evidence</Typography>
+            )}
+          </Grid>
         </DialogContent>
       </Dialog>
       <Dialog open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false); setInEditMode(false); }}>
@@ -306,6 +313,22 @@ function AdminPage() {
           <Typography>Are you sure you want to change the visibility of all evidence to {makeAllPublic ? 'public' : 'private'}?</Typography>
           <Button onClick={() => handleMakeAllPublic(makeAllPublic)} color='primary'>Confirm</Button>
           <Button onClick={() => setAllPublicConfirmModalOpen(false)}>Cancel</Button>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={userInfoModalOpen} onClose={closeModal} fullWidth maxWidth='md'>
+        <DialogTitle>User Information</DialogTitle>
+        <DialogContent>
+          {selectedItem && (
+            <div>
+              <Avatar src={selectedItem.avatar_AWS_URL} alt="User Avatar" style={{ width: 100, height: 100, margin: 'auto' }} />
+              <Typography variant='h6'>Username: {selectedItem.username}</Typography>
+              <Typography variant='body1'>Email: {selectedItem.email}</Typography>
+              <Typography variant='body1'>Phone Number: {selectedItem.phone_number}</Typography>
+              <Typography variant='body1'>Role: {selectedItem.role}</Typography>
+              <Typography variant='body1'>Full Name: {selectedItem.full_name}</Typography>
+              <Typography variant='body1'>Video Watched: {JSON.stringify(selectedItem.video_watched)}</Typography>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </div>

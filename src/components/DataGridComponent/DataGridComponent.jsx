@@ -15,6 +15,7 @@ const DataGridComponent = ({
   openDeleteConfirmModal,
   openDeleteUserConfirmModal,
   openUserEvidenceModal,
+  openUserInfoModal,
 }) => {
   const evidenceColumns = [
     { field: 'title', headerName: 'Evidence Title', width: 150 },
@@ -24,7 +25,7 @@ const DataGridComponent = ({
     { field: 'postedBy', headerName: 'Posted By', width: 200 },
     {
       field: 'actions',
-      headerName: 'Details',
+      headerName: 'Evidence',
       sortable: false,
       width: 150,
       renderCell: (params) => (
@@ -88,7 +89,22 @@ const DataGridComponent = ({
     { field: 'phone_number', headerName: 'Phone Number', width: 200 },
     {
       field: 'actions',
-      headerName: 'Details',
+      headerName: 'Info',
+      sortable: false,
+      width: 150,
+      renderCell: (params) => (
+        <div>
+          <Button
+            onClick={() => openUserInfoModal(params.row)}
+            style={{ cursor: 'pointer', marginRight: '5px' }}
+            startIcon={<InfoIcon />}
+          />
+        </div>
+      ),
+    },
+    {
+      field: 'actions1',
+      headerName: 'Evidence',
       sortable: false,
       width: 150,
       renderCell: (params) => (
@@ -138,6 +154,8 @@ const DataGridComponent = ({
     email: user.email,
     full_name: user.full_name,
     phone_number: user.phone_number,
+    role: user.role,
+    video_watched: user.video_watched,
   }));
 
   return (

@@ -29,7 +29,7 @@ const s3 = new aws.S3Client({
 
 router.get('/users', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
-    const queryText = 'SELECT id, username, email, full_name, phone_number, avatar_url FROM "user"';
+    const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, video_watched FROM "user"';
     try {
       const result = await pool.query(queryText);
       const users = result.rows;
