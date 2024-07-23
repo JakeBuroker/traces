@@ -1,4 +1,3 @@
-// AdminPage.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -22,7 +21,9 @@ function AdminPage() {
   const evidenceList = useSelector((store) => store.evidence);
   const [users, setUsers] = useState([]);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
+  const [userEvidenceModalOpen, setUserEvidenceModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedUserEvidence, setSelectedUserEvidence] = useState([]);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteUserModalOpen, setDeleteUserModalOpen] = useState(false);
   const [inEditMode, setInEditMode] = useState(false);
@@ -134,9 +135,21 @@ function AdminPage() {
     setDetailsModalOpen(true);
   };
 
+  const openUserEvidenceModal = (user) => {
+    axios.get(`/api/user/${user.id}/evidence`)
+      .then((response) => {
+        setSelectedUserEvidence(response.data);
+        setUserEvidenceModalOpen(true);
+      })
+      .catch((error) => {
+        console.error('Error fetching user evidence:', error);
+      });
+  };
+
   const closeModal = () => {
     setSelectedItem(null);
     setDetailsModalOpen(false);
+    setUserEvidenceModalOpen(false);
     setInEditMode(false);
   };
 
@@ -196,6 +209,7 @@ function AdminPage() {
         openPublicConfirmModal={openPublicConfirmModal}
         openDeleteConfirmModal={openDeleteConfirmModal}
         openDeleteUserConfirmModal={openDeleteUserConfirmModal}
+        openUserEvidenceModal={openUserEvidenceModal}
       />
       <Dialog open={detailsModalOpen} onClose={closeModal} fullWidth maxWidth='md'>
         <DialogContent>
@@ -233,6 +247,25 @@ function AdminPage() {
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+      <Dialog open={userEvidenceModalOpen} onClose={closeModal} fullWidth maxWidth='md'>
+        <DialogContent>
+          {selectedUserEvidence.map((evidence) => (
+            <div key={evidence.id}>
+              {evidence.media_type === 4 ? (
+                <audio src={evidence.aws_url} controls style={{ width: '100%' }} />
+              ) : evidence.media_type === 3 ? (
+                <video src={evidence.aws_url} controls style={{ maxHeight: '500px', maxWidth: '100%', objectFit: 'contain' }} />
+              ) : (
+                <CardMedia component='img' src={evidence.aws_url} className='item-image' style={{ maxHeight: '500px', maxWidth: '100%', objectFit: 'contain' }} />
+              )}
+              <Typography variant='h5'>Title: {evidence.title}</Typography>
+              <Typography variant='body1'>Notes: {evidence.notes}</Typography>
+              <Typography variant='body1'>Location: {evidence.location}</Typography>
+              <Typography variant='body1'>Date Posted: {evidence.datePosted}</Typography>
+            </div>
+          ))}
         </DialogContent>
       </Dialog>
       <Dialog open={deleteModalOpen} onClose={() => { setDeleteModalOpen(false); setInEditMode(false); }}>
