@@ -12,6 +12,7 @@ import {
   Avatar,
   Button,
   Grid,
+  TextField
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
@@ -191,8 +192,36 @@ function AdminPage() {
   };
 
   const openUserInfoModal = (user) => {
+    setEditsInput({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      phone_number: user.phone_number,
+      role: user.role,
+      full_name: user.full_name,
+      alias: user.alias,
+      video_watched: user.video_watched,
+    });
     setSelectedItem(user);
     setUserInfoModalOpen(true);
+  };
+
+  const handleUserUpdate = (user) => {
+    axios.put(`/api/user/admin/${user.id}`, {
+      username: editsInput.username,
+      email: editsInput.email,
+      phone_number: editsInput.phone_number,
+      role: editsInput.role,
+      full_name: editsInput.full_name,
+      alias: editsInput.alias,
+      video_watched: editsInput.video_watched,
+    }).then(() => {
+      setInEditMode(false);
+      fetchUsers();
+      setSelectedItem({ ...selectedItem, ...editsInput });
+    }).catch(err => {
+      console.log(err);
+    });
   };
 
   return (
@@ -321,12 +350,89 @@ function AdminPage() {
           {selectedItem && (
             <div>
               <Avatar src={selectedItem.avatar_AWS_URL} alt="User Avatar" style={{ width: 100, height: 100, margin: 'auto' }} />
-              <Typography variant='h6'>Username: {selectedItem.username}</Typography>
-              <Typography variant='body1'>Email: {selectedItem.email}</Typography>
-              <Typography variant='body1'>Phone Number: {selectedItem.phone_number}</Typography>
-              <Typography variant='body1'>Role: {selectedItem.role}</Typography>
-              <Typography variant='body1'>Full Name: {selectedItem.full_name}</Typography>
-              <Typography variant='body1'>Video Watched: {JSON.stringify(selectedItem.video_watched)}</Typography>
+              {inEditMode ? (
+                <>
+                  <TextField
+                    label="Username"
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                    value={editsInput.username}
+                    onChange={(e) => setEditsInput({ ...editsInput, username: e.target.value })}
+                  />
+                  <TextField
+                    label="Email"
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                    value={editsInput.email}
+                    onChange={(e) => setEditsInput({ ...editsInput, email: e.target.value })}
+                  />
+                  <TextField
+                    label="Phone Number"
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                    value={editsInput.phone_number}
+                    onChange={(e) => setEditsInput({ ...editsInput, phone_number: e.target.value })}
+                  />
+                  <TextField
+                    label="Role"
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                    value={editsInput.role}
+                    onChange={(e) => setEditsInput({ ...editsInput, role: e.target.value })}
+                  />
+                  <TextField
+                    label="Full Name"
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                    value={editsInput.full_name}
+                    onChange={(e) => setEditsInput({ ...editsInput, full_name: e.target.value })}
+                  />
+                  <TextField
+                    label="Video Watched"
+                    variant="outlined"
+                    fullWidth
+                    margin="dense"
+                    value={editsInput.video_watched}
+                    onChange={(e) => setEditsInput({ ...editsInput, video_watched: e.target.value })}
+                  />
+                  <Button
+                    onClick={() => handleUserUpdate(editsInput)}
+                    variant="contained"
+                    color="primary"
+                    style={{ marginTop: '20px' }}
+                  >
+                    Save Changes
+                  </Button>
+                  <Button
+                    onClick={() => setInEditMode(false)}
+                    variant="contained"
+                    style={{ marginTop: '20px', marginLeft: '10px' }}
+                  >
+                    Cancel
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Typography variant='h6'>Username: {selectedItem.username}</Typography>
+                  <Typography variant='body1'>Email: {selectedItem.email}</Typography>
+                  <Typography variant='body1'>Phone Number: {selectedItem.phone_number}</Typography>
+                  <Typography variant='body1'>Role: {selectedItem.role}</Typography>
+                  <Typography variant='body1'>Full Name: {selectedItem.full_name}</Typography>
+                  <Typography variant='body1'>Video Watched: {JSON.stringify(selectedItem.video_watched)}</Typography>
+                  <Button
+                    onClick={() => setInEditMode(true)}
+                    variant="contained"
+                    style={{ marginTop: '20px', backgroundColor: '#c40f0f', color: 'hsl(0, 0%, 97%)' }}
+                  >
+                    Edit User
+                  </Button>
+                </>
+              )}
             </div>
           )}
         </DialogContent>
