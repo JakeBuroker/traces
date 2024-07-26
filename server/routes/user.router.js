@@ -13,6 +13,9 @@ dotenv.config();
 // ! Set up for AWS
 const aws = require('@aws-sdk/client-s3');
 const signer = require('@aws-sdk/s3-request-presigner');
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
@@ -27,14 +30,15 @@ const s3 = new aws.S3Client({
   region: bucketRegion,
 });
 
+// Route to get all users (admin only)
 router.get('/users', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
-    const queryText = 'SELECT id, username, email, full_name, phone_number, avatar_url FROM "user"';
+    const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, video_watched FROM "user"';
     try {
       const result = await pool.query(queryText);
       const users = result.rows;
 
-      // Generate signed URLs for avatar
+      // Generate signed URLs for avatars
       for (let user of users) {
         if (user.avatar_url) {
           const command = new aws.GetObjectCommand({
@@ -56,14 +60,15 @@ router.get('/users', rejectUnauthenticated, async (req, res) => {
   }
 });
 
+// Route to get all evidence for a specific user (admin only)
 router.get('/:id/evidence', rejectUnauthenticated, async (req, res) => {
-  if (req.user.role === 2) {  
+  if (req.user.role === 2) {
     const userId = req.params.id;
     const queryText = 'SELECT * FROM "evidence" WHERE user_id = $1';
 
     try {
       const result = await pool.query(queryText, [userId]);
-      
+
       // Generate signed URLs for evidence
       const evidenceList = result.rows;
       for (let evidence of evidenceList) {
@@ -122,10 +127,8 @@ router.delete('/:id', rejectUnauthenticated, async (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  // Corrected the quotes around the table name `user`
   const queryText = 'INSERT INTO "user" (username, password, email, phone_number, role, full_name) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id';
   pool
-    // TODO : GAVIN: Change the params for what we actually need in register page.
     .query(queryText, [username, password, req.body.email, req.body.phone_number, req.body.role, req.body.full_name])
     .then(() => res.sendStatus(201))
     .catch((err) => {
@@ -134,13 +137,14 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+// Route to update video watched status
 router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
   const queryText = `
     UPDATE "user"
     SET "video_watched" = true
     WHERE "id" = $1;
   `;
-  const queryParams = [req.user.id]; // Assuming req.user.id holds the authenticated user's ID
+  const queryParams = [req.user.id];
 
   const connection = await pool.connect();
 
@@ -148,18 +152,80 @@ router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
     await connection.query('BEGIN');
     const result = await connection.query(queryText, queryParams);
 
-    // Optional: Check if the update was successful, i.e., if any row was actually updated
     if (result.rowCount === 0) {
-      // No row updated, possibly because the user ID was not found
-      throw new Error('User not found or waiver already acknowledged.');
+      throw new Error('User not found or video already watched.');
     }
 
     await connection.query('COMMIT');
-    res.send(result.rows[0]); // Send back the updated user info, for example
+    res.send(result.rows[0]);
   } catch (error) {
-    console.error('Error acknowledging waiver:', error);
+    console.error('Error updating video watched status:', error);
     await connection.query('ROLLBACK');
-    res.status(500).send({ error: 'Failed to acknowledge waiver. Please try again.' });
+    res.status(500).send({ error: 'Failed to update video watched status. Please try again.' });
+  } finally {
+    connection.release();
+  }
+});
+
+// Route to update user information by admin
+router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+  const userId = req.params.id;
+  const { username, email, phone_number, role, full_name, alias, video_watched } = req.body;
+
+  const queryText = `
+    UPDATE "user" 
+    SET 
+      "username" = $1,
+      "email" = $2, 
+      "phone_number" = $3,
+      "role" = $4,
+      "full_name" = $5,
+      "alias" = $6,
+      "video_watched" = $7
+    WHERE "id" = $8
+    RETURNING "avatar_url";
+  `;
+
+  const queryParams = [
+    username,
+    email,
+    phone_number,
+    role,
+    full_name,
+    alias,
+    video_watched,
+    userId
+  ];
+
+  const connection = await pool.connect();
+  try {
+    await connection.query("BEGIN");
+    const result = await connection.query(queryText, queryParams);
+    console.log(result.rows);
+
+    if (req.file) {
+      let avatarUrl;
+      if (result.rows[0].avatar_url) {
+        avatarUrl = result.rows[0].avatar_url;
+      } else {
+        avatarUrl = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`;
+      }
+      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [avatarUrl, userId]);
+      const params = {
+        Bucket: bucketName,
+        Key: avatarUrl,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype,
+      };
+      const command = new aws.PutObjectCommand(params);
+      await s3.send(command);
+    }
+    res.send(result.rows);
+    await connection.query("COMMIT");
+  } catch (error) {
+    console.log(error);
+    await connection.query("ROLLBACK");
+    res.sendStatus(500);
   } finally {
     connection.release();
   }
@@ -173,7 +239,7 @@ router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
 
-// clear all server session information about this user
+// Clear all server session information about this user
 router.post('/logout', (req, res) => {
   // Use passport's built-in method to log out the user
   req.logout();
