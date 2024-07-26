@@ -314,10 +314,10 @@ function UserPage() {
         >
           <Box sx={style}>
             <Typography id="confirm-modal-title" variant="h6" component="h2">
-              Confirm Understanding
+              Video Instruction Acknowledgement
             </Typography>
             <Typography id="confirm-modal-description" sx={{ mt: 2 }}>
-              Do you understand the information provided in the video?
+              Please acknowledge that you have watched and understood the instructional video. (This video can be rewatched in the 'Help' tab)
             </Typography>
             <div style={{ display: "flex", justifyContent: "space-around", marginTop: "20px" }}>
               <Button
@@ -328,7 +328,7 @@ function UserPage() {
                   color: "hsl(0, 0%, 97%)",
                 }}
               >
-                Yes
+                I understand
               </Button>
               <Button
                 onClick={() => setOpenConfirmModal(false)}
@@ -338,7 +338,7 @@ function UserPage() {
                   color: "hsl(0, 0%, 97%)",
                 }}
               >
-                No
+                Rewatch Video
               </Button>
             </div>
           </Box>

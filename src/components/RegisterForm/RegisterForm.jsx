@@ -21,10 +21,14 @@ function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [passwordsValid, setPasswordsValid] = useState(false)
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [phoneNumberConfirm, setPhoneNumberConfirm] = useState('')
+  const [phoneNumbersValid, setPhoneNumbersValid] = useState(false)
   const [fullName, setFullName] = useState('')
   const [role, setRole] = useState(1)
+  const [submitDisabled, setSubmitDisabled] = useState(false)
   const [snackBarOpen, setSnackBarOpen] = useState(false)
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
@@ -32,18 +36,20 @@ function RegisterForm() {
 
   const registerUser = (event) => {
     event.preventDefault();
-
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        username: username,
-        password: password,
-        email: email,
-        phone_number: phoneNumber,
-        full_name: fullName,
-        role: role // ! default set to 1 (user)
-      },
-    });
+    validatePasswords()
+    validatePhoneNumbers()
+    if (!validateForm()) return
+      dispatch({
+        type: 'REGISTER',
+        payload: {
+          username: username,
+          password: password,
+          email: email,
+          phone_number: phoneNumber,
+          full_name: fullName,
+          role: role // ! default set to 1 (user)
+        },
+      });
     setSnackBarOpen(true)
     resetState()
     history.push('/user')
@@ -65,13 +71,34 @@ function RegisterForm() {
     setRole(1)
   }
 
-  const validatePasswords = (target) => {
-    setPasswordConfirm(target.value)
-    if (target.value !== password) {
-      target.setCustomeValidity('Passwords Do Not Match.')
+  const validatePasswords = () => {
+    if (password === passwordConfirm) {
+      setPasswordsValid(true)
     } else {
-      target.setCustomeValidity('')
+      console.log('Passwords not matching');
+      setPasswordsValid(false)
     }
+  }
+
+  const validatePhoneNumbers = () => {
+    if (phoneNumber === phoneNumberConfirm) {
+      setPhoneNumbersValid(true)
+    } else {
+      console.log('Phone numbers not matching');
+      setPhoneNumbersValid(false)
+    }
+  }
+
+  const validateForm = () => {
+    if (phoneNumbersValid && passwordsValid) {
+      // setSubmitDisabled(false)
+      console.log('Form is valid');
+      return true
+    }
+    // setSubmitDisabled(true)
+    console.log("Form is not valid");
+    return false
+
   }
 
   return (
@@ -134,6 +161,19 @@ function RegisterForm() {
             </label>
           </div>
           <div className="input-container">
+            <label htmlFor="confirmPhoneNumber" style={styles.labels}>
+              Confirm Phone Number*
+              <input
+                type="text"
+                minLength={10}
+                id="confirmPhoneNumber"
+                value={phoneNumberConfirm}
+                required
+                onChange={(event) => setPhoneNumberConfirm(event.target.value)}
+              />
+            </label>
+          </div>
+          <div className="input-container">
             <label htmlFor="password" style={styles.labels}>
               Password*
               <input
@@ -146,13 +186,7 @@ function RegisterForm() {
               />
             </label>
           </div>
-          <UploadButton 
-            btnName={"Upload Avatar*"}
-            color={"primary"}
-            setter={() => {}}
-            style={styles.uploadButton}
-          />
-          {/* <div className="input-container">
+          <div className="input-container">
             <label htmlFor="password-confirm" style={styles.labels}>
               Confirm Password*
               <input
@@ -160,34 +194,30 @@ function RegisterForm() {
                 id="password-confirm"
                 value={passwordConfirm}
                 required
-                onChange={(event) => validatePasswords(event.target)}
+                onChange={(event) => setPasswordConfirm(event.target.value)}
               />
             </label>
-          </div> */}
-          {/* <div>
-            <FormControl required sx={{ width: "100%", }}>
-              <label htmlFor="roleInpute" style={{...styles.labels, marginBottom: '10px' }}>Roll: </label>
-              <Select
-                sx={{ border: 1, borderRadius: 4, height: 52 }}
-                size='small'
-                labelId="roleInput-label"
-                id="roleInput"
-                value={role}
-                onChange={(e) => setRole(Number(e.target.value))}
-              >
-                <MenuItem value={1}>Audience Member</MenuItem>
-                <MenuItem value={2}>Administrator</MenuItem>
-              </Select>
-            </FormControl>
-          </div> */}
+          </div>
+          <UploadButton
+            btnName={"Upload Avatar*"}
+            color={"primary"}
+            setter={() => { }}
+            style={styles.uploadButton}
+          />
         </div>
         <div>
 
         </div>
         <div>
-          <Button className='btn' type='submit' name='submit' value='Register' style={{ margin: '10px 0px', color: 'blue' }}>Register</Button>
-          {/* <Button className='btn' type='reset' onClick={() => history.push('/admin')}>Back to Admin Page</Button> */}
-          {/* <input className="btn" type="submit" name="submit" value="Register" /> */}
+          <Button
+            className='btn'
+            type='submit'
+            name='submit'
+            value='Register'
+            disabled={submitDisabled}
+            style={{ margin: '10px 0px', }}>
+            Register
+          </Button>
         </div>
       </form>
       <Snackbar
