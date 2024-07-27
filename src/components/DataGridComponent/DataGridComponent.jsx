@@ -1,7 +1,6 @@
-// DataGridComponent.js
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
+import { Avatar, Button } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -14,8 +13,11 @@ const DataGridComponent = ({
   openModal,
   openPublicConfirmModal,
   openDeleteConfirmModal,
-  openDeleteUserConfirmModal
+  openDeleteUserConfirmModal,
+  openUserEvidenceModal,
+  openUserInfoModal,
 }) => {
+  // Define columns for the evidence data grid
   const evidenceColumns = [
     { field: 'title', headerName: 'Evidence Title', width: 150 },
     { field: 'location', headerName: 'Location', width: 150 },
@@ -24,7 +26,7 @@ const DataGridComponent = ({
     { field: 'postedBy', headerName: 'Posted By', width: 200 },
     {
       field: 'actions',
-      headerName: 'Details',
+      headerName: 'Evidence',
       sortable: false,
       width: 150,
       renderCell: (params) => (
@@ -72,7 +74,16 @@ const DataGridComponent = ({
     },
   ];
 
+  // Define columns for the user data grid
   const userColumns = [
+    {
+      field: 'avatar_AWS_URL',
+      headerName: 'Avatar',
+      width: 70,
+      renderCell: (params) => (
+        <Avatar src={params.value || './default_avi.jpeg'} />
+      ),
+    },
     { field: 'id', headerName: 'ID', width: 100 },
     { field: 'username', headerName: 'Username', width: 150 },
     { field: 'email', headerName: 'Email', width: 200 },
@@ -80,6 +91,36 @@ const DataGridComponent = ({
     { field: 'phone_number', headerName: 'Phone Number', width: 200 },
     {
       field: 'actions',
+      headerName: 'Info',
+      sortable: false,
+      width: 150,
+      renderCell: (params) => (
+        <div>
+          <Button
+            onClick={() => openUserInfoModal(params.row)}
+            style={{ cursor: 'pointer', marginRight: '5px' }}
+            startIcon={<InfoIcon />}
+          />
+        </div>
+      ),
+    },
+    {
+      field: 'actions1',
+      headerName: 'Evidence',
+      sortable: false,
+      width: 150,
+      renderCell: (params) => (
+        <div>
+          <Button
+            onClick={() => openUserEvidenceModal(params.row)}
+            style={{ cursor: 'pointer', marginRight: '5px' }}
+            startIcon={<InfoIcon />}
+          />
+        </div>
+      ),
+    },
+    {
+      field: 'actions2',
       headerName: 'Delete?',
       sortable: false,
       width: 150,
@@ -96,6 +137,7 @@ const DataGridComponent = ({
     },
   ];
 
+  // Map evidence data to the format expected by the data grid
   const evidenceRows = data.evidence.map((item) => ({
     id: item.id,
     title: item.title,
@@ -108,14 +150,19 @@ const DataGridComponent = ({
     media_type: item.media_type,
   }));
 
+  // Map user data to the format expected by the data grid
   const userRows = data.users.map((user) => ({
     id: user.id,
+    avatar_AWS_URL: user.avatar_AWS_URL || './default_avi.jpeg',
     username: user.username,
     email: user.email,
     full_name: user.full_name,
     phone_number: user.phone_number,
+    role: user.role,
+    video_watched: user.video_watched,
   }));
 
+  // Return statement for rendering the data grid with the appropriate columns and rows based on the view
   return (
     <DataGrid
       rows={view === 'evidence' ? evidenceRows : userRows}

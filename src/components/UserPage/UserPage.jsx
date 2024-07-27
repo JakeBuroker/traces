@@ -42,11 +42,13 @@ function UserPage() {
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || "");
   const [userAvi, setUserAvi] = useState(null);
   const [openVideoModal, setOpenVideoModal] = useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [controlsEnabled, setControlsEnabled] = useState(false);
 
   const enableControlsAfter = 3; // Time in seconds after which the controls will be enabled
 
+  // useEffect to check if the user has watched the video
   useEffect(() => {
     if (!user.video_watched) {
       setOpenVideoModal(true);
@@ -54,10 +56,12 @@ function UserPage() {
     console.log(theme);
   }, [user.video_watched]);
 
+  // Handle file change for avatar upload
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
   };
 
+  // Function to save changes to user information
   const saveChanges = async () => {
     const formData = new FormData();
     formData.append("email", email);
@@ -85,12 +89,13 @@ function UserPage() {
     }
   };
 
+  // Function to mark the video as watched
   const videoWatched = async () => {
     try {
       const response = await axios.put(`/api/user/watched/${user.id}`);
       if (response.status === 200) {
         dispatch({ type: "FETCH_USER" });
-        setOpenVideoModal(false);
+        setOpenConfirmModal(false);
         history.push("/evidence");
       } else {
         throw new Error("Failed to update video watched status.");
@@ -100,6 +105,7 @@ function UserPage() {
     }
   };
 
+  // Handle play/pause button for the video
   const handlePlayPause = () => {
     if (isPlaying) {
       videoRef.current.pause();
@@ -109,17 +115,20 @@ function UserPage() {
     setIsPlaying(!isPlaying);
   };
 
+  // Handle video end event
   const handleVideoEnd = () => {
     setIsPlaying(false);
-    videoWatched();
+    setOpenConfirmModal(true);
   };
 
+  // Handle time update event for the video
   const handleTimeUpdate = () => {
     if (videoRef.current.currentTime >= enableControlsAfter) {
       setControlsEnabled(true);
     }
   };
 
+  // Style for the modal
   const style = {
     position: "absolute",
     top: "50%",
@@ -132,6 +141,7 @@ function UserPage() {
     p: 4,
   };
 
+  // Return statement for rendering the user page
   return (
     <ThemeProvider theme={theme}>
       <div style={{ padding: "70px 10px" }} className="user-container">
@@ -302,6 +312,43 @@ function UserPage() {
                   {isPlaying ? "Pause" : "Play"}
                 </Button>
               )}
+            </div>
+          </Box>
+        </Modal>
+        <Modal
+          open={openConfirmModal}
+          onClose={() => {}}
+          aria-labelledby="confirm-modal-title"
+          aria-describedby="confirm-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="confirm-modal-title" variant="h6" component="h2">
+              Confirm Understanding
+            </Typography>
+            <Typography id="confirm-modal-description" sx={{ mt: 2 }}>
+              Do you understand the information provided in the video?
+            </Typography>
+            <div style={{ display: "flex", justifyContent: "space-around", marginTop: "20px" }}>
+              <Button
+                onClick={videoWatched}
+                variant="contained"
+                style={{
+                  backgroundColor: "#c40f0f",
+                  color: "hsl(0, 0%, 97%)",
+                }}
+              >
+                Yes
+              </Button>
+              <Button
+                onClick={() => setOpenConfirmModal(false)}
+                variant="contained"
+                style={{
+                  backgroundColor: "#c40f0f",
+                  color: "hsl(0, 0%, 97%)",
+                }}
+              >
+                No
+              </Button>
             </div>
           </Box>
         </Modal>
