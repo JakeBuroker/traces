@@ -124,7 +124,7 @@ const DataGridComponent = ({
       rowsPerPageOptions={[5]}
       checkboxSelection={false}
       disableSelectionOnClick
-      style={{ height: 550, width: '100%', backgroundColor: 'hsl(0, 0%, 97%)' }}
+      style={{ height: 550, width: '100%', backgroundColor: '#f7f7f7' }}
     />
   );
 };

@@ -148,7 +148,7 @@ function UserPage() {
             style={{ borderRadius: "5px" }}
           />
         )}
-        <Typography variant="h4" sx={{ textAlign: "center", padding: "10px", color: "hsl(0, 0%, 97%)" }}>
+        <Typography variant="h4" sx={{ textAlign: "center", padding: "10px", color: "#f7f7f7" }}>
           {user.full_name}
         </Typography>
         {editMode ? (
@@ -162,7 +162,7 @@ function UserPage() {
             <TextField
               InputProps={{
                 style: {
-                  color: "hsl(0, 0%, 97%)",
+                  color: "#f7f7f7",
                 },
               }}
               label="Full Name"
@@ -175,7 +175,7 @@ function UserPage() {
             <TextField
               InputProps={{
                 style: {
-                  color: "hsl(0, 0%, 97%)",
+                  color: "#f7f7f7",
                 },
               }}
               label="Email"
@@ -189,7 +189,7 @@ function UserPage() {
             <TextField
               InputProps={{
                 style: {
-                  color: "hsl(0, 0%, 97%)",
+                  color: "#f7f7f7",
                 },
               }}
               label="Phone Number"
@@ -204,7 +204,7 @@ function UserPage() {
               style={{
                 marginTop: "10px",
                 backgroundColor: "#c40f0f",
-                color: "hsl(0, 0%, 97%)",
+                color: "#f7f7f7",
               }}
               setter={setUserAvi}
               color={userAvi ? "success" : "primary"}
@@ -216,7 +216,7 @@ function UserPage() {
               style={{
                 margin: "40px 0 10px 0",
                 backgroundColor: "#c40f0f",
-                color: "hsl(0, 0%, 97%)",
+                color: "#f7f7f7",
               }}
             >
               Save Changes
@@ -224,7 +224,7 @@ function UserPage() {
             <Button
               onClick={() => setEditMode(false)}
               variant="contained"
-              style={{ backgroundColor: "#c40f0f", color: "hsl(0, 0%, 97%)" }}
+              style={{ backgroundColor: "#c40f0f", color: "#f7f7f7" }}
             >
               Cancel
             </Button>
@@ -248,7 +248,7 @@ function UserPage() {
               variant="contained"
               style={{
                 backgroundColor: "#c40f0f",
-                color: "hsl(0, 0%, 97%)",
+                color: "#f7f7f7",
               }}
             >
               Edit Profile
@@ -257,7 +257,7 @@ function UserPage() {
               onClick={() => dispatch({ type: "LOGOUT" })}
               style={{
                 backgroundColor: "#c40f0f",
-                color: "hsl(0, 0%, 97%)",
+                color: "#f7f7f7",
               }}
               variant="outlined"
             >
@@ -296,7 +296,7 @@ function UserPage() {
                   style={{
                     marginTop: "10px",
                     backgroundColor: "#c40f0f",
-                    color: "hsl(0, 0%, 97%)",
+                    color: "#f7f7f7",
                   }}
                 >
                   {isPlaying ? "Pause" : "Play"}

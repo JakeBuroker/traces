@@ -169,14 +169,14 @@ function AdminPage() {
           <Button
             variant='contained'
             onClick={() => openAllPublicModal(true)}
-            style={{ backgroundColor: '#c40f0f', color: 'hsl(0, 0%, 97%)', marginRight: '10px' }}
+            style={{ backgroundColor: '#c40f0f', color: '#f7f7f7', marginRight: '10px' }}
           >
             Make All Public
           </Button>
           <Button
             variant='contained'
             onClick={() => openAllPublicModal(false)}
-            style={{ backgroundColor: '#c40f0f', color: 'hsl(0, 0%, 97%)' }}
+            style={{ backgroundColor: '#c40f0f', color: '#f7f7f7' }}
           >
             Make All Private
           </Button>
@@ -185,7 +185,7 @@ function AdminPage() {
       <Button
         variant='contained'
         onClick={() => setView(view === 'evidence' ? 'users' : 'evidence')}
-        style={{ backgroundColor: '#c40f0f', color: 'hsl(0, 0%, 97%)', marginBottom: '20px' }}
+        style={{ backgroundColor: '#c40f0f', color: '#f7f7f7', marginBottom: '20px' }}
       >
         {view === 'evidence' ? 'Show Users' : 'Show Evidence'}
       </Button>
