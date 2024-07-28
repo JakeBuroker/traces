@@ -1,6 +1,11 @@
 import React from 'react';
 import './HelpPage.css';
 import { Button } from '@mui/material';
+import Accordion from '@mui/material/Accordion';
+import AccordionActions from '@mui/material/AccordionActions';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function HelpPage() {
   return (
@@ -16,11 +21,48 @@ function HelpPage() {
         </video>
       </div>
       <h3 style={{ padding: "30px" }}>FAQ</h3>
-      <ul>
-        <li>What do I do if the call drops?</li>
-        <li>If I don't know where to go, what do I do?</li>
-        <li>Am I getting paid for this?</li>
-      </ul>
+      <div style={{backgroundColor:"f7f7f7"}}>
+        <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel1-content'
+          id='panel1-header'
+          sx={{textDecoration: "underline"}}
+        >
+          What do I do if the call drops?
+        </AccordionSummary>
+        <AccordionDetails>
+          Call the number back or move to an area where your phone has reception and then attempt to call back.
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel2-content'
+          id='panel2-header'
+          sx={{textDecoration: "underline"}}
+        >
+          If I don't know where to go, what do I do?
+        </AccordionSummary>
+        <AccordionDetails>
+          Await further instruction from the prompter.
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel3-content'
+          id='panel3-header'
+          sx={{textDecoration: "underline"}}
+        >
+          Am I getting paid for this?
+        </AccordionSummary>
+        <AccordionDetails>
+          As much as we would love to we cant.
+        </AccordionDetails>
+      </Accordion>
+      </div>
+
     </div>
   );
 }
