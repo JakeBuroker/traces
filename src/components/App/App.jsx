@@ -66,13 +66,17 @@ function App() {
             <EvidenceUpload />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows Adminpage
-            exact
-            path="/admin"
-          >
-            <AdminPage />
-          </ProtectedRoute>
+
+        <ProtectedRoute exact path="/admin">
+            {user.role === 1 ? (
+              // If the user is already logged in,
+              // redirect to the /user page
+              <Redirect to="/user" />
+            ) : (
+              // Otherwise, show the login page
+              <AdminPage />
+            )}
+         </ProtectedRoute>
 
           <ProtectedRoute
             // logged in shows Adminpage
