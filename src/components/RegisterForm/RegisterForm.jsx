@@ -13,7 +13,7 @@ const styles = {
   uploadButton: {
     marginTop: "10px",
     backgroundColor: "#c40f0f",
-    color: "hsl(0, 0%, 97%)",
+    color: "#f7f7f7",
   },
   warningLabels: {
     color: '#c40f0f'
