@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import {
   Card,
   Typography,
-  Grid
+  Grid,
+  Box
 } from '@mui/material';
 import EvidenceDetailsModal from '../EvidenceDetailsModal/EvidenceDetailsModal';
 
@@ -102,6 +103,22 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
           height: '230px'
         }}
         onClick={() => setIsOpen(true)}>
+        {item.is_public && (
+          <Box
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              color: 'white',
+              padding: '2px 4px',
+              borderRadius: '4px',
+              fontSize: '12px',
+            }}
+          >
+            Public
+          </Box>
+        )}
         {hasMedia(item.media_type) && renderImageForMediaItem(item)}
         <Typography variant="h5" component="div" sx={{ textAlign: "center", fontFamily: 'Caveat', fontSize: '30px' }}>
           {formatLongTitles(item.title)}
