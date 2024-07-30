@@ -19,21 +19,87 @@ const DataGridComponent = ({
 }) => {
   // Define columns for the evidence data grid
   const evidenceColumns = [
-    { field: 'title', headerName: 'Evidence Title', width: 150 },
-    { field: 'location', headerName: 'Location', width: 150 },
-    { field: 'datePosted', headerName: 'Date Posted', width: 200 },
-    { field: 'notes', headerName: 'Notes', width: 200 },
-    { field: 'postedBy', headerName: 'Posted By', width: 200 },
+    {
+      field: 'title',
+      headerName: 'Evidence Title',
+      width: 225,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => (
+        <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <span style={{ display: 'inline-block', maxWidth: '100%', textAlign: 'center' }}>
+            {params.value}
+          </span>
+        </div>
+      ),
+    },
+    {
+      field: 'location',
+      headerName: 'Location',
+      width: 150,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => (
+        <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <span style={{ display: 'inline-block', maxWidth: '100%', textAlign: 'center' }}>
+            {params.value}
+          </span>
+        </div>
+      ),
+    },
+    {
+      field: 'datePosted',
+      headerName: 'Date Posted',
+      width: 200,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => (
+        <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <span style={{ display: 'inline-block', maxWidth: '100%', textAlign: 'center' }}>
+            {params.value}
+          </span>
+        </div>
+      ),
+    },
+    {
+      field: 'notes',
+      headerName: 'Notes',
+      width: 200,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => (
+        <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <span style={{ display: 'inline-block', maxWidth: '100%', textAlign: 'center' }}>
+            {params.value}
+          </span>
+        </div>
+      ),
+    },
+    {
+      field: 'postedBy',
+      headerName: 'Posted By',
+      width: 200,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => (
+        <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <span style={{ display: 'inline-block', maxWidth: '100%', textAlign: 'center' }}>
+            {params.value}
+          </span>
+        </div>
+      ),
+    },
     {
       field: 'actions',
       headerName: 'Evidence',
+      headerAlign: 'center',
       sortable: false,
       width: 150,
       renderCell: (params) => (
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Button
             onClick={() => openModal(params.row)}
-            style={{ cursor: 'pointer', marginRight: '5px' }}
+            style={{ cursor: 'pointer', right: '-40px' }}
             startIcon={<InfoIcon />}
           />
         </div>
@@ -42,13 +108,14 @@ const DataGridComponent = ({
     {
       field: 'actions1',
       headerName: 'Toggle Secrecy',
+      headerAlign: 'center',
       sortable: false,
       width: 150,
       renderCell: (params) => (
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Button
             onClick={() => openPublicConfirmModal(params.row)}
-            style={{ cursor: 'pointer', marginRight: '5px' }}
+            style={{ cursor: 'pointer', right: '-20px' }}
             startIcon={params.row.isPublic ? <VisibilityIcon /> : <VisibilityOffIcon />}
           >
             {params.row.isPublic ? 'Public' : 'Hidden'}
@@ -59,13 +126,14 @@ const DataGridComponent = ({
     {
       field: 'actions2',
       headerName: 'Delete?',
+      headerAlign: 'center',
       sortable: false,
       width: 150,
       renderCell: (params) => (
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Button
             onClick={() => openDeleteConfirmModal(params.row)}
-            style={{ cursor: 'pointer', marginRight: '5px' }}
+            style={{ cursor: 'pointer', right: '-40px' }}
             startIcon={<DeleteIcon />}
             color='error'
           />
@@ -80,25 +148,30 @@ const DataGridComponent = ({
       field: 'avatar_AWS_URL',
       headerName: 'Avatar',
       width: 70,
+      headerAlign: 'center',
+      align: 'center',
       renderCell: (params) => (
-        <Avatar src={params.value || './default_avi.jpeg'} />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Avatar src={params.value || './default_avi.jpeg'} />
+        </div>
       ),
     },
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'username', headerName: 'Username', width: 150 },
-    { field: 'email', headerName: 'Email', width: 200 },
-    { field: 'full_name', headerName: 'Full Name', width: 200 },
-    { field: 'phone_number', headerName: 'Phone Number', width: 200 },
+    { field: 'id', headerName: 'ID', width: 100, headerAlign: 'center', align: 'center' },
+    { field: 'username', headerName: 'Username', width: 200, headerAlign: 'center', align: 'center' },
+    { field: 'email', headerName: 'Email', width: 250, headerAlign: 'center', align: 'center' },
+    { field: 'full_name', headerName: 'Full Name', width: 250, headerAlign: 'center', align: 'center' },
+    { field: 'phone_number', headerName: 'Phone Number', width: 200, headerAlign: 'center', align: 'center' },
     {
       field: 'actions',
       headerName: 'Info',
+      headerAlign: 'center',
       sortable: false,
-      width: 150,
+      width: 125,
       renderCell: (params) => (
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Button
             onClick={() => openUserInfoModal(params.row)}
-            style={{ cursor: 'pointer', marginRight: '5px' }}
+            style={{ cursor: 'pointer', right: '-30px' }}
             startIcon={<InfoIcon />}
           />
         </div>
@@ -107,13 +180,14 @@ const DataGridComponent = ({
     {
       field: 'actions1',
       headerName: 'Evidence',
+      headerAlign: 'center',
       sortable: false,
-      width: 150,
+      width: 145,
       renderCell: (params) => (
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Button
             onClick={() => openUserEvidenceModal(params.row)}
-            style={{ cursor: 'pointer', marginRight: '5px' }}
+            style={{ cursor: 'pointer', right: '-35px'  }}
             startIcon={<InfoIcon />}
           />
         </div>
@@ -122,13 +196,14 @@ const DataGridComponent = ({
     {
       field: 'actions2',
       headerName: 'Delete?',
+      headerAlign: 'center',
       sortable: false,
       width: 150,
       renderCell: (params) => (
-        <div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center'  }}>
           <Button
             onClick={() => openDeleteUserConfirmModal(params.row)}
-            style={{ cursor: 'pointer', marginRight: '5px' }}
+            style={{ cursor: 'pointer', right: '-40px'  }}
             startIcon={<DeleteIcon />}
             color='error'
           />
