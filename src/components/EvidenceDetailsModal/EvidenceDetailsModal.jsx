@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { DateTime } from 'luxon';
 
 const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, deleteEvidence, acceptedMedia }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -74,6 +75,10 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
     }
   };
 
+  const formatDateTime = (dateString) => {
+    return DateTime.fromISO(dateString).toLocaleString(DateTime.DATETIME_MED);
+  };
+
   return (
     <>
       <Dialog
@@ -84,17 +89,17 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
       >
         <DialogContent>
           {selectedItem && (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
               {renderImageForMediaItem(selectedItem)}
               {selectedItem.is_public && (
                 <Box
                   sx={{
                     backgroundColor: 'rgba(0,0,0,0.5)',
                     color: 'white',
-                    padding: '2px 4px',
+                    padding: '2px 5px',
                     borderRadius: '4px',
                     fontSize: '12px',
-                    marginTop: '8px',
+                    marginTop: '10px',
                   }}
                 >
                   Public
@@ -114,6 +119,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
                   display: "flex",
                   justifyContent: "center",
                   gap: "10px",
+                  padding: "10px",
                 }}
               >
                 <Chip
@@ -131,6 +137,19 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
                   style={{ cursor: "pointer" }}
                 />
               </div>
+              {selectedItem.date_posted && (
+                <Typography
+                  variant="caption"
+                  style={{
+                    position: 'absolute',
+                    bottom: -17.5,
+                    left: -15,
+                  fontSize: '14px',
+                  }}
+                >
+                 {formatDateTime(selectedItem.date_posted)}
+                </Typography>
+              )}
             </div>
           )}
         </DialogContent>
@@ -210,5 +229,3 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
 };
 
 export default EvidenceDetailsModal;
-
-
