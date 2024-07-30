@@ -17,7 +17,7 @@ function LandingPage() {
   }
 
   return (
-    <Box className="container" sx={{ padding: '60px 20px' }}>
+    <Box className="container" sx={{ padding: '65px 20px' }}>
       <div className="grid">
         <div className='grid-col grid-col_12'>
           <img src="/bridge.jpg" alt="An image of a bridge" style={{ display: 'block', width: '300px', margin: '25px auto', borderRadius: '5px' }} />
@@ -34,12 +34,12 @@ function LandingPage() {
         </div>
 
         <div className="grid-col grid-col_12">
-          <Typography variant='body1' sx={{ color: '#f7f7f7', textAlign: "center" }}>
+          <Typography variant='body1' sx={{ color: 'black', textAlign: "center" }}>
             {text.english.landingPageBodies.body1}
           </Typography>
         </div>
         <div className="grid-col grid-col_12" style={{ marginTop: '25px' }}>
-          {!user.id && (<h4 style={{ color: '#f7f7f7' }}>If you are participating in the play, please login.</h4>)}
+          {!user.id && (<h4 style={{ color: '#000000' }}>If you are participating in the play, please login.</h4>)}
         </div>
       </div>
     </Box>

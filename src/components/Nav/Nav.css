@@ -2,10 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 58px;
+  height: 70px;
   margin-bottom: 30px;
-  background-color: #AB0D0D;
+  background-color: #ffff;
   /* background-color: #18245A; */
+  border-bottom: 1px solid black;
   overflow: hidden;
   position: fixed;
   width: 100%;
@@ -17,7 +18,7 @@
 .nav-title {
   /* font-size: 34px; */
   /* font-weight: 700; */
-  /* color: "#f7f7f7"; */
+  /* color: "#000000"; */
   padding-left: 5px;
   cursor: pointer;
   /* margin-bottom: 7px; */

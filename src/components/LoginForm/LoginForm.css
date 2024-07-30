@@ -28,7 +28,7 @@
     font-size: 17px; 
     border: 1px solid black;
     border-radius: 5px; 
-   color:  #c40f0f;
+   color:  #ffffff;
     margin: 10px 0;
   }
   
@@ -48,8 +48,8 @@
   }
   
   .btn {
-    background-color: #c40f0f !important;;
-    color: #f7f7f7 !important;
+    background-color: #ffffff !important;;
+    color: #000000 !important;
     font-weight: bold !important;
     width: 100%;
     padding: 5px;
