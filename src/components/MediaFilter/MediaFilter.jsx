@@ -4,6 +4,7 @@ import { Typography, ToggleButtonGroup, ToggleButton } from '@mui/material';
 function MediaFilter({ selectedMediaType, onMediaTypeChange }) {
   return (
     <div style={{
+      padding: "20px",
       display: "flex",
       justifyContent: "center",
       flexWrap: "wrap",
