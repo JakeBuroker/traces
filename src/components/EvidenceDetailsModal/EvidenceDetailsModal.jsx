@@ -7,30 +7,31 @@ import {
   DialogActions,
   Typography,
   TextField,
-  Chip
+  Chip,
+  Box
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { DateTime } from 'luxon';
 
 const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, deleteEvidence, acceptedMedia }) => {
-  const [isEditing, setIsEditing] = useState(false)
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [formState, setFormState] = useState({
     user_id: selectedItem.id,
     title: selectedItem.title,
     notes: selectedItem.notes,
   });
 
-
   const cancelDelete = () => {
-    setDeleteModalOpen(false)
+    setDeleteModalOpen(false);
   };
 
   const handleDelete = (id) => {
-    deleteEvidence(id)
-    setDeleteModalOpen(false)
-    onClose()
-  }
+    deleteEvidence(id);
+    setDeleteModalOpen(false);
+    onClose();
+  };
 
   const handleSave = (id) => {
     const formData = new FormData();
@@ -40,40 +41,43 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
       formData.append("file", formState.file);
     }
     setIsEditing(false);
-    // function for PUT request
-    editEvidence(id, formData)
-    onClose()
+    editEvidence(id, formData);
+    onClose();
   };
 
-  const renderImageForMediaItem = ({media_type, aws_url, title}) => {
+  const renderImageForMediaItem = ({ media_type, aws_url, title }) => {
     if (media_type === 4) {
-      return ( // Render an audio element for audio files
-      <video
-        src={aws_url}
-        controls
-        style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "cover", margin: '5px 0' }}
-        poster='./audio_placeholder.jpeg'
-      />)
+      return (
+        <video
+          src={aws_url}
+          controls
+          style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "cover", margin: '5px 0' }}
+          poster='./audio_placeholder.jpeg'
+        />
+      );
     } else if (media_type === 3) {
       return (
-        // Render a video element for video files
         <video
-        src={aws_url}
-        controls
-        style={{maxHeight: "500px", maxWidth: "100%", objectFit: "cover", margin: '5px 0' }}
-        poster='./video_placeholder.jpeg'
-      />
-      )
+          src={aws_url}
+          controls
+          style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "cover", margin: '5px 0' }}
+          poster='./video_placeholder.jpeg'
+        />
+      );
     } else if (media_type === 2) {
       return (
         <img
-        src={aws_url}
-        alt={title}
-        style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "cover", margin: '5px 0' }}
-      />
-      )
+          src={aws_url}
+          alt={title}
+          style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "cover", margin: '5px 0' }}
+        />
+      );
     }
-  }
+  };
+
+  const formatDateTime = (dateString) => {
+    return DateTime.fromISO(dateString).toLocaleString(DateTime.DATETIME_MED);
+  };
 
   return (
     <>
@@ -85,13 +89,22 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
       >
         <DialogContent>
           {selectedItem && (
-            <div style={{display: 'flex', flexDirection: 'column', alignContent: 'center'}}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
               {renderImageForMediaItem(selectedItem)}
-              {/* <img
-                src={selectedItem.aws_url}
-                alt={selectedItem.title}
-                style={{ width: "100%", height: "auto", objectFit: "cover", border: "solid" }}
-              /> */}
+              {selectedItem.is_public && (
+                <Box
+                  sx={{
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    color: 'white',
+                    padding: '2px 5px',
+                    borderRadius: '4px',
+                    fontSize: '12px',
+                    marginTop: '10px',
+                  }}
+                >
+                  Public
+                </Box>
+              )}
               <Typography variant="h5" style={{ textAlign: "center" }}>
                 {selectedItem.title}
               </Typography>
@@ -106,6 +119,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
                   display: "flex",
                   justifyContent: "center",
                   gap: "10px",
+                  padding: "10px",
                 }}
               >
                 <Chip
@@ -123,6 +137,19 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
                   style={{ cursor: "pointer" }}
                 />
               </div>
+              {selectedItem.date_posted && (
+                <Typography
+                  variant="caption"
+                  style={{
+                    position: 'absolute',
+                    bottom: -17.5,
+                    left: -15,
+                  fontSize: '14px',
+                  }}
+                >
+                 {formatDateTime(selectedItem.date_posted)}
+                </Typography>
+              )}
             </div>
           )}
         </DialogContent>
@@ -152,7 +179,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
         fullWidth
         maxWidth="md"
         disableEscapeKeyDown
-        sx={{border:"solid"}}
+        sx={{ border: "solid" }}
       >
         <DialogTitle>Edit Item</DialogTitle>
         <DialogContent>
@@ -163,7 +190,7 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
               }
               type="file"
               id="fileInput"
-            accept={acceptedMedia(selectedItem.media_type)}
+              accept={acceptedMedia(selectedItem.media_type)}
             />
           )}
           <TextField
@@ -202,4 +229,3 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
 };
 
 export default EvidenceDetailsModal;
-
