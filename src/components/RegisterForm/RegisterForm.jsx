@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button, Select, MenuItem, FormControl, Snackbar, Alert } from '@mui/material';
@@ -14,6 +14,9 @@ const styles = {
     marginTop: "10px",
     backgroundColor: "#c40f0f",
     color: "hsl(0, 0%, 97%)",
+  },
+  warningLabels: {
+    color: '#c40f0f'
   }
 }
 
@@ -28,28 +31,35 @@ function RegisterForm() {
   const [phoneNumbersValid, setPhoneNumbersValid] = useState(false)
   const [fullName, setFullName] = useState('')
   const [role, setRole] = useState(1)
-  const [submitDisabled, setSubmitDisabled] = useState(false)
+  const [validationErrors, setValidationErrors] = useState({ passwordError: false, phoneNumberError: false })
   const [snackBarOpen, setSnackBarOpen] = useState(false)
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
   const history = useHistory()
 
+  useEffect(() => {
+    formIsValid()
+    console.log(validationErrors);
+  }, [phoneNumber, phoneNumberConfirm, password, passwordConfirm, phoneNumbersValid, passwordsValid])
+
   const registerUser = (event) => {
     event.preventDefault();
     validatePasswords()
     validatePhoneNumbers()
-    if (!validateForm()) return
-      dispatch({
-        type: 'REGISTER',
-        payload: {
-          username: username,
-          password: password,
-          email: email,
-          phone_number: phoneNumber,
-          full_name: fullName,
-          role: role // ! default set to 1 (user)
-        },
-      });
+    if (!formIsValid()) {
+      console.log("This form will return");
+      return}
+    dispatch({
+      type: 'REGISTER',
+      payload: {
+        username: username,
+        password: password,
+        email: email,
+        phone_number: phoneNumber,
+        full_name: fullName,
+        role: role // ! default set to 1 (user)
+      },
+    });
     setSnackBarOpen(true)
     resetState()
     history.push('/user')
@@ -74,22 +84,26 @@ function RegisterForm() {
   const validatePasswords = () => {
     if (password === passwordConfirm) {
       setPasswordsValid(true)
+      setValidationErrors({ ...validationErrors, passwordError: false })
     } else {
       console.log('Passwords not matching');
       setPasswordsValid(false)
+      setValidationErrors({ ...validationErrors, passwordError: true })
     }
   }
 
   const validatePhoneNumbers = () => {
     if (phoneNumber === phoneNumberConfirm) {
       setPhoneNumbersValid(true)
+      setValidationErrors({ ...validationErrors, phoneNumberError: false })
     } else {
       console.log('Phone numbers not matching');
       setPhoneNumbersValid(false)
+      setValidationErrors({ ...validationErrors, phoneNumberError: true })
     }
   }
 
-  const validateForm = () => {
+  const formIsValid = () => {
     if (phoneNumbersValid && passwordsValid) {
       // setSubmitDisabled(false)
       console.log('Form is valid');
@@ -172,6 +186,7 @@ function RegisterForm() {
                 onChange={(event) => setPhoneNumberConfirm(event.target.value)}
               />
             </label>
+            {validationErrors.phoneNumberError && (<label style={styles.warningLabels}>Phone numbers do not match.</label>)}
           </div>
           <div className="input-container">
             <label htmlFor="password" style={styles.labels}>
@@ -197,6 +212,7 @@ function RegisterForm() {
                 onChange={(event) => setPasswordConfirm(event.target.value)}
               />
             </label>
+            {validationErrors.passwordError && (<label style={styles.warningLabels}>Passwords do not match.</label>)}
           </div>
           <UploadButton
             btnName={"Upload Avatar*"}
@@ -214,7 +230,6 @@ function RegisterForm() {
             type='submit'
             name='submit'
             value='Register'
-            disabled={submitDisabled}
             style={{ margin: '10px 0px', }}>
             Register
           </Button>
