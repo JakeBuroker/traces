@@ -28,6 +28,7 @@ function Nav() {
   const menuItemStyle = {
     color: "#000000",
     padding: "10px 20px",
+    border: "none",
     fontSize: "inherit", // Preserve existing font size
     transition: "background-color 0.3s ease, color 0.3s ease",
     '&:hover': {

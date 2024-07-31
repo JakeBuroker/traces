@@ -10,12 +10,11 @@ body {
   background-color: #ffffff;
   /* background-color: rgb(188, 188, 188); */
 }
+
 img {
   display: inline-block;
   max-width: 100%;
 }
-
-
 
 /* --------------------------------------------------------------------------------
 Container

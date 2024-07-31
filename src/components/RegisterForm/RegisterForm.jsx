@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Button, Select, MenuItem, FormControl, Snackbar, Alert } from '@mui/material';
+import { Button, Snackbar, Alert } from '@mui/material';
 import { Formik } from 'formik';
 import UploadButton from '../UploadButton/UploadButton';
 
 const styles = {
   labels: {
-    color: '#000000',
+    color: 'Black',
     fontWeight: 'bold',
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    marginBottom: '5px',
   },
-  uploadButton: {
-    marginTop: "10px",
-    backgroundColor: "#ffffff",
-    color: "#000000",
+  inputContainer: {
+    marginBottom: '15px',
   },
   warningLabels: {
-    color: '#c40f0f'
+    color: '#c40f0f',
+    fontSize: '0.875rem',
+    marginTop: '5px',
   }
 }
 
 function RegisterForm() {
-  const [role, setRole] = useState(1)
-  const [snackBarOpen, setSnackBarOpen] = useState(false)
-  const errors = useSelector((store) => store.errors);
+  const [role, setRole] = useState(1);
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
   const dispatch = useDispatch();
-  const history = useHistory()
-  const [formValues, setFormValues] = useState({})
+  const history = useHistory();
 
   const registerUser = ({ username, password, email, phone_number, full_name }) => {
     dispatch({
@@ -38,13 +37,12 @@ function RegisterForm() {
         email,
         phone_number,
         full_name,
-        role: role // ! default set to 1 (user)
+        role: role // Default set to 1 (user)
       },
     });
-    setSnackBarOpen(true)
-    resetState()
-    history.push('/user')
-  }; // end registerUser
+    setSnackBarOpen(true);
+    history.push('/user');
+  };
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -53,18 +51,8 @@ function RegisterForm() {
     setSnackBarOpen(false);
   };
 
-
-  const resetState = () => {
-    setUsername('')
-    setPassword('')
-    setEmail('')
-    setPhoneNumber('')
-    setFullName('')
-    setRole(1)
-  }
-
-  const FormFields = () => (
-    <div>
+  return (
+    <div className="login-container">
       <Formik
         initialValues={{
           fullName: '',
@@ -81,16 +69,16 @@ function RegisterForm() {
 
           // Phone number
           if (!values.phoneNumber) {
-            errors.phoneNumber = 'Required'
+            errors.phoneNumber = 'Required';
           } else if (values.phoneNumber.length < 10) {
-            errors.phoneNumber = 'Invalid Phone Number'
+            errors.phoneNumber = 'Invalid Phone Number';
           }
 
           // Phone number confirm
           if (!values.phoneNumberConfirm) {
-            errors.phoneNumberConfirm = 'Required'
+            errors.phoneNumberConfirm = 'Required';
           } else if (values.phoneNumber !== values.phoneNumberConfirm) {
-            errors.phoneNumberConfirm = 'Phone numbers must match'
+            errors.phoneNumberConfirm = 'Phone numbers must match';
           }
 
           // Email
@@ -102,46 +90,35 @@ function RegisterForm() {
             errors.email = 'Invalid email address';
           }
 
+          // Password
           if (!values.password) {
-            errors.password = 'Required'
+            errors.password = 'Required';
           } else if (values.password.length < 7) {
-            errors.password = 'Password must be at least 7 characters'
+            errors.password = 'Password must be at least 7 characters';
           }
 
-          // Password Confirm 
+          // Password Confirm
           if (!values.passwordConfirm) {
-            errors.passwordConfirm = 'Required'
-          } else if (values.passwordConfirm.length < 7) {
-            errors.passwordConfirm = 'Password must be at least 7 characters'
+            errors.passwordConfirm = 'Required';
           } else if (values.passwordConfirm !== values.password) {
-            errors.passwordConfirm = 'Passwords do not match'
+            errors.passwordConfirm = 'Passwords do not match';
           }
 
           // Image
           if (!values.avitar) {
-            errors.avitar = "You must include a photo of yourself"
+            errors.avitar = "You must include a photo of yourself";
           }
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setFormValues({
-              username: values.username,
-              password: values.password,
-              email: values.email,
-              phone_number: values.phoneNumber,
-              full_name: values.fullName,
-            })
-            registerUser({
-              username: values.username,
-              password: values.password,
-              email: values.email,
-              phone_number: values.phoneNumber,
-              full_name: values.fullName,
-            })
-            setSubmitting(false);
-          }, 400);
+          setSubmitting(false);
+          registerUser({
+            username: values.username,
+            password: values.password,
+            email: values.email,
+            phone_number: values.phoneNumber,
+            full_name: values.fullName,
+          });
         }}
         className='formPanel'
       >
@@ -153,12 +130,11 @@ function RegisterForm() {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          /* and other goodies */
         }) => (
-          <form onSubmit={handleSubmit} >
-            <h2 style={{ marginBottom: '30px', textAlign: 'center', color: '#f7f7f7' }}>Register User</h2>
+          <form onSubmit={handleSubmit}>
+            <h2 style={{ marginBottom: '30px', textAlign: 'center', color: 'Black' }}>Register User</h2>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div className="input-container">
+              <div className="input-container" style={styles.inputContainer}>
                 <label htmlFor="fullName" style={styles.labels}>
                   Full Name*
                 </label>
@@ -170,7 +146,12 @@ function RegisterForm() {
                   onBlur={handleBlur}
                   value={values.fullName}
                 />
-                {errors.fullName && touched.fullName && errors.fullName}
+                {touched.fullName && errors.fullName && (
+                  <div style={styles.warningLabels}>{errors.fullName}</div>
+                )}
+              </div>
+
+              <div className="input-container" style={styles.inputContainer}>
                 <label htmlFor="username" style={styles.labels}>
                   Username*
                 </label>
@@ -182,7 +163,12 @@ function RegisterForm() {
                   onBlur={handleBlur}
                   value={values.username}
                 />
-                {errors.username && touched.username && errors.username}
+                {touched.username && errors.username && (
+                  <div style={styles.warningLabels}>{errors.username}</div>
+                )}
+              </div>
+
+              <div className="input-container" style={styles.inputContainer}>
                 <label htmlFor="email" style={styles.labels}>
                   Email*
                 </label>
@@ -194,7 +180,12 @@ function RegisterForm() {
                   onBlur={handleBlur}
                   value={values.email}
                 />
-                {errors.email && touched.email && errors.email}
+                {touched.email && errors.email && (
+                  <div style={styles.warningLabels}>{errors.email}</div>
+                )}
+              </div>
+
+              <div className="input-container" style={styles.inputContainer}>
                 <label htmlFor="phoneNumber" style={styles.labels}>
                   Phone Number*
                 </label>
@@ -206,7 +197,12 @@ function RegisterForm() {
                   onBlur={handleBlur}
                   value={values.phoneNumber}
                 />
-                {errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}
+                {touched.phoneNumber && errors.phoneNumber && (
+                  <div style={styles.warningLabels}>{errors.phoneNumber}</div>
+                )}
+              </div>
+
+              <div className="input-container" style={styles.inputContainer}>
                 <label htmlFor="phoneNumberConfirm" style={styles.labels}>
                   Confirm Phone Number*
                 </label>
@@ -218,7 +214,12 @@ function RegisterForm() {
                   onBlur={handleBlur}
                   value={values.phoneNumberConfirm}
                 />
-                {errors.phoneNumberConfirm && touched.phoneNumberConfirm && errors.phoneNumberConfirm}
+                {touched.phoneNumberConfirm && errors.phoneNumberConfirm && (
+                  <div style={styles.warningLabels}>{errors.phoneNumberConfirm}</div>
+                )}
+              </div>
+
+              <div className="input-container" style={styles.inputContainer}>
                 <label htmlFor="password" style={styles.labels}>
                   Password*
                 </label>
@@ -230,7 +231,12 @@ function RegisterForm() {
                   onBlur={handleBlur}
                   value={values.password}
                 />
-                {errors.password && touched.password && errors.password}
+                {touched.password && errors.password && (
+                  <div style={styles.warningLabels}>{errors.password}</div>
+                )}
+              </div>
+
+              <div className="input-container" style={styles.inputContainer}>
                 <label htmlFor="passwordConfirm" style={styles.labels}>
                   Confirm Password*
                 </label>
@@ -242,7 +248,12 @@ function RegisterForm() {
                   onBlur={handleBlur}
                   value={values.passwordConfirm}
                 />
-                {errors.passwordConfirm && touched.passwordConfirm && errors.passwordConfirm}
+                {touched.passwordConfirm && errors.passwordConfirm && (
+                  <div style={styles.warningLabels}>{errors.passwordConfirm}</div>
+                )}
+              </div>
+
+              <div className="input-container" style={styles.inputContainer}>
                 <UploadButton
                   btnName={"Upload Photo"}
                   onChange={handleChange}
@@ -250,27 +261,23 @@ function RegisterForm() {
                   value={values.avitar}
                   name={'avitar'}
                 />
-                 {errors.username && touched.username && errors.username}
+                {touched.avitar && errors.avitar && (
+                  <div style={styles.warningLabels}>{errors.avitar}</div>
+                )}
               </div>
+
+              <Button type="submit" disabled={isSubmitting} className='btn'>
+                Submit
+              </Button>
             </div>
-            <Button type="submit" disabled={isSubmitting} className='btn'>
-              Submit
-            </Button>
           </form>
         )}
       </Formik>
-    </div>
-  );
-
-  return (
-    <div className="login-container">
-      <FormFields />
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         open={snackBarOpen}
         autoHideDuration={6000}
         onClose={handleClose}
-      // message="New User Created"
       >
         <Alert
           onClose={handleClose}
@@ -282,7 +289,6 @@ function RegisterForm() {
         </Alert>
       </Snackbar>
     </div>
-
   );
 }
 
