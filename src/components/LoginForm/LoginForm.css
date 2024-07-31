@@ -58,8 +58,14 @@
     border-radius: 10px;
    
   }
+
   .btn:not(:last-child) {
     margin-right: 2px; /* Adds space to the right of each button except the last button */
+  }
+
+  .btn:disabled {
+    background-color: gray !important;
+    columns: #c40f0f !important; 
   }
   
   .login-btn {

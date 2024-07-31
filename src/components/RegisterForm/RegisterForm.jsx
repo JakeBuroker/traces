@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button, Select, MenuItem, FormControl, Snackbar, Alert } from '@mui/material';
+import { Formik } from 'formik';
 import UploadButton from '../UploadButton/UploadButton';
 
 const styles = {
@@ -14,33 +15,29 @@ const styles = {
     marginTop: "10px",
     backgroundColor: "#ffffff",
     color: "#000000",
+  },
+  warningLabels: {
+    color: '#c40f0f'
   }
 }
 
 function RegisterForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('')
-  const [email, setEmail] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [fullName, setFullName] = useState('')
   const [role, setRole] = useState(1)
   const [snackBarOpen, setSnackBarOpen] = useState(false)
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
   const history = useHistory()
+  const [formValues, setFormValues] = useState({})
 
-  const registerUser = (event) => {
-    event.preventDefault();
-
+  const registerUser = ({ username, password, email, phone_number, full_name }) => {
     dispatch({
       type: 'REGISTER',
       payload: {
-        username: username,
-        password: password,
-        email: email,
-        phone_number: phoneNumber,
-        full_name: fullName,
+        username,
+        password,
+        email,
+        phone_number,
+        full_name,
         role: role // ! default set to 1 (user)
       },
     });
@@ -56,6 +53,7 @@ function RegisterForm() {
     setSnackBarOpen(false);
   };
 
+
   const resetState = () => {
     setUsername('')
     setPassword('')
@@ -65,131 +63,208 @@ function RegisterForm() {
     setRole(1)
   }
 
-  const validatePasswords = (target) => {
-    setPasswordConfirm(target.value)
-    if (target.value !== password) {
-      target.setCustomeValidity('Passwords Do Not Match.')
-    } else {
-      target.setCustomeValidity('')
-    }
-  }
+  const FormFields = () => (
+    <div>
+      <Formik
+        initialValues={{
+          fullName: '',
+          username: '',
+          email: '',
+          phoneNumber: '',
+          phoneNumberConfirm: '',
+          password: '',
+          passwordConfirm: '',
+          avitar: ''
+        }}
+        validate={values => {
+          const errors = {};
+
+          // Phone number
+          if (!values.phoneNumber) {
+            errors.phoneNumber = 'Required'
+          } else if (values.phoneNumber.length < 10) {
+            errors.phoneNumber = 'Invalid Phone Number'
+          }
+
+          // Phone number confirm
+          if (!values.phoneNumberConfirm) {
+            errors.phoneNumberConfirm = 'Required'
+          } else if (values.phoneNumber !== values.phoneNumberConfirm) {
+            errors.phoneNumberConfirm = 'Phone numbers must match'
+          }
+
+          // Email
+          if (!values.email) {
+            errors.email = 'Required';
+          } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+          ) {
+            errors.email = 'Invalid email address';
+          }
+
+          if (!values.password) {
+            errors.password = 'Required'
+          } else if (values.password.length < 7) {
+            errors.password = 'Password must be at least 7 characters'
+          }
+
+          // Password Confirm 
+          if (!values.passwordConfirm) {
+            errors.passwordConfirm = 'Required'
+          } else if (values.passwordConfirm.length < 7) {
+            errors.passwordConfirm = 'Password must be at least 7 characters'
+          } else if (values.passwordConfirm !== values.password) {
+            errors.passwordConfirm = 'Passwords do not match'
+          }
+
+          // Image
+          if (!values.avitar) {
+            errors.avitar = "You must include a photo of yourself"
+          }
+          return errors;
+        }}
+        onSubmit={(values, { setSubmitting }) => {
+          setTimeout(() => {
+            alert(JSON.stringify(values, null, 2));
+            setFormValues({
+              username: values.username,
+              password: values.password,
+              email: values.email,
+              phone_number: values.phoneNumber,
+              full_name: values.fullName,
+            })
+            registerUser({
+              username: values.username,
+              password: values.password,
+              email: values.email,
+              phone_number: values.phoneNumber,
+              full_name: values.fullName,
+            })
+            setSubmitting(false);
+          }, 400);
+        }}
+        className='formPanel'
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+          /* and other goodies */
+        }) => (
+          <form onSubmit={handleSubmit} >
+            <h2 style={{ marginBottom: '30px', textAlign: 'center', color: '#f7f7f7' }}>Register User</h2>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div className="input-container">
+                <label htmlFor="fullName" style={styles.labels}>
+                  Full Name*
+                </label>
+                <input
+                  type="text"
+                  name="fullName"
+                  id='fullName'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.fullName}
+                />
+                {errors.fullName && touched.fullName && errors.fullName}
+                <label htmlFor="username" style={styles.labels}>
+                  Username*
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  id='username'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.username}
+                />
+                {errors.username && touched.username && errors.username}
+                <label htmlFor="email" style={styles.labels}>
+                  Email*
+                </label>
+                <input
+                  type="text"
+                  name="email"
+                  id='email'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.email}
+                />
+                {errors.email && touched.email && errors.email}
+                <label htmlFor="phoneNumber" style={styles.labels}>
+                  Phone Number*
+                </label>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  id='phoneNumber'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.phoneNumber}
+                />
+                {errors.phoneNumber && touched.phoneNumber && errors.phoneNumber}
+                <label htmlFor="phoneNumberConfirm" style={styles.labels}>
+                  Confirm Phone Number*
+                </label>
+                <input
+                  type="text"
+                  name="phoneNumberConfirm"
+                  id='phoneNumberConfirm'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.phoneNumberConfirm}
+                />
+                {errors.phoneNumberConfirm && touched.phoneNumberConfirm && errors.phoneNumberConfirm}
+                <label htmlFor="password" style={styles.labels}>
+                  Password*
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id='password'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.password}
+                />
+                {errors.password && touched.password && errors.password}
+                <label htmlFor="passwordConfirm" style={styles.labels}>
+                  Confirm Password*
+                </label>
+                <input
+                  type="password"
+                  name="passwordConfirm"
+                  id='passwordConfirm'
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.passwordConfirm}
+                />
+                {errors.passwordConfirm && touched.passwordConfirm && errors.passwordConfirm}
+                <UploadButton
+                  btnName={"Upload Photo"}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.avitar}
+                  name={'avitar'}
+                />
+                 {errors.username && touched.username && errors.username}
+              </div>
+            </div>
+            <Button type="submit" disabled={isSubmitting} className='btn'>
+              Submit
+            </Button>
+          </form>
+        )}
+      </Formik>
+    </div>
+  );
 
   return (
     <div className="login-container">
-      <form className="formPanel" onSubmit={registerUser}>
-        <h2 style={{ marginBottom: '30px', textAlign: 'center', color: '#000000' }}>Register User</h2>
-        {errors.registrationMessage && (
-          <h3 className="alert" role="alert">
-            {errors.registrationMessage}
-          </h3>
-        )}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className="input-container">
-            <label htmlFor="fullName" style={styles.labels}>
-              Full Name*
-            </label>
-            <input
-              type="text"
-              id="fullName"
-              value={fullName}
-              required
-              onChange={(event) => setFullName(event.target.value)}
-            />
-          </div>
-          <div className="input-container">
-            <label htmlFor="username" style={styles.labels}>
-              Username*
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={username}
-              required
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </div>
-          <div className="input-container">
-            <label htmlFor="email" style={styles.labels}>
-              Email*
-              <input
-                type="email"
-                id="email"
-                value={email}
-                required
-                onChange={(event) => setEmail(event.target.value)}
-              />
-            </label>
-          </div>
-          <div className="input-container">
-            <label htmlFor="phoneNumber" style={styles.labels}>
-              Phone Number*
-              <input
-                type="text"
-                minLength={10}
-                id="phoneNumber"
-                value={phoneNumber}
-                required
-                onChange={(event) => setPhoneNumber(event.target.value)}
-              />
-            </label>
-          </div>
-          <div className="input-container">
-            <label htmlFor="password" style={styles.labels}>
-              Password*
-              <input
-                type="password"
-                id="password"
-                value={password}
-                autoComplete='new-password'
-                required
-                onChange={(event) => setPassword(event.target.value)}
-              />
-            </label>
-          </div>
-          <UploadButton 
-            btnName={"Upload Avatar*"}
-            color={"primary"}
-            setter={() => {}}
-            style={styles.uploadButton}
-          />
-          {/* <div className="input-container">
-            <label htmlFor="password-confirm" style={styles.labels}>
-              Confirm Password*
-              <input
-                type="password"
-                id="password-confirm"
-                value={passwordConfirm}
-                required
-                onChange={(event) => validatePasswords(event.target)}
-              />
-            </label>
-          </div> */}
-          {/* <div>
-            <FormControl required sx={{ width: "100%", }}>
-              <label htmlFor="roleInpute" style={{...styles.labels, marginBottom: '10px' }}>Roll: </label>
-              <Select
-                sx={{ border: 1, borderRadius: 4, height: 52 }}
-                size='small'
-                labelId="roleInput-label"
-                id="roleInput"
-                value={role}
-                onChange={(e) => setRole(Number(e.target.value))}
-              >
-                <MenuItem value={1}>Audience Member</MenuItem>
-                <MenuItem value={2}>Administrator</MenuItem>
-              </Select>
-            </FormControl>
-          </div> */}
-        </div>
-        <div>
-
-        </div>
-        <div>
-          <Button className='btn' type='submit' name='submit' value='Register' style={{ margin: '10px 0px', color: 'blue' }}>Register</Button>
-          {/* <Button className='btn' type='reset' onClick={() => history.push('/admin')}>Back to Admin Page</Button> */}
-          {/* <input className="btn" type="submit" name="submit" value="Register" /> */}
-        </div>
-      </form>
+      <FormFields />
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         open={snackBarOpen}
