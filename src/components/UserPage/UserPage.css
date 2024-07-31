@@ -3,13 +3,11 @@
   max-width: 250px;
   margin: auto;
   padding: 20px;
-  
 }
 
 .edit-form, .info-display {
   display: flex;
   flex-direction: column;
-  
 }
 
 .form-group {
@@ -19,7 +17,6 @@
 .form-group label {
   margin-bottom: 5px;
   font-weight: bold;
-  
 }
 
 .form-group input, .form-group select {
@@ -27,7 +24,6 @@
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  
 }
 
 .save-btn, .edit-btn, .logout-btn {
@@ -58,37 +54,37 @@
   height: 100px;
   border-radius: 50%;
   margin-bottom: 15px;
+  border: black 1px solid;
 }
 
 /* Desktop-specific styles */
 @media (min-width: 768px) {
   .user-container {
-    max-width: 350px; /* Keep your preference or adjust as needed */
+    max-width: 350px; /* Adjust for larger screens */
   }
 
   .edit-form, .info-display {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
-    align-items: flex-start; /* Align items at the start of the container */
+    align-items: flex-start;
   }
 
   .form-group {
-    flex-basis: 48%; /* This allows for a two-column layout */
+    flex-basis: 48%; /* Two-column layout */
   }
 
-  /* Additional styling for desktop to manage spacing and alignment */
   .button-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
-    width: 100%; /* Ensure the container takes full width */
-    margin-top: 20px; /* Add some margin on top */
+    width: 100%;
+    margin-top: 20px;
   }
 
   .user-avi {
-    width: 150px; /* Adjusted for a larger display */
+    width: 150px;
     height: 150px;
   }
 }

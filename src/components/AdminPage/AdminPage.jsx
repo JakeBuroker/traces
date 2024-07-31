@@ -256,14 +256,14 @@ function AdminPage() {
           <Button
             variant='contained'
             onClick={() => openAllPublicModal(true)}
-            style={{ backgroundColor: '#c40f0f', color: '#f7f7f7', marginRight: '10px' }}
+            style={{ backgroundColor: '#ffffff', color: '#000000', marginRight: '10px' }}
           >
             Make All Public
           </Button>
           <Button
             variant='contained'
             onClick={() => openAllPublicModal(false)}
-            style={{ backgroundColor: '#c40f0f', color: '#f7f7f7' }}
+            style={{ backgroundColor: '#ffffff', color: '#000000' }}
           >
             Make All Private
           </Button>
@@ -272,7 +272,7 @@ function AdminPage() {
       <Button
         variant='contained'
         onClick={() => setView(view === 'evidence' ? 'users' : 'evidence')}
-        style={{ backgroundColor: '#c40f0f', color: '#f7f7f7', marginBottom: '20px' }}
+        style={{ backgroundColor: '#ffffff', color: '#000000', marginBottom: '20px' }}
       >
         {view === 'evidence' ? 'Show Users' : 'Show Evidence'}
       </Button>
@@ -451,7 +451,7 @@ function AdminPage() {
                   <Button
                     onClick={() => setInEditMode(true)}
                     variant="contained"
-                    style={{ marginTop: '20px', backgroundColor: '#c40f0f', color: 'hsl(0, 0%, 97%)' }}
+                    style={{ marginTop: '20px', backgroundColor: '#ffffff', color: 'hsl(0, 0%, 97%)' }}
                   >
                     Edit User
                   </Button>

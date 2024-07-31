@@ -7,14 +7,14 @@ import UploadButton from '../UploadButton/UploadButton';
 
 const styles = {
   labels: {
-    color: '#f7f7f7',
+    color: '#000000',
     fontWeight: 'bold',
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
   },
   uploadButton: {
     marginTop: "10px",
-    backgroundColor: "#c40f0f",
-    color: "#f7f7f7",
+    backgroundColor: "#ffffff",
+    color: "#000000",
   },
   warningLabels: {
     color: '#c40f0f'

@@ -13,9 +13,9 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focused': {
-            color: '#f7f7f7', // Color of label text when the input is focused
+            color: '#000000', // Color of label text when the input is focused
           },
-          color: '#f7f7f7',
+          color: '#000000',
         },
       },
     },
@@ -23,7 +23,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#f7f7f7', // Change focus border color to black
+            borderColor: '#000000', // Change focus border color to black
           },
         },
       },
@@ -53,7 +53,6 @@ function UserPage() {
     if (!user.video_watched) {
       setOpenVideoModal(true);
     }
-    console.log(theme);
   }, [user.video_watched]);
 
   // Handle file change for avatar upload
@@ -144,22 +143,22 @@ function UserPage() {
   // Return statement for rendering the user page
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ padding: "70px 10px" }} className="user-container">
+      <div style={{ padding: "90px 1px" }} className="user-container">
         {user.avatar_url ? (
           <img
             src={user.avatar_AWS_URL}
             alt="An avatar for the user."
-            style={{ borderRadius: "5px" }}
+            style={{ borderRadius: "5px", border: "2px solid #000" }}
           />
         ) : (
           <img
             src="./default_avi.jpeg"
             alt="The default avatar"
-            style={{ borderRadius: "5px" }}
+            style={{ borderRadius: "5px", border: "2px solid #000" }}
           />
         )}
-        <Typography variant="h4" sx={{ textAlign: "center", padding: "10px", color: "#f7f7f7" }}>
-          {user.full_name}
+        <Typography variant="h4" sx={{ textAlign: "center", padding: "10px", color: "#000000" }}>
+          {user.username}
         </Typography>
         {editMode ? (
           <form
@@ -168,27 +167,33 @@ function UserPage() {
               e.preventDefault();
               saveChanges();
             }}
+            style={{ border: "2px solid #000", borderRadius: "8px", padding: "20px" }}
           >
+            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
+              Full Name
+            </Typography>
             <TextField
               InputProps={{
                 style: {
-                  color: "#f7f7f7",
+                  color: "#000000",
                 },
               }}
-              label="Full Name"
               variant="outlined"
               fullWidth
               margin="dense"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
             />
+            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem', marginTop: '15px' }}>
+              Email
+            </Typography>
             <TextField
               InputProps={{
                 style: {
-                  color: "#f7f7f7",
+                  color: "#000000",
+                  padding: "5px",
                 },
               }}
-              label="Email"
               type="email"
               variant="outlined"
               fullWidth
@@ -196,13 +201,15 @@ function UserPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem', marginTop: '15px' }}>
+              Phone Number
+            </Typography>
             <TextField
               InputProps={{
                 style: {
-                  color: "#f7f7f7",
+                  color: "#000000",
                 },
               }}
-              label="Phone Number"
               variant="outlined"
               fullWidth
               margin="dense"
@@ -213,8 +220,9 @@ function UserPage() {
               btnName={"Upload Avatar"}
               style={{
                 marginTop: "10px",
-                backgroundColor: "#c40f0f",
-                color: "#f7f7f7",
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                border: "2px solid #000", // Adding border to the UploadButton
               }}
               setter={setUserAvi}
               color={userAvi ? "success" : "primary"}
@@ -222,11 +230,18 @@ function UserPage() {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
               style={{
-                margin: "40px 0 10px 0",
-                backgroundColor: "#c40f0f",
-                color: "#f7f7f7",
+                margin: "20px 0 10px 0",
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                border: "2px solid #000",
+                transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
+                '&:hover': {
+                  backgroundColor: "#f5f5f5",
+                  color: "#000000",
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
+                  transform: 'scale(1.02)', // Slightly larger on hover
+                },
               }}
             >
               Save Changes
@@ -234,7 +249,18 @@ function UserPage() {
             <Button
               onClick={() => setEditMode(false)}
               variant="contained"
-              style={{ backgroundColor: "#c40f0f", color: "#f7f7f7" }}
+              style={{
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                border: "2px solid #000",
+                transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
+                '&:hover': {
+                  backgroundColor: "#f5f5f5",
+                  color: "#000000",
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
+                  transform: 'scale(1.02)', // Slightly larger on hover
+                },
+              }}
             >
               Cancel
             </Button>
@@ -246,30 +272,67 @@ function UserPage() {
               display: "flex",
               flexDirection: "column",
               gap: "10px",
-              color: "#f7f7f7",
+              color: "#000000",
+              border: "2px solid #000", // Adding border to info display
+              borderRadius: "8px"
             }}
             className="info-display"
           >
-            <p>Full Name: {fullName}</p>
-            <p>Email: {email}</p>
-            <p>Phone Number: {phoneNumber}</p>
+            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
+              Full Name
+            </Typography>
+            <Typography variant="body1" component="p">
+              {fullName}
+            </Typography>
+            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem', marginTop: '10px' }}>
+              Email
+            </Typography>
+            <Typography variant="body1" component="p">
+              {email}
+            </Typography>
+            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem', marginTop: '10px' }}>
+              Phone Number
+            </Typography>
+            <Typography variant="body1" component="p">
+              {phoneNumber}
+            </Typography>
             <Button
               onClick={() => setEditMode(true)}
               variant="contained"
               style={{
-                backgroundColor: "#c40f0f",
-                color: "#f7f7f7",
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                padding: "15px",
+                alignSelf: "center",
+                border: "2px solid #000",
+                transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
+                '&:hover': {
+                  backgroundColor: "#f5f5f5",
+                  color: "#000000",
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
+                  transform: 'scale(1.02)', // Slightly larger on hover
+                },
               }}
             >
               Edit Profile
             </Button>
             <Button
               onClick={() => dispatch({ type: "LOGOUT" })}
-              style={{
-                backgroundColor: "#c40f0f",
-                color: "#f7f7f7",
-              }}
               variant="outlined"
+              style={{
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                border: "2px solid #000",
+                padding: "15px",
+                alignSelf: "center",
+                transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
+                '&:hover': {
+                  backgroundColor: "#f5f5f5",
+                  color: "#000000",
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
+                  transform: 'scale(1.02)', // Slightly larger on hover
+                },
+              }}
             >
               Log Out
             </Button>
@@ -305,8 +368,16 @@ function UserPage() {
                   variant="contained"
                   style={{
                     marginTop: "10px",
-                    backgroundColor: "#c40f0f",
-                    color: "#f7f7f7",
+                    backgroundColor: "#ffffff",
+                    color: "#000000",
+                    border: "2px solid #000",
+                    transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
+                    '&:hover': {
+                      backgroundColor: "#f5f5f5",
+                      color: "#000000",
+                      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
+                      transform: 'scale(1.02)', // Slightly larger on hover
+                    },
                   }}
                 >
                   {isPlaying ? "Pause" : "Play"}
@@ -333,8 +404,16 @@ function UserPage() {
                 onClick={videoWatched}
                 variant="contained"
                 style={{
-                  backgroundColor: "#c40f0f",
+                  backgroundColor: "#ffffff",
                   color: "hsl(0, 0%, 97%)",
+                  border: "2px solid #000",
+                  transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
+                  '&:hover': {
+                    backgroundColor: "#f5f5f5",
+                    color: "#000000",
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
+                    transform: 'scale(1.02)', // Slightly larger on hover
+                  },
                 }}
               >
                 I understand
@@ -343,8 +422,16 @@ function UserPage() {
                 onClick={() => setOpenConfirmModal(false)}
                 variant="contained"
                 style={{
-                  backgroundColor: "#c40f0f",
+                  backgroundColor: "#ffffff",
                   color: "hsl(0, 0%, 97%)",
+                  border: "2px solid #000",
+                  transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
+                  '&:hover': {
+                    backgroundColor: "#f5f5f5",
+                    color: "#000000",
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
+                    transform: 'scale(1.02)', // Slightly larger on hover
+                  },
                 }}
               >
                 Rewatch Video

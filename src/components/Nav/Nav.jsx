@@ -3,7 +3,6 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Typography } from "@mui/material";
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import "./Nav.css";
@@ -26,10 +25,22 @@ function Nav() {
     dispatch({ type: "LOGOUT" });
   };
 
+  const menuItemStyle = {
+    color: "#000000",
+    padding: "10px 20px",
+    fontSize: "inherit", // Preserve existing font size
+    transition: "background-color 0.3s ease, color 0.3s ease",
+    '&:hover': {
+      backgroundColor: "hsl(0, 0%, 99.50%) !important",
+      color: "#dedede !important",
+      borderRadius: "8px",
+    }
+  };
+
   return (
     <div className="nav">
       <div className="nav-title" onClick={() => navigateTo("/")}>
-        <img src="./traces_logo_01.jpg" alt="Traces Logo" style={{ marginTop: '8px' }} />
+        <h1 style={{ marginTop: '1.5px', padding: '5px', fontFamily: 'Lato', fontStyle: 'italic', fontSize: "42.5px" }}>TRACES</h1>
       </div>
       <div className="nav-controls">
         {user.id && (
@@ -40,10 +51,15 @@ function Nav() {
         <Dropdown>
           <MenuButton
             sx={{
-              color: "#f7f7f7",
+              border: 'solid 1px #000000',
+              color: "#000000 !important",
+              borderRadius: "8px",
+              transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
               '&:hover': {
-                backgroundColor: "hsl(0, 85.78%, 45%) !important",
-                color: "#f7f7f7"
+                backgroundColor: "hsl(0, 0%, 99.50%) !important",
+                color: "#dedede !important",
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
+                transform: 'scale(1.02)', // Slightly larger on hover
               },
               pointerEvents: user.id && !user.video_watched ? 'none' : 'auto',
               opacity: user.id && !user.video_watched ? 0.5 : 1
@@ -51,42 +67,53 @@ function Nav() {
           >
             <MenuIcon />
           </MenuButton>
-          <Menu sx={{ padding: "20px", color: "#f7f7f7", fontSize: "20px", backgroundColor: "#AB0D0D", border: "none" }}>
+          <Menu
+            sx={{
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', // Subtle shadow for depth
+              borderRadius: '8px',
+              padding: '10px 0',
+              backgroundColor: '#ffffff',
+              mt: '8px',
+              '& .MuiMenuItem-root': {
+                minHeight: '40px', // Consistent item height
+              }
+            }}
+          >
             {!user.id ? (
               <>
-                <MenuItem onClick={() => navigateTo('/home')} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                <MenuItem onClick={() => navigateTo('/home')} sx={menuItemStyle}>
                   Home
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                <MenuItem onClick={() => navigateTo('/gallery')} sx={menuItemStyle}>
                   Gallery
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/registration')} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                <MenuItem onClick={() => navigateTo('/registration')} sx={menuItemStyle}>
                   Register
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/login')} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                <MenuItem onClick={() => navigateTo('/login')} sx={menuItemStyle}>
                   Login
                 </MenuItem>
               </>
             ) : (
               <>
-                <MenuItem onClick={() => navigateTo('/home')} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                <MenuItem onClick={() => navigateTo('/home')} sx={menuItemStyle}>
                   Home
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/evidence')} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                <MenuItem onClick={() => navigateTo('/evidence')} sx={menuItemStyle}>
                   Evidence
                 </MenuItem>
                 {user.role === 2 && (
-                  <MenuItem onClick={() => navigateTo('/admin')} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                  <MenuItem onClick={() => navigateTo('/admin')} sx={menuItemStyle}>
                     Admin Page
                   </MenuItem>
                 )}
-                <MenuItem onClick={() => navigateTo('/gallery')} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                <MenuItem onClick={() => navigateTo('/gallery')} sx={menuItemStyle}>
                   Gallery
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/help')} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                <MenuItem onClick={() => navigateTo('/help')} sx={menuItemStyle}>
                   Help
                 </MenuItem>
-                <MenuItem onClick={Logout} sx={{ color: "#f7f7f7", '&:hover': { backgroundColor: "hsl(0, 85.78%, 45%) !important", color: "#f7f7f7 !important" } }}>
+                <MenuItem onClick={Logout} sx={menuItemStyle}>
                   Logout
                 </MenuItem>
               </>
