@@ -29,7 +29,7 @@ function RegisterForm() {
   const history = useHistory()
   const [formValues, setFormValues] = useState({})
 
-  const registerUser = ({username, password, email, phone_number, full_name}) => {
+  const registerUser = ({ username, password, email, phone_number, full_name }) => {
     dispatch({
       type: 'REGISTER',
       payload: {
@@ -53,6 +53,7 @@ function RegisterForm() {
     setSnackBarOpen(false);
   };
 
+
   const resetState = () => {
     setUsername('')
     setPassword('')
@@ -73,6 +74,7 @@ function RegisterForm() {
           phoneNumberConfirm: '',
           password: '',
           passwordConfirm: '',
+          avitar: ''
         }}
         validate={values => {
           const errors = {};
@@ -113,6 +115,11 @@ function RegisterForm() {
             errors.passwordConfirm = 'Password must be at least 7 characters'
           } else if (values.passwordConfirm !== values.password) {
             errors.passwordConfirm = 'Passwords do not match'
+          }
+
+          // Image
+          if (!values.avitar) {
+            errors.avitar = "You must include a photo of yourself"
           }
           return errors;
         }}
@@ -236,6 +243,14 @@ function RegisterForm() {
                   value={values.passwordConfirm}
                 />
                 {errors.passwordConfirm && touched.passwordConfirm && errors.passwordConfirm}
+                <UploadButton
+                  btnName={"Upload Photo"}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.avitar}
+                  name={'avitar'}
+                />
+                 {errors.username && touched.username && errors.username}
               </div>
             </div>
             <Button type="submit" disabled={isSubmitting} className='btn'>
