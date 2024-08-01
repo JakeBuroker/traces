@@ -170,7 +170,7 @@ router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
 // Route to update user information by admin
 router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (req, res) => {
   const userId = req.params.id;
-  const { username, email, phone_number, role, full_name, alias, video_watched } = req.body;
+  const { username, email, phone_number, role, full_name, video_watched } = req.body;
 
   const queryText = `
     UPDATE "user" 
@@ -180,9 +180,8 @@ router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (re
       "phone_number" = $3,
       "role" = $4,
       "full_name" = $5,
-      "alias" = $6,
-      "video_watched" = $7
-    WHERE "id" = $8
+      "video_watched" = $6
+    WHERE "id" = $7
     RETURNING "avatar_url";
   `;
 
@@ -192,7 +191,6 @@ router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (re
     phone_number,
     role,
     full_name,
-    alias,
     video_watched,
     userId
   ];
