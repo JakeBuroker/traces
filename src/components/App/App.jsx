@@ -20,7 +20,9 @@ import EvidenceUpload from "../EvidenceUploadPage/EvidenceUploadPage";
 import EvidencePage from "../EvidencePage/EvidencePage";
 import HelpPage from "../HelpPage/HelpPage";
 import EvidenceDetails from "../EvidenceDetailsPage/EvidenceDetailsPage";
-
+import ResetPasswordCodeConfPage from "../ResetPasswordCodeConfPage/ResetPasswordCodeConfPage"
+import ResetPasswordEmailPage from "../ResetPasswordEmailPage/ResetPasswordEmailPage"
+import ResetPasswordPage from "../ResetPasswordPage/ResetPasswordPage"
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
@@ -77,6 +79,24 @@ function App() {
               <AdminPage />
             )}
          </ProtectedRoute>
+         <Route
+            exact
+            path="/reset-password-code"
+          >
+            <ResetPasswordCodeConfPage />
+          </Route>
+         <Route
+            exact
+            path="/reset-password-email"
+          >
+            <ResetPasswordEmailPage />
+          </Route>
+          <Route
+            exact
+            path="/reset-password-page"
+          >
+            <ResetPasswordPage />
+          </Route>
 
           <ProtectedRoute
             // logged in shows Adminpage

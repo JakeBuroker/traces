@@ -24,7 +24,7 @@ export default function ResetPasswordEmailForm(){
     }
 
     return(
-        <div>
+        <div className="login-container">
             <h1>Enter the email associated with your account:</h1>
             <form onSubmit={submitEMail}>
                 Email: <input 

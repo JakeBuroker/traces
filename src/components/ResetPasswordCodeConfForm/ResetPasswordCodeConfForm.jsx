@@ -22,7 +22,7 @@ export default function ResetPasswordCodeConfForm () {
        
     }
     return(
-        <div>
+        <div className="login-container">
             <h1>Please enter your password reset code:</h1>
             <form onSubmit={submitCode}>
                Code: <input 
