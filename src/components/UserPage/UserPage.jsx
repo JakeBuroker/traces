@@ -6,7 +6,6 @@ import UploadButton from "../UploadButton/UploadButton";
 import { Button, Modal, Box, Typography, TextField, ThemeProvider, createTheme } from "@mui/material";
 import "./UserPage.css";
 
-// Create a theme to override MUI default styles
 const theme = createTheme({
   components: {
     MuiInputLabel: {
@@ -48,19 +47,16 @@ function UserPage() {
 
   const enableControlsAfter = 3; // Time in seconds after which the controls will be enabled
 
-  // useEffect to check if the user has watched the video
   useEffect(() => {
     if (!user.video_watched) {
       setOpenVideoModal(true);
     }
   }, [user.video_watched]);
 
-  // Handle file change for avatar upload
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
   };
 
-  // Function to save changes to user information
   const saveChanges = async () => {
     const formData = new FormData();
     formData.append("email", email);
@@ -88,7 +84,6 @@ function UserPage() {
     }
   };
 
-  // Function to mark the video as watched
   const videoWatched = async () => {
     try {
       const response = await axios.put(`/api/user/watched/${user.id}`);
@@ -104,7 +99,6 @@ function UserPage() {
     }
   };
 
-  // Handle play/pause button for the video
   const handlePlayPause = () => {
     if (isPlaying) {
       videoRef.current.pause();
@@ -114,21 +108,19 @@ function UserPage() {
     setIsPlaying(!isPlaying);
   };
 
-  // Handle video end event
   const handleVideoEnd = () => {
     setIsPlaying(false);
     setOpenConfirmModal(true);
   };
 
-  // Handle time update event for the video
   const handleTimeUpdate = () => {
     if (videoRef.current.currentTime >= enableControlsAfter) {
       setControlsEnabled(true);
     }
   };
 
-  // Style for the modal
-  const style = {
+  // Define the style for the modals
+  const modalStyle = {
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -140,7 +132,6 @@ function UserPage() {
     p: 4,
   };
 
-  // Return statement for rendering the user page
   return (
     <ThemeProvider theme={theme}>
       <div style={{ padding: "90px 1px" }} className="user-container">
@@ -217,15 +208,14 @@ function UserPage() {
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
             <UploadButton
-              btnName={"Upload Avatar"}
+              btnName="Upload Avatar"
               style={{
                 marginTop: "10px",
                 backgroundColor: "#ffffff",
                 color: "#000000",
-                border: "2px solid #000", // Adding border to the UploadButton
+                border: "2px solid #000",
               }}
-              setter={setUserAvi}
-              color={userAvi ? "success" : "primary"}
+              onChange={handleFileChange}
             />
             <Button
               type="submit"
@@ -239,8 +229,8 @@ function UserPage() {
                 '&:hover': {
                   backgroundColor: "#f5f5f5",
                   color: "#000000",
-                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
-                  transform: 'scale(1.02)', // Slightly larger on hover
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                  transform: 'scale(1.02)',
                 },
               }}
             >
@@ -257,8 +247,8 @@ function UserPage() {
                 '&:hover': {
                   backgroundColor: "#f5f5f5",
                   color: "#000000",
-                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
-                  transform: 'scale(1.02)', // Slightly larger on hover
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                  transform: 'scale(1.02)',
                 },
               }}
             >
@@ -273,7 +263,7 @@ function UserPage() {
               flexDirection: "column",
               gap: "10px",
               color: "#000000",
-              border: "2px solid #000", // Adding border to info display
+              border: "2px solid #000",
               borderRadius: "8px"
             }}
             className="info-display"
@@ -309,8 +299,8 @@ function UserPage() {
                 '&:hover': {
                   backgroundColor: "#f5f5f5",
                   color: "#000000",
-                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
-                  transform: 'scale(1.02)', // Slightly larger on hover
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                  transform: 'scale(1.02)',
                 },
               }}
             >
@@ -329,8 +319,8 @@ function UserPage() {
                 '&:hover': {
                   backgroundColor: "#f5f5f5",
                   color: "#000000",
-                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
-                  transform: 'scale(1.02)', // Slightly larger on hover
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                  transform: 'scale(1.02)',
                 },
               }}
             >
@@ -344,7 +334,7 @@ function UserPage() {
           aria-labelledby="video-modal-title"
           aria-describedby="video-modal-description"
         >
-          <Box sx={style}>
+          <Box sx={modalStyle}>
             <Typography id="video-modal-title" variant="h6" component="h2">
               Welcome to TRACES
             </Typography>
@@ -375,8 +365,8 @@ function UserPage() {
                     '&:hover': {
                       backgroundColor: "#f5f5f5",
                       color: "#000000",
-                      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
-                      transform: 'scale(1.02)', // Slightly larger on hover
+                      boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                      transform: 'scale(1.02)',
                     },
                   }}
                 >
@@ -392,7 +382,7 @@ function UserPage() {
           aria-labelledby="confirm-modal-title"
           aria-describedby="confirm-modal-description"
         >
-          <Box sx={style}>
+          <Box sx={modalStyle}>
             <Typography id="confirm-modal-title" variant="h6" component="h2">
               Video Instruction Acknowledgement
             </Typography>
@@ -405,14 +395,14 @@ function UserPage() {
                 variant="contained"
                 style={{
                   backgroundColor: "#ffffff",
-                  color: "hsl(0, 0%, 97%)",
+                  color: "#000000",
                   border: "2px solid #000",
                   transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
                   '&:hover': {
                     backgroundColor: "#f5f5f5",
                     color: "#000000",
-                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
-                    transform: 'scale(1.02)', // Slightly larger on hover
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                    transform: 'scale(1.02)',
                   },
                 }}
               >
@@ -423,14 +413,14 @@ function UserPage() {
                 variant="contained"
                 style={{
                   backgroundColor: "#ffffff",
-                  color: "hsl(0, 0%, 97%)",
+                  color: "#000000",
                   border: "2px solid #000",
                   transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
                   '&:hover': {
                     backgroundColor: "#f5f5f5",
                     color: "#000000",
-                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Subtle shadow on hover
-                    transform: 'scale(1.02)', // Slightly larger on hover
+                    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+                    transform: 'scale(1.02)',
                   },
                 }}
               >
