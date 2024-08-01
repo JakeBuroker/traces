@@ -55,7 +55,7 @@ let transporter = nodemailer.createTransport({
   console.log("req.body number", req.body[0]);
 
   let mailOptions = {
-    from: "test@gmail.com",
+    from: "nodemailer356@gmail.com",
     to: req.body[1],
     subject: "Nodemailer API",
     text: passwordReset,

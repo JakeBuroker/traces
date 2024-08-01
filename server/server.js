@@ -71,7 +71,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/user', userRouter);
 app.use('/api/evidence', evidenceRouter);
-// app.use('/api/email', emailRouter);
+app.use('/api/email', emailRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {

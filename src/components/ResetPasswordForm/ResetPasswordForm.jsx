@@ -25,7 +25,7 @@ export default function ResetPasswordForm() {
     }
 
     return(
-        <div>
+        <div className="login-container">
             <h1>Reset Password Here</h1>
         <form onSubmit={newPasswordSubmit}>
             New Password: <input
