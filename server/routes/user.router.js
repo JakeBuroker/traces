@@ -244,4 +244,19 @@ router.post('/logout', (req, res) => {
   res.sendStatus(200);
 });
 
+// * This is the route for updating a users password
+router.put('/passwordupdated', (req,res) => {
+  console.log("req.body 1", req.body[0][0], "req.body2", req.body[0][1]);
+  const queryParams = [encryptLib.encryptPassword(req.body[0][0]), req.body[0][1]]
+  let sqlText = `UPDATE "user" SET "password" = $1 WHERE "email" = $2;`
+  pool.query(sqlText, queryParams)
+  .then((result) => {
+    res.sendStatus(200)
+  })
+  .catch((error) => {
+    console.log(`Error editing password ${sqlText}`, error);
+    res.sendStatus(500);
+});
+})
+
 module.exports = router;

@@ -11,7 +11,6 @@ export default function EvidenceUpload() {
   const dispatch = useDispatch();
   const evidenceType = useSelector((store) => store.evidenceUploadReducer.evidenceUploadReducer);
 
-  
 
   // Handle file input change for audio uploads
   const changeMedia = (event) => {

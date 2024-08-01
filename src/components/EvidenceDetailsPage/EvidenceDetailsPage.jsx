@@ -56,15 +56,15 @@ export default function EvidenceDetails() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "auto", maxWidth: "600px", padding: "20px" }}>
+    <div className="detailsDiv"style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "auto", maxWidth: "600px", padding: "20px" }}>
       <BackButton/>
-      <Button
+      {/* <Button
         startIcon={<ArrowBackIosNewIcon />}
         onClick={() => history.push('/evidence')}
         style={{ alignSelf: "flex-start", color: "black", marginBottom: "20px" }}
       >
         Back
-      </Button>
+      </Button> */}
       <h2 style={{ textAlign: "center" }}>Add Details for Your Evidence</h2>
       <form onSubmit={handleButtonClick} style={{ width: "100%" }}>
         {previewUrl && (

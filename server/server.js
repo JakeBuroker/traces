@@ -9,6 +9,7 @@ const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const evidenceRouter = require('./routes/evidence.router');
+const emailRouter = require('./routes/email.router');
 
 const PORT = process.env.PORT || 5001;
 const app = express();
@@ -70,6 +71,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/api/user', userRouter);
 app.use('/api/evidence', evidenceRouter);
+app.use('/api/email', emailRouter);
 
 // Listen Server & Port
 app.listen(PORT, () => {
