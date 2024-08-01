@@ -221,7 +221,6 @@ function AdminPage() {
       phone_number: user.phone_number,
       role: user.role,
       full_name: user.full_name,
-      alias: user.alias,
       video_watched: user.video_watched,
     });
     setSelectedItem(user);
@@ -236,7 +235,6 @@ function AdminPage() {
       phone_number: editsInput.phone_number,
       role: editsInput.role,
       full_name: editsInput.full_name,
-      alias: editsInput.alias,
       video_watched: editsInput.video_watched,
     }).then(() => {
       setInEditMode(false);

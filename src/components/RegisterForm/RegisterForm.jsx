@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button, Snackbar, Alert } from '@mui/material';
 import { Formik } from 'formik';
-import UploadButton from '../UploadButton/UploadButton';
+
 
 const styles = {
   labels: {
@@ -62,7 +62,6 @@ function RegisterForm() {
           phoneNumberConfirm: '',
           password: '',
           passwordConfirm: '',
-          avitar: ''
         }}
         validate={values => {
           const errors = {};
@@ -104,10 +103,6 @@ function RegisterForm() {
             errors.passwordConfirm = 'Passwords do not match';
           }
 
-          // Image
-          if (!values.avitar) {
-            errors.avitar = "You must include a photo of yourself";
-          }
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
@@ -250,19 +245,6 @@ function RegisterForm() {
                 />
                 {touched.passwordConfirm && errors.passwordConfirm && (
                   <div style={styles.warningLabels}>{errors.passwordConfirm}</div>
-                )}
-              </div>
-
-              <div className="input-container" style={styles.inputContainer}>
-                <UploadButton
-                  btnName={"Upload Photo"}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.avitar}
-                  name={'avitar'}
-                />
-                {touched.avitar && errors.avitar && (
-                  <div style={styles.warningLabels}>{errors.avitar}</div>
                 )}
               </div>
 
