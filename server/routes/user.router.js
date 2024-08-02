@@ -5,15 +5,16 @@ const {
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
-const router = express.Router();
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const multer = require('multer');
+const aws = require('@aws-sdk/client-s3');
+const signer = require('@aws-sdk/s3-request-presigner');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
-// ! Set up for AWS
-const aws = require('@aws-sdk/client-s3');
-const signer = require('@aws-sdk/s3-request-presigner');
-const multer = require('multer');
+const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -30,27 +31,73 @@ const s3 = new aws.S3Client({
   region: bucketRegion,
 });
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
+
+transporter.verify((err, success) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(`=== Server is ready to take messages: ${success} ===`);
+  }
+});
+
+const awsGetURLs = async (result) => {
+  for (let e of result.rows) {
+    if (e.media_type !== 1) {
+      const command = new aws.GetObjectCommand({
+        Bucket: bucketName,
+        Key: e.aws_key,
+      });
+      const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 });
+      e.aws_url = url;
+    }
+  }
+  return result.rows;
+};
+
+const awsGetAvatarULRs = async (result) => {
+  for (let j of result) {
+    if (j.avatar_url) {
+      const command = new aws.GetObjectCommand({
+        Bucket: bucketName,
+        Key: j.avatar_url,
+      });
+      const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 });
+      j.avatar_AWS_URL = url;
+    }
+  }
+  return result;
+};
+
+const awsGetVerificationPhotoURLs = async (result) => {
+  for (let j of result) {
+    if (j.verification_photo) {
+      const command = new aws.GetObjectCommand({
+        Bucket: bucketName,
+        Key: j.verification_photo,
+      });
+      const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 });
+      j.verification_photo_AWS_URL = url;
+    }
+  }
+  return result;
+};
+
 // Route to get all users (admin only)
 router.get('/users', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
-    const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, video_watched FROM "user"';
+    const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, verification_photo, video_watched FROM "user"';
     try {
       const result = await pool.query(queryText);
-      const users = result.rows;
-
-      // Generate signed URLs for avatars
-      for (let user of users) {
-        if (user.avatar_url) {
-          const command = new aws.GetObjectCommand({
-            Bucket: bucketName,
-            Key: user.avatar_url,
-          });
-          const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 });
-          user.avatar_AWS_URL = url;
-        }
-      }
-
-      res.json(users);
+      const usersWithAvatars = await awsGetAvatarULRs(result.rows);
+      const usersWithVerificationPhotos = await awsGetVerificationPhotoURLs(usersWithAvatars);
+      res.json(usersWithVerificationPhotos);
     } catch (error) {
       console.error('Error fetching users:', error);
       res.sendStatus(500);
@@ -68,20 +115,7 @@ router.get('/:id/evidence', rejectUnauthenticated, async (req, res) => {
 
     try {
       const result = await pool.query(queryText, [userId]);
-
-      // Generate signed URLs for evidence
-      const evidenceList = result.rows;
-      for (let evidence of evidenceList) {
-        if (evidence.aws_key) {
-          const command = new aws.GetObjectCommand({
-            Bucket: bucketName,
-            Key: evidence.aws_key,
-          });
-          const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 });
-          evidence.aws_url = url;
-        }
-      }
-
+      const evidenceList = await awsGetURLs(result);
       res.json(evidenceList);
     } catch (error) {
       console.error('Error fetching user evidence:', error);
@@ -92,16 +126,16 @@ router.get('/:id/evidence', rejectUnauthenticated, async (req, res) => {
 
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, async (req, res) => {
-  // Send back user object from the session (previously queried from the database)
-  if (req.user.avatar_url) {
-    const command = new aws.GetObjectCommand({
-      Bucket: bucketName,
-      Key: req.user.avatar_url,
-    });
-    const url = await signer.getSignedUrl(s3, command, { expiresIn: 3600 });
-    req.user.avatar_AWS_URL = url;
+  const queryText = 'SELECT * FROM "user" WHERE id = $1';
+  try {
+    const result = await pool.query(queryText, [req.user.id]);
+    const usersWithAvatars = await awsGetAvatarULRs(result.rows);
+    const usersWithVerificationPhotos = await awsGetVerificationPhotoURLs(usersWithAvatars);
+    res.send(usersWithVerificationPhotos[0]);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.sendStatus(500);
   }
-  res.send(req.user);
 });
 
 // Route for admin to delete a user
@@ -121,20 +155,61 @@ router.delete('/:id', rejectUnauthenticated, async (req, res) => {
   }
 });
 
-// Handles POST request with new user data
-// The only thing different from this and every other post we've seen
-// is that the password gets encrypted before being inserted
-router.post('/register', (req, res, next) => {
+// Handles POST request with new user data and verification photo upload
+router.post('/register', upload.single('verification_photo'), async (req, res) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  const queryText = 'INSERT INTO "user" (username, password, email, phone_number, role, full_name) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id';
-  pool
-    .query(queryText, [username, password, req.body.email, req.body.phone_number, req.body.role, req.body.full_name])
-    .then(() => res.sendStatus(201))
-    .catch((err) => {
-      console.log('User registration failed:', err);
-      res.sendStatus(500);
+  const { email, phone_number, role, full_name } = req.body;
+  const verificationToken = crypto.randomBytes(20).toString('hex');
+  const hashedToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
+
+  console.log('Generated Verification Token:', verificationToken);
+  console.log('Hashed Verification Token:', hashedToken);
+
+  try {
+    let verificationPhotoKey;
+    if (req.file) {
+      const fileContent = req.file.buffer;
+      verificationPhotoKey = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`;
+
+      const uploadParams = {
+        Bucket: bucketName,
+        Key: verificationPhotoKey,
+        Body: fileContent,
+        ContentType: req.file.mimetype,
+      };
+
+      await s3.send(new aws.PutObjectCommand(uploadParams));
+    }
+
+    const queryText = `
+      INSERT INTO "user" (username, password, email, phone_number, role, full_name, verification_photo, verification_token, verified)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      RETURNING id;
+    `;
+    const result = await pool.query(queryText, [username, password, email, phone_number, role, full_name, verificationPhotoKey, hashedToken, false]);
+
+    const verificationUrl = `http://localhost:5001/email/verify/${verificationToken}`;
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'Email Verification',
+      text: `Please verify your email by clicking the following link: ${verificationUrl}`,
+    };
+
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.error('Error sending email: ' + err);
+        res.status(500).json({ error: 'Error sending verification email' });
+      } else {
+        console.log('Verification email sent successfully');
+        res.status(200).json({ message: 'Verification email sent' });
+      }
     });
+  } catch (error) {
+    console.error('User registration failed:', error);
+    res.sendStatus(500);
+  }
 });
 
 // Route to update video watched status
@@ -230,33 +305,29 @@ router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (re
 });
 
 // Handles login form authenticate/login POST
-// userStrategy.authenticate('local') is middleware that we run on this route
-// this middleware will run our POST if successful
-// this middleware will send a 404 if not successful
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
 
 // Clear all server session information about this user
 router.post('/logout', (req, res) => {
-  // Use passport's built-in method to log out the user
   req.logout();
   res.sendStatus(200);
 });
 
-// * This is the route for updating a users password
-router.put('/passwordupdated', (req,res) => {
+// Update user's password
+router.put('/passwordupdated', (req, res) => {
   console.log("req.body 1", req.body[0][0], "req.body2", req.body[0][1]);
-  const queryParams = [encryptLib.encryptPassword(req.body[0][0]), req.body[0][1]]
-  let sqlText = `UPDATE "user" SET "password" = $1 WHERE "email" = $2;`
+  const queryParams = [encryptLib.encryptPassword(req.body[0][0]), req.body[0][1]];
+  const sqlText = `UPDATE "user" SET "password" = $1 WHERE "email" = $2;`;
   pool.query(sqlText, queryParams)
-  .then((result) => {
-    res.sendStatus(200)
-  })
-  .catch((error) => {
-    console.log(`Error editing password ${sqlText}`, error);
-    res.sendStatus(500);
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log(`Error editing password ${sqlText}`, error);
+      res.sendStatus(500);
+    });
 });
-})
 
 module.exports = router;

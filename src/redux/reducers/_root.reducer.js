@@ -7,6 +7,7 @@ import mediaReducer from './evidence.media.reducer'
 import audioReducer from './audio.reducer';
 import email from './emails.reducer'
 
+
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
 // This is imported in index.js as rootSaga
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   evidenceUploadReducer,
  media: mediaReducer,
  audioReducer,
- email
+ email,
+
 
 });
 

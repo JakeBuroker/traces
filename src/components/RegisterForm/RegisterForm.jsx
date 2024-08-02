@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button, Snackbar, Alert } from '@mui/material';
 import { Formik } from 'formik';
-
+import UploadButton from '../UploadButton/UploadButton';
 
 const styles = {
   labels: {
@@ -50,6 +50,10 @@ function RegisterForm() {
     }
     setSnackBarOpen(false);
   };
+  const handleFileChange = (event) => {
+    setUserAvi(event.target.files[0]);
+  };
+
 
   return (
     <div className="login-container">
@@ -247,6 +251,16 @@ function RegisterForm() {
                   <div style={styles.warningLabels}>{errors.passwordConfirm}</div>
                 )}
               </div>
+              <UploadButton
+              btnName="Upload Avatar"
+              style={{
+                marginTop: "10px",
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                border: "2px solid #000",
+              }}
+              onChange={handleFileChange}
+            />
 
               <Button type="submit" disabled={isSubmitting} className='btn'>
                 Submit

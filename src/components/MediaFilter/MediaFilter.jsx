@@ -10,6 +10,7 @@ function MediaFilter({ selectedMediaType, onMediaTypeChange }) {
       flexWrap: "wrap",
       gap: "10px",
       alignItems: "center",
+      
     }}>
       <ToggleButtonGroup
         value={selectedMediaType}
