@@ -189,7 +189,7 @@ router.post('/register', upload.single('verification_photo'), async (req, res) =
     `;
     const result = await pool.query(queryText, [username, password, email, phone_number, role, full_name, verificationPhotoKey, hashedToken, false]);
 
-    const verificationUrl = `http://localhost:5001/api/email/verify/${verificationToken}`;
+    const verificationUrl = `${process.env.BASE_URL}/api/email/verify/${verificationToken}`;
     const mailOptions = {
       from: process.env.EMAIL,
       to: email,
