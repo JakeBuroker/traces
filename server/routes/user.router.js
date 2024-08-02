@@ -5,16 +5,16 @@ const {
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
-const router = express.Router();
-const dotenv = require('dotenv');
 const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+const multer = require('multer');
+const aws = require('@aws-sdk/client-s3');
+const signer = require('@aws-sdk/s3-request-presigner');
+const dotenv = require('dotenv');
 
 dotenv.config();
 
-// AWS setup
-const aws = require('@aws-sdk/client-s3');
-const signer = require('@aws-sdk/s3-request-presigner');
-const multer = require('multer');
+const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -31,9 +31,25 @@ const s3 = new aws.S3Client({
   region: bucketRegion,
 });
 
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
+
+transporter.verify((err, success) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(`=== Server is ready to take messages: ${success} ===`);
+  }
+});
+
 const awsGetURLs = async (result) => {
   for (let e of result.rows) {
-    if (e.media_type !== 1) { // If the media_type isn't text, then...
+    if (e.media_type !== 1) {
       const command = new aws.GetObjectCommand({
         Bucket: bucketName,
         Key: e.aws_key,
@@ -144,11 +160,15 @@ router.post('/register', upload.single('verification_photo'), async (req, res) =
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
   const { email, phone_number, role, full_name } = req.body;
+  const verificationToken = crypto.randomBytes(20).toString('hex');
+  const hashedToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
+
+  console.log('Generated Verification Token:', verificationToken);
+  console.log('Hashed Verification Token:', hashedToken);
 
   try {
     let verificationPhotoKey;
     if (req.file) {
-      // Upload verification photo to S3
       const fileContent = req.file.buffer;
       verificationPhotoKey = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`;
 
@@ -162,13 +182,32 @@ router.post('/register', upload.single('verification_photo'), async (req, res) =
       await s3.send(new aws.PutObjectCommand(uploadParams));
     }
 
-    // Insert user data into the database
-    const queryText = 'INSERT INTO "user" (username, password, email, phone_number, role, full_name, verification_photo) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id';
-    await pool.query(queryText, [username, password, email, phone_number, role, full_name, verification_photo]);
+    const queryText = `
+      INSERT INTO "user" (username, password, email, phone_number, role, full_name, verification_photo, verification_token, verified)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      RETURNING id;
+    `;
+    const result = await pool.query(queryText, [username, password, email, phone_number, role, full_name, verificationPhotoKey, hashedToken, false]);
 
-    res.sendStatus(201);
-  } catch (err) {
-    console.error('User registration failed:', err);
+    const verificationUrl = `http://localhost:5001/email/verify/${verificationToken}`;
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: email,
+      subject: 'Email Verification',
+      text: `Please verify your email by clicking the following link: ${verificationUrl}`,
+    };
+
+    transporter.sendMail(mailOptions, (err, data) => {
+      if (err) {
+        console.error('Error sending email: ' + err);
+        res.status(500).json({ error: 'Error sending verification email' });
+      } else {
+        console.log('Verification email sent successfully');
+        res.status(200).json({ message: 'Verification email sent' });
+      }
+    });
+  } catch (error) {
+    console.error('User registration failed:', error);
     res.sendStatus(500);
   }
 });
@@ -266,33 +305,29 @@ router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (re
 });
 
 // Handles login form authenticate/login POST
-// userStrategy.authenticate('local') is middleware that we run on this route
-// this middleware will run our POST if successful
-// this middleware will send a 404 if not successful
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
 
 // Clear all server session information about this user
 router.post('/logout', (req, res) => {
-  // Use passport's built-in method to log out the user
   req.logout();
   res.sendStatus(200);
 });
 
-// * This is the route for updating a users password
-router.put('/passwordupdated', (req,res) => {
+// Update user's password
+router.put('/passwordupdated', (req, res) => {
   console.log("req.body 1", req.body[0][0], "req.body2", req.body[0][1]);
-  const queryParams = [encryptLib.encryptPassword(req.body[0][0]), req.body[0][1]]
-  let sqlText = `UPDATE "user" SET "password" = $1 WHERE "email" = $2;`
+  const queryParams = [encryptLib.encryptPassword(req.body[0][0]), req.body[0][1]];
+  const sqlText = `UPDATE "user" SET "password" = $1 WHERE "email" = $2;`;
   pool.query(sqlText, queryParams)
-  .then((result) => {
-    res.sendStatus(200)
-  })
-  .catch((error) => {
-    console.log(`Error editing password ${sqlText}`, error);
-    res.sendStatus(500);
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log(`Error editing password ${sqlText}`, error);
+      res.sendStatus(500);
+    });
 });
-})
 
 module.exports = router;

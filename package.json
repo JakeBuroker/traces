@@ -6,8 +6,8 @@
     "node": "18.x"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.525.0",
-    "@aws-sdk/s3-request-presigner": "^3.525.0",
+    "@aws-sdk/client-s3": "^3.622.0",
+    "@aws-sdk/s3-request-presigner": "^3.622.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.11",
@@ -20,6 +20,7 @@
     "connect-pg-simple": "^9.0.1",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
+    "crypto": "^1.0.1",
     "csurf": "^1.11.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

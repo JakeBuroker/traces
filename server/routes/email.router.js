@@ -1,18 +1,10 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+require('dotenv').config();
 
-/**
- * GET route template
- */
-router.get('/', (req, res) => {
-  // GET route code here
-});
-
-/**
- * POST route template
- */
 
 // let transporter = nodemailer.createTransport({
 //   service: "gmail",
@@ -27,18 +19,21 @@ router.get('/', (req, res) => {
 //  });
 // * transporter without OAuth implemented
 let transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL,
-    pass: process.env.PASSWORD
+    pass: process.env.PASSWORD,
   },
- });
+});
 
- transporter.verify((err, success) => {
-  err
-    ? console.log(err)
-    : console.log(`=== Server is ready to take messages: ${success} ===`);
- });
+transporter.verify((err, success) => {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(`=== Server is ready to take messages: ${success} ===`);
+  }
+});
+
 
 //  let mailOptions = {
 //   from: "test@gmail.com",
@@ -48,29 +43,46 @@ let transporter = nodemailer.createTransport({
 //  };
 
  // * This is the actual route that sends the email
- router.post("/send", function (req, res) {
-   let passwordReset = `
- Here is your password reset code ${req.body[0]}`
-  console.log("req.body email", req.body[1]);
-  console.log("req.body number", req.body[0]);
-
-  let mailOptions = {
+router.post('/send', (req, res) => {
+  const { email, token } = req.body;
+  const verificationUrl = `http://localhost:5001/email/verify/${token}`;
+  const mailOptions = {
     from: process.env.EMAIL,
-    to: req.body[1],
-    subject: "Nodemailer API",
-    text: passwordReset,
+    to: email,
+    subject: 'Email Verification',
+    text: `Please verify your email by clicking the following link: ${verificationUrl}`,
   };
- 
-  transporter.sendMail(mailOptions, function (err, data) {
+
+  transporter.sendMail(mailOptions, (err, data) => {
     if (err) {
-      console.log("Error " + err);
+      console.error('Error sending email: ' + err);
+      res.status(500).json({ error: 'Error sending verification email' });
     } else {
-      console.log("Email sent successfully");
-      res.json({ status: "Email sent" });
+      console.log('Verification email sent successfully');
+      res.status(200).json({ message: 'Verification email sent' });
     }
   });
- });
+});
 
+// Verify email token
+router.get('/verify/:token', async (req, res) => {
+  const { token } = req.params;
+  const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+  console.log('Hashed Token from URL:', hashedToken);
 
+  try {
+    const verifyQuery = 'UPDATE "user" SET verified = TRUE WHERE verification_token = $1 RETURNING id';
+    const result = await pool.query(verifyQuery, [hashedToken]);
+
+    if (result.rows.length > 0) {
+      res.status(200).json({ message: 'Email verified successfully' });
+    } else {
+      res.status(400).json({ error: 'Invalid or expired token' });
+    }
+  } catch (error) {
+    console.error('Error verifying token:', error);
+    res.status(500).json({ error: 'Error verifying token' });
+  }
+});
 
 module.exports = router;
