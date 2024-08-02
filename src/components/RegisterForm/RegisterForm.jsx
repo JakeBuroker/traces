@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Button, Snackbar, Alert } from '@mui/material';
+import { Button, Snackbar, Alert, Modal, Box } from '@mui/material';
 import { Formik } from 'formik';
 import UploadButton from '../UploadButton/UploadButton';
 
@@ -19,26 +19,45 @@ const styles = {
     color: '#c40f0f',
     fontSize: '0.875rem',
     marginTop: '5px',
-  }
-}
+  },
+};
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 function RegisterForm() {
   const [role, setRole] = useState(1);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [userAvi, setUserAvi] = useState(null);
+  const [formValues, setFormValues] = useState(null); // State to store form values
   const dispatch = useDispatch();
   const history = useHistory();
 
   const registerUser = ({ username, password, email, phone_number, full_name }) => {
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('email', email);
+    formData.append('phone_number', phone_number);
+    formData.append('full_name', full_name);
+    formData.append('role', role); // Default set to 1 (user)
+    if (userAvi) {
+      formData.append('verification_photo', userAvi);
+    }
+
     dispatch({
       type: 'REGISTER',
-      payload: {
-        username,
-        password,
-        email,
-        phone_number,
-        full_name,
-        role: role // Default set to 1 (user)
-      },
+      payload: formData,
     });
     setSnackBarOpen(true);
     history.push('/user');
@@ -50,38 +69,59 @@ function RegisterForm() {
     }
     setSnackBarOpen(false);
   };
+
   const handleFileChange = (event) => {
     setUserAvi(event.target.files[0]);
   };
 
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
+  const handleSubmitWithPhoto = (values, setSubmitting) => {
+    setSubmitting(false);
+    setFormValues(values); // Store form values in state
+    setModalOpen(true);
+  };
+
+  const handleModalSubmit = () => {
+    if (formValues) {
+      registerUser(formValues);
+      handleModalClose();
+    }
+  };
+
+  const clickCamera = () => {
+    document.getElementById('cameraInput').click();
+  };
 
   return (
     <div className="login-container">
       <Formik
         initialValues={{
-          fullName: '',
+          full_name: '',
           username: '',
           email: '',
-          phoneNumber: '',
-          phoneNumberConfirm: '',
+          phone_number: '',
+          phone_number_confirm: '',
           password: '',
-          passwordConfirm: '',
+          password_confirm: '',
         }}
         validate={values => {
           const errors = {};
 
           // Phone number
-          if (!values.phoneNumber) {
-            errors.phoneNumber = 'Required';
-          } else if (values.phoneNumber.length < 10) {
-            errors.phoneNumber = 'Invalid Phone Number';
+          if (!values.phone_number) {
+            errors.phone_number = 'Required';
+          } else if (values.phone_number.length < 10) {
+            errors.phone_number = 'Invalid Phone Number';
           }
 
           // Phone number confirm
-          if (!values.phoneNumberConfirm) {
-            errors.phoneNumberConfirm = 'Required';
-          } else if (values.phoneNumber !== values.phoneNumberConfirm) {
-            errors.phoneNumberConfirm = 'Phone numbers must match';
+          if (!values.phone_number_confirm) {
+            errors.phone_number_confirm = 'Required';
+          } else if (values.phone_number !== values.phone_number_confirm) {
+            errors.phone_number_confirm = 'Phone numbers must match';
           }
 
           // Email
@@ -101,23 +141,16 @@ function RegisterForm() {
           }
 
           // Password Confirm
-          if (!values.passwordConfirm) {
-            errors.passwordConfirm = 'Required';
-          } else if (values.passwordConfirm !== values.password) {
-            errors.passwordConfirm = 'Passwords do not match';
+          if (!values.password_confirm) {
+            errors.password_confirm = 'Required';
+          } else if (values.password_confirm !== values.password) {
+            errors.password_confirm = 'Passwords do not match';
           }
 
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setSubmitting(false);
-          registerUser({
-            username: values.username,
-            password: values.password,
-            email: values.email,
-            phone_number: values.phoneNumber,
-            full_name: values.fullName,
-          });
+          handleSubmitWithPhoto(values, setSubmitting);
         }}
         className='formPanel'
       >
@@ -134,19 +167,19 @@ function RegisterForm() {
             <h2 style={{ marginBottom: '30px', textAlign: 'center', color: 'Black' }}>Register User</h2>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div className="input-container" style={styles.inputContainer}>
-                <label htmlFor="fullName" style={styles.labels}>
+                <label htmlFor="full_name" style={styles.labels}>
                   Full Name*
                 </label>
                 <input
                   type="text"
-                  name="fullName"
-                  id='fullName'
+                  name="full_name"
+                  id='full_name'
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.fullName}
+                  value={values.full_name}
                 />
-                {touched.fullName && errors.fullName && (
-                  <div style={styles.warningLabels}>{errors.fullName}</div>
+                {touched.full_name && errors.full_name && (
+                  <div style={styles.warningLabels}>{errors.full_name}</div>
                 )}
               </div>
 
@@ -185,36 +218,36 @@ function RegisterForm() {
               </div>
 
               <div className="input-container" style={styles.inputContainer}>
-                <label htmlFor="phoneNumber" style={styles.labels}>
+                <label htmlFor="phone_number" style={styles.labels}>
                   Phone Number*
                 </label>
                 <input
                   type="text"
-                  name="phoneNumber"
-                  id='phoneNumber'
+                  name="phone_number"
+                  id='phone_number'
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.phoneNumber}
+                  value={values.phone_number}
                 />
-                {touched.phoneNumber && errors.phoneNumber && (
-                  <div style={styles.warningLabels}>{errors.phoneNumber}</div>
+                {touched.phone_number && errors.phone_number && (
+                  <div style={styles.warningLabels}>{errors.phone_number}</div>
                 )}
               </div>
 
               <div className="input-container" style={styles.inputContainer}>
-                <label htmlFor="phoneNumberConfirm" style={styles.labels}>
+                <label htmlFor="phone_number_confirm" style={styles.labels}>
                   Confirm Phone Number*
                 </label>
                 <input
                   type="text"
-                  name="phoneNumberConfirm"
-                  id='phoneNumberConfirm'
+                  name="phone_number_confirm"
+                  id='phone_number_confirm'
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.phoneNumberConfirm}
+                  value={values.phone_number_confirm}
                 />
-                {touched.phoneNumberConfirm && errors.phoneNumberConfirm && (
-                  <div style={styles.warningLabels}>{errors.phoneNumberConfirm}</div>
+                {touched.phone_number_confirm && errors.phone_number_confirm && (
+                  <div style={styles.warningLabels}>{errors.phone_number_confirm}</div>
                 )}
               </div>
 
@@ -236,31 +269,21 @@ function RegisterForm() {
               </div>
 
               <div className="input-container" style={styles.inputContainer}>
-                <label htmlFor="passwordConfirm" style={styles.labels}>
+                <label htmlFor="password_confirm" style={styles.labels}>
                   Confirm Password*
                 </label>
                 <input
                   type="password"
-                  name="passwordConfirm"
-                  id='passwordConfirm'
+                  name="password_confirm"
+                  id='password_confirm'
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.passwordConfirm}
+                  value={values.password_confirm}
                 />
-                {touched.passwordConfirm && errors.passwordConfirm && (
-                  <div style={styles.warningLabels}>{errors.passwordConfirm}</div>
+                {touched.password_confirm && errors.password_confirm && (
+                  <div style={styles.warningLabels}>{errors.password_confirm}</div>
                 )}
               </div>
-              <UploadButton
-              btnName="Upload Avatar"
-              style={{
-                marginTop: "10px",
-                backgroundColor: "#ffffff",
-                color: "#000000",
-                border: "2px solid #000",
-              }}
-              onChange={handleFileChange}
-            />
 
               <Button type="submit" disabled={isSubmitting} className='btn'>
                 Submit
@@ -284,6 +307,49 @@ function RegisterForm() {
           New User Created!
         </Alert>
       </Snackbar>
+      <Modal
+        open={modalOpen}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <h2 id="modal-modal-title">Upload Verification Photo</h2>
+          <UploadButton
+            btnName="Choose from Files"
+            style={{
+              marginTop: "10px",
+              backgroundColor: "#ffffff",
+              color: "#000000",
+              border: "2px solid #000",
+            }}
+            onChange={handleFileChange}
+          />
+          <input
+            id='cameraInput'
+            type='file'
+            accept='image/*'
+            capture='environment'
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+          />
+          <Button
+            variant="contained"
+            onClick={clickCamera}
+            style={{ marginTop: '10px', backgroundColor: "#ffffff", color: "#000000", border: "2px solid #000" }}
+          >
+            Take a Selfie
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleModalSubmit}
+            style={{ marginTop: '10px' }}
+          >
+            Submit Photo and Register
+          </Button>
+        </Box>
+      </Modal>
     </div>
   );
 }
