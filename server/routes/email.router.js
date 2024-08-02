@@ -42,15 +42,14 @@ transporter.verify((err, success) => {
 //   text: "Hi from your nodemailer API",
 //  };
 
- // * This is the actual route that sends the email
 router.post('/send', (req, res) => {
   const { email, token } = req.body;
-  const verificationUrl = `http://localhost:5001/email/verify/${token}`;
+  const verificationUrl = `${process.env.BASE_URL}/api/email/verify/${token}`;
   const mailOptions = {
     from: process.env.EMAIL,
     to: email,
     subject: 'Email Verification',
-    text: `Please verify your email by clicking the following link: ${verificationUrl}`,
+    text: `Please verify your email by clicking the following link: ${verificationUrl}`
   };
 
   transporter.sendMail(mailOptions, (err, data) => {
