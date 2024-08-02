@@ -30,7 +30,7 @@ let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL,
-    pass: process.env.WORD
+    pass: process.env.PASSWORD
   },
  });
 
@@ -55,7 +55,7 @@ let transporter = nodemailer.createTransport({
   console.log("req.body number", req.body[0]);
 
   let mailOptions = {
-    from: "nodemailer356@gmail.com",
+    from: process.env.EMAIL,
     to: req.body[1],
     subject: "Nodemailer API",
     text: passwordReset,

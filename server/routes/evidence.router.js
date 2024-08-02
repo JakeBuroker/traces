@@ -1,24 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../modules/pool");
-const { rejectUnauthenticated } = require('../modules/authentication-middleware')
-const multer = require('multer')
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
-const dotenv = require('dotenv')
-dotenv.config()
-// Using crypto to generate unique aws_keys
-const crypto = require('crypto')
-const awsGet = require('../modules/get.evidence')
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+const dotenv = require('dotenv');
+dotenv.config();
 
-// ! Set up for AWS
-const aws = require('@aws-sdk/client-s3')
+// Using crypto to generate unique aws_keys
+const crypto = require('crypto');
+const awsGet = require('../modules/get.evidence');
+
+// AWS setup
+const aws = require('@aws-sdk/client-s3');
 const signer = require('@aws-sdk/s3-request-presigner');
 
-const bucketName = process.env.BUCKET_NAME
-const bucketRegion = process.env.BUCKET_REGION
-const accessKey = process.env.ACCESS_KEY
-const secretAccessKey = process.env.SECRET_ACCESS_KEY
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
 
 const s3 = new aws.S3Client({
   credentials: {
@@ -26,8 +27,7 @@ const s3 = new aws.S3Client({
     secretAccessKey: secretAccessKey,
   },
   region: bucketRegion,
-
-})
+});
 
 // Gets all evidence that is public.
 router.get("/public", (req, res) => {
@@ -42,16 +42,17 @@ router.get("/public", (req, res) => {
     "evidence".date_posted,
     "evidence".media_type,
     "user".username,
-    "user".avatar_url
+    "user".avatar_url,
+    "user".verification_photo
     FROM "evidence"
     JOIN "user" ON "evidence".user_id = "user".id
     WHERE "evidence".is_public = true;
     `)
     .then(async (result) => {
-      let awsGetResult = await awsGet.awsGetURLs(result)
-      console.log(awsGetResult);
-      awsGetResult = await awsGet.awsGetAvatarULRs(awsGetResult)
-      res.send(awsGetResult)
+      let awsGetResult = await awsGet.awsGetURLs(result);
+      awsGetResult = await awsGet.awsGetAvatarULRs(awsGetResult);
+      awsGetResult = await awsGet.awsGetVerificationPhotoURLs(awsGetResult);
+      res.send(awsGetResult);
     })
     .catch((error) => {
       console.log("Error GET /api/evidence", error);
@@ -63,16 +64,16 @@ router.get("/public", (req, res) => {
 router.get('/', rejectUnauthenticated, (req, res) => {
   const queryText = `
   SELECT * FROM "evidence" WHERE "user_id" = $1;
-  `
+  `;
   pool.query(queryText, [req.user.id])
     .then(async result => {
-      const awsGetResult = await awsGet.awsGetURLs(result)
-      res.send(awsGetResult)
+      const awsGetResult = await awsGet.awsGetURLs(result);
+      res.send(awsGetResult);
     }).catch(err => {
       console.log(err);
-      res.sendStatus(500)
-    })
-})
+      res.sendStatus(500);
+    });
+});
 
 // GET route for the admin
 router.get('/admin', rejectUnauthenticated, (req, res) => {
@@ -87,22 +88,24 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
     "evidence".date_posted,
     "evidence".is_public,
     "evidence".media_type,
-    "user".full_name
+    "user".full_name,
+    "user".verification_photo
     FROM "evidence"
     JOIN "user" ON "evidence".user_id = "user".id;
-    `
+    `;
     pool.query(queryText)
       .then(async result => {
-        const awsGetResult = await awsGet.awsGetURLs(result)
-        res.send(awsGetResult)
+        const awsGetResult = await awsGet.awsGetURLs(result);
+        awsGetResult = await awsGet.awsGetVerificationPhotoURLs(awsGetResult);
+        res.send(awsGetResult);
       }).catch(err => {
         console.log(err);
-        res.sendStatus(500)
-      })
+        res.sendStatus(500);
+      });
   } else {
-    res.sendStatus(403)
+    res.sendStatus(403);
   }
-})
+});
 
 // This post should post to AWS only if there's a file, otherwise it will post to server with 'text' as the media_type.
 // This POST is expecting in a Form Data:
@@ -111,29 +114,29 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
 //    file (optional)
 //    Sends 201 'Create' if successful
 router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) => {
-  console.log('Req.file', req.file, 'Req.body:', req.body)
+  console.log('Req.file', req.file, 'Req.body:', req.body);
 
-  const connection = await pool.connect()
+  const connection = await pool.connect();
   try {
-    connection.query("BEGIN")
+    connection.query("BEGIN");
     const queryText = `
          INSERT INTO "evidence" ("title", "notes", "aws_key", "user_id", "media_type")
          VALUES ($1, $2, $3, $4, $5);
-         `
+         `;
 
     // Determines what the media_type is.
-    let mediaType
-    let awsReference
+    let mediaType;
+    let awsReference;
     if (req.file) {
-      mediaType = await checkMediaType(req.file.mimetype)
-      awsReference = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`
+      mediaType = await checkMediaType(req.file.mimetype);
+      awsReference = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`;
     } else {
-      mediaType = 1
-      awsReference = req.body.title
+      mediaType = 1;
+      awsReference = req.body.title;
     }
     console.log('req.file', req.file);
 
-    await connection.query(queryText, [req.body.title, req.body.notes, awsReference, req.user.id, mediaType])
+    await connection.query(queryText, [req.body.title, req.body.notes, awsReference, req.user.id, mediaType]);
 
     // Uploads to AWS if there is a file.
     if (req.file) {
@@ -142,21 +145,20 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
         Key: awsReference,
         Body: req.file.buffer,
         ContentType: req.file.mimetype,
-      }
-      const command = new aws.PutObjectCommand(params)
-      await s3.send(command)
+      };
+      const command = new aws.PutObjectCommand(params);
+      await s3.send(command);
     }
 
-    await connection.query("COMMIT")
-    res.sendStatus(201)
+    await connection.query("COMMIT");
+    res.sendStatus(201);
   } catch (error) {
     console.log(error);
-    await connection.query("ROLLBACK")
+    await connection.query("ROLLBACK");
   } finally {
-    connection.release()
+    connection.release();
   }
 });
-
 
 // Updates all the user information.
 // This PUT is expecting in a Data Form: 
@@ -171,108 +173,111 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   "email" = $1, 
   "phone_number" = $2
   WHERE "id" = $3
-  RETURNING "avatar_url";
-  `
+  RETURNING "avatar_url", "verification_photo";
+  `;
   const queryParams = [
     req.body.email,
     req.body.phone_number,
     req.user.id
-  ]
-  const connection = await pool.connect()
+  ];
+  const connection = await pool.connect();
   try {
-    await connection.query("BEGIN")
-    const result = await connection.query(queryText, queryParams)
+    await connection.query("BEGIN");
+    const result = await connection.query(queryText, queryParams);
     console.log(result.rows);
 
     if (req.file) {
-      let avatarUrl
+      let avatarUrl;
       if (result.rows[0].avatar_url) {
-        avatarUrl = result.rows[0].avatar_url
+        avatarUrl = result.rows[0].avatar_url;
       } else {
-        avatarUrl = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`
+        avatarUrl = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`;
       }
-      // ? Seems to not replace the old avatar image, but adds another.
-      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [avatarUrl, req.user.id])
+      // Update the avatar URL in the database
+      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [avatarUrl, req.user.id]);
       const params = {
         Bucket: bucketName,
         Key: avatarUrl,
         Body: req.file.buffer,
         ContentType: req.file.mimetype,
-      }
-      const command = new aws.PutObjectCommand(params)
-      await s3.send(command)
+      };
+      const command = new aws.PutObjectCommand(params);
+      await s3.send(command);
     }
-    res.send(result.rows)
-    connection.query("COMMIT")
+    // Fetch the updated user data including the signed URLs
+    const updatedUserResult = await pool.query(`SELECT * FROM "user" WHERE id = $1`, [req.user.id]);
+    const usersWithAvatars = await awsGet.awsGetAvatarULRs(updatedUserResult.rows);
+    const usersWithVerificationPhotos = await awsGet.awsGetVerificationPhotoURLs(usersWithAvatars);
 
+    res.send(usersWithVerificationPhotos[0]);
+    await connection.query("COMMIT");
   } catch (error) {
     console.log(error);
-    connection.query("ROLLBACK")
+    await connection.query("ROLLBACK");
   } finally {
-    connection.release()
+    connection.release();
   }
-})
+});
 
 // Updates to change all is_public to true.
 router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = `
     UPDATE "evidence" SET "is_public" = true;
-    `
+    `;
     await pool.query(queryText)
       .catch(err => {
-        console.log(err)
-        req.sendStatus(500)
-      })
-    res.sendStatus(201)
+        console.log(err);
+        req.sendStatus(500);
+      });
+    res.sendStatus(201);
   } else {
-    res.sendStatus(403)
+    res.sendStatus(403);
   }
-})
+});
 
 // Updates to change all is_public to false.
 router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = `
     UPDATE "evidence" SET "is_public" = false;
-    `
+    `;
     await pool.query(queryText)
       .catch(err => {
-        console.log(err)
-        req.sendStatus(500)
-      })
-    res.sendStatus(201)
+        console.log(err);
+        req.sendStatus(500);
+      });
+    res.sendStatus(201);
   } else {
-    res.sendStatus(403)
+    res.sendStatus(403);
   }
-})
+});
 
 // Update to change to toggle the specific is_public of an evidence.
 router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
-    const connection = await pool.connect()
+    const connection = await pool.connect();
     try {
-      connection.query("BEGIN")
-      const result = await connection.query(`SELECT "user_id", "is_public" FROM "evidence" WHERE "id" = $1;`, [req.params.id])
-      const toggle = !result.rows[0].is_public
+      connection.query("BEGIN");
+      const result = await connection.query(`SELECT "user_id", "is_public" FROM "evidence" WHERE "id" = $1;`, [req.params.id]);
+      const toggle = !result.rows[0].is_public;
       const queryText = `
       UPDATE "evidence" SET "is_public" = $1 WHERE "id" = $2;
-      `
-      await connection.query(queryText, [toggle, req.params.id])
-      await connection.query("COMMIT")
-      res.send(result.rows)
-
+      `;
+      await connection.query(queryText, [toggle, req.params.id]);
+      await connection.query("COMMIT");
+      res.send(result.rows);
     } catch (error) {
-      await connection.query("ROLLBACK")
+      await connection.query("ROLLBACK");
       console.log(error);
-      res.sendStatus(500)
+      res.sendStatus(500);
     } finally {
-      connection.release()
+      connection.release();
     }
   } else {
-    res.sendStatus(403)
+    res.sendStatus(403);
   }
-})
+});
 
 // Updates Evidence For Users
 // This PUT requires in a Form Data:
@@ -280,10 +285,10 @@ router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
 //    notes
 //    file (optional)
 router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (req, res) => {
-  const connection = await pool.connect()
+  const connection = await pool.connect();
   try {
-    await connection.query("BEGIN")
-    let result = await connection.query(`SELECT "user_id" FROM "evidence" WHERE "id" = $1`, [req.params.id])
+    await connection.query("BEGIN");
+    let result = await connection.query(`SELECT "user_id" FROM "evidence" WHERE "id" = $1`, [req.params.id]);
     if (result.rows[0].user_id === req.user.id || req.user.role === 2) {
       const queryText = `
         UPDATE "evidence" 
@@ -292,92 +297,90 @@ router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (r
         "notes" = $2
         WHERE "id" = $3
         RETURNING "aws_key";
-    `
+    `;
       const queryParams = [
         req.body.title,
         req.body.notes,
         req.params.id
-      ]
-      result = await connection.query(queryText, queryParams)
+      ];
+      result = await connection.query(queryText, queryParams);
 
       console.log(req.file, req.body);
       if (req.file) {
         console.log('in req.file');
-        const mediaType = await checkMediaType(req.file.mimetype)
-        await connection.query(`UPDATE "evidence" SET "media_type" = $1 WHERE "id" = $2;`, [mediaType, req.params.id])
-        let awsKey = result.rows[0].aws_key
+        const mediaType = await checkMediaType(req.file.mimetype);
+        await connection.query(`UPDATE "evidence" SET "media_type" = $1 WHERE "id" = $2;`, [mediaType, req.params.id]);
+        let awsKey = result.rows[0].aws_key;
         const params = {
           Bucket: bucketName,
           Key: awsKey,
           Body: req.file.buffer,
           ContentType: req.file.mimetype,
-        }
-        const command = new aws.PutObjectCommand(params)
-        await s3.send(command)
+        };
+        const command = new aws.PutObjectCommand(params);
+        await s3.send(command);
       }
-      res.send(result.rows)
-      connection.query("COMMIT")
-
+      res.send(result.rows);
+      connection.query("COMMIT");
     } else {
-      res.sendStatus(403)
+      res.sendStatus(403);
     }
   } catch (error) {
     console.log(error);
-    connection.query("ROLLBACK")
+    connection.query("ROLLBACK");
   } finally {
-    connection.release()
+    connection.release();
   }
-})
+});
 
 // Deletes an entry for an admin or a user.
 router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
   // Check that user is either an admin or the user who created it
-  const connection = await pool.connect()
+  const connection = await pool.connect();
   try {
-    await connection.query("BEGIN")
-    const result = await connection.query(`SELECT "user_id", "aws_key", "media_type" FROM "evidence" WHERE "id" = $1;`, [req.params.id])
+    await connection.query("BEGIN");
+    const result = await connection.query(`SELECT "user_id", "aws_key", "media_type" FROM "evidence" WHERE "id" = $1;`, [req.params.id]);
     if (result.rows[0].user_id === req.user.id || req.user.role === 2) {
-      await connection.query(`DELETE FROM "evidence" WHERE "id" = $1`, [req.params.id])
+      await connection.query(`DELETE FROM "evidence" WHERE "id" = $1`, [req.params.id]);
 
       // Checking to make sure the media isn't just text. 
       if (result.rows[0].media_type !== 1) {
         const command = new aws.DeleteObjectCommand({
           Bucket: bucketName,
           Key: result.rows[0].aws_key,
-        })
-        await s3.send(command)
+        });
+        await s3.send(command);
       }
 
-      res.sendStatus(201)
+      res.sendStatus(201);
     } else {
-      res.sendStatus(403)
+      res.sendStatus(403);
     }
 
-    await connection.query("COMMIT")
+    await connection.query("COMMIT");
   } catch (error) {
     console.log(error);
-    connection.query("ROLLBACK")
-    res.sendStatus(500)
+    connection.query("ROLLBACK");
+    res.sendStatus(500);
   } finally {
-    connection.release()
+    connection.release();
   }
-})
-
+});
 
 // Utility function
 const checkMediaType = async (mimetype) => {
-  const result = await pool.query(`SELECT * FROM "media";`)
-  const allMediaTypes = result.rows
+  const result = await pool.query(`SELECT * FROM "media";`);
+  const allMediaTypes = result.rows;
   for (let type of allMediaTypes) {
     if (mimetype.includes(type.type)) {
       console.log('type.id', type.id);
-      if (mimetype == 'video/webm'){
-        type.id = 4
-        return type.id
+      if (mimetype == 'video/webm') {
+        type.id = 4;
+        return type.id;
       }
-      return type.id
+      return type.id;
     }
   }
-}
+};
 
-module.exports = router
+module.exports = router;

@@ -58,15 +58,15 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// CSRF Protection Middleware
-const csrfProtection = csurf({ cookie: true });
-app.use(csrfProtection);
+// // CSRF Protection Middleware
+// const csrfProtection = csurf({ cookie: true });
+// app.use(csrfProtection);
 
-// Middleware to set the CSRF token in a cookie
-app.use((req, res, next) => {
-  res.cookie('XSRF-TOKEN', req.csrfToken());
-  next();
-});
+// // Middleware to set the CSRF token in a cookie
+// app.use((req, res, next) => {
+//   res.cookie('XSRF-TOKEN', req.csrfToken());
+//   next();
+// });
 
 // Routes
 app.use('/api/user', userRouter);

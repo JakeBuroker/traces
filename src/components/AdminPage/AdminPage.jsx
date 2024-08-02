@@ -248,20 +248,20 @@ function AdminPage() {
   // Return statement for rendering the admin page
   return (
     <div style={{ padding: '75px', height: 500, width: '100%' }}>
-      <h1 style={{ fontFamily: 'Merriweather', color: 'white' }}>Administration</h1>
+      <h1 style={{ fontFamily: 'Merriweather', color: 'black' }}>Administration</h1>
       <div style={{ padding: '30px', display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', gap: '20px' }}>
           <Button
             variant='contained'
             onClick={() => openAllPublicModal(true)}
-            style={{ backgroundColor: '#ffffff', color: '#f7f7f7', marginRight: '10px' }}
+            style={{ backgroundColor: '#ffffff', color: 'black', marginRight: '10px' }}
           >
             Make All Public
           </Button>
           <Button
             variant='contained'
             onClick={() => openAllPublicModal(false)}
-            style={{ backgroundColor: '#ffffff', color: '#f7f7f7' }}
+            style={{ backgroundColor: '#ffffff', color: 'black' }}
           >
             Make All Private
           </Button>
@@ -270,7 +270,7 @@ function AdminPage() {
       <Button
         variant='contained'
         onClick={() => setView(view === 'evidence' ? 'users' : 'evidence')}
-        style={{ backgroundColor: '#ffffff', color: '#f7f7f7', marginBottom: '20px' }}
+        style={{ backgroundColor: '#ffffff', color: 'black', marginBottom: '20px' }}
       >
         {view === 'evidence' ? 'Show Users' : 'Show Evidence'}
       </Button>
