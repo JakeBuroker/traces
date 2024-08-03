@@ -6,13 +6,10 @@ CREATE TABLE "user" (
     phone_number VARCHAR(20) NOT NULL,
     role INTEGER DEFAULT 1 NOT NULL,
     full_name VARCHAR(100) NOT NULL,
+    alias VARCHAR(100),
     avatar_url VARCHAR(200),
-    verification_photo VARCHAR(200),
-    video_watched BOOLEAN DEFAULT FALSE,
-    verification_token VARCHAR(255),
-    verified BOOLEAN DEFAULT FALSE
+    video_watched BOOLEAN DEFAULT FALSE
 );
-
 
 CREATE TABLE IF NOT EXISTS media (
     id SERIAL PRIMARY KEY,
