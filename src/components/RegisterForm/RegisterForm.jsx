@@ -110,7 +110,7 @@ function RegisterForm() {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div className="input-container">
             <label htmlFor="fullName" style={styles.labels}>
-              Full Name*
+              Full Name
             </label>
             <input
               type="text"
@@ -122,7 +122,7 @@ function RegisterForm() {
           </div>
           <div className="input-container">
             <label htmlFor="username" style={styles.labels}>
-              Username*
+              Username
             </label>
             <input
               type="text"
@@ -134,7 +134,7 @@ function RegisterForm() {
           </div>
           <div className="input-container">
             <label htmlFor="email" style={styles.labels}>
-              Email*
+              Email
               <input
                 type="email"
                 id="email"
@@ -146,7 +146,7 @@ function RegisterForm() {
           </div>
           <div className="input-container">
             <label htmlFor="phoneNumber" style={styles.labels}>
-              Phone Number*
+              Phone Number
               <input
                 type="text"
                 minLength={10}
@@ -159,7 +159,7 @@ function RegisterForm() {
           </div>
           <div className="input-container">
             <label htmlFor="password" style={styles.labels}>
-              Password*
+              Password
               <input
                 type="password"
                 id="password"

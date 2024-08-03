@@ -81,3 +81,13 @@
   .pageIcon{
     border-radius: 50%;
   }
+
+  @media (max-width: 768px) {
+    input[type="text"],
+    input[type="password"] {
+      font-size: 16px; /* Prevents zoom on focus in iOS */
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }

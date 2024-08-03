@@ -1,27 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@mui/material';
-import './LoginForm.css'; // Assuming you have a CSS file for styles
+import './LoginForm.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import ResetPasswordBtn from '../ResetPasswordBtn/ResetPasswordBtn.jsx';
+import { Padding } from '@mui/icons-material';
 
 function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [formValues, setFormValues] = useState({
+    username: 'Enter your username',
+    password: 'Enter your password',
+  });
   const errors = useSelector(store => store.errors);
   const user = useSelector(store => store.user);
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues(prevValues => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
+
+  const handleFocus = (event) => {
+    const { name } = event.target;
+    if (formValues[name] === 'Enter your username' || formValues[name] === 'Enter your password') {
+      setFormValues(prevValues => ({
+        ...prevValues,
+        [name]: '',
+      }));
+    }
+  };
+
   const login = (event) => {
     event.preventDefault();
-    if (username && password) {
+    if (formValues.username && formValues.password) {
       dispatch({
         type: 'LOGIN',
-        payload: {
-          username: username,
-          password: password,
-        },
+        payload: formValues,
       });
     } else {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
@@ -35,13 +53,8 @@ function LoginForm() {
   }, [user.id, history]);
 
   return (
-    <div className="login-container">
+    <div className="login-container" style={{ marginTop: "20px" }}>
       <form className="formPanel" onSubmit={login}>
-        <div className="image-container">
-          {/* Assuming you want to include an image at the top, you can use an img tag here */}
-          <img className="pageIcon" src="/fillerIconFour.jpg" alt="Login" style={{ width: 200, height: 200 }} />
-        </div>
-
         {errors.loginMessage && (
           <h3 className="alert" role="alert">
             {errors.loginMessage}
@@ -55,8 +68,10 @@ function LoginForm() {
             type="text"
             name="username"
             required
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
+            value={formValues.username}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            placeholder="Enter your username"
           />
         </div>
         <div className="input-container">
@@ -67,8 +82,10 @@ function LoginForm() {
             type="password"
             name="password"
             required
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            value={formValues.password}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            placeholder="Enter your password"
           />
         </div>
         <div>
