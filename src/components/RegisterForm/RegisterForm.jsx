@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button, Snackbar, Alert, Modal, Box } from '@mui/material';
 import UploadButton from '../UploadButton/UploadButton';
+import axios from 'axios';
 
 const styles = {
   labels: {
@@ -39,13 +40,23 @@ function RegisterForm() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [userAvi, setUserAvi] = useState(null);
+  const [error, setError] = useState(null);
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setModalOpen(true);
+    try {
+      const response = await axios.post('/api/user/check', { username, email });
+      if (response.data.exists) {
+        setError(response.data.message);
+      } else {
+        setModalOpen(true);
+      }
+    } catch (error) {
+      console.error('Error checking user existence', error);
+    }
   };
 
   const registerUser = () => {
@@ -106,6 +117,9 @@ function RegisterForm() {
           <h3 className="alert" role="alert">
             {errors.registrationMessage}
           </h3>
+        )}
+        {error && (
+          <Alert severity="error">{error}</Alert>
         )}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div className="input-container">
