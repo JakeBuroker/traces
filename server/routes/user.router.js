@@ -304,6 +304,31 @@ router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (re
   }
 });
 
+router.post('/check', async (req, res) => {
+  const { username, email } = req.body;
+  const queryText = 'SELECT username, email FROM "user" WHERE username = $1 OR email = $2';
+
+  try {
+    const result = await pool.query(queryText, [username, email]);
+    if (result.rows.length > 0) {
+      const existingUser = result.rows[0];
+      if (existingUser.username === username && existingUser.email === email) {
+        res.status(200).json({ exists: true, message: 'Username and email already exist' });
+      } else if (existingUser.username === username) {
+        res.status(200).json({ exists: true, message: 'Username already exists' });
+      } else {
+        res.status(200).json({ exists: true, message: 'Email already exists' });
+      }
+    } else {
+      res.status(200).json({ exists: false });
+    }
+  } catch (error) {
+    console.error('Error checking user existence', error);
+    res.sendStatus(500);
+  }
+});
+
+
 // Handles login form authenticate/login POST
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
