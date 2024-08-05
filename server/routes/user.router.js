@@ -1,20 +1,19 @@
 const express = require('express');
-const {
-  rejectUnauthenticated,
-} = require('../modules/authentication-middleware');
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
+const router = express.Router();
+const dotenv = require('dotenv');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
-const multer = require('multer');
-const aws = require('@aws-sdk/client-s3');
-const signer = require('@aws-sdk/s3-request-presigner');
-const dotenv = require('dotenv');
 
 dotenv.config();
 
-const router = express.Router();
+// AWS setup
+const aws = require('@aws-sdk/client-s3');
+const signer = require('@aws-sdk/s3-request-presigner');
+const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -29,22 +28,6 @@ const s3 = new aws.S3Client({
     secretAccessKey: secretAccessKey,
   },
   region: bucketRegion,
-});
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD,
-  },
-});
-
-transporter.verify((err, success) => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log(`=== Server is ready to take messages: ${success} ===`);
-  }
 });
 
 const awsGetURLs = async (result) => {
@@ -88,6 +71,23 @@ const awsGetVerificationPhotoURLs = async (result) => {
   }
   return result;
 };
+
+// Configure nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD,
+  },
+});
+
+transporter.verify((err, success) => {
+  if (err) {
+    console.error('Error verifying transporter: ', err);
+  } else {
+    console.log(`=== Server is ready to take messages: ${success} ===`);
+  }
+});
 
 // Route to get all users (admin only)
 router.get('/users', rejectUnauthenticated, async (req, res) => {
@@ -304,6 +304,18 @@ router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (re
   }
 });
 
+// Handles login form authenticate/login POST
+router.post('/login', userStrategy.authenticate('local'), (req, res) => {
+  res.sendStatus(200);
+});
+
+// Clear all server session information about this user
+router.post('/logout', (req, res) => {
+  req.logout();
+  res.sendStatus(200);
+});
+
+// Check if username or email already exists
 router.post('/check', async (req, res) => {
   const { username, email } = req.body;
   const queryText = 'SELECT username, email FROM "user" WHERE username = $1 OR email = $2';
@@ -328,19 +340,7 @@ router.post('/check', async (req, res) => {
   }
 });
 
-
-// Handles login form authenticate/login POST
-router.post('/login', userStrategy.authenticate('local'), (req, res) => {
-  res.sendStatus(200);
-});
-
-// Clear all server session information about this user
-router.post('/logout', (req, res) => {
-  req.logout();
-  res.sendStatus(200);
-});
-
-// Update user's password
+// Route to update the user's password
 router.put('/passwordupdated', (req, res) => {
   console.log("req.body 1", req.body[0][0], "req.body2", req.body[0][1]);
   const queryParams = [encryptLib.encryptPassword(req.body[0][0]), req.body[0][1]];
