@@ -51,15 +51,15 @@ function AdminPage() {
   // Function to fetch evidence data from the server
   const fetchEvidence = () => {
     axios
-      .get('/api/evidence/admin')
+      .get("/api/evidence/admin")
       .then((response) => {
-        dispatch({ type: 'SET_EVIDENCE', payload: response.data });
+        dispatch({ type: "SET_EVIDENCE", payload: response.data });
       })
       .catch((error) => {
-        console.error('Could not fetch evidence:', error);
+        console.error(error);
+        alert("Could not load evidence!");
       });
   };
-
   // Function to fetch users data from the server
   const fetchUsers = () => {
     axios

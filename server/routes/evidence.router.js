@@ -76,6 +76,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 });
 
 // GET route for the admin
+// GET route for the admin
 router.get('/admin', rejectUnauthenticated, (req, res) => {
   if (req.user.role === 2) { // checking for admin status
     const queryText = `
@@ -89,13 +90,15 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
     "evidence".is_public,
     "evidence".media_type,
     "user".full_name,
+    "user".username,
+    "user".avatar_url,
     "user".verification_photo
     FROM "evidence"
     JOIN "user" ON "evidence".user_id = "user".id;
     `;
     pool.query(queryText)
       .then(async result => {
-        const awsGetResult = await awsGet.awsGetURLs(result);
+        let awsGetResult = await awsGet.awsGetURLs(result);
         awsGetResult = await awsGet.awsGetVerificationPhotoURLs(awsGetResult);
         res.send(awsGetResult);
       }).catch(err => {
@@ -106,6 +109,7 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
     res.sendStatus(403);
   }
 });
+
 
 // This post should post to AWS only if there's a file, otherwise it will post to server with 'text' as the media_type.
 // This POST is expecting in a Form Data:
