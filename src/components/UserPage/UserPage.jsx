@@ -339,7 +339,7 @@ function UserPage() {
               Welcome to TRACES
             </Typography>
             <Typography id="video-modal-description" sx={{ mt: 2 }}>
-              It is important that you watch the following instructional video. It covers important information about how your mobile device will be used in this experience. 
+            To prepare for this investigation, please watch the following brief instructional video. It is very important that you complete this part of your training and confirm you are equipped to participate.
             </Typography>
             <div style={{ width: "100%", marginTop: "20px" }}>
               <video

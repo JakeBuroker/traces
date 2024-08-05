@@ -39,7 +39,7 @@ function LandingPage() {
           </Typography>
         </div>
         <div className="grid-col grid-col_12" style={{ marginTop: '25px' }}>
-          {!user.id && (<h4 style={{ color: '#000000' }}>If you are participating in the play, please login.</h4>)}
+          {!user.id && (<h4 style={{ color: '#000000' }}>If you are participating in the investigation, please register or login.</h4>)}
         </div>
       </div>
     </Box>

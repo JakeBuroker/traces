@@ -91,7 +91,6 @@ router.get('/verify/:token', async (req, res) => {
 });
 
 // Check if email exists
-// Check if email exists
 router.post('/check-email', async (req, res) => {
   const { email } = req.body;
   console.log("Received email to check:", email); // Log the received email

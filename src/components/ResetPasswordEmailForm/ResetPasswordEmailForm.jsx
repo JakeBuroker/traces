@@ -34,7 +34,7 @@ export default function ResetPasswordEmailForm() {
             dispatch({ type: 'SEND', payload: emailArr });
             history.push('/reset-password-code');
         } else {
-            alert("Email does not exist.");
+            alert("No account is registered with that email address");
         }
     };
 
