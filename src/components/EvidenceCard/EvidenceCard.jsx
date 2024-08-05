@@ -1,11 +1,6 @@
-import axios from 'axios';
 import React, { useState } from 'react';
-import {
-  Card,
-  Typography,
-  Grid,
-  Box
-} from '@mui/material';
+import axios from 'axios';
+import { Card, Typography, Grid, Box } from '@mui/material';
 import EvidenceDetailsModal from '../EvidenceDetailsModal/EvidenceDetailsModal';
 
 const EvidenceCard = ({ item, fetchEvidence }) => {
@@ -19,14 +14,14 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
     axios
       .put(`/api/evidence/update/${id}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       })
       .then(() => {
         fetchEvidence();
         setIsOpen(false);
       })
-      .catch((error) => console.error("Error updating evidence:", error));
+      .catch((error) => console.error('Error updating evidence:', error));
   };
 
   const deleteEvidence = (itemId) => {
@@ -36,7 +31,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
         fetchEvidence();
         setIsOpen(false);
       })
-      .catch((error) => console.error("Error deleting evidence:", error));
+      .catch((error) => console.error('Error deleting evidence:', error));
   };
 
   const onClose = () => {
@@ -66,7 +61,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
         <video
           src={aws_url}
           controls
-          style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
+          style={{ height: 160, width: 160, objectFit: 'cover', margin: '5px 0' }}
           poster='./audio_placeholder.jpeg'
         />
       );
@@ -75,7 +70,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
         <video
           src={aws_url}
           controls
-          style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
+          style={{ height: 160, width: 160, objectFit: 'cover', margin: '5px 0' }}
           poster='./video_placeholder.jpeg'
         />
       );
@@ -84,7 +79,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
         <img
           src={aws_url}
           alt={title}
-          style={{ height: 160, width: 160, objectFit: "cover", margin: '5px 0' }}
+          style={{ height: 160, width: 160, objectFit: 'cover', margin: '5px 0' }}
         />
       );
     }
@@ -93,16 +88,17 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
   return (
     <Grid item xs={2} sm={2} md={6} lg={4}>
       <Card
-        className="item-card"
+        className='item-card'
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          position: "relative",
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative',
           boxShadow: 10,
           width: '170px',
-          height: '230px'
+          height: '230px',
         }}
-        onClick={() => setIsOpen(true)}>
+        onClick={() => setIsOpen(true)}
+      >
         {item.is_public && (
           <Box
             sx={{
@@ -120,7 +116,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
           </Box>
         )}
         {hasMedia(item.media_type) && renderImageForMediaItem(item)}
-        <Typography variant="h5" component="div" sx={{ textAlign: "center", fontFamily: 'Caveat', fontSize: '30px' }}>
+        <Typography variant='h5' component='div' sx={{ textAlign: 'center', fontFamily: 'Caveat', fontSize: '30px' }}>
           {formatLongTitles(item.title)}
         </Typography>
       </Card>

@@ -22,7 +22,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#000000', // Change focus border color to black
+            borderColor: '#000000',
           },
         },
       },
@@ -339,7 +339,7 @@ function UserPage() {
               Welcome to TRACES
             </Typography>
             <Typography id="video-modal-description" sx={{ mt: 2 }}>
-            To prepare for this investigation, please watch the following brief instructional video. It is very important that you complete this part of your training and confirm you are equipped to participate.
+              It is important that you watch the following instructional video. It covers important information about how your mobile device will be used in this experience. 
             </Typography>
             <div style={{ width: "100%", marginTop: "20px" }}>
               <video

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
   CardMedia,
@@ -16,17 +16,16 @@ import {
 } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import DataGridComponent from '../DataGridComponent/DataGridComponent';
 import EvidenceCard from '../EvidenceCard/EvidenceCard';
 import './AdminPage.css';
 
+const DataGridComponent = lazy(() => import('../DataGridComponent/DataGridComponent'));
+
 function AdminPage() {
-  // Redux hooks for dispatching actions and selecting state
   const dispatch = useDispatch();
   const history = useHistory();
   const evidenceList = useSelector((store) => store.evidence);
 
-  // State variables for various modals and data
   const [users, setUsers] = useState([]);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
   const [userEvidenceModalOpen, setUserEvidenceModalOpen] = useState(false);
@@ -42,7 +41,6 @@ function AdminPage() {
   const [makeAllPublic, setMakeAllPublic] = useState(true);
   const [view, setView] = useState('evidence');
 
-  // useEffect to fetch evidence and users data when the component mounts
   useEffect(() => {
     fetchEvidence();
     fetchUsers();
@@ -60,6 +58,7 @@ function AdminPage() {
         alert("Could not load evidence!");
       });
   };
+
   // Function to fetch users data from the server
   const fetchUsers = () => {
     axios
@@ -72,29 +71,22 @@ function AdminPage() {
       });
   };
 
-  // Function to toggle the public status of an evidence item
   const toggleIsPublic = (id) => {
     axios.put(`/api/evidence/clearance/${id}`)
-      .then(() => {
-        fetchEvidence();
-      }).catch(err => {
-        console.error(err);
-      });
+      .then(fetchEvidence)
+      .catch(err => console.error(err));
   };
 
-  // Function to handle making all evidence public or private
   const handleMakeAllPublic = (bool) => {
     let route = bool ? 'makeAllPublic' : 'makeAllSecret';
     axios.put(`/api/evidence/${route}`)
       .then(() => {
         fetchEvidence();
         setAllPublicConfirmModalOpen(false);
-      }).catch(err => {
-        console.error(err);
-      });
+      }).catch(err => console.error(err));
   };
 
-  // Function to handle editing an evidence item
+  // Function to toggle the public status of an evidence item
   const handleEdit = (item) => {
     setEditsInput({
       id: item.id,
@@ -105,7 +97,6 @@ function AdminPage() {
     setInEditMode(true);
   };
 
-  // Function to handle updating an evidence item
   const handleUpdate = (item) => {
     axios.put(`/api/evidence/update/${item.id}`, {
       title: item.title,
@@ -114,12 +105,9 @@ function AdminPage() {
       setInEditMode(false);
       fetchEvidence();
       setSelectedItem({ ...selectedItem, title: item.title, notes: item.notes });
-    }).catch(err => {
-      console.error(err);
-    });
+    }).catch(err => console.error(err));
   };
 
-  // Function to delete an evidence item
   const deleteEvidence = (evidenceId) => {
     axios.delete(`/api/evidence/delete/${evidenceId}`)
       .then(() => {
@@ -134,7 +122,6 @@ function AdminPage() {
       });
   };
 
-  // Function to delete a user
   const deleteUser = (userId) => {
     axios.delete(`/api/user/${userId}`)
       .then(() => {
@@ -148,13 +135,11 @@ function AdminPage() {
       });
   };
 
-  // Function to open the details modal
   const openModal = (item) => {
     setSelectedItem(item);
     setDetailsModalOpen(true);
   };
 
-  // Function to open the user evidence modal
   const openUserEvidenceModal = (user) => {
     setSelectedItem(user);
     fetchUserEvidence(user.id);
@@ -181,38 +166,32 @@ function AdminPage() {
     setInEditMode(false);
   };
 
-  // Function to open the delete confirmation modal for evidence
   const openDeleteConfirmModal = (item) => {
     setSelectedItem(item);
     setDeleteModalOpen(true);
     setInEditMode(false);
   };
 
-  // Function to open the delete confirmation modal for users
   const openDeleteUserConfirmModal = (user) => {
     setSelectedItem(user);
     setDeleteUserModalOpen(true);
   };
 
-  // Function to open the public confirmation modal for evidence
   const openPublicConfirmModal = (item) => {
     setSelectedItem(item);
     setConfirmModalOpen(true);
   };
 
-  // Function to open the modal to confirm making all evidence public or private
   const openAllPublicModal = (bool) => {
     setMakeAllPublic(bool);
     setAllPublicConfirmModalOpen(true);
   };
 
-  // Function to handle updating evidence data after changes
   const handleEvidenceUpdate = () => {
     fetchUserEvidence(selectedItem.id);
     fetchEvidence();
   };
 
-  // Function to open the user information modal
   const openUserInfoModal = (user) => {
     setEditsInput({
       id: user.id,
@@ -227,7 +206,6 @@ function AdminPage() {
     setUserInfoModalOpen(true);
   };
 
-  // Function to handle updating user information
   const handleUserUpdate = (user) => {
     axios.put(`/api/user/admin/${user.id}`, {
       username: editsInput.username,
@@ -240,14 +218,11 @@ function AdminPage() {
       setInEditMode(false);
       fetchUsers();
       setSelectedItem({ ...selectedItem, ...editsInput });
-    }).catch(err => {
-      console.error(err);
-    });
+    }).catch(err => console.error(err));
   };
 
-  // Return statement for rendering the admin page
   return (
-    <div style={{ padding: '75px', height: 500, width: '100%' }}>
+    <div style={{ padding: '75px', height: '100%', width: '100%' }}>
       <h1 style={{ fontFamily: 'Merriweather', color: 'black' }}>Administration</h1>
       <div style={{ padding: '30px', display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', gap: '20px' }}>
@@ -274,16 +249,18 @@ function AdminPage() {
       >
         {view === 'evidence' ? 'Show Users' : 'Show Evidence'}
       </Button>
-      <DataGridComponent
-        data={{ evidence: evidenceList, users }}
-        view={view}
-        openModal={openModal}
-        openPublicConfirmModal={openPublicConfirmModal}
-        openDeleteConfirmModal={openDeleteConfirmModal}
-        openDeleteUserConfirmModal={openDeleteUserConfirmModal}
-        openUserEvidenceModal={openUserEvidenceModal}
-        openUserInfoModal={openUserInfoModal} 
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <DataGridComponent
+          data={{ evidence: evidenceList, users }}
+          view={view}
+          openModal={openModal}
+          openPublicConfirmModal={openPublicConfirmModal}
+          openDeleteConfirmModal={openDeleteConfirmModal}
+          openDeleteUserConfirmModal={openDeleteUserConfirmModal}
+          openUserEvidenceModal={openUserEvidenceModal}
+          openUserInfoModal={openUserInfoModal}
+        />
+      </Suspense>
       <Dialog open={detailsModalOpen} onClose={closeModal} fullWidth maxWidth='md'>
         <DialogContent>
           {selectedItem && (
@@ -329,7 +306,7 @@ function AdminPage() {
               <EvidenceCard
                 key={item.id}
                 item={item}
-                fetchEvidence={handleEvidenceUpdate} // Updated function to fetch user's evidence
+                fetchEvidence={handleEvidenceUpdate}
               />
             ))}
             {selectedUserEvidence.length === 0 && (
