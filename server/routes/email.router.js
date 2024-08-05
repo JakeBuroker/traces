@@ -90,4 +90,26 @@ router.get('/verify/:token', async (req, res) => {
   }
 });
 
+// Check if email exists
+// Check if email exists
+router.post('/check-email', async (req, res) => {
+  const { email } = req.body;
+  console.log("Received email to check:", email); // Log the received email
+  const queryText = 'SELECT email FROM "user" WHERE email = $1';
+
+  try {
+      const result = await pool.query(queryText, [email]);
+      console.log("Query result:", result.rows); // Log the query result
+      if (result.rows.length > 0) {
+          res.status(200).json({ exists: true });
+      } else {
+          res.status(200).json({ exists: false });
+      }
+  } catch (error) {
+      console.error('Error checking email existence', error);
+      res.sendStatus(500);
+  }
+});
+
+
 module.exports = router;

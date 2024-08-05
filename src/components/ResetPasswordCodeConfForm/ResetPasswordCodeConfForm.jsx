@@ -17,13 +17,13 @@ export default function ResetPasswordCodeConfForm () {
             history.push('/reset-password-page')
         }
         else{
-            alert("you entered the reset code incorrectly dumbass");
+            alert("Incorrect code. Please try again.");
         }
        
     }
     return(
         <div className="login-container">
-            <h1>Please enter your password reset code:</h1>
+            <h1>You have been emailed a password reset code. Please enter it here:</h1>
             <form onSubmit={submitCode}>
                Code: <input 
                value={codeAttempt}
