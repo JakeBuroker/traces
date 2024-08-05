@@ -27,7 +27,7 @@ passport.deserializeUser((id, done) => {
       }
     })
     .catch((error) => {
-      console.log('Error with query during deserializing user ', error);
+      console.error('Error with query during deserializing user ', error);
       // done takes an error (we have one) and a user (null in this case)
       // this will result in the server returning a 500 status code
       done(error, null);

@@ -30,7 +30,7 @@ export default function ResetPasswordEmailForm() {
         if (emailExists) {
             let randNum = Math.floor(100000 + Math.random() * 900000);
             let emailArr = [randNum, enterEmail];
-            console.log("attempting to send email");
+
             dispatch({ type: 'SEND', payload: emailArr });
             history.push('/reset-password-code');
         } else {

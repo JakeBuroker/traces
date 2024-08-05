@@ -23,7 +23,7 @@ function* loginUser(action) {
     // get the user information from the server
     yield put({ type: 'FETCH_USER' });
   } catch (error) {
-    console.log('Error with user login:', error);
+    console.error('Error with user login:', error);
     if (error.response.status === 401) {
       // The 401 is the error status sent from passport
       // if user isn't in the database or

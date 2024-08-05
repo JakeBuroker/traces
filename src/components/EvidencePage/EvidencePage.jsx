@@ -28,7 +28,7 @@ function EvidencePage() {
       })
       .catch((error) => {
         console.error(error);
-        alert("Could not fetch evidence!");
+        alert("Could not load evidence!");
       });
   };
 

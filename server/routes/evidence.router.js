@@ -114,8 +114,6 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
 //    file (optional)
 //    Sends 201 'Create' if successful
 router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) => {
-  console.log('Req.file', req.file, 'Req.body:', req.body);
-
   const connection = await pool.connect();
   try {
     connection.query("BEGIN");
@@ -369,7 +367,6 @@ const checkMediaType = async (mimetype) => {
   const allMediaTypes = result.rows;
   for (let type of allMediaTypes) {
     if (mimetype.includes(type.type)) {
-      console.log('type.id', type.id);
       if (mimetype == 'video/webm') {
         type.id = 4;
         return type.id;

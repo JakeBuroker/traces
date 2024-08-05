@@ -6,16 +6,16 @@ function* sendEmail(action){
         yield axios.post('/api/email/send', action.payload)
         yield put({ type: 'RESET_PASSWORD', payload: action.payload });
     }catch(error){
-        console.log("error sending email");
+        console.error("error sending email");
     }
 }
 function* resetPassword(action){
     try{
         yield axios.put('/api/user/passwordupdated', [action.payload])
-        console.log('action payload for password reset', action.payload);
+        console.error('action payload for password reset', action.payload);
         // yield put({ type: 'RESET_PASSWORD', payload: action.payload });
     }catch(error){
-        console.log("error resetting password");
+        console.error("error resetting password");
     }
 }
 // function* enterEmail(action){

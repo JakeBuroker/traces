@@ -78,7 +78,7 @@ function AdminPage() {
       .then(() => {
         fetchEvidence();
       }).catch(err => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -90,7 +90,7 @@ function AdminPage() {
         fetchEvidence();
         setAllPublicConfirmModalOpen(false);
       }).catch(err => {
-        console.log(err);
+        console.error(err);
       });
   };
 
@@ -115,7 +115,7 @@ function AdminPage() {
       fetchEvidence();
       setSelectedItem({ ...selectedItem, title: item.title, notes: item.notes });
     }).catch(err => {
-      console.log(err);
+      console.error(err);
     });
   };
 
@@ -241,7 +241,7 @@ function AdminPage() {
       fetchUsers();
       setSelectedItem({ ...selectedItem, ...editsInput });
     }).catch(err => {
-      console.log(err);
+      console.error(err);
     });
   };
 

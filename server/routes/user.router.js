@@ -163,9 +163,6 @@ router.post('/register', upload.single('verification_photo'), async (req, res) =
   const verificationToken = crypto.randomBytes(20).toString('hex');
   const hashedToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
 
-  console.log('Generated Verification Token:', verificationToken);
-  console.log('Hashed Verification Token:', hashedToken);
-
   try {
     let verificationPhotoKey;
     if (req.file) {
@@ -202,7 +199,6 @@ router.post('/register', upload.single('verification_photo'), async (req, res) =
         console.error('Error sending email: ' + err);
         res.status(500).json({ error: 'Error sending verification email' });
       } else {
-        console.log('Verification email sent successfully');
         res.status(200).json({ message: 'Verification email sent' });
       }
     });
@@ -341,7 +337,6 @@ router.post('/check', async (req, res) => {
 
 // Route to update the user's password
 router.put('/passwordupdated', (req, res) => {
-  console.log("req.body 1", req.body[0][0], "req.body2", req.body[0][1]);
   const queryParams = [encryptLib.encryptPassword(req.body[0][0]), req.body[0][1]];
   const sqlText = `UPDATE "user" SET "password" = $1 WHERE "email" = $2;`;
   pool.query(sqlText, queryParams)

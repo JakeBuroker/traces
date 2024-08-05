@@ -57,7 +57,7 @@ function GalleryPage() {
                 setPublicEvidence(response.data);
                 setPageCount(Math.ceil(response.data.length / 8)); // Adjust for 2 rows of 4
             }).catch(err => {
-                console.log(err);
+                console.error(err);
             });
     }
 
