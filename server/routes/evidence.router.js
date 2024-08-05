@@ -55,7 +55,7 @@ router.get("/public", (req, res) => {
       res.send(awsGetResult);
     })
     .catch((error) => {
-      console.log("Error GET /api/evidence", error);
+      console.error("Error GET /api/evidence", error);
       res.sendStatus(500);
     });
 });
@@ -70,7 +70,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
       const awsGetResult = await awsGet.awsGetURLs(result);
       res.send(awsGetResult);
     }).catch(err => {
-      console.log(err);
+      console.error("Error GET /api/evidence for user", err);
       res.sendStatus(500);
     });
 });
@@ -99,7 +99,7 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
         awsGetResult = await awsGet.awsGetVerificationPhotoURLs(awsGetResult);
         res.send(awsGetResult);
       }).catch(err => {
-        console.log(err);
+        console.error("Error GET /api/evidence for admin", err);
         res.sendStatus(500);
       });
   } else {
@@ -134,7 +134,6 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
       mediaType = 1;
       awsReference = req.body.title;
     }
-    console.log('req.file', req.file);
 
     await connection.query(queryText, [req.body.title, req.body.notes, awsReference, req.user.id, mediaType]);
 
@@ -153,7 +152,7 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
     await connection.query("COMMIT");
     res.sendStatus(201);
   } catch (error) {
-    console.log(error);
+    console.error("Error POST /api/evidence", error);
     await connection.query("ROLLBACK");
   } finally {
     connection.release();
@@ -184,7 +183,6 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   try {
     await connection.query("BEGIN");
     const result = await connection.query(queryText, queryParams);
-    console.log(result.rows);
 
     if (req.file) {
       let avatarUrl;
@@ -212,7 +210,7 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
     res.send(usersWithVerificationPhotos[0]);
     await connection.query("COMMIT");
   } catch (error) {
-    console.log(error);
+    console.error("Error PUT /api/evidence/user", error);
     await connection.query("ROLLBACK");
   } finally {
     connection.release();
@@ -227,8 +225,8 @@ router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
     `;
     await pool.query(queryText)
       .catch(err => {
-        console.log(err);
-        req.sendStatus(500);
+        console.error("Error PUT /makeAllPublic", err);
+        res.sendStatus(500);
       });
     res.sendStatus(201);
   } else {
@@ -244,8 +242,8 @@ router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
     `;
     await pool.query(queryText)
       .catch(err => {
-        console.log(err);
-        req.sendStatus(500);
+        console.error("Error PUT /makeAllSecret", err);
+        res.sendStatus(500);
       });
     res.sendStatus(201);
   } else {
@@ -269,7 +267,7 @@ router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
       res.send(result.rows);
     } catch (error) {
       await connection.query("ROLLBACK");
-      console.log(error);
+      console.error("Error PUT /clearance/:id", error);
       res.sendStatus(500);
     } finally {
       connection.release();
@@ -305,9 +303,7 @@ router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (r
       ];
       result = await connection.query(queryText, queryParams);
 
-      console.log(req.file, req.body);
       if (req.file) {
-        console.log('in req.file');
         const mediaType = await checkMediaType(req.file.mimetype);
         await connection.query(`UPDATE "evidence" SET "media_type" = $1 WHERE "id" = $2;`, [mediaType, req.params.id]);
         let awsKey = result.rows[0].aws_key;
@@ -326,7 +322,7 @@ router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (r
       res.sendStatus(403);
     }
   } catch (error) {
-    console.log(error);
+    console.error("Error PUT /update/:id", error);
     connection.query("ROLLBACK");
   } finally {
     connection.release();
@@ -359,7 +355,7 @@ router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
 
     await connection.query("COMMIT");
   } catch (error) {
-    console.log(error);
+    console.error("Error DELETE /delete/:id", error);
     connection.query("ROLLBACK");
     res.sendStatus(500);
   } finally {
