@@ -211,7 +211,7 @@ function RegisterForm() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <h2 id="modal-modal-title">Upload Verification Photo</h2>
+          <h2 id="modal-modal-title">Please upload a clear photo of your face. This is required, but will be used for internal identification purposes only; it will NOT be shared publicly or with anyone outside the TRACES team</h2>
           <UploadButton
             btnName="Choose from Files"
             style={{
