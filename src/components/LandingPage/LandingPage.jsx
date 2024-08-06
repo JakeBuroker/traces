@@ -35,7 +35,8 @@ function LandingPage() {
   }, [user.id]);
 
   return (
-    <Box className="container" sx={{ padding: '65px 20px' }}>
+    <Box className="container" sx={{ padding: '75px 20px' }}>
+      <h1>Welcome to TRACES</h1>
       <div className="grid">
         <div className="grid-col grid-col_12">
           <img
