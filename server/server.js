@@ -10,13 +10,9 @@ const passport = require('./strategies/user.strategy');
 const userRouter = require('./routes/user.router');
 const evidenceRouter = require('./routes/evidence.router');
 const emailRouter = require('./routes/email.router');
-const forceHTTPS = require('express-force-https'); // Add this line
 
 const PORT = process.env.PORT || 5001;
 const app = express();
-
-// Set up Express to trust proxies
-app.set('trust proxy', 1);
 
 // Middleware to redirect non-www to www
 app.use((req, res, next) => {
@@ -27,13 +23,8 @@ app.use((req, res, next) => {
   }
 });
 
-// Middleware to force HTTPS
-app.use((req, res, next) => {
-  if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect(301, 'https://' + req.headers.host + req.originalUrl);
-  }
-  next();
-});
+// Set up Express to trust proxies
+app.set('trust proxy', 1);
 
 // Security Middleware
 app.use(
