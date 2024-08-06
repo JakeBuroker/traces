@@ -12,8 +12,7 @@ export default function ResetPasswordForm() {
     let updateInfo = [firstEntry, userEmail]
     const newPasswordSubmit = () => {
         if (firstEntry == secondEntry){
-            console.log("both of the passwords are the same!", firstEntry, secondEntry);
-            console.log('This is the email we\'re targetting', userEmail);
+ 
             alert("Password updated successfully!")
             dispatch({type:'EDIT_PASSWORD', payload: updateInfo})
             history.push('/login')

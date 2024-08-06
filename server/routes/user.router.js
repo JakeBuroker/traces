@@ -7,15 +7,15 @@ const router = express.Router();
 const dotenv = require('dotenv');
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 dotenv.config();
 
 // AWS setup
 const aws = require('@aws-sdk/client-s3');
 const signer = require('@aws-sdk/s3-request-presigner');
-const multer = require('multer');
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
@@ -83,9 +83,9 @@ const transporter = nodemailer.createTransport({
 
 transporter.verify((err, success) => {
   if (err) {
-    console.error('Error verifying transporter: ', err);
+    console.error('Error verifying transporter:', err);
   } else {
-    console.log(`=== Server is ready to take messages: ${success} ===`);
+    console.info('Email verification reset mailer ready for messages');
   }
 });
 
@@ -163,9 +163,6 @@ router.post('/register', upload.single('verification_photo'), async (req, res) =
   const verificationToken = crypto.randomBytes(20).toString('hex');
   const hashedToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
 
-  console.log('Generated Verification Token:', verificationToken);
-  console.log('Hashed Verification Token:', hashedToken);
-
   try {
     let verificationPhotoKey;
     if (req.file) {
@@ -197,12 +194,11 @@ router.post('/register', upload.single('verification_photo'), async (req, res) =
       text: `Please verify your email by clicking the following link: ${verificationUrl}`,
     };
 
-    transporter.sendMail(mailOptions, (err, data) => {
+    transporter.sendMail(mailOptions, (err) => {
       if (err) {
         console.error('Error sending email: ' + err);
         res.status(500).json({ error: 'Error sending verification email' });
       } else {
-        console.log('Verification email sent successfully');
         res.status(200).json({ message: 'Verification email sent' });
       }
     });
@@ -274,7 +270,6 @@ router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (re
   try {
     await connection.query("BEGIN");
     const result = await connection.query(queryText, queryParams);
-    console.log(result.rows);
 
     if (req.file) {
       let avatarUrl;
@@ -296,7 +291,7 @@ router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (re
     res.send(result.rows);
     await connection.query("COMMIT");
   } catch (error) {
-    console.log(error);
+    console.error("Error updating user information by admin:", error);
     await connection.query("ROLLBACK");
     res.sendStatus(500);
   } finally {
@@ -342,15 +337,14 @@ router.post('/check', async (req, res) => {
 
 // Route to update the user's password
 router.put('/passwordupdated', (req, res) => {
-  console.log("req.body 1", req.body[0][0], "req.body2", req.body[0][1]);
   const queryParams = [encryptLib.encryptPassword(req.body[0][0]), req.body[0][1]];
   const sqlText = `UPDATE "user" SET "password" = $1 WHERE "email" = $2;`;
   pool.query(sqlText, queryParams)
-    .then((result) => {
+    .then(() => {
       res.sendStatus(200);
     })
     .catch((error) => {
-      console.log(`Error editing password ${sqlText}`, error);
+      console.error(`Error updating password ${sqlText}`, error);
       res.sendStatus(500);
     });
 });

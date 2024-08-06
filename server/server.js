@@ -14,6 +14,15 @@ const emailRouter = require('./routes/email.router');
 const PORT = process.env.PORT || 5001;
 const app = express();
 
+// Middleware to redirect non-www to www
+app.use((req, res, next) => {
+  if (!req.headers.host.startsWith('www.') && process.env.NODE_ENV === 'production') {
+    res.redirect(301, 'https://www.' + req.headers.host + req.originalUrl);
+  } else {
+    next();
+  }
+});
+
 // Set up Express to trust proxies
 app.set('trust proxy', 1);
 
@@ -58,11 +67,11 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// // CSRF Protection Middleware
+// CSRF Protection Middleware
 // const csrfProtection = csurf({ cookie: true });
 // app.use(csrfProtection);
 
-// // Middleware to set the CSRF token in a cookie
+// Middleware to set the CSRF token in a cookie
 // app.use((req, res, next) => {
 //   res.cookie('XSRF-TOKEN', req.csrfToken());
 //   next();
@@ -77,4 +86,3 @@ app.use('/api/email', emailRouter);
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
-

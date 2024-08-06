@@ -14,19 +14,18 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Verify transporter configuration
 transporter.verify((err, success) => {
   if (err) {
-    console.error('Error verifying transporter: ', err);
+    console.error('Error verifying transporter:', err);
   } else {
-    console.log(`=== Server is ready to take messages: ${success} ===`);
+    console.info('Password reset mailer ready for messages');
   }
 });
 
 // Route to send password reset email
 router.post('/send', function (req, res) {
   const passwordReset = `Here is your password reset code ${req.body[0]}`;
-  console.log("req.body email", req.body[1]);
-  console.log("req.body number", req.body[0]);
 
   const mailOptions = {
     from: process.env.EMAIL,
@@ -35,12 +34,10 @@ router.post('/send', function (req, res) {
     text: passwordReset,
   };
 
-  transporter.sendMail(mailOptions, function (err, data) {
+  transporter.sendMail(mailOptions, function (err) {
     if (err) {
-      console.log('Error ' + err);
       res.status(500).json({ error: 'Error sending reset email' });
     } else {
-      console.log('Email sent successfully');
       res.json({ status: 'Email sent' });
     }
   });
@@ -58,12 +55,10 @@ router.post('/send-verification', (req, res) => {
     text: `Please verify your email by clicking the following link: ${verificationUrl}`,
   };
 
-  transporter.sendMail(mailOptions, (err, data) => {
+  transporter.sendMail(mailOptions, (err) => {
     if (err) {
-      console.error('Error sending email: ' + err);
       res.status(500).json({ error: 'Error sending verification email' });
     } else {
-      console.log('Verification email sent successfully');
       res.status(200).json({ message: 'Verification email sent', verificationToken });
     }
   });
@@ -73,7 +68,6 @@ router.post('/send-verification', (req, res) => {
 router.get('/verify/:token', async (req, res) => {
   const { token } = req.params;
   const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
-  console.log('Hashed Token from URL:', hashedToken);
 
   try {
     const verifyQuery = 'UPDATE "user" SET verified = TRUE WHERE verification_token = $1 RETURNING id';
@@ -93,22 +87,19 @@ router.get('/verify/:token', async (req, res) => {
 // Check if email exists
 router.post('/check-email', async (req, res) => {
   const { email } = req.body;
-  console.log("Received email to check:", email); // Log the received email
   const queryText = 'SELECT email FROM "user" WHERE email = $1';
 
   try {
-      const result = await pool.query(queryText, [email]);
-      console.log("Query result:", result.rows); // Log the query result
-      if (result.rows.length > 0) {
-          res.status(200).json({ exists: true });
-      } else {
-          res.status(200).json({ exists: false });
-      }
+    const result = await pool.query(queryText, [email]);
+    if (result.rows.length > 0) {
+        res.status(200).json({ exists: true });
+    } else {
+        res.status(200).json({ exists: false });
+    }
   } catch (error) {
-      console.error('Error checking email existence', error);
-      res.sendStatus(500);
+    console.error('Error checking email existence:', error);
+    res.sendStatus(500);
   }
 });
-
 
 module.exports = router;

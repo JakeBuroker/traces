@@ -10,10 +10,8 @@ export default function ResetPasswordCodeConfForm () {
 
     const submitCode = (event) => {
         event.preventDefault()
-        console.log("resetCode", resetCode);
-        console.log("code attempt", codeAttempt);
         if (codeAttempt == resetCode){
-            console.log("you entered the reset code correctly");
+        
             history.push('/reset-password-page')
         }
         else{
