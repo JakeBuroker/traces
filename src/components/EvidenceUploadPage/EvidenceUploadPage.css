@@ -127,6 +127,14 @@ img.audio-recorder-mic{
     border-color: #f0f0f0;
     border-radius: 50%;
 }
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: black;
+    margin-bottom: 20px;
+  }
+  
 
 
 
