@@ -36,7 +36,7 @@ function LandingPage() {
 
   return (
     <Box className="container" sx={{ padding: '75px 20px' }}>
-      <h1>Welcome to TRACES</h1>
+      {/* <h1>Welcome to TRACES</h1> */}
       <div className="grid">
         <div className="grid-col grid-col_12">
           <img

@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import BackButton from '../BackButton/BackButton';
 import AudioUploadElement from './AudioUploadElement';
 import './EvidenceUploadPage.css'
@@ -45,10 +47,17 @@ export default function EvidenceUpload() {
   } else if (evidenceType === "cambutton" || evidenceType === "notesbutton") {
     return (
       <div 
-        style={{ padding: "55px" }}
+        style={{ marginTop: "75px" }}
         className='basicBackground'
       >
-        <BackButton/>
+        <Button
+         className="back-button"
+          startIcon={<ArrowBackIosNewIcon />}
+          onClick={() => history.push('/evidence')}
+          style={{ alignSelf: "flex-start", color: "black", marginBottom: "0px" }}
+        >
+          Back
+        </Button>
         <input
           id="fileInput"
           className='fileInput'
@@ -94,7 +103,13 @@ export default function EvidenceUpload() {
         className='basicBackground'
         onClick={audioClick}
       >
-        <BackButton/>
+        <Button
+          startIcon={<ArrowBackIosNewIcon />}
+          onClick={() => history.push('/evidence')}
+          style={{ alignSelf: "flex-start", color: "black", marginTop: "40px" }}
+        >
+          Back
+        </Button>
         <input
           id="fileInput"
           className='fileInput'

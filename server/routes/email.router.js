@@ -7,7 +7,9 @@ require('dotenv').config();
 
 // Configure nodemailer transporter
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.zoho.com',
+  port: 465,
+  secure: true, // true for 465, false for other ports
   auth: {
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
@@ -92,9 +94,9 @@ router.post('/check-email', async (req, res) => {
   try {
     const result = await pool.query(queryText, [email]);
     if (result.rows.length > 0) {
-        res.status(200).json({ exists: true });
+      res.status(200).json({ exists: true });
     } else {
-        res.status(200).json({ exists: false });
+      res.status(200).json({ exists: false });
     }
   } catch (error) {
     console.error('Error checking email existence:', error);
