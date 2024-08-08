@@ -60,7 +60,7 @@ export default function EvidenceDetails() {
         startIcon={<ArrowBackIosNewIcon />}
          className="back-button"
         onClick={() => history.push('/evidence')}
-        style={{ position: 'absolute', top: '20px', left: '20px', color: "black", marginBottom: "20px" }}
+        style={{ position: 'absolute', top: '-30px', left: '-0px', color: "black", marginBottom: "20px" }}
       >
         Back
       </Button>
