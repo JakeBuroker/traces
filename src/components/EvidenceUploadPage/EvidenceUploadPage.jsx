@@ -47,14 +47,14 @@ export default function EvidenceUpload() {
   } else if (evidenceType === "cambutton" || evidenceType === "notesbutton") {
     return (
       <div 
-        style={{ marginTop: "75px" }}
+        style={{ marginTop: "85px" }}
         className='basicBackground'
       >
         <Button
          className="back-button"
           startIcon={<ArrowBackIosNewIcon />}
           onClick={() => history.push('/evidence')}
-          style={{ alignSelf: "flex-start", color: "black", marginBottom: "0px" }}
+          style={{ alignSelf: "flex-start", color: "black", marginTop: "-35px", left: "-0px" }}
         >
           Back
         </Button>
@@ -106,7 +106,7 @@ export default function EvidenceUpload() {
         <Button
           startIcon={<ArrowBackIosNewIcon />}
           onClick={() => history.push('/evidence')}
-          style={{ alignSelf: "flex-start", color: "black", marginTop: "40px" }}
+          style={{ alignSelf: "flex-start", color: "black", marginTop: "25px", left: "-50px" }}
         >
           Back
         </Button>
