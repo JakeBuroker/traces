@@ -54,7 +54,7 @@ function LandingPage() {
         </div>
         <div className="grid-col grid-col_12">{userButtons}</div>
         <div className="grid-col grid-col_12">
-          <Typography variant="body1" sx={{ color: 'black', textAlign: 'center' }}>
+          <Typography variant="body1" sx={{ color: 'black', textAlign: 'center', margin: '15px 0' }}>
             {text.english.landingPageBodies.body1}
           </Typography>
         </div>
