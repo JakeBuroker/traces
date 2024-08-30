@@ -89,12 +89,12 @@ function LoginForm() {
           />
         </div>
         <div>
-          <Button className="btn" type="submit" name="submit" value="Log In">
+          <Button className="btn" type="submit" name="submit" value="Log In" style={{marginTop: '10px'}}>
             Login
           </Button>
+          <ResetPasswordBtn />
         </div>
       </form>
-      <ResetPasswordBtn/>
     </div>
   );
 }
