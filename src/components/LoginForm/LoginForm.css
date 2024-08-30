@@ -56,7 +56,18 @@
     /* margin-top:40px !important;  */
     margin-left: 60px;
     border-radius: 10px;
-   
+    border: .5px solid black !important;
+  }
+
+  .btn-reset {
+    background-color: #ffffff !important;;
+    color: #000000 !important;
+    font-weight: bold !important;
+    width: 100%;
+    padding: 5px;
+    /* margin-top:40px !important;  */
+    margin-left: 60px;
+    border-radius: 10px;
   }
 
   .btn:not(:last-child) {
