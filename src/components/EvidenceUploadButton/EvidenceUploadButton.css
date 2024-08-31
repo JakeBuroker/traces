@@ -1,0 +1,129 @@
+/* Reset margins and paddings */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+/* Primary button styling, adjusted for bottom-right positioning */
+.button-container {
+    position: fixed;
+    bottom: 1.5vh; 
+    right: -102.5vh; /* Adjusted to position closer to the right edge */
+    z-index: 1000;
+}
+
+.button {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #f7f7f7; /* Light background */
+    border-width: 5px;
+    border-color: black;
+    color: #f7f7f7;
+    text-align: center;
+    line-height: 100px;
+    font-size: 60px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+.button:hover {
+    background-color: red; /* Change color on hover */
+}
+
+.button:active {
+    background-color: blue; /* Change color when the button is clicked */
+}
+
+/* Additional buttons container */
+.additional-buttons {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    flex-direction: row; /* Align additional buttons in a row */
+    transform-origin: center bottom;
+    bottom: 0;
+    left: 40%;
+    transform: translateX(-50%);
+}
+
+/* Styling for the additional action buttons */
+.additional-button {
+    margin: 0 5px; /* Space between additional buttons */
+    width: 80px; /* Smaller size for the additional buttons */
+    height: 80px;
+    border-radius: 50%; /* Circle shape */
+    background-color: #f7f7f7; /* Light background */
+    border-width: 5px;
+    border-color: black;
+    color: #f7f7f7;
+    text-align: center;
+    line-height: 60px; /* Centers the icon vertically */
+    font-size: 30px; /* Icon size */
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out; /* Smooth transition for hover effects */
+}
+
+/* Position individual buttons next to the main button */
+#notesbutton {
+    right: 100%; /* Position to the left of the main button */
+}
+
+#audiobutton {
+    right: 80%; /* Position slightly to the left of notesbutton */
+}
+
+#cambutton {
+    right: 60%; /* Position slightly to the left of audiobutton */
+}
+
+@media (max-width: 600px) {
+    .button-container {
+        right: -36vw; /* Place it closer to the right edge */
+        bottom: 1.5vh; /* Adjust the bottom position */
+    }
+
+    .button {
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        font-size: 50px; /* Adjust the font size for mobile */
+    }
+
+    .additional-button {
+        width: 75px; /* Smaller than the main button */
+        height: 75px;
+        line-height: 60px; /* Adjust line height for vertical centering */
+        font-size: 30px; /* Adjust font size for the icons/text inside the buttons */
+        margin: 0 2px; /* Less space between buttons */
+    }
+
+    /* Additional buttons container */
+    .additional-buttons {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        flex-direction: row; /* Align additional buttons in a row */
+        transform-origin: center bottom;
+        bottom: 0;
+        left: 8.5%;
+        transform: translateX(-50%);
+    }
+
+    #notesbutton {
+        right: 100%; 
+    }
+
+    #audiobutton {
+        right: 80%; 
+    }
+
+    #cambutton {
+        right: 60%; 
+    }
+}
+
+.images {
+    border-radius: 50%;
+}

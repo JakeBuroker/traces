@@ -4,12 +4,11 @@ import { Button } from '@mui/material';
 import './LoginForm.css';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import ResetPasswordBtn from '../ResetPasswordBtn/ResetPasswordBtn.jsx';
-import { Padding } from '@mui/icons-material';
 
 function LoginForm() {
   const [formValues, setFormValues] = useState({
-    username: 'Enter your username',
-    password: 'Enter your password',
+    username: '',
+    password: '',
   });
   const errors = useSelector(store => store.errors);
   const user = useSelector(store => store.user);
@@ -22,16 +21,6 @@ function LoginForm() {
       ...prevValues,
       [name]: value,
     }));
-  };
-
-  const handleFocus = (event) => {
-    const { name } = event.target;
-    if (formValues[name] === 'Enter your username' || formValues[name] === 'Enter your password') {
-      setFormValues(prevValues => ({
-        ...prevValues,
-        [name]: '',
-      }));
-    }
   };
 
   const login = (event) => {
@@ -70,7 +59,6 @@ function LoginForm() {
             required
             value={formValues.username}
             onChange={handleChange}
-            onFocus={handleFocus}
             placeholder="Enter your username"
           />
         </div>
@@ -84,15 +72,15 @@ function LoginForm() {
             required
             value={formValues.password}
             onChange={handleChange}
-            onFocus={handleFocus}
             placeholder="Enter your password"
           />
         </div>
         <div>
-          <Button className="btn" type="submit" name="submit" value="Log In" style={{marginTop: '10px'}}>
+          <Button className="btn" type="submit" name="submit" value="Log In" style={{ marginTop: '10px' }}>
             Login
           </Button>
           <ResetPasswordBtn />
+          <Button className='btn-reset' style={{marginTop: '20px'}} onClick={() => history.push('/registration')} >REGISTER</Button>
         </div>
       </form>
     </div>

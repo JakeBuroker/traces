@@ -15,7 +15,10 @@ const styles = {
     marginTop: "10px",
     backgroundColor: "#ffffff",
     color: "#000000",
-  }
+  },
+  alert: {
+    marginTop: '5px',
+  },
 };
 
 const modalStyle = {
@@ -33,24 +36,59 @@ const modalStyle = {
 function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [confirmPhoneNumber, setConfirmPhoneNumber] = useState('');
   const [fullName, setFullName] = useState('');
   const [role, setRole] = useState(1);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [userAvi, setUserAvi] = useState(null);
-  const [error, setError] = useState(null);
-  const errors = useSelector((store) => store.errors);
+  const [errors, setErrors] = useState({});
+  const globalErrors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(phoneNumber);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const newErrors = {};
+
+    if (password.length < 7) {
+      newErrors.password = "Password must be at least 7 characters long";
+    }
+    if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+    if (!validateEmail(email)) {
+      newErrors.email = "Invalid email address";
+    }
+    if (!validatePhoneNumber(phoneNumber)) {
+      newErrors.phoneNumber = "Phone number must be 10 digits long";
+    }
+    if (phoneNumber !== confirmPhoneNumber) {
+      newErrors.confirmPhoneNumber = "Phone numbers do not match";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     try {
       const response = await axios.post('/api/user/check', { username, email });
       if (response.data.exists) {
-        setError(response.data.message);
+        setErrors({ username: response.data.message });
       } else {
         setModalOpen(true);
       }
@@ -94,11 +132,14 @@ function RegisterForm() {
   const resetState = () => {
     setUsername('');
     setPassword('');
+    setConfirmPassword('');
     setEmail('');
     setPhoneNumber('');
+    setConfirmPhoneNumber('');
     setFullName('');
     setRole(1);
     setUserAvi(null);
+    setErrors({});
   };
 
   const handleFileChange = (event) => {
@@ -113,13 +154,10 @@ function RegisterForm() {
     <div className="login-container">
       <form className="formPanel" onSubmit={handleSubmit}>
         <h2 style={{ marginBottom: '30px', textAlign: 'center', color: '#000000' }}>Register User</h2>
-        {errors.registrationMessage && (
+        {globalErrors.registrationMessage && (
           <h3 className="alert" role="alert">
-            {errors.registrationMessage}
+            {globalErrors.registrationMessage}
           </h3>
-        )}
-        {error && (
-          <Alert severity="error">{error}</Alert>
         )}
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div className="input-container">
@@ -133,6 +171,9 @@ function RegisterForm() {
               required
               onChange={(event) => setFullName(event.target.value)}
             />
+            {errors.fullName && (
+              <Alert severity="warning" style={styles.alert}>{errors.fullName}</Alert>
+            )}
           </div>
           <div className="input-container">
             <label htmlFor="username" style={styles.labels}>
@@ -145,44 +186,87 @@ function RegisterForm() {
               required
               onChange={(event) => setUsername(event.target.value)}
             />
+            {errors.username && (
+              <Alert severity="warning" style={styles.alert}>{errors.username}</Alert>
+            )}
           </div>
           <div className="input-container">
             <label htmlFor="email" style={styles.labels}>
               Email
-              <input
-                type="email"
-                id="email"
-                value={email}
-                required
-                onChange={(event) => setEmail(event.target.value)}
-              />
             </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              required
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            {errors.email && (
+              <Alert severity="warning" style={styles.alert}>{errors.email}</Alert>
+            )}
           </div>
           <div className="input-container">
             <label htmlFor="phoneNumber" style={styles.labels}>
               Phone Number
-              <input
-                type="text"
-                minLength={10}
-                id="phoneNumber"
-                value={phoneNumber}
-                required
-                onChange={(event) => setPhoneNumber(event.target.value)}
-              />
             </label>
+            <input
+              type="text"
+              minLength={10}
+              id="phoneNumber"
+              value={phoneNumber}
+              required
+              onChange={(event) => setPhoneNumber(event.target.value)}
+            />
+            {errors.phoneNumber && (
+              <Alert severity="warning" style={styles.alert}>{errors.phoneNumber}</Alert>
+            )}
+          </div>
+          <div className="input-container">
+            <label htmlFor="confirmPhoneNumber" style={styles.labels}>
+              Confirm Phone Number
+            </label>
+            <input
+              type="text"
+              minLength={10}
+              id="confirmPhoneNumber"
+              value={confirmPhoneNumber}
+              required
+              onChange={(event) => setConfirmPhoneNumber(event.target.value)}
+            />
+            {errors.confirmPhoneNumber && (
+              <Alert severity="warning" style={styles.alert}>{errors.confirmPhoneNumber}</Alert>
+            )}
           </div>
           <div className="input-container">
             <label htmlFor="password" style={styles.labels}>
               Password
-              <input
-                type="password"
-                id="password"
-                value={password}
-                autoComplete='new-password'
-                required
-                onChange={(event) => setPassword(event.target.value)}
-              />
             </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              autoComplete='new-password'
+              required
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            {errors.password && (
+              <Alert severity="warning" style={styles.alert}>{errors.password}</Alert>
+            )}
+          </div>
+          <div className="input-container">
+            <label htmlFor="confirmPassword" style={styles.labels}>
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              required
+              onChange={(event) => setConfirmPassword(event.target.value)}
+            />
+            {errors.confirmPassword && (
+              <Alert severity="warning" style={styles.alert}>{errors.confirmPassword}</Alert>
+            )}
           </div>
         </div>
         <div>
