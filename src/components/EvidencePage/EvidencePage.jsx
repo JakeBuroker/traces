@@ -6,6 +6,8 @@ import EvidenceUploadButton from "../EvidenceUploadRender/EvidenceUploadButton";
 import EvidenceCard from "../EvidenceCard/EvidenceCard";
 import MediaFilter from "../MediaFilter/MediaFilter";
 import "./EvidencePage.css";
+import { evidencePageText } from "./EvidencePage.text";
+import { Typography } from "@mui/material";
 
 const EvidencePage = () => {
   const dispatch = useDispatch();
@@ -51,6 +53,11 @@ const EvidencePage = () => {
       <div>
         <EvidenceUploadButton />
         <Grid container spacing={2} justifyContent="center">
+          {evidence.length === 0 &&
+            <Grid item key={"key"}>
+              <Typography sx={{textAlign: 'center', color: '#383838'}} variant="body1">{evidencePageText.instructions}</Typography>
+            </Grid>
+          }
           {getFilteredEvidence().map((item) => (
             <Grid item key={item.id}>
               <EvidenceCard
