@@ -249,6 +249,12 @@ function AdminPage() {
       >
         {view === 'evidence' ? 'Show Users' : 'Show Evidence'}
       </Button>
+      <Typography
+        variant='h3'
+        sx={{ textAlign: 'center', marginBottom: '20px' }}
+      >
+        {view === 'evidence' ? "Evidence" : "Users"}
+      </Typography>
       <Suspense fallback={<div>Loading...</div>}>
         <DataGridComponent
           data={{ evidence: evidenceList, users }}
