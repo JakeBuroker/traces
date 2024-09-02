@@ -47,7 +47,7 @@ export default function EvidenceUpload() {
   } else if (evidenceType === "cambutton" || evidenceType === "notesbutton") {
     return (
       <div 
-        style={{ marginTop: "85px" }}
+        style={{ marginTop: "85px",}}
         className='basicBackground'
       >
         <Button
