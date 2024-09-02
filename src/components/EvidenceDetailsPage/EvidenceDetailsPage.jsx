@@ -9,7 +9,7 @@ import './EvidenceDetailsPage.css'; // Ensure this CSS file contains your desire
 import { green, red } from "@mui/material/colors";
 
 export default function EvidenceDetails() {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState("Supporting Evidence");
   const [notes, setNotes] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const file = useSelector((state) => state.media[0]);
