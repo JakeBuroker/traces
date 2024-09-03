@@ -152,14 +152,14 @@ function RegisterForm() {
 
   return (
     <div className="login-container">
-      <form className="formPanel" onSubmit={handleSubmit}>
-        <h2 style={{ marginBottom: '30px', textAlign: 'center', color: '#000000' }}>Register User</h2>
+      <form className="formPanel" onSubmit={handleSubmit} >
+        <h2 style={{textAlign: 'center', color: '#000000', padding: '3px' }}>Register User</h2>
         {globalErrors.registrationMessage && (
           <h3 className="alert" role="alert">
             {globalErrors.registrationMessage}
           </h3>
         )}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', }}>
           <div className="input-container">
             <label htmlFor="fullName" style={styles.labels}>
               Full Name
