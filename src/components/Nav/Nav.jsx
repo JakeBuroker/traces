@@ -47,7 +47,7 @@ function Nav() {
         {user.id && (
           user.avatar_url ?
             <img onClick={() => navigateTo('/user')} src={user.avatar_AWS_URL} alt="An avatar for the user." className="nav-avatar" /> :
-            <img onClick={() => navigateTo('/user')} src="./default_avi.jpeg" alt='The default avatar' className="nav-avatar" />
+            <img onClick={() => navigateTo('/user')} src="./altered_avi2.jpeg" alt='The default avatar' className="nav-avatar" />
         )}
         <Dropdown>
           <MenuButton

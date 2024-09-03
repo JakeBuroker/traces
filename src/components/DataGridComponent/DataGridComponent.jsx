@@ -152,7 +152,7 @@ const DataGridComponent = ({
       align: 'center',
       renderCell: (params) => (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Avatar src={params.value || './default_avi.jpeg'} />
+          <Avatar src={params.value || './altered_avi2.jpeg'} />
         </div>
       ),
     },
@@ -228,7 +228,7 @@ const DataGridComponent = ({
   // Map user data to the format expected by the data grid
   const userRows = data.users.map((user) => ({
     id: user.id,
-    avatar_AWS_URL: user.avatar_AWS_URL || './default_avi.jpeg',
+    avatar_AWS_URL: user.avatar_AWS_URL || './altered_avi2.jpeg',
     username: user.username,
     email: user.email,
     full_name: user.full_name,
