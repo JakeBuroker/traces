@@ -13,6 +13,23 @@ Grid
   align-items: flex-start;
 }
 
+.bridge-image {
+    display: block;
+    height: 200px;
+    width: 300px;
+    margin: 25px auto;
+    border-radius: 5px;
+    object-fit: cover; 
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .bridge-image {
+    height: 350px;
+    width: 650px; 
+  }
+}
+
 .grid-col {
   flex: 0 0 auto;
   padding: 0 0.5rem 0.5rem;

@@ -40,21 +40,15 @@ function LandingPage() {
       <div className="grid">
         <div className="grid-col grid-col_12">
           <img
+            className="bridge-image"
             src="/bridge.jpg"
             alt="An image of a bridge"
-            style={{
-              display: 'block',
-              height: '200px',
-              width: '300px',
-              margin: '25px auto',
-              borderRadius: '5px',
-              loading: 'lazy',
-            }}
+            loading="lazy"
           />
         </div>
         <div className="grid-col grid-col_12">{userButtons}</div>
         <div className="grid-col grid-col_12">
-          <Typography variant="body1" sx={{ color: 'black', textAlign: 'center', margin: '15px 0' }}>
+          <Typography variant="body1" sx={{ color: 'black', textAlign: 'center', margin: '15px 0', fontFamily: 'Roboto', fontSize: '1.1rem'}}>
             {text.english.landingPageBodies.body1}
           </Typography>
         </div>
