@@ -6,19 +6,45 @@ import UploadButton from '../UploadButton/UploadButton';
 import axios from 'axios';
 
 const styles = {
-  labels: {
+  modalTitle: {
     color: '#000000',
     fontWeight: 'bold',
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: 'Roboto',
+    marginBottom: '15px',
+    fontSize: '1.2rem',
+    textAlign: 'center',
   },
   uploadButton: {
     marginTop: "10px",
     backgroundColor: "#ffffff",
     color: "#000000",
+    border: "2px solid #000",
+    width: '100%',
+    padding: '10px',
+    textTransform: 'none',
   },
-  alert: {
-    marginTop: '5px',
+  cameraButton: {
+    marginTop: '10px',
+    backgroundColor: "#ffffff",
+    color: "#000000",
+    border: "2px solid #000",
+    width: '100%',
+    padding: '10px',
+    textTransform: 'none',
   },
+  submitButton: {
+    marginTop: '10px',
+    backgroundColor: "#ffffff",
+    color: "#000000",
+    border: "2px solid #000",
+    width: '100%',
+    padding: '10px',
+    fontWeight: 'bold',
+    textTransform: 'none',
+  },
+  modalAlert: {
+    marginTop: '15px',
+  }
 };
 
 const modalStyle = {
@@ -26,9 +52,10 @@ const modalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '90%',
+  maxWidth: 500,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  borderRadius: '10px',
   boxShadow: 24,
   p: 4,
 };
@@ -98,6 +125,11 @@ function RegisterForm() {
   };
 
   const registerUser = () => {
+    if (!userAvi) {
+      setErrors({ userAvi: 'Please upload a photo' });
+      return;
+    }
+
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
@@ -105,9 +137,7 @@ function RegisterForm() {
     formData.append('phone_number', phoneNumber);
     formData.append('full_name', fullName);
     formData.append('role', role);
-    if (userAvi) {
-      formData.append('verification_photo', userAvi);
-    }
+    formData.append('verification_photo', userAvi);
 
     dispatch({
       type: 'REGISTER',
@@ -152,16 +182,16 @@ function RegisterForm() {
 
   return (
     <div className="login-container">
-      <form className="formPanel" onSubmit={handleSubmit} >
-        <h2 style={{textAlign: 'center', color: '#000000', padding: '3px' }}>Register User</h2>
+      <form className="formPanel" onSubmit={handleSubmit}>
+        <h2 style={{ textAlign: 'center', color: '#000000', padding: '3px' }}>Register User</h2>
         {globalErrors.registrationMessage && (
           <h3 className="alert" role="alert">
             {globalErrors.registrationMessage}
           </h3>
         )}
-        <div style={{ display: 'flex', flexDirection: 'column', }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div className="input-container">
-            <label htmlFor="fullName" style={styles.labels}>
+            <label htmlFor="fullName" style={styles.modalTitle}>
               Full Name
             </label>
             <input
@@ -176,7 +206,7 @@ function RegisterForm() {
             )}
           </div>
           <div className="input-container">
-            <label htmlFor="username" style={styles.labels}>
+            <label htmlFor="username" style={styles.modalTitle}>
               Username
             </label>
             <input
@@ -191,7 +221,7 @@ function RegisterForm() {
             )}
           </div>
           <div className="input-container">
-            <label htmlFor="email" style={styles.labels}>
+            <label htmlFor="email" style={styles.modalTitle}>
               Email
             </label>
             <input
@@ -206,7 +236,7 @@ function RegisterForm() {
             )}
           </div>
           <div className="input-container">
-            <label htmlFor="phoneNumber" style={styles.labels}>
+            <label htmlFor="phoneNumber" style={styles.modalTitle}>
               Phone Number
             </label>
             <input
@@ -222,7 +252,7 @@ function RegisterForm() {
             )}
           </div>
           <div className="input-container">
-            <label htmlFor="confirmPhoneNumber" style={styles.labels}>
+            <label htmlFor="confirmPhoneNumber" style={styles.modalTitle}>
               Confirm Phone Number
             </label>
             <input
@@ -238,14 +268,14 @@ function RegisterForm() {
             )}
           </div>
           <div className="input-container">
-            <label htmlFor="password" style={styles.labels}>
+            <label htmlFor="password" style={styles.modalTitle}>
               Password
             </label>
             <input
               type="password"
               id="password"
               value={password}
-              autoComplete='new-password'
+              autoComplete="new-password"
               required
               onChange={(event) => setPassword(event.target.value)}
             />
@@ -254,7 +284,7 @@ function RegisterForm() {
             )}
           </div>
           <div className="input-container">
-            <label htmlFor="confirmPassword" style={styles.labels}>
+            <label htmlFor="confirmPassword" style={styles.modalTitle}>
               Confirm Password
             </label>
             <input
@@ -270,7 +300,9 @@ function RegisterForm() {
           </div>
         </div>
         <div>
-          <Button className='btn' type='submit' name='submit' value='Register' style={{ margin: '10px 0px', color: 'blue' }}>Register</Button>
+          <Button className="btn" type="submit" name="submit" value="Register" style={styles.submitButton}>
+            Register
+          </Button>
         </div>
       </form>
       <Snackbar
@@ -279,12 +311,7 @@ function RegisterForm() {
         autoHideDuration={6000}
         onClose={handleClose}
       >
-        <Alert
-          onClose={handleClose}
-          severity="success"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
+        <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
           New User Created!
         </Alert>
       </Snackbar>
@@ -295,40 +322,31 @@ function RegisterForm() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <h2 id="modal-modal-title">Please upload a clear photo of your face. This is required, but will be used for internal identification purposes only; it will NOT be shared publicly or with anyone outside the TRACES team</h2>
-          <UploadButton
-            btnName="Choose from Files"
-            style={{
-              marginTop: "10px",
-              backgroundColor: "#ffffff",
-              color: "#000000",
-              border: "2px solid #000",
-            }}
-            onChange={handleFileChange}
-          />
+          <h2 id="modal-modal-title" style={styles.modalTitle}>
+            Please upload a clear photo of your face. This is required, but will be used for internal identification purposes only; it will NOT be shared publicly or with anyone outside the TRACES team.
+          </h2>
+          <UploadButton btnName="Choose from Files" style={styles.uploadButton} onChange={handleFileChange} />
+          {errors.userAvi && (
+            <Alert severity="warning" style={styles.modalAlert}>
+              {errors.userAvi}
+            </Alert>
+          )}
           <input
-            id='cameraInput'
-            type='file'
-            accept='image/*'
-            capture='environment'
+            id="cameraInput"
+            type="file"
+            accept="image/*"
+            capture="environment"
             style={{ display: 'none' }}
             onChange={handleFileChange}
           />
-          <Button
-            variant="contained"
-            onClick={clickCamera}
-            style={{ marginTop: '10px', backgroundColor: "#ffffff", color: "#000000", border: "2px solid #000" }}
-          >
+          <Button variant="contained" onClick={clickCamera} style={styles.cameraButton}>
             Take a Selfie
           </Button>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => {
-              registerUser();
-              handleModalClose();
-            }}
-            style={{ marginTop: '10px' }}
+            onClick={registerUser}
+            style={styles.submitButton}
           >
             Submit Photo and Register
           </Button>
