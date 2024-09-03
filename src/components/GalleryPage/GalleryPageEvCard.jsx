@@ -119,7 +119,7 @@ export const GalleryPageEvCard = ({ item }) => {
                     </Typography>
                     <Avatar
                         alt={item.username}
-                        src={item.avatar_AWS_URL || "./default_avi.jpeg"}
+                        src={item.avatar_AWS_URL || "./altered_avi2.jpeg"}
                         sizes="small"
                         sx={{ position: 'absolute', bottom: 55, left: 11 }}
                     />

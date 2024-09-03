@@ -143,7 +143,7 @@ function UserPage() {
           />
         ) : (
           <img
-            src="./default_avi.jpeg"
+            src="./altered_avi2.jpeg"
             alt="The default avatar"
             style={{ borderRadius: "5px", border: "2px solid #000" }}
           />
