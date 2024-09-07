@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { Button, Snackbar, Alert, Modal, Box } from '@mui/material';
@@ -33,31 +33,42 @@ const styles = {
     textTransform: 'none',
   },
   submitButton: {
-    marginTop: '10px',
-    backgroundColor: "#ffffff",
-    color: "#000000",
-    border: "2px solid #000",
-    width: '100%',
-    padding: '10px',
-    fontWeight: 'bold',
-    textTransform: 'none',
+    enabled: {
+      marginTop: '10px',
+      backgroundColor: "#ffffff",
+      color: "#000000",
+      border: "2px solid #000",
+      width: '100%',
+      padding: '10px',
+      fontWeight: 'bold',
+      textTransform: 'none',
+    },
+    disabled: {
+      marginTop: '10px',
+      backgroundColor: "#ffffff",
+      color: "gray",
+      border: "2px solid gray",
+      width: '100%',
+      padding: '10px',
+      fontWeight: 'bold',
+      textTransform: 'none',
+    }
   },
   modalAlert: {
     marginTop: '15px',
+  },
+  modalStyle: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '90%',
+    maxWidth: 500,
+    bgcolor: 'background.paper',
+    borderRadius: '10px',
+    boxShadow: 24,
+    p: 4,
   }
-};
-
-const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '90%',
-  maxWidth: 500,
-  bgcolor: 'background.paper',
-  borderRadius: '10px',
-  boxShadow: 24,
-  p: 4,
 };
 
 function RegisterForm() {
@@ -81,6 +92,13 @@ function RegisterForm() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
+  useEffect(() => {
+    if(userAvi) {
+      console.log("user avi", userAvi);
+      
+    }
+  }, [userAvi])
 
   const validatePhoneNumber = (phoneNumber) => {
     const phoneRegex = /^[0-9]{10}$/;
@@ -321,11 +339,16 @@ function RegisterForm() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={modalStyle}>
+        <Box sx={styles.modalStyle}>
           <h2 id="modal-modal-title" style={styles.modalTitle}>
             Please upload a clear photo of your face. This is required, but will be used for internal identification purposes only; it will NOT be shared publicly or with anyone outside the TRACES team.
           </h2>
-          <UploadButton btnName="Choose from Files" style={styles.uploadButton} onChange={handleFileChange} />
+          <UploadButton 
+          btnName="Choose from Files" 
+          style={styles.uploadButton} 
+          onChange={handleFileChange} 
+          fileName={userAvi ? userAvi.name : ''}
+          />
           {errors.userAvi && (
             <Alert severity="warning" style={styles.modalAlert}>
               {errors.userAvi}
@@ -344,9 +367,9 @@ function RegisterForm() {
           </Button>
           <Button
             variant="contained"
-            color="primary"
             onClick={registerUser}
-            style={styles.submitButton}
+            style={userAvi ? styles.submitButton.enabled : styles.submitButton.disabled}
+            disabled={!userAvi}
           >
             Submit Photo and Register
           </Button>

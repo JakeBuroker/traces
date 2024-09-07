@@ -13,7 +13,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function UploadButton({ btnName, style, color, onChange }) {
+export default function UploadButton({ btnName, style, color, onChange, fileName }) {
   return (
     <Button
       component="label"
@@ -21,7 +21,7 @@ export default function UploadButton({ btnName, style, color, onChange }) {
       style={style}
       color={color}
     >
-      {btnName}
+      {fileName ? fileName : btnName}
       <VisuallyHiddenInput
         type="file"
         accept="image/*"
