@@ -12,7 +12,7 @@ import { Typography } from "@mui/material";
 const styles = {
   mediaFilter: { display: "flex", flexDirection: "column", padding: "65px 0 10px 0" },
   welcome: {textAlign: 'center', marginBottom: '10px', color: '#383838'},
-  body1: { textAlign: 'center', color: '#383838', maxWidth: '500px'},
+  body1: { textAlign: 'center', color: '#383838', maxWidth: '500px', padding: '0 10px'},
 }
 
 const EvidencePage = () => {

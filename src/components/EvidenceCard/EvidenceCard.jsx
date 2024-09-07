@@ -116,7 +116,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
           </Box>
         )}
         {hasMedia(item.media_type) && renderImageForMediaItem(item)}
-        <Typography variant='h5' component='div' sx={{ textAlign: 'center', fontFamily: 'Caveat', fontSize: '30px' }}>
+        <Typography variant='h5' component='div' sx={{ textAlign: 'center', fontSize: '20px' }}>
           {formatLongTitles(item.title)}
         </Typography>
       </Card>
