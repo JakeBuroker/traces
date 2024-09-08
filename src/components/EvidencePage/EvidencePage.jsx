@@ -9,6 +9,12 @@ import "./EvidencePage.css";
 import { evidencePageText } from "./EvidencePage.text";
 import { Typography } from "@mui/material";
 
+const styles = {
+  mediaFilter: { display: "flex", flexDirection: "column", padding: "65px 0 10px 0" },
+  welcome: {textAlign: 'center', marginBottom: '10px', color: '#383838'},
+  body1: { textAlign: 'center', color: '#383838', maxWidth: '500px', padding: '0 10px'},
+}
+
 const EvidencePage = () => {
   const dispatch = useDispatch();
   const evidence = useSelector((store) => store.evidence);
@@ -44,7 +50,7 @@ const EvidencePage = () => {
 
   return (
     <main>
-      <div style={{ display: "flex", flexDirection: "column", padding: "65px 0 10px 0" }}>
+      <div style={styles.mediaFilter}>
         <MediaFilter
           selectedMediaType={selectedMediaType}
           onMediaTypeChange={handleMediaFilterChange}
@@ -55,7 +61,8 @@ const EvidencePage = () => {
         <Grid container spacing={2} justifyContent="center">
           {evidence.length === 0 &&
             <Grid item key={"key"}>
-              <Typography sx={{textAlign: 'center', color: '#383838'}} variant="body1">{evidencePageText.instructions}</Typography>
+              <Typography variant="h5" sx={styles.welcome}>{evidencePageText.welcome}</Typography>
+              <Typography sx={styles.body1} variant="body1">{evidencePageText.instructions}</Typography>
             </Grid>
           }
           {getFilteredEvidence().map((item) => (
