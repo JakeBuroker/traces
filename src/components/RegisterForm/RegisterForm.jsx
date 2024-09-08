@@ -112,7 +112,7 @@ function RegisterForm() {
       newErrors.email = "Invalid email address";
     }
     if (!validatePhoneNumber(phoneNumber)) {
-      newErrors.phoneNumber = "Phone number must be 10 digits long";
+      newErrors.phoneNumber = "Phone number must be 10 digits long and contain no dashes";
     }
     if (phoneNumber !== confirmPhoneNumber) {
       newErrors.confirmPhoneNumber = "Phone numbers do not match";
@@ -248,7 +248,7 @@ function RegisterForm() {
           </div>
           <div className="input-container">
             <label htmlFor="phoneNumber" style={styles.modalTitle}>
-              Phone Number
+              Phone Number (10 digits, no dashes)
             </label>
             <input
               type="text"
