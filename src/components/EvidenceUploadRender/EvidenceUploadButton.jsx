@@ -47,15 +47,15 @@ export default function EvidenceUploadButton() {
             {showAdditionalButtons && (
                 <div>
                     {/* Button for camera uploads */}
-                    <button onClick={handleEvidenceUpload} className="additional-button" id="cambutton">
+                    <button onClick={handleEvidenceUpload} className="additional-button" id="cambutton" title='Camera Upload'>
                         <img className='images' src="/cameraInputIcon.jpg" alt="Camera Upload" />
                     </button>
                     {/* Button for audio uploads */}
-                    <button onClick={handleEvidenceUpload} className="additional-button" id="audiobutton">
+                    <button onClick={handleEvidenceUpload} className="additional-button" id="audiobutton" title='Audio Upload'>
                         <img className='images' src="/recordInputIcon.jpg" alt="Audio Upload" />
                     </button>
                     {/* Button for notes uploads */}
-                    <button onClick={handleNotesUpload} className="additional-button" id="notesbutton">
+                    <button onClick={handleNotesUpload} className="additional-button" id="notesbutton" title='Notes Upload'>
                         <img className='images' src="/notesInputIcon.jpg" alt="Notes Upload" />
                     </button>
                 </div>
