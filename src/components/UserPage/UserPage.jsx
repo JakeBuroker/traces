@@ -46,6 +46,9 @@ function UserPage() {
   const [controlsEnabled, setControlsEnabled] = useState(false);
 
   const enableControlsAfter = 3; // Time in seconds after which the controls will be enabled
+  // TODO change to depending on how long the actual video is
+  // Todo get the use's required selfie
+  // Todo upload a public facing user avitar? (How priority?)
 
   useEffect(() => {
     if (!user.video_watched) {
@@ -151,111 +154,6 @@ function UserPage() {
         <Typography variant="h4" sx={{ textAlign: "center", padding: "10px", color: "#000000" }}>
           {user.username}
         </Typography>
-        {editMode ? (
-          <form
-            className="edit-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              saveChanges();
-            }}
-            style={{ border: "2px solid #000", borderRadius: "8px", padding: "20px" }}
-          >
-            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem' }}>
-              Full Name
-            </Typography>
-            <TextField
-              InputProps={{
-                style: {
-                  color: "#000000",
-                },
-              }}
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem', marginTop: '15px' }}>
-              Email
-            </Typography>
-            <TextField
-              InputProps={{
-                style: {
-                  color: "#000000",
-                  padding: "5px",
-                },
-              }}
-              type="email"
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem', marginTop: '15px' }}>
-              Phone Number
-            </Typography>
-            <TextField
-              InputProps={{
-                style: {
-                  color: "#000000",
-                },
-              }}
-              variant="outlined"
-              fullWidth
-              margin="dense"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-            />
-            <UploadButton
-              btnName="Upload Avatar"
-              style={{
-                marginTop: "10px",
-                backgroundColor: "#ffffff",
-                color: "#000000",
-                border: "2px solid #000",
-              }}
-              onChange={handleFileChange}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              style={{
-                margin: "20px 0 10px 0",
-                backgroundColor: "#ffffff",
-                color: "#000000",
-                border: "2px solid #000",
-                transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
-                '&:hover': {
-                  backgroundColor: "#f5f5f5",
-                  color: "#000000",
-                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-                  transform: 'scale(1.02)',
-                },
-              }}
-            >
-              Save Changes
-            </Button>
-            <Button
-              onClick={() => setEditMode(false)}
-              variant="contained"
-              style={{
-                backgroundColor: "#ffffff",
-                color: "#000000",
-                border: "2px solid #000",
-                transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
-                '&:hover': {
-                  backgroundColor: "#f5f5f5",
-                  color: "#000000",
-                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-                  transform: 'scale(1.02)',
-                },
-              }}
-            >
-              Cancel
-            </Button>
-          </form>
-        ) : (
           <div
             style={{
               padding: "20px",
@@ -286,26 +184,17 @@ function UserPage() {
             <Typography variant="body1" component="p">
               {phoneNumber}
             </Typography>
-            <Button
-              onClick={() => setEditMode(true)}
-              variant="contained"
+            {/* // ! If we want to upload a public facing avi soon. */}
+            {/* <UploadButton
+              btnName="Upload Avatar"
               style={{
+                marginTop: "10px",
                 backgroundColor: "#ffffff",
                 color: "#000000",
-                padding: "15px",
-                alignSelf: "center",
                 border: "2px solid #000",
-                transition: 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease',
-                '&:hover': {
-                  backgroundColor: "#f5f5f5",
-                  color: "#000000",
-                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
-                  transform: 'scale(1.02)',
-                },
               }}
-            >
-              Edit Profile
-            </Button>
+              onChange={handleFileChange}
+            /> */}
             <Button
               onClick={() => dispatch({ type: "LOGOUT" })}
               variant="outlined"
@@ -327,7 +216,6 @@ function UserPage() {
               Log Out
             </Button>
           </div>
-        )}
         <Modal
           open={openVideoModal}
           onClose={() => {}}
