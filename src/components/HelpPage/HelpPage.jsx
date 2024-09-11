@@ -29,10 +29,10 @@ function HelpPage() {
           id='panel1-header'
           sx={{textDecoration: "underline"}}
         >
-          What do I do if the call drops?
+          When is my investigation appointment?
         </AccordionSummary>
         <AccordionDetails>
-          Call the number back or move to an area where your phone has reception and then attempt to call back.
+        You should have received an email from the “Walker Art Center” confirming the date and time of your appointment. You will receive reminders via text message in the days leading up.
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -42,10 +42,49 @@ function HelpPage() {
           id='panel2-header'
           sx={{textDecoration: "underline"}}
         >
-          If I don't know where to go, what do I do?
+          Where do I go to participate in the investigation?
         </AccordionSummary>
         <AccordionDetails>
-          Await further instruction from the prompter.
+        On the date and time of your appointment, please stand at the Northeast corner of Hennepin Avenue and South 4th Street in downtown Minneapolis (same block as Minneapolis Central Library) and await a phone call from our agency. We will call you on the number that you shared in the registration process. Do NOT go to the Walker Art Center. Nothing happens there.
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel3-content'
+          id='panel3-header'
+          sx={{textDecoration: "underline"}}
+        >
+          What if it’s raining or snowing? Is the operation still on?
+        </AccordionSummary>
+        <AccordionDetails>
+        If precipitation is light, the operation will continue. Feel free to wait in the ground level lobby of Minneapolis Central Library if you are not comfortable outdoors. If the weather is severe, we will be in touch with you via text message about rescheduling your appointment.
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel3-content'
+          id='panel3-header'
+          sx={{textDecoration: "underline"}}
+        >
+          What do I do if the call drops?
+        </AccordionSummary>
+        <AccordionDetails>
+        This happens from time to time. Our agency will call you back immediately. Please do not try to call us.
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel3-content'
+          id='panel3-header'
+          sx={{textDecoration: "underline"}}
+        >
+          If I don’t know where to go, what do I do?
+        </AccordionSummary>
+        <AccordionDetails>
+        One of our agents will guide you by phone every step of the way. Please follow their instructions. If anything is not clear, please let them know. They will make sure you know what to do.
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -58,7 +97,7 @@ function HelpPage() {
           Am I getting paid for this?
         </AccordionSummary>
         <AccordionDetails>
-          As much as we would love to we cant.
+        No. All civilian informants pay dues to TRACES Agency in the form of “tickets” purchased through the “Walker Art Center.” This makes the operation possible and keeps it discreet.
         </AccordionDetails>
       </Accordion>
       </div>
