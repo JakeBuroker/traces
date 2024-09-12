@@ -17,7 +17,8 @@ const styles = {
     textAlign: 'center',
     margin: '15px 0',
     fontFamily: 'Roboto',
-    fontSize: '1.1rem'
+    fontSize: '1.1rem',
+    
   },
 }
 
@@ -63,9 +64,11 @@ function LandingPage() {
         </div>
         <div className="grid-col grid-col_12">{userButtons}</div>
         <div className="grid-col grid-col_12">
-          <Typography variant="body1" sx={styles.body1}>
+        {user.id && (
+          <Typography variant="body1" sx={{...styles.body1, whiteSpace: 'pre-wrap'}}>
             {text.english.landingPageBodies.body1}
           </Typography>
+        )}
           {!user.id && (
             <Typography variant="body1" sx={styles.body1}>
               If you are participating in the investigation, please register or login.

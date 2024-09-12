@@ -52,6 +52,7 @@ export default function EvidenceUpload() {
       >
         <Button
          className="back-button"
+         title='Back Button'
           startIcon={<ArrowBackIosNewIcon />}
           onClick={() => history.push('/evidence')}
           style={{ alignSelf: "flex-start", color: "black", marginTop: "-35px", left: "-0px" }}
@@ -68,7 +69,8 @@ export default function EvidenceUpload() {
         />
         <button
           className='fileButton'
-          onClick={clickFile} 
+          onClick={clickFile}
+          title='Upload File' 
         />
         <input
           id='cameraInput'
@@ -89,10 +91,12 @@ export default function EvidenceUpload() {
         <button
           className='cameraButton'
           onClick={clickCamera}
+          title='Take Picture'
         />
         <button
           className='recordButton'
           onClick={recordVideo}
+          title='Record Video'
         />
       </div>
     );
@@ -105,6 +109,7 @@ export default function EvidenceUpload() {
       >
         <Button
           startIcon={<ArrowBackIosNewIcon />}
+          title='Back Button'
           onClick={() => history.push('/evidence')}
           style={{ alignSelf: "flex-start", color: "black", marginTop: "25px", left: "-50px" }}
         >
@@ -120,6 +125,7 @@ export default function EvidenceUpload() {
         />
         <button
           className='fileButton'
+          title='Record Audio'
           onClick={clickFile}
         />
         <div className='audioRecorderDiv'>

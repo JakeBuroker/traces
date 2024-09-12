@@ -51,6 +51,7 @@ function Nav() {
         )}
         <Dropdown>
           <MenuButton
+            aria-label="Menu"
             sx={{
               border: 'solid 1px #000000',
               color: "#000000 !important",
