@@ -40,7 +40,9 @@ export default function EvidenceUploadButton() {
         <div className='button-container'>
             {/* Main evidence upload button */}
             <button className="button" onClick={toggleAdditionalButtons}>
-                <img className='images' src="/evidenceInputIcon.jpg" alt="Upload Evidence" />
+                <img className='images' 
+                src='/red_plus1-02.png'
+                alt="Upload Evidence" />
             </button>
 
             {/* Additional buttons for different evidence types */}
