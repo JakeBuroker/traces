@@ -237,7 +237,7 @@ function UserPage() {
                 onTimeUpdate={handleTimeUpdate}
                 controls={controlsEnabled}
               >
-                <source src="https://traces-project.s3.amazonaws.com/hd0903_1080p_12000br.mp4" type="video/mp4" />
+                <source src="https://traces-project.s3.amazonaws.com/finaltracesonboarding.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               {!controlsEnabled && (
