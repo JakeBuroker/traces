@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
+import { Typography, Box, CircularProgress, Button } from "@mui/material";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import './EvidenceDetailsPage.css'; // Ensure this CSS file contains your desired styles
+import './EvidenceDetailsPage.css';
 import { green, red } from "@mui/material/colors";
 
 export default function EvidenceDetails() {
@@ -24,6 +22,7 @@ export default function EvidenceDetails() {
     if (file) {
       const objectUrl = URL.createObjectURL(file);
       setPreviewUrl(objectUrl);
+    
       return () => URL.revokeObjectURL(objectUrl);
     }
   }, [file]);
@@ -101,7 +100,8 @@ export default function EvidenceDetails() {
           />
         </div>
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <Box sx={{ position: "relative" }}>
+          <Box sx={{ position: "relative", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {loading && <Typography variant={'subtitle2'}>DO NOT CLOSE OUT OF THIS SCREEN</Typography>}
             <Button
               variant="contained"
               sx={{ bgcolor: red[500], "&:hover": { bgcolor: red[700] }, color: 'white' }}
