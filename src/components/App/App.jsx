@@ -23,6 +23,8 @@ import EvidenceDetails from "../EvidenceDetailsPage/EvidenceDetailsPage";
 import ResetPasswordCodeConfPage from "../ResetPasswordCodeConfPage/ResetPasswordCodeConfPage"
 import ResetPasswordEmailPage from "../ResetPasswordEmailPage/ResetPasswordEmailPage"
 import ResetPasswordPage from "../ResetPasswordPage/ResetPasswordPage"
+import VerificationPage from "../VerificationPage/VerificationPage"
+
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
@@ -58,8 +60,14 @@ function App() {
             path="/user"
           >
             <UserPage />
-          </ProtectedRoute>
+            </ProtectedRoute>
 
+            <Route
+  exact
+  path="/verify-email"
+>
+  <VerificationPage />
+</Route>
           <ProtectedRoute
             // logged in shows EvidenceUpload else shows LoginPage
             exact
