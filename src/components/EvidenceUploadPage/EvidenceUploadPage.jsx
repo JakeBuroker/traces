@@ -64,7 +64,7 @@ export default function EvidenceUpload() {
           className='fileInput'
           onChange={changeMedia}
           type="file"
-          multiple
+          // multiple
           accept='video/*, image/*'
         />
         <button
@@ -120,7 +120,7 @@ export default function EvidenceUpload() {
           className='fileInput'
           onChange={changeMedia}
           type="file"
-          multiple
+          // multiple
           accept="audio/*"
         />
         <button
