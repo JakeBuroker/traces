@@ -1,6 +1,5 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
   CardMedia,
@@ -23,7 +22,6 @@ const DataGridComponent = lazy(() => import('../DataGridComponent/DataGridCompon
 
 function AdminPage() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const evidenceList = useSelector((store) => store.evidence);
 
   const [users, setUsers] = useState([]);
@@ -426,7 +424,7 @@ function AdminPage() {
                   <Typography variant='h6'>Username: {selectedItem.username}</Typography>
                   <Typography variant='body1'>Email: {selectedItem.email}</Typography>
                   <Typography variant='body1'>Phone Number: {selectedItem.phone_number}</Typography>
-                  <Typography variant='body1'>Role: {selectedItem.role}</Typography>
+                  <Typography variant='body1'>Role: {selectedItem.role === 1 ? "User" : "Admin"}</Typography>
                   <Typography variant='body1'>Full Name: {selectedItem.full_name}</Typography>
                   <Typography variant='body1'>Video Watched: {JSON.stringify(selectedItem.video_watched)}</Typography>
                   <Button

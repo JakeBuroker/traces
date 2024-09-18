@@ -145,6 +145,18 @@ const DataGridComponent = ({
   // Define columns for the user data grid
   const userColumns = [
     {
+      field: 'verification_photo_AWS_URL',
+      headerName: 'Verification Photo',
+      width: 70,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) =>(
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Avatar src={params.value || './altered_avi2.jpeg'} />
+        </div>
+      ),
+    },
+    {
       field: 'avatar_AWS_URL',
       headerName: 'Avatar',
       width: 70,
@@ -235,6 +247,7 @@ const DataGridComponent = ({
     phone_number: user.phone_number,
     role: user.role,
     video_watched: user.video_watched,
+    verification_photo_AWS_URL: user.verification_photo_AWS_URL || './altered_avi2.jpeg',
   }));
 
   // Return statement for rendering the data grid with the appropriate columns and rows based on the view
