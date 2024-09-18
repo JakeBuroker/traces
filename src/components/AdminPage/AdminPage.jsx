@@ -63,6 +63,7 @@ function AdminPage() {
       .get('/api/user/users')
       .then((response) => {
         setUsers(response.data);
+        console.log('Users:', response.data);
       })
       .catch((error) => {
         console.error('Could not fetch users:', error);
@@ -191,6 +192,7 @@ function AdminPage() {
   };
 
   const openUserInfoModal = (user) => {
+    console.log('Selected user', user);
     setEditsInput({
       id: user.id,
       username: user.username,
@@ -352,7 +354,8 @@ function AdminPage() {
         <DialogContent>
           {selectedItem && (
             <div>
-              <Avatar src={selectedItem.avatar_AWS_URL} alt="User Avatar" style={{ width: 100, height: 100, margin: 'auto' }} />
+              <Avatar src={selectedItem.avatar_AWS_URL} alt="User Avatar" style={{ width: 200, height: 200, margin: 'auto' }} />
+              <Avatar src={selectedItem.verification_photo_AWS_URL} alt="A user's groovy selfie" style={{ width: 200, height: 200, margin: 'auto' }} />
               {inEditMode ? (
                 <>
                   <TextField
@@ -385,6 +388,7 @@ function AdminPage() {
                     fullWidth
                     margin="dense"
                     value={editsInput.role}
+                    disabled
                     onChange={(e) => setEditsInput({ ...editsInput, role: e.target.value })}
                   />
                   <TextField
@@ -399,6 +403,7 @@ function AdminPage() {
                     label="Video Watched"
                     variant="outlined"
                     fullWidth
+                    disabled
                     margin="dense"
                     value={editsInput.video_watched}
                     onChange={(e) => setEditsInput({ ...editsInput, video_watched: e.target.value })}
