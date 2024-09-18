@@ -63,7 +63,6 @@ function AdminPage() {
       .get('/api/user/users')
       .then((response) => {
         setUsers(response.data);
-        console.log('Users:', response.data);
       })
       .catch((error) => {
         console.error('Could not fetch users:', error);
