@@ -16,7 +16,7 @@ export default function EvidenceUpload() {
   const changeMedia = (event) => {
     event.preventDefault();
     const files = event.target.files;
-    const selectedFilesArray = Array.from(files);
+    const selectedFilesArray = Array.from(files); 
     dispatch({ type: 'SET_MEDIA', payload: selectedFilesArray });
     history.push('/evidence-details');
   };
@@ -64,7 +64,7 @@ export default function EvidenceUpload() {
           className='fileInput'
           onChange={changeMedia}
           type="file"
-          multiple
+          // multiple
           accept='video/*, image/*'
         />
         <button
@@ -120,7 +120,7 @@ export default function EvidenceUpload() {
           className='fileInput'
           onChange={changeMedia}
           type="file"
-          multiple
+          // multiple
           accept="audio/*"
         />
         <button
