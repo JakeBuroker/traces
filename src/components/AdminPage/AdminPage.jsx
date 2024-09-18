@@ -191,7 +191,6 @@ function AdminPage() {
   };
 
   const openUserInfoModal = (user) => {
-    console.log('Selected user', user);
     setEditsInput({
       id: user.id,
       username: user.username,
