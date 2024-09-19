@@ -11,6 +11,7 @@ dotenv.config();
 // Using crypto to generate unique aws_keys
 const crypto = require('crypto');
 const awsGet = require('../modules/get.evidence');
+const convert = require('../modules/convertToJPG')
 
 // AWS setup
 const aws = require('@aws-sdk/client-s3');
@@ -127,9 +128,15 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
          `;
 
     // Determines what the media_type is.
-    let mediaType;
-    let awsReference;
+    let mediaType, awsReference, file
     if (req.file) {
+      file = req.file.buffer
+      if (
+        req.file.originalname.toLowerCase().includes('.heic') ||
+        req.file.originalname.toLowerCase().includes('.heif')
+      ) {
+        file = await convert(req.file.buffer)
+      }
       mediaType = await checkMediaType(req.file.mimetype);
       awsReference = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`;
     } else {
@@ -144,7 +151,7 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
       const params = {
         Bucket: bucketName,
         Key: awsReference,
-        Body: req.file.buffer,
+        Body: file,
         ContentType: req.file.mimetype,
       };
       const command = new aws.PutObjectCommand(params);
