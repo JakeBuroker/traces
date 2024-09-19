@@ -66,18 +66,21 @@ html, body {
 
 /* Individual positioning of additional buttons for a semi-circle layout */
 #cambutton {
-    right: 53%;
+    right: 55%;
     top: 8%; 
+    /* right: 53% */
 }
 
 #audiobutton {
-    right: 57.5%;
+    right: 63%;
     top: 8%;
+    /* right: 57.5%; */
 }
 
 #notesbutton {
-    right: 62%;
+    right: 71%;
     top: 8%;
+    /* right: 62%; */
 }
 
 @media (max-width: 600px) {
