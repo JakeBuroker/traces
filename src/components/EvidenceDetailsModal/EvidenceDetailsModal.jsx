@@ -10,6 +10,7 @@ import {
   Chip,
   Box
 } from '@mui/material';
+import { visuallyHidden } from '@mui/utils'
 import CreateIcon from '@mui/icons-material/Create';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { DateTime } from 'luxon';
@@ -124,14 +125,14 @@ const EvidenceDetailsModal = ({ selectedItem, isOpen, onClose, editEvidence, del
               >
                 <Chip
                   icon={<CreateIcon />}
-                  label="Edit"
+                  label={<span>Edit<span style={visuallyHidden}> this piece of evidence.</span></span>}
                   onClick={() => setIsEditing(true)}
                   color="default"
                   style={{ cursor: "pointer" }}
                 />
                 <Chip
                   icon={<DeleteForeverIcon />}
-                  label="Delete"
+                  label={<span>Delete<span style={visuallyHidden}> this piece of evidence.</span></span>}
                   onClick={() => setDeleteModalOpen(true)}
                   color="error"
                   style={{ cursor: "pointer" }}
