@@ -46,90 +46,95 @@ export default function EvidenceUpload() {
     );
   } else if (evidenceType === "cambutton" || evidenceType === "notesbutton") {
     return (
-      <div 
-        style={{ marginTop: "85px",}}
-        className='basicBackground'
-      >
+      <div className='basicBackground'>
         <Button
-         className="back-button"
-         title='Back Button'
+          className="back-button"
+          title='Back Button'
           startIcon={<ArrowBackIosNewIcon />}
           onClick={() => history.push('/evidence')}
-          style={{ alignSelf: "flex-start", color: "black", marginTop: "-35px", left: "-0px" }}
         >
           Back
         </Button>
-        <input
-          id="fileInput"
-          className='fileInput'
-          onChange={changeMedia}
-          type="file"
-          // multiple
-          accept='video/*, image/*'
-        />
-        <button
-          className='fileButton'
-          onClick={clickFile}
-          title='Upload File' 
-        />
-        <input
-          id='cameraInput'
-          className='cameraInput'
-          onChange={changeMedia}
-          type="file" 
-          accept="image/*" 
-          capture="camera"
-        />
-        <input
-          id='videoInput'
-          className='videoInput'
-          onChange={changeMedia}
-          type="file" 
-          accept="video/*" 
-          capture="camera"
-        />
-        <button
-          className='cameraButton'
-          onClick={clickCamera}
-          title='Take Picture'
-        />
-        <button
-          className='recordButton'
-          onClick={recordVideo}
-          title='Record Video'
-        />
+        <div className='button-container file-button-container'>
+          <span className='button-label'>Upload File</span>
+          <input
+            id="fileInput"
+            className='fileInput'
+            onChange={changeMedia}
+            type="file"
+            accept='video/*, image/*'
+          />
+          <button
+            className='fileButton'
+            onClick={clickFile}
+            title='Upload File' 
+          />
+        </div>
+        <div className='button-container camera-button-container'>
+          <span className='button-label'>Take Picture</span>
+          <input
+            id='cameraInput'
+            className='cameraInput'
+            onChange={changeMedia}
+            type="file" 
+            accept="image/*" 
+            capture="camera"
+          />
+          <button
+            className='cameraButton'
+            onClick={clickCamera}
+            title='Take Picture'
+          />
+        </div>
+        <div className='button-container record-button-container'>
+          <span className='button-label'>Record Video</span>
+          <input
+            id='videoInput'
+            className='videoInput'
+            onChange={changeMedia}
+            type="file" 
+            accept="video/*" 
+            capture="camera"
+          />
+          <button
+            className='recordButton'
+            onClick={recordVideo}
+            title='Record Video'
+          />
+        </div>
       </div>
     );
   } else if (evidenceType === "audiobutton") {
     return (
-      <div 
-        style={{ padding: "55px" }}
-        className='basicBackground'
-        onClick={audioClick}
-      >
+      <div className='basicBackground'>
         <Button
-          startIcon={<ArrowBackIosNewIcon />}
+          className="back-button"
           title='Back Button'
+          startIcon={<ArrowBackIosNewIcon />}
           onClick={() => history.push('/evidence')}
-          style={{ alignSelf: "flex-start", color: "black", marginTop: "25px", left: "-50px" }}
         >
           Back
         </Button>
-        <input
-          id="fileInput"
-          className='fileInput'
-          onChange={changeMedia}
-          type="file"
-          // multiple
-          accept="audio/*"
-        />
-        <button
-          className='fileButton'
-          title='Record Audio'
-          onClick={clickFile}
-        />
-        <div className='audioRecorderDiv'>
-          <AudioUploadElement className="audioRecorder"/>
+        <div className='button-container file-button-container'>
+          <span className='button-label'>Upload Audio</span>
+          <input
+            id="fileInput"
+            className='fileInput'
+            onChange={changeMedia}
+            type="file"
+            accept="audio/*"
+          />
+          <button
+            className='fileButton'
+            title='Upload Audio'
+            onClick={clickFile}
+          />
+        </div>
+        <div className='button-container audio-recorder-container'>
+          <span className='button-label-audio'>Record Audio</span>
+          <div className='audioRecorderDiv'>
+            <AudioUploadElement className="audioRecorder"/>
+          </div>
         </div>
       </div>
     );
