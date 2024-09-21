@@ -1,94 +1,97 @@
-
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-    /* overflow: hidden;  */
 }
+
+.basicBackground {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding-top: 85px;
+}
+
+.button-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-label {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-align: center;
+    display: block;
+}
+.button-label-audio {
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+    margin-left: 45px;
+}
+
+.cameraButton, .fileButton, .recordButton {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: black;
+    background-size: cover;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
 .cameraButton {
-    width: 150px; /* Set the width of the button */
-    height: 150px; /* Set the height of the button */
-    border-radius: 50%; /* Make the button a circle */
-    background-color: black; /* Set the background color to black */
-    background-image: url('/CameraIcon.jpg'); /* Set the image as the background */
-    background-size: 450px; /* Cover the entire background with the image */
-    background-position: center; /* Center the image within the button */
-    border: none; /* Remove border */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    outline: none; /* Remove default focus outline */
-    position: fixed; /* Position the button relative to the viewport */
-    bottom: 20px; /* Distance from the bottom of the viewport */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust horizontally to center */
+    background-image: url('/CameraIcon.jpg');
+    background-size: 300px;
 }
 
 .fileButton {
-    width: 130px; /* Set the width of the button */
-    height: 130px; /* Set the height of the button */
-    border-radius: 50%; /* Make the button a circle */
-    background-color:gray; /* Set the background color to black */
-    background-image: url('/FileIcon.jpg'); /* Set the image as the background */
-    background-size: 420px; /* Cover the entire background with the image */
-    background-position: center; /* Center the image within the button */
-    border: none; /* Remove border */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    outline: none; /* Remove default focus outline */
-    position: fixed; /* Position the button relative to the viewport */
-    top: 200px; /* Distance from the bottom of the viewport */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust horizontally to center */
+    background-color: gray;
+    background-image: url('/FileIcon.jpg');
+    background-size: 280px;
 }
-.recordButton{
-    width: 100px; /* Set the width of the button */
-    height: 100px; /* Set the height of the button */
-    border-width: 10px;
+
+.recordButton {
     background-color: red;
-    border-color: black;
-    border-radius: 50%; /* Make the button a circle */
-    position: fixed; /* Position the button relative to the viewport */
-    bottom: 50px; /* Distance from the bottom of the viewport */
-    left: 85%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust horizontally to center */
-
+    border: 10px solid black;
 }
 
-.cameraInput{
-    opacity: 0;
-    position: fixed; /* Position the button relative to the viewport */
-    bottom: 20px; /* Distance from the bottom of the viewport */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust horizontally to center */
-}
-.fileInput{
-    opacity: 0;
-    position: fixed; /* Position the button relative to the viewport */
-    top: 200px; /* Distance from the bottom of the viewport */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust horizontally to center */
-}
-.videoInput{
-    opacity: 0;
-    position: fixed; /* Position the button relative to the viewport */
-    top: 200px; /* Distance from the bottom of the viewport */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust horizontally to center */
+.cameraInput, .fileInput, .videoInput {
+    display: none;
 }
 
-.audioRecorder{
-    position: fixed; /* Position the button relative to the viewport */
-    bottom: 100px; /* Distance from the bottom of the viewport */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust horizontally to center */
-    background-color: aqua;
+.file-button-container {
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.audioRecorderDiv{
-    position: fixed;
-    bottom: 50px; /* Distance from the bottom of the viewport */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust horizontally to center */
-    content:icon;
+.camera-button-container {
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.record-button-container {
+    bottom: 50px;
+    right: 15%;
+}
+
+.audio-recorder-container {
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: black;
 }
 
 div.audio-recorder {
@@ -96,54 +99,92 @@ div.audio-recorder {
     width: 150px;
     height: 150px;
     border-radius: 50%;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    margin-left: 20px;
 }
-div.audio-recorder.recording{
+
+div.audio-recorder.recording {
     width: 150px;
 }
-span.audio-recorder-status{
+
+span.audio-recorder-status {
     background-color: #f0f0f0;
-    position: fixed;
-    bottom: 200px; /* Distance from the bottom of the viewport */
-    left: 40%;
-    transform: translateX(-50%); /* Adjust horizontally to center */
-}
-span.audio-recorder-timer{
-    background-color: #f0f0f0;
-    position: fixed;
+    position: absolute;
     bottom: 200px;
-    left: 10px; 
-    transform: translateX(-50%); 
-}
-img.audio-recorder-options{
-    background-color: #f0f0f0;
-    position: relative;
-    bottom: 110px;
-    right: -40px; 
+    left: 40%;
     transform: translateX(-50%);
 }
+
+span.audio-recorder-timer {
+    background-color: #f0f0f0;
+    position: absolute;
+    bottom: 200px;
+    left: 10px;
+    transform: translateX(-50%);
+}
+
+img.audio-recorder-options {
+    background-color: #f0f0f0;
+    position: absolute;
+    bottom: 110px;
+    right: -40px;
+    transform: translateX(-50%);
+}
+
 .audio-recorder .audio-recorder-mic {
     border-radius: 50% !important;
 }
-img.audio-recorder-mic{
+
+img.audio-recorder-mic {
     background-color: white;
-    border-color: #f0f0f0;
-    src: url('/FileIcon.jpg') !important; 
-    width: 150px;
-    height: 150px;
-    border-width: 10px;
-    border-color: #f0f0f0;
+    border: 10px solid #f0f0f0;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
 }
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    color: black;
-    margin-bottom: 20px;
-  }
-  
 
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+    .button-label {
+        font-size: 16px;
+    }
 
+    .cameraButton, .fileButton, .recordButton {
+        width: 120px;
+        height: 120px;
+    }
 
+    .record-button-container {
+        right: 10%;
+    }
+}
 
+@media (max-width: 480px) {
+    .basicBackground {
+        padding-top: 60px;
+    }
+
+    .button-label {
+        font-size: 16px;
+    }
+
+    .cameraButton, .fileButton, .recordButton {
+        width: 100px;
+        height: 100px;
+    }
+
+    .file-button-container {
+        top: 150px;
+    }
+
+    .camera-button-container {
+        bottom: 10px;
+    }
+
+    .record-button-container {
+        bottom: 30px;
+        right: 5%;
+    }
+}
