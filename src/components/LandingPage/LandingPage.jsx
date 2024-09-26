@@ -67,6 +67,8 @@ function LandingPage() {
         {user.id && (
           <Typography variant="body1" sx={{...styles.body1, whiteSpace: 'pre-wrap'}}>
             {text.english.landingPageBodies.body1}
+            <Typography variant='body1' sx={{...styles.body1, whiteSpace: 'pre-wrap', fontWeight: 'bold'}}>{text.english.landingPageBodies.body2}</Typography>
+            {text.english.landingPageBodies.body3}
           </Typography>
         )}
           {!user.id && (
