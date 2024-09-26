@@ -138,9 +138,9 @@ function UserPage() {
   return (
     <ThemeProvider theme={theme}>
       <div style={{ padding: "90px 1px" }} className="user-container">
-        {user.avatar_url ? (
+        {user.verification_photo ? (
           <img
-            src={user.avatar_AWS_URL}
+            src={user.verification_photo_AWS_URL}
             alt="An avatar for the user."
             style={{ borderRadius: "5px", border: "2px solid #000" }}
           />

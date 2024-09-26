@@ -6,6 +6,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import "./Nav.css";
+import { useEffect } from "react";
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -45,8 +46,8 @@ function Nav() {
       </div>
       <div className="nav-controls">
         {user.id && (
-          user.avatar_url ?
-            <img onClick={() => navigateTo('/user')} src={user.avatar_AWS_URL} alt="An avatar for the user." className="nav-avatar" /> :
+          user.verification_photo ?
+            <img onClick={() => navigateTo('/user')} src={user.verification_photo_AWS_URL} alt="An avatar for the user." className="nav-avatar" /> :
             <img onClick={() => navigateTo('/user')} src="./altered_avi2.jpeg" alt='The default avatar' className="nav-avatar" />
         )}
         <Dropdown>
