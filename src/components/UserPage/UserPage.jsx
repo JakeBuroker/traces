@@ -93,7 +93,7 @@ function UserPage() {
       if (response.status === 200) {
         dispatch({ type: "FETCH_USER" });
         setOpenConfirmModal(false);
-        history.push("/evidence");
+        history.push("/home");
       } else {
         throw new Error("Failed to update video watched status.");
       }
