@@ -37,9 +37,22 @@ passport.deserializeUser((id, done) => {
 // Does actual work of logging in
 passport.use(
   'local',
-  new LocalStrategy((username, password, done) => {
+  new LocalStrategy({
+    usernameField: 'usernameOrEmail',
+    passwordField: 'password',
+  },(usernameOrEmail, password, done) => {
+      let query, params;
+
+      if (usernameOrEmail.includes('@')) {
+        // If input contains '@', treat it as an email
+        query = 'SELECT * FROM "user" WHERE email = $1';
+      } else {
+        // Otherwise, treat it as a username
+        query = 'SELECT * FROM "user" WHERE username = $1';
+      }
+      params = [usernameOrEmail];
     pool
-      .query('SELECT * FROM "user" WHERE username = $1', [username])
+      .query(query, params)
       .then((result) => {
         const user = result && result.rows && result.rows[0];
         if (user && encryptLib.comparePassword(password, user.password)) {

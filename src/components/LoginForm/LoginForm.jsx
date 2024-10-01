@@ -7,7 +7,7 @@ import ResetPasswordBtn from '../ResetPasswordBtn/ResetPasswordBtn.jsx';
 
 function LoginForm() {
   const [formValues, setFormValues] = useState({
-    username: '',
+    usernameOrEmail: '',
     password: '',
   });
   const errors = useSelector(store => store.errors);
@@ -25,10 +25,13 @@ function LoginForm() {
 
   const login = (event) => {
     event.preventDefault();
-    if (formValues.username && formValues.password) {
+    if (formValues.usernameOrEmail && formValues.password) {
       dispatch({
         type: 'LOGIN',
-        payload: formValues,
+        payload: {
+          usernameOrEmail: formValues.usernameOrEmail,
+          password: formValues.password
+        },
       });
     } else {
       dispatch({ type: 'LOGIN_INPUT_ERROR' });
@@ -50,16 +53,16 @@ function LoginForm() {
           </h3>
         )}
         <div className="input-container">
-          <h4 htmlFor="username" style={{ color: '#000000' }}>
-            Username:
+          <h4 htmlFor="usernameOrEmail" style={{ color: '#000000' }}>
+            Username or Email:
           </h4>
           <input
             type="text"
-            name="username"
+            name="usernameOrEmail"
             required
-            value={formValues.username}
+            value={formValues.usernameOrEmail}
             onChange={handleChange}
-            placeholder="Enter your username"
+            placeholder="Enter your username or email"
           />
         </div>
         <div className="input-container">
