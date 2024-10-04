@@ -34,6 +34,11 @@ passport.deserializeUser((id, done) => {
     });
 });
 
+const isEmail = (input) => {
+  const emailDomains = ['.com', '.edu', '.net', '.org', '.io', '.gov', '.co'];
+  return emailDomains.some(domain => input.toLowerCase().endsWith(domain));
+};
+
 // Does actual work of logging in
 passport.use(
   'local',
@@ -43,7 +48,7 @@ passport.use(
   },(usernameOrEmail, password, done) => {
       let query, params;
 
-      if (usernameOrEmail.includes('@')) {
+      if (isEmail(usernameOrEmail)) {
         // If input contains '@', treat it as an email
         query = 'SELECT * FROM "user" WHERE email = $1';
       } else {
