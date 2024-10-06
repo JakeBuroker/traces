@@ -79,6 +79,7 @@ function RegisterForm() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [confirmPhoneNumber, setConfirmPhoneNumber] = useState('');
   const [fullName, setFullName] = useState('');
+  const [pronouns, setPronouns] = useState('')
   const [role, setRole] = useState(1);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -147,6 +148,7 @@ function RegisterForm() {
     formData.append('email', email);
     formData.append('phone_number', phoneNumber);
     formData.append('full_name', fullName);
+    formData.append('pronouns', pronouns);
     formData.append('role', role);
     formData.append('verification_photo', userAvi);
 
@@ -178,6 +180,7 @@ function RegisterForm() {
     setPhoneNumber('');
     setConfirmPhoneNumber('');
     setFullName('');
+    setPronouns('')
     setRole(1);
     setUserAvi(null);
     setErrors({});
