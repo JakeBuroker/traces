@@ -41,8 +41,13 @@ function Nav() {
 
   return (
     <div className="nav">
-      <div className="nav-title" onClick={() => navigateTo("/")}>
+      {/* <div className="nav-title" onClick={() => navigateTo("/")}>
         <h1 style={{ marginTop: '1.5px', padding: '5px', fontFamily: 'Lato', fontStyle: 'italic', fontSize: "42.5px" }}>TRACES</h1>
+      </div> */}
+      <div className="nav-title">
+        <img
+          src="/traces_logo_02.png"
+          alt="TRACES logo" />
       </div>
       <div className="nav-controls">
         {user.id && (
