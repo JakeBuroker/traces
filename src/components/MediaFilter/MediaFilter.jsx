@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { visuallyHidden } from '@mui/utils'
 
 function MediaFilter({ selectedMediaType, onMediaTypeChange }) {
   return (
@@ -12,7 +13,9 @@ function MediaFilter({ selectedMediaType, onMediaTypeChange }) {
       alignItems: "center",
       
     }}>
+      <label htmlFor="filterButtons" style={visuallyHidden}>Filter Evidence</label>
       <ToggleButtonGroup
+        id='filterButtons'
         value={selectedMediaType}
         exclusive
         onChange={onMediaTypeChange}

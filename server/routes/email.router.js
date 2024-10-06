@@ -76,15 +76,18 @@ router.get('/verify/:token', async (req, res) => {
     const result = await pool.query(verifyQuery, [hashedToken]);
 
     if (result.rows.length > 0) {
-      res.status(200).json({ message: 'Email verified successfully' });
+      // Redirect to the frontend verification success page
+      res.redirect(`${process.env.FRONTEND_URL}#/verify-email`);
     } else {
-      res.status(400).json({ error: 'Invalid or expired token' });
+      // Redirect to a failure page or return an error message
+      res.redirect(`${process.env.FRONTEND_URL}#/verify-email?status=failure`);
     }
   } catch (error) {
     console.error('Error verifying token:', error);
     res.status(500).json({ error: 'Error verifying token' });
   }
 });
+
 
 // Check if email exists
 router.post('/check-email', async (req, res) => {

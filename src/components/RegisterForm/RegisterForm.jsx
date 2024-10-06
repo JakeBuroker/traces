@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Button, Snackbar, Alert, Modal, Box } from '@mui/material';
+import { Button, Snackbar, Alert, Modal, Box, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import UploadButton from '../UploadButton/UploadButton';
 import axios from 'axios';
 
@@ -12,7 +13,7 @@ const styles = {
     fontFamily: 'Roboto',
     marginBottom: '15px',
     fontSize: '1.2rem',
-    textAlign: 'center',
+    textAlign: 'left',
   },
   uploadButton: {
     marginTop: "10px",
@@ -68,6 +69,9 @@ const styles = {
     borderRadius: '10px',
     boxShadow: 24,
     p: 4,
+  },
+  dropDownStyle: {
+    border: '1px'
   }
 };
 
@@ -79,8 +83,8 @@ function RegisterForm() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [confirmPhoneNumber, setConfirmPhoneNumber] = useState('');
   const [fullName, setFullName] = useState('');
-  const [pronouns, setPronouns] = useState('')
   const [role, setRole] = useState(1);
+  const [pronouns, setPronouns] = useState('');
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [userAvi, setUserAvi] = useState(null);
@@ -148,9 +152,9 @@ function RegisterForm() {
     formData.append('email', email);
     formData.append('phone_number', phoneNumber);
     formData.append('full_name', fullName);
-    formData.append('pronouns', pronouns);
     formData.append('role', role);
     formData.append('verification_photo', userAvi);
+    formData.append('pronouns', pronouns);
 
     dispatch({
       type: 'REGISTER',
@@ -193,7 +197,25 @@ function RegisterForm() {
   const clickCamera = () => {
     document.getElementById('cameraInput').click();
   };
-
+  const additionalStyles = {
+    formControl: {
+      marginBottom: '10px',
+      width: '100%',
+      border: '1px',
+    },
+  };
+  const StyledSelect = styled(Select)(({ theme }) => ({
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#000000',
+      borderWidth: '1px',
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#000000',
+    },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: '#000000',
+    },
+  }));
   return (
     <div className="login-container">
       <form className="formPanel" onSubmit={handleSubmit}>
@@ -234,6 +256,23 @@ function RegisterForm() {
               <Alert severity="warning" style={styles.alert}>{errors.username}</Alert>
             )}
           </div>
+          <FormControl style={additionalStyles.formControl} className='input-container'>
+            <label htmlFor='pronouns' style={styles.modalTitle}>
+              Pronouns
+            </label>
+              <StyledSelect
+                labelId="pronouns-label"
+                id="pronouns"
+                value={pronouns}
+                onChange={(event) => setPronouns(event.target.value)}
+              >
+                <MenuItem value="">Prefer not to say</MenuItem>
+                <MenuItem value="he/him">He/Him</MenuItem>
+                <MenuItem value="she/her">She/Her</MenuItem>
+                <MenuItem value="they/them">They/Them</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </StyledSelect>
+          </FormControl>
           <div className="input-container">
             <label htmlFor="email" style={styles.modalTitle}>
               Email

@@ -6,6 +6,7 @@ import AccordionActions from '@mui/material/AccordionActions';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { evidencePageText } from '../EvidencePage/EvidencePage.text';
 
 function HelpPage() {
   return (
@@ -98,6 +99,19 @@ function HelpPage() {
         </AccordionSummary>
         <AccordionDetails>
         No. All civilian informants pay dues to TRACES Agency in the form of “tickets” purchased through the “Walker Art Center.” This makes the operation possible and keeps it discreet.
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel3-content'
+          id='panel3-header'
+          sx={{textDecoration: "underline"}}
+        >
+          How do I upload evidence?
+        </AccordionSummary>
+        <AccordionDetails>
+        {evidencePageText.instructions}
         </AccordionDetails>
       </Accordion>
       </div>

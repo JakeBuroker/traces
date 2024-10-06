@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Card, Typography, Grid, Box } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Box } from '@mui/material';
+import { Link } from '@mui/joy';
+import { visuallyHidden } from '@mui/utils'
 import EvidenceDetailsModal from '../EvidenceDetailsModal/EvidenceDetailsModal';
 
 const EvidenceCard = ({ item, fetchEvidence }) => {
@@ -97,7 +99,7 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
           width: '170px',
           height: '230px',
         }}
-        onClick={() => setIsOpen(true)}
+      // onClick={() => setIsOpen(true)}
       >
         {item.is_public && (
           <Box
@@ -115,10 +117,22 @@ const EvidenceCard = ({ item, fetchEvidence }) => {
             Public
           </Box>
         )}
-        {hasMedia(item.media_type) && renderImageForMediaItem(item)}
-        <Typography variant='h5' component='div' sx={{ textAlign: 'center', fontSize: '20px' }}>
-          {formatLongTitles(item.title)}
-        </Typography>
+        <CardContent>
+          {hasMedia(item.media_type) && renderImageForMediaItem(item)}
+          <Typography variant='h5' component='div' sx={{ textAlign: 'center', fontSize: '20px' }}>
+            <Link
+              overlay
+              underline='none'
+              sx={{ color: 'text.primary' }}
+              // href='_blank'
+              component={'button'}
+              onClick={() => setIsOpen(true)}
+            ><Box sx={visuallyHidden}>Click for more information about this piece of evidence:</Box>
+              {formatLongTitles(item.title)}
+            </Link>
+          </Typography>
+
+        </CardContent>
       </Card>
 
       <EvidenceDetailsModal

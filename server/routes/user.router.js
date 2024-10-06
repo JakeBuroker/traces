@@ -94,7 +94,7 @@ transporter.verify((err, success) => {
 // Route to get all users (admin only)
 router.get('/users', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
-    const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, verification_photo, video_watched FROM "user"';
+    const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, verification_photo, video_watched, pronouns FROM "user"';
     try {
       const result = await pool.query(queryText);
       const usersWithAvatars = await awsGetAvatarULRs(result.rows);
@@ -161,7 +161,7 @@ router.delete('/:id', rejectUnauthenticated, async (req, res) => {
 router.post('/register', upload.single('verification_photo'), async (req, res) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  const { email, phone_number, role, full_name } = req.body;
+  const { email, phone_number, role, full_name, pronouns } = req.body;
   const verificationToken = crypto.randomBytes(20).toString('hex');
   const hashedToken = crypto.createHash('sha256').update(verificationToken).digest('hex');
 
@@ -182,11 +182,11 @@ router.post('/register', upload.single('verification_photo'), async (req, res) =
     }
 
     const queryText = `
-      INSERT INTO "user" (username, password, email, phone_number, role, full_name, verification_photo, verification_token, verified)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      INSERT INTO "user" (username, password, email, phone_number, role, full_name, verification_photo, verification_token, verified, pronouns)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       RETURNING id;
     `;
-    const result = await pool.query(queryText, [username, password, email, phone_number, role, full_name, verificationPhotoKey, hashedToken, false]);
+    const result = await pool.query(queryText, [username, password, email, phone_number, role, full_name, verificationPhotoKey, hashedToken, false, pronouns]);
 
     const verificationUrl = `${process.env.BASE_URL}/api/email/verify/${verificationToken}`;
     const mailOptions = {

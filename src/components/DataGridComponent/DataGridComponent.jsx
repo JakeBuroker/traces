@@ -172,6 +172,18 @@ const DataGridComponent = ({
     { field: 'username', headerName: 'Username', width: 200, headerAlign: 'center', align: 'center' },
     { field: 'email', headerName: 'Email', width: 250, headerAlign: 'center', align: 'center' },
     { field: 'full_name', headerName: 'Full Name', width: 250, headerAlign: 'center', align: 'center' },
+    {
+      field: 'pronouns',
+      headerName: 'Pronouns',
+      width: 100,
+      headerAlign: 'center',
+      align: 'center',
+      renderCell: (params) => (
+        <div style={{ textAlign: 'center', width: '100%' }}>
+          {params.value || 'N/A'}
+        </div>
+      ),
+    },
     { field: 'phone_number', headerName: 'Phone Number', width: 200, headerAlign: 'center', align: 'center' },
     {
       field: 'actions',
@@ -244,6 +256,7 @@ const DataGridComponent = ({
     username: user.username,
     email: user.email,
     full_name: user.full_name,
+    pronouns: user.pronouns,
     phone_number: user.phone_number,
     role: user.role,
     video_watched: user.video_watched,

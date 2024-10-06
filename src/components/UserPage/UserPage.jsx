@@ -93,7 +93,7 @@ function UserPage() {
       if (response.status === 200) {
         dispatch({ type: "FETCH_USER" });
         setOpenConfirmModal(false);
-        history.push("/evidence");
+        history.push("/home-validate");
       } else {
         throw new Error("Failed to update video watched status.");
       }
@@ -138,9 +138,9 @@ function UserPage() {
   return (
     <ThemeProvider theme={theme}>
       <div style={{ padding: "90px 1px" }} className="user-container">
-        {user.avatar_url ? (
+        {user.verification_photo ? (
           <img
-            src={user.avatar_AWS_URL}
+            src={user.verification_photo_AWS_URL}
             alt="An avatar for the user."
             style={{ borderRadius: "5px", border: "2px solid #000" }}
           />
@@ -152,7 +152,7 @@ function UserPage() {
           />
         )}
         <Typography variant="h4" sx={{ textAlign: "center", padding: "10px", color: "#000000" }}>
-          {user.username}
+          {user.username} ({user.pronouns})
         </Typography>
           <div
             style={{
