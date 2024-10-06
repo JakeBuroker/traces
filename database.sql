@@ -10,7 +10,8 @@ CREATE TABLE "user" (
     verification_photo VARCHAR(200),
     video_watched BOOLEAN DEFAULT FALSE,
     verification_token VARCHAR(255),
-    verified BOOLEAN DEFAULT FALSE
+    verified BOOLEAN DEFAULT FALSE,
+    pronouns VARCHAR(200)
 );
 
 
@@ -39,4 +40,6 @@ VALUES ('text'),
 ('video'),
 ('audio');
 
+
+ALTER TABLE "user" ADD IF NOT EXISTS pronouns VARCHAR(200);
 
