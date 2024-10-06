@@ -80,6 +80,7 @@ function RegisterForm() {
   const [confirmPhoneNumber, setConfirmPhoneNumber] = useState('');
   const [fullName, setFullName] = useState('');
   const [role, setRole] = useState(1);
+  const [pronouns, setPronouns] = useState('')
   const [snackBarOpen, setSnackBarOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [userAvi, setUserAvi] = useState(null);
@@ -149,6 +150,7 @@ function RegisterForm() {
     formData.append('full_name', fullName);
     formData.append('role', role);
     formData.append('verification_photo', userAvi);
+    formData.append('pronouns', pronouns);
 
     dispatch({
       type: 'REGISTER',
@@ -229,6 +231,21 @@ function RegisterForm() {
             />
             {errors.username && (
               <Alert severity="warning" style={styles.alert}>{errors.username}</Alert>
+            )}
+          </div>
+          <div className="input-container">
+            <label htmlFor="pronouns" style={styles.modalTitle}>
+              Pronouns
+            </label>
+            <input
+              type="text"
+              id="pronouns"
+              value={pronouns}
+              required
+              onChange={(event) => setPronouns(event.target.value)}
+            />
+            {errors.pronouns && (
+              <Alert severity="warning" style={styles.alert}>{errors.pronouns}</Alert>
             )}
           </div>
           <div className="input-container">
