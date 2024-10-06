@@ -40,7 +40,9 @@ function LoginForm() {
 
   useEffect(() => {
     if (user.id) {
-      history.push('/user');
+      console.log("pushing to home");
+      
+      history.push('/home');
     }
   }, [user.id, history]);
 
