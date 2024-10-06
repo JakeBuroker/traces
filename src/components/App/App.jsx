@@ -39,7 +39,9 @@ function App() {
         <Nav />
         <Switch>
           {/* Visiting localhost:5173 will redirect to localhost:5173/home */}
+
           <Redirect exact from="/" to="/home" />
+          {user.id && !user.video_watched && <Redirect exact from="/home" to="/user" />}
 
           {/* Visiting localhost:5173/about will show the about page. */}
           <Route
@@ -60,14 +62,14 @@ function App() {
             path="/user"
           >
             <UserPage />
-            </ProtectedRoute>
+          </ProtectedRoute>
 
-            <Route
-  exact
-  path="/verify-email"
->
-  <VerificationPage />
-</Route>
+          <Route
+            exact
+            path="/verify-email"
+          >
+            <VerificationPage />
+          </Route>
           <ProtectedRoute
             // logged in shows EvidenceUpload else shows LoginPage
             exact
@@ -77,7 +79,7 @@ function App() {
           </ProtectedRoute>
 
 
-        <ProtectedRoute exact path="/admin">
+          <ProtectedRoute exact path="/admin">
             {user.role === 1 ? (
               // If the user is already logged in,
               // redirect to the /user page
@@ -86,14 +88,14 @@ function App() {
               // Otherwise, show the login page
               <AdminPage />
             )}
-         </ProtectedRoute>
-         <Route
+          </ProtectedRoute>
+          <Route
             exact
             path="/reset-password-code"
           >
             <ResetPasswordCodeConfPage />
           </Route>
-         <Route
+          <Route
             exact
             path="/reset-password-email"
           >
@@ -140,7 +142,10 @@ function App() {
             {/* Otherwise, show the Landing page */}
             <LandingPage />
           </Route>
-
+          <Route exact path="/home-validate">
+            {/* Otherwise, show the Landing page */}
+            <LandingPage />
+          </Route>
           <Route
             // shows AboutPage at all times (logged in or not)
             exact
@@ -158,7 +163,7 @@ function App() {
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
-            <h1 style={{marginTop: '100px'}}>404</h1>
+            <h1 style={{ marginTop: '100px' }}>404</h1>
           </Route>
         </Switch>
       </div>
