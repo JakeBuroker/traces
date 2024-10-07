@@ -152,7 +152,7 @@ function UserPage() {
           />
         )}
         <Typography variant="h4" sx={{ textAlign: "center", padding: "10px", color: "#000000" }}>
-          {user.username} ({user.pronouns})
+          {user.pronouns ? `${user.username} (${user.pronouns})` : user.username}
         </Typography>
           <div
             style={{
