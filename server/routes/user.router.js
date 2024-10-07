@@ -94,7 +94,7 @@ transporter.verify((err, success) => {
 // Route to get all users (admin only)
 router.get('/users', rejectUnauthenticated, async (req, res) => {
   if (req.user.role === 2) {
-    const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, verification_photo, video_watched FROM "user"';
+    const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, verification_photo, video_watched, pronouns FROM "user"';
     try {
       const result = await pool.query(queryText);
       const usersWithAvatars = await awsGetAvatarULRs(result.rows);
