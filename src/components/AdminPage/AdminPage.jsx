@@ -428,7 +428,7 @@ function AdminPage() {
                   <Typography variant='body1'>Email: {selectedItem.email}</Typography>
                   <Typography variant='body1'>Phone Number: {selectedItem.phone_number}</Typography>
                   <Typography variant='body1'>Role: {selectedItem.role === 1 ? "User" : "Admin"}</Typography>
-                  <Typography variant='body1'>Full Name: {selectedItem.full_name}</Typography>
+                  <Typography variant='body1'>Full Name: {selectedItem.full_name} {selectedItem.pronouns && `(${selectedItem.pronouns})`}</Typography>
                   <Typography variant='body1'>Video Watched: {JSON.stringify(selectedItem.video_watched)}</Typography>
                   <Button
                     onClick={() => setInEditMode(true)}
