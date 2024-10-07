@@ -195,13 +195,13 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
 
     if (req.file) {
       let avatarUrl;
-      if (result.rows[0].avatar_url) {
-        avatarUrl = result.rows[0].avatar_url;
+      if (result.rows[0].verification_photo) {
+        avatarUrl = result.rows[0].verification_photo;
       } else {
         avatarUrl = `${crypto.randomBytes(8).toString('hex')}-${req.file.originalname}`;
       }
       // Update the avatar URL in the database
-      await connection.query(`UPDATE "user" SET "avatar_url" = $1 WHERE "id" = $2;`, [avatarUrl, req.user.id]);
+      await connection.query(`UPDATE "user" SET "verification_photo" = $1 WHERE "id" = $2;`, [avatarUrl, req.user.id]);
       const params = {
         Bucket: bucketName,
         Key: avatarUrl,
