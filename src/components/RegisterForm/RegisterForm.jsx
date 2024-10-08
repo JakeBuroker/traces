@@ -267,10 +267,10 @@ function RegisterForm() {
                 onChange={(event) => setPronouns(event.target.value)}
               >
                 <MenuItem value="">Prefer not to say</MenuItem>
-                <MenuItem value="he/him">He/Him</MenuItem>
-                <MenuItem value="she/her">She/Her</MenuItem>
-                <MenuItem value="they/them">They/Them</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
+                <MenuItem value="He/Him">He/Him</MenuItem>
+                <MenuItem value="She/Her">She/Her</MenuItem>
+                <MenuItem value="They/Them">They/Them</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
               </StyledSelect>
           </FormControl>
           <div className="input-container">
