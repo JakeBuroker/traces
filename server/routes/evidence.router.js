@@ -179,13 +179,15 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
   UPDATE "user" 
   SET 
   "email" = $1, 
-  "phone_number" = $2
-  WHERE "id" = $3
+  "phone_number" = $2,
+  "pronouns" = $3
+  WHERE "id" = $4
   RETURNING "avatar_url", "verification_photo";
   `;
   const queryParams = [
     req.body.email,
     req.body.phone_number,
+    req.body.pronouns,
     req.user.id
   ];
   const connection = await pool.connect();

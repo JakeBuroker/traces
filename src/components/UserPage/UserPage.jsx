@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import UploadButton from "../UploadButton/UploadButton";
-import { Button, Modal, Box, Typography, TextField, ThemeProvider, createTheme } from "@mui/material";
+import { Button, Modal, Box, Typography, TextField, ThemeProvider, createTheme, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import "./UserPage.css";
 
 const theme = createTheme({
@@ -39,6 +39,7 @@ function UserPage() {
   const [fullName, setFullName] = useState(user.full_name || "");
   const [email, setEmail] = useState(user.email || "");
   const [phoneNumber, setPhoneNumber] = useState(user.phone_number || "");
+  const [pronouns, setPronouns] = useState(user.pronouns || "");
   const [userAvi, setUserAvi] = useState(null);
   const [openVideoModal, setOpenVideoModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
@@ -61,6 +62,7 @@ function UserPage() {
     const formData = new FormData();
     formData.append("email", email);
     formData.append("phone_number", phoneNumber);
+    formData.append("pronouns", pronouns);
     if (userAvi) {
       formData.append("file", userAvi);
     }
@@ -149,6 +151,7 @@ function UserPage() {
           />
         )}
         <Typography variant="h4" sx={{ textAlign: "center", padding: "10px", color: "#000000" }}>
+          {user.pronouns ? `${user.username} (${user.pronouns})` : user.username}
         </Typography>
         {editMode ? (
           <form
@@ -181,7 +184,7 @@ function UserPage() {
               InputProps={{
                 style: {
                   color: "#000000",
-                  padding: "5px",
+                
                 },
               }}
               type="email"
@@ -206,6 +209,25 @@ function UserPage() {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
+            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem', marginTop: '15px' }}>
+              Pronouns
+            </Typography>
+            <FormControl variant="outlined" fullWidth margin="dense">
+              <Select
+                labelId="pronouns-label"
+                id="pronouns"
+                value={pronouns}
+                onChange={(e) => setPronouns(e.target.value)}
+                fullWidth
+                sx={{ color: "#000000" }}
+              >
+                <MenuItem value="">Prefer not to say</MenuItem>
+                <MenuItem value="He/Him">He/Him</MenuItem>
+                <MenuItem value="She/Her">She/Her</MenuItem>
+                <MenuItem value="They/Them">They/Them</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
+              </Select>
+            </FormControl>
             <UploadButton
               btnName="Upload Avatar"
               style={{
@@ -285,6 +307,12 @@ function UserPage() {
             <Typography variant="body1" component="p">
               {phoneNumber}
             </Typography>
+            <Typography variant="body1" component="label" sx={{ fontWeight: 'bold', fontSize: '1.1rem', marginTop: '10px' }}>
+              Pronouns
+            </Typography>
+            <Typography variant="body1" component="p">
+              {pronouns || "Prefer not to say"}
+            </Typography>
             <Button
               onClick={() => setEditMode(true)}
               variant="contained"
@@ -348,7 +376,7 @@ function UserPage() {
                 onTimeUpdate={handleTimeUpdate}
                 controls={controlsEnabled}
               >
-                 <source src="https://traces-project.s3.amazonaws.com/finaltracesonboarding.mp4" type="video/mp4" />
+                <source src="https://traces-project.s3.amazonaws.com/finaltracesonboarding.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               {!controlsEnabled && (
