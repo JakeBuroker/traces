@@ -1,13 +1,20 @@
 /* Base styles for mobile */
 .user-container {
-  max-width: 250px;
+  max-width: 100%; /* Full width for mobile */
+  width: 100%;
   margin: auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the content */
 }
 
 .edit-form, .info-display {
+  width: 90%; /* Ensure form takes full width */
   display: flex;
+  max-width: "100px";
   flex-direction: column;
+  gap: 15px; /* Space between fields */
 }
 
 .form-group {
@@ -50,41 +57,39 @@
 }
 
 .user-avi {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  margin-bottom: 15px;
-  border: black 1px solid;
+  border: 2px solid black;
+  object-fit: cover; /* Ensures the image fits nicely inside the circle */
+  margin-bottom: 20px; /* Add space below the avatar */
 }
 
 /* Desktop-specific styles */
 @media (min-width: 768px) {
   .user-container {
-    max-width: 350px; /* Adjust for larger screens */
+    max-width: 800px; /* Wider container on desktop */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center container content */
   }
 
   .edit-form, .info-display {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
+    width: 100%; /* Full width on desktop */
+    max-width: 400px; /* Set max width to 600px for forms */
+    flex-direction: column; /* Keep the form in a column */
+    gap: 10px; /* Increase gap between elements */
+    align-items: center; /* Center the form fields */
   }
 
   .form-group {
-    flex-basis: 48%; /* Two-column layout */
-  }
-
-  .button-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 100%;
-    margin-top: 20px;
+    width: 100%; /* Ensure input fields take full width */
   }
 
   .user-avi {
     width: 150px;
     height: 150px;
+    margin-bottom: 20px; /* Space below avatar */
   }
 }
