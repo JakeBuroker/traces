@@ -338,8 +338,9 @@ router.post('/check', async (req, res) => {
 });
 
 // Route to update the user's password
-router.put('/passwordupdated', (req, res) => {
-  const queryParams = [encryptLib.encryptPassword(req.body[0][0]), req.body[0][1]];
+router.put('/passwordupdated', async (req, res) => {
+  const hashedPassword = await encryptLib.encryptPassword(req.body[0][0])
+  const queryParams = [hashedPassword, req.body[0][1]];
   const sqlText = `UPDATE "user" SET "password" = $1 WHERE "email" = $2;`;
   pool.query(sqlText, queryParams)
     .then(() => {
