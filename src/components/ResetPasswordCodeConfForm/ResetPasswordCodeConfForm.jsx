@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Button } from '@mui/material';
+import { Button, Typography, Link } from '@mui/material';
+import axios from "axios";
 
 const styles = {
   labels: {
@@ -16,13 +17,14 @@ const styles = {
   input: {
     width: '100%',
     padding: '15px 10px',
-    fontSize: '17px', 
+    fontSize: '17px',
     border: '1px solid black',
     borderRadius: '5px',
     marginTop: '10px',
+    marginBottom: '10px',
   },
   buttonContainer: {
-    marginTop: '30px',
+    marginTop: '20px',
     textAlign: 'center',
   },
   button: {
@@ -34,28 +36,53 @@ const styles = {
     borderRadius: '10px',
     border: '0.5px solid black',
   },
+  text: {
+    marginTop: '10px',
+  },
 };
 
 export default function ResetPasswordCodeConfForm() {
   const [codeAttempt, setCodeAttempt] = useState('');
+  const [email, setEmail] = useState('')
   const resetCodeStore = useSelector((store) => store.email);
-  const resetCode = resetCodeStore.emailReducer[0];
+  const [_resetCode, resetEmail] = resetCodeStore.emailReducer;
   const history = useHistory();
 
-  const submitCode = (event) => {
+  const submitCode = async (event) => {
     event.preventDefault();
-    if (codeAttempt === resetCode) {
+    const codeMatches = await resetCodeIsValid(email, codeAttempt)
+    if (codeMatches) {
       history.push('/reset-password-page');
     } else {
       alert("Incorrect code. Please try again.");
     }
   };
 
+  const resetCodeIsValid = async (email, code) => {
+    const response = await axios.post('/api/email/check/reset-code', { email, code })
+    const { codeMatches } = response.data
+    return codeMatches
+  }
+
+  useEffect(() => {
+    if (resetEmail) {
+      setEmail(resetEmail)
+    }
+  }, [resetEmail])
+
   return (
     <div className="login-container">
       <form onSubmit={submitCode}>
         <h2 style={{ padding: '30px', textAlign: 'center', color: '#000000' }}>Enter Reset Code</h2>
         <div style={styles.inputContainer}>
+          <label style={styles.labels}>Email</label>
+          <input
+            type="text"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            style={styles.input}
+            required
+          />
           <label style={styles.labels}>Code</label>
           <input
             type="text"
@@ -70,6 +97,9 @@ export default function ResetPasswordCodeConfForm() {
           <Button type="submit" style={styles.button}>
             Submit
           </Button>
+        </div>
+        <div>
+          <Typography sx={styles.text} variant='body1'>Didn't receive a code? Try checking your spam mail or <Link component={'button'} onClick={() => history.push('/reset-password-email')}>request another code</Link>.</Typography>
         </div>
       </form>
     </div>

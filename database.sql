@@ -11,7 +11,8 @@ CREATE TABLE "user" (
     video_watched BOOLEAN DEFAULT FALSE,
     verification_token VARCHAR(255),
     verified BOOLEAN DEFAULT FALSE,
-    pronouns VARCHAR(200)
+    pronouns VARCHAR(200),
+    reset_code VARCHAR(100)
 );
 
 
@@ -42,4 +43,5 @@ VALUES ('text'),
 
 
 ALTER TABLE "user" ADD IF NOT EXISTS pronouns VARCHAR(200);
+ALTER TABLE "user" ADD IF NOT EXISTS reset_code VARCHAR(100);
 

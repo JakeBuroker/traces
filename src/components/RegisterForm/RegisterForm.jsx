@@ -150,6 +150,7 @@ function RegisterForm() {
     formData.append('username', username);
     formData.append('password', password);
     formData.append('email', email);
+    formData.append('usernameOrEmail', email)
     formData.append('phone_number', phoneNumber);
     formData.append('full_name', fullName);
     formData.append('role', role);
