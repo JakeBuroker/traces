@@ -3,6 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const encryptLib = require('../modules/encryption')
 require('dotenv').config();
 
 // Configure nodemailer transporter
@@ -44,6 +45,43 @@ router.post('/send', function (req, res) {
     }
   });
 });
+
+router.put('/reset-code', async (req, res) => {
+  const email = req.body.email
+  const code = req.body.code
+
+  const hashedCode = await encryptLib.encryptPassword(code)
+  const query = `UPDATE "user" SET reset_code = $1 WHERE email = $2;`
+  const queryParams = [hashedCode, email]
+  pool.query(query, queryParams)
+    .then(result => {
+      res.send(result.rows)
+    }).catch(e => {
+      console.log(e);
+      res.sendStatus(500)
+    })
+})
+
+router.post('/check/reset-code', async (req, res) => {
+const email = req.body.email
+const code = req.body.code
+// console.log({email, code});
+
+try {
+  const result = await pool.query('SELECT "reset_code" FROM "user" WHERE "email" = $1', [email])
+  const hashedCode = result.rows[0].reset_code
+  if (hashedCode) {
+    const matches = encryptLib.comparePassword(code, hashedCode)
+    pool.query(`UPDATE "user" SET reset_code = NULL WHERE email = $1`, [email])
+    res.send({"codeMatches": matches})
+  } else {
+    res.send({"codeMatches": false})
+  }
+} catch (error) {
+  console.log(error);
+  res.sendStatus(500)
+}
+})
 
 // Route to send verification email
 router.post('/send-verification', (req, res) => {
