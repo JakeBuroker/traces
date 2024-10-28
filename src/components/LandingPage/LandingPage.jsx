@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, Typography, Box } from '@mui/material';
+import { Button, Typography, Box, Link } from '@mui/material';
 import './LandingPage.css';
 import { text } from './LandingPage.text';
 import { useMemo } from 'react';
@@ -18,7 +18,7 @@ const styles = {
     margin: '15px 0',
     fontFamily: 'Roboto',
     fontSize: '1.1rem',
-
+    padding: '0 8px'
   },
 }
 
@@ -62,6 +62,18 @@ function LandingPage() {
             loading="lazy"
           />
         </div>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: "100%"}}>
+          {!user.id && (
+            <Link sx={styles.body1} href="https://sites.google.com/view/spyontraces/" target='_blank'>
+              CLICK HERE TO SPY ON TRACES
+            </Link>
+          )}
+        </div>
+        {!user.id && (
+          <Typography variant="body1" sx={{ ...styles.body1, whiteSpace: 'pre-wrap' }}>
+            If you are participating in the investigation, please register or login.
+          </Typography>
+        )}
         <div className="grid-col grid-col_12">{userButtons}</div>
         <div className="grid-col grid-col_12">
           {user.id && (
@@ -77,11 +89,6 @@ function LandingPage() {
               </Typography>
             </>
 
-          )}
-          {!user.id && (
-            <Typography variant="body1" sx={styles.body1}>
-              If you are participating in the investigation, please register or login.
-            </Typography>
           )}
         </div>
       </div>
