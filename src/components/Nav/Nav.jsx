@@ -118,6 +118,15 @@ function Nav() {
                 <MenuItem onClick={() => navigateTo('/help')} sx={menuItemStyle}>
                   Help
                 </MenuItem>
+                <MenuItem 
+                  component="a" 
+                  href="https://sites.google.com/view/spyontraces/"
+                  target="_blank"   // Opens in new tab
+                  rel="noopener noreferrer"  // Security best practice for external links
+                  sx={menuItemStyle}
+                >
+                  Spy on Traces
+                </MenuItem>
                 <MenuItem onClick={Logout} sx={menuItemStyle}>
                   Logout
                 </MenuItem>

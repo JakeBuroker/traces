@@ -18,7 +18,7 @@ const styles = {
     margin: '15px 0',
     fontFamily: 'Roboto',
     fontSize: '1.1rem',
-    padding: '0 8px'
+    padding: '0 8px',
   },
   body2: {
     color: 'black',
@@ -71,11 +71,17 @@ function LandingPage() {
             loading="lazy"
           />
         </div>
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: "100%"}}>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: "100%", flexDirection: "column"}}>
           {!user.id && (
+            <>
             <Link sx={styles.body2} href="https://sites.google.com/view/spyontraces/" target='_blank'>
               CLICK HERE TO SPY ON TRACES
             </Link>
+            <h4>(Do NOT register for an account unless you have a ticket)</h4>
+            <Link sx={styles.body1} href="https://secure.walkerart.org/overview/13131" target='_blank'>
+              INVESTIGATION
+            </Link>
+            </>
           )}
         </div>
         {!user.id && (
