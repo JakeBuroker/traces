@@ -78,16 +78,21 @@ function LandingPage() {
               CLICK HERE TO SPY ON TRACES
             </Link>
             <h4>(Do NOT register for an account unless you have a ticket)</h4>
-            <Link sx={styles.body1} href="https://secure.walkerart.org/overview/13131" target='_blank'>
-              INVESTIGATION
-            </Link>
             </>
           )}
         </div>
         {!user.id && (
-          <Typography variant="body1" sx={{ ...styles.body1, whiteSpace: 'pre-wrap' }}>
-            If you are participating in the investigation, please register or login.
-          </Typography>
+         <Typography variant="body1" sx={{ ...styles.body1, whiteSpace: 'pre-wrap'}}>
+         If you are participating in the
+         <Link 
+           sx={{...styles.body1, fontWeight: 'bold' }} 
+           href="https://secure.walkerart.org/overview/13131" 
+           target='_blank'
+         >
+          investigation
+         </Link>
+         , please register or login.
+       </Typography>
         )}
         <div className="grid-col grid-col_12">{userButtons}</div>
         <div className="grid-col grid-col_12">
