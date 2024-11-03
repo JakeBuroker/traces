@@ -4,7 +4,6 @@ import { Button, Typography, Box, Link } from '@mui/material';
 import './LandingPage.css';
 import { text } from './LandingPage.text';
 import { useMemo } from 'react';
-import { BorderAll } from '@mui/icons-material';
 
 const styles = {
   registerButton: {
