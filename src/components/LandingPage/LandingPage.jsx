@@ -71,28 +71,35 @@ function LandingPage() {
             loading="lazy"
           />
         </div>
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: "100%", flexDirection: "column"}}>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          width: "100%", 
+          flexDirection: "column",
+           }}>
           {!user.id && (
             <>
-            <Link sx={styles.body2} href="https://sites.google.com/view/spyontraces/" target='_blank'>
-              CLICK HERE TO SPY ON TRACES
-            </Link>
-            <h4>(Do NOT register for an account unless you have a ticket)</h4>
+              <Link sx={styles.body2} href="https://sites.google.com/view/spyontraces/" target='_blank'>
+                CLICK HERE TO SPY ON TRACES
+              </Link>
+              <h4 style={{textAlign: 'center'}}>(Do NOT register for an account unless you have a ticket)</h4>
             </>
           )}
         </div>
+        <div style={{height: '100px', width: '100%', display: 'block'}}>
+          <div style={{border: '1px solid black', opacity: '25%', marginTop: '50px'}}></div>
+        </div>
         {!user.id && (
-         <Typography variant="body1" sx={{ ...styles.body1, whiteSpace: 'pre-wrap'}}>
-         If you are participating in the
-         <Link 
-           sx={{...styles.body1, fontWeight: 'bold' }} 
-           href="https://secure.walkerart.org/overview/13131" 
-           target='_blank'
-         >
-          investigation
-         </Link>
-         , please register or login.
-       </Typography>
+          <Typography variant="body1" sx={{ ...styles.body1, whiteSpace: 'pre-wrap' }}>
+            {"If you are participating in the "}
+            <Link
+              sx={{ fontWeight: 'bold', color: 'black' }}
+              href="https://secure.walkerart.org/overview/13131"
+              target='_blank'
+            >{"investigation"}</Link>
+            , please register or login.
+          </Typography>
         )}
         <div className="grid-col grid-col_12">{userButtons}</div>
         <div className="grid-col grid-col_12">
