@@ -7,15 +7,16 @@ const GalleryEnlargeModal = ({ selectedItem, isOpen, setIsOpen }) => {
     // Function to handle modal close
     const onClose = () => setIsOpen(false);
 
-    const NoteType = ({ selectedItem }) => {
+    const GridLayout = ({ selectedItem, mediaComponent }) => {
         return (
-            <Grid container padding={'20px'}>
-                <Grid item xs={4} sx={{ alignContent: 'center', justifyItems: 'center', overflow: 'scroll' }}>
-                    <Typography variant='body2'>
+            <Grid container padding={'20px'} gap={2}>
+                <Grid item xs={3} sx={{ alignContent: 'center', justifyItems: 'center', overflow: 'scroll' }}>
+                    {!mediaComponent && <Typography variant='body2'>
                         No media to display.
-                    </Typography>
+                    </Typography>}
+                    {mediaComponent}
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={7}>
                     <Typography
                         variant="h5"
                         component="div"
@@ -62,15 +63,18 @@ const GalleryEnlargeModal = ({ selectedItem, isOpen, setIsOpen }) => {
 
         switch (media_type) {
             case 1: // Notes only, no media to display
-                return <NoteType selectedItem={selectedItem} />
+                return <GridLayout selectedItem={selectedItem} />
             case 3: // Video
                 return (
-                    <div style={{ textAlign: "center" }}>
-                        <video src={aws_url} controls style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "contain" }} />
-                        <Typography style={{ marginTop: "20px" }}>{notes}</Typography>
-                    </div>
+                    <GridLayout selectedItem={selectedItem} mediaComponent={(
+                        <video
+                            src={aws_url}
+                            controls
+                            style={{ width: '100%' }}
+                        />
+                    )} />
                 );
-            case 4: // Audio
+            case 4: // ! Audio is broken, renders with video
                 return (
                     <div style={{ textAlign: "center" }}>
                         <audio src={aws_url} controls style={{ maxWidth: "100%" }} />
@@ -79,10 +83,9 @@ const GalleryEnlargeModal = ({ selectedItem, isOpen, setIsOpen }) => {
                 );
             default: // Images
                 return (
-                    <div style={{ textAlign: "center" }}>
+                    <GridLayout selectedItem={selectedItem} mediaComponent={(
                         <img src={aws_url} alt="Archive item" style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "contain" }} />
-                        <Typography style={{ marginTop: "20px" }}>{notes}</Typography>
-                    </div>
+                    )} />
                 );
         }
     };
