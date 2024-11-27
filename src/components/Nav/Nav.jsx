@@ -90,7 +90,7 @@ function Nav() {
                   Home
                 </MenuItem>
                 <MenuItem onClick={() => navigateTo('/gallery')} sx={menuItemStyle}>
-                  Gallery
+                  Archive
                 </MenuItem>
                 <MenuItem onClick={() => navigateTo('/registration')} sx={menuItemStyle}>
                   Register
@@ -113,7 +113,7 @@ function Nav() {
                   </MenuItem>
                 )}
                 <MenuItem onClick={() => navigateTo('/gallery')} sx={menuItemStyle}>
-                  Gallery
+                  Archive
                 </MenuItem>
                 <MenuItem onClick={() => navigateTo('/help')} sx={menuItemStyle}>
                   Help

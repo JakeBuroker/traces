@@ -16,12 +16,12 @@ function GalleryPage() {
     }, []);
 
     // Function to handle page change in pagination
-    const handleChange = (event, value) => {
+    const handleChange = (_event, value) => {
         setPage(value);
     };
 
     // Function to handle media filter change
-    const handleMediaFilterChange = (event, newMediaType) => {
+    const handleMediaFilterChange = (_event, newMediaType) => {
         setSelectedCategories(newMediaType);
     };
 
@@ -66,7 +66,6 @@ function GalleryPage() {
     } else {
         return (
             <div style={{ padding: "65px 0" }}>
-                {/* <h2 style={{ leftPadding: "65px", padding: "5px" }} >Evidence Gallery: Declassified</h2> */}
                 <MediaFilter selectedMediaType={selectedMediaType} onMediaTypeChange={handleMediaFilterChange} />
                 <Grid container spacing={2} justifyContent="center" style={{ padding: "20px" }}>
                     {getFilteredEvidence()[`page${page}`]?.map((item) => (

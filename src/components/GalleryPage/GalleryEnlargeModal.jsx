@@ -30,7 +30,7 @@ const GalleryEnlargeModal = ({ selectedItem, isOpen, setIsOpen }) => {
             default: // Images
                 return (
                     <div style={{ textAlign: "center" }}>
-                        <img src={aws_url} alt="Gallery item" style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "contain" }} />
+                        <img src={aws_url} alt="Archive item" style={{ maxHeight: "500px", maxWidth: "100%", objectFit: "contain" }} />
                         <Typography style={{ marginTop: "20px" }}>{notes}</Typography>
                     </div>
                 );
