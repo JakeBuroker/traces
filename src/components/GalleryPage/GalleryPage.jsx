@@ -36,7 +36,7 @@ function GalleryPage() {
 
     // Function to paginate results
     const paginateResults = (array) => {
-        const itemsPerPage = 8; // 2 rows of 4
+        const itemsPerPage = 15; // 2 rows of 4
         let pages = {};
         
         array.forEach((item, index) => {
@@ -67,7 +67,7 @@ function GalleryPage() {
         return (
             <div style={{ padding: "65px 0" }}>
                 <MediaFilter selectedMediaType={selectedMediaType} onMediaTypeChange={handleMediaFilterChange} />
-                <Grid container spacing={2} justifyContent="center" style={{ padding: "20px" }}>
+                <Grid container spacing={2} justifyContent='flex-start' style={{ padding: "20px" }}>
                     {getFilteredEvidence()[`page${page}`]?.map((item) => (
                         <GalleryPageEvCard item={item} key={item.id} />
                     ))}

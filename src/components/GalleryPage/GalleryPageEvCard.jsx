@@ -5,7 +5,8 @@ import {
     Grid,
     Card,
     Typography,
-    CardContent
+    CardContent,
+    CardMedia,
 } from '@mui/material';
 import GalleryEnlargeModal from './GalleryEnlargeModal';
 
@@ -28,14 +29,14 @@ export const GalleryPageEvCard = ({ item }) => {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         display: '-webkit-box',
-        WebkitLineClamp: 3, // Number of lines you want to display
+        WebkitLineClamp: 6, // Number of lines you want to display
         WebkitBoxOrient: 'vertical',
         fontSize: '1rem', // Larger font size
     };
 
     return (
         <>
-            <Grid key={item.id} item xs={12} sm={10} md={6} lg={3}>
+            {/* <Grid key={item.id} item xs={12} sm={10} md={6} lg={3}>
                 <Card
                     className="item-card"
                     sx={{
@@ -136,6 +137,59 @@ export const GalleryPageEvCard = ({ item }) => {
                         {item.location}
                     </Typography>
                 </Card>
+            </Grid> */}
+            <Grid item xs={4} sx={{ justifyItems: 'center' }} >
+                <div onClick={() => setIsOpen(true)} style={{ width: '250px', height: '357px' }}>
+                    {/* // TODO audio not rendering correctly */}
+                    {isAudio && (
+                        <>
+                            <div style={{ width: "55%", alignSelf: "center", marginBottom: "-40px" }}>
+                                <img
+                                    src='./audio_placeholder.jpeg'
+                                    alt="Audio Placeholder"
+                                    style={{ width: "100%", height: 130, objectFit: "cover" }}
+                                />
+                            </div>
+                            <audio
+                                ref={audioRef}
+                                src={item.aws_url}
+                                controls
+                                style={{ width: "60%", alignSelf: "center", marginTop: "10px" }}
+                            />
+                        </>
+                    )}
+                    {isVideo && (
+                        <video
+                            src={item.aws_url}
+                            controls
+                            style={{
+                                height: 200,
+                                minWidth: 250,
+                                objectFit: "cover",
+                                alignSelf: "center",
+                            }}
+                        />
+                    )}
+                    {!isAudio && !isVideo && !isNote && (
+                        <img
+                            src={item.aws_url}
+                            alt={item.title}
+                            style={{
+                                height: 200,
+                                minWidth: '250px',
+                                objectFit: "cover",
+                                alignSelf: "center",
+                            }}
+                        />
+                    )}
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={noteStyles}
+                    >
+                        {item.notes}
+                    </Typography>
+                </div>
             </Grid>
 
             <GalleryEnlargeModal isOpen={isOpen} setIsOpen={setIsOpen} selectedItem={item} />

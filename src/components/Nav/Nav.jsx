@@ -89,7 +89,7 @@ function Nav() {
                 <MenuItem onClick={() => navigateTo('/home')} sx={menuItemStyle}>
                   Home
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/gallery')} sx={menuItemStyle}>
+                <MenuItem onClick={() => navigateTo('/archive')} sx={menuItemStyle}>
                   Archive
                 </MenuItem>
                 <MenuItem onClick={() => navigateTo('/registration')} sx={menuItemStyle}>
@@ -112,7 +112,7 @@ function Nav() {
                     Admin Page
                   </MenuItem>
                 )}
-                <MenuItem onClick={() => navigateTo('/gallery')} sx={menuItemStyle}>
+                <MenuItem onClick={() => navigateTo('/archive')} sx={menuItemStyle}>
                   Archive
                 </MenuItem>
                 <MenuItem onClick={() => navigateTo('/help')} sx={menuItemStyle}>
