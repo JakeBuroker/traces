@@ -138,7 +138,7 @@ export const GalleryPageEvCard = ({ item }) => {
                     </Typography>
                 </Card>
             </Grid> */}
-            <Grid item xs={4} sx={{ justifyItems: 'center' }} >
+            <Grid item xs={12} sm={6} md={4} sx={{ justifyItems: 'center' }} >
                 <div onClick={() => setIsOpen(true)} style={{ width: '250px', height: '357px' }}>
                     {/* // TODO audio not rendering correctly */}
                     {isAudio && (
