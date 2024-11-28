@@ -47,7 +47,7 @@ function App() {
           <Route
             // shows GalleryPage at all times (logged in or not)
             exact
-            path="/gallery"
+            path="/archive"
           >
             <GalleryPage />
           </Route>
