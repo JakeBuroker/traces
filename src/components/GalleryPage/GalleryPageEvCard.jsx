@@ -73,6 +73,7 @@ export const GalleryPageEvCard = ({ item }) => {
                                 objectFit: "cover",
                                 alignSelf: "center",
                             }}
+                            loading="lazy"
                         />
                     )}
                     <Typography
