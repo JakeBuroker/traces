@@ -31,7 +31,7 @@ const styles = {
   }
 }
 
-function LandingPage() {
+function LandingPage({ inArchive }) {
   const user = useSelector((store) => store.user);
   const history = useHistory();
 
@@ -46,16 +46,16 @@ function LandingPage() {
   // Memoize user-related conditional rendering
   const userButtons = useMemo(() => {
     if (!user.id) {
-      return (
-        <>
+      return !inArchive ? (<>
           <Button className="btn" onClick={toLogin}>
             Login
           </Button>
           <Button className="btn" onClick={toRegister} style={styles.registerButton}>
             Register
           </Button>
-        </>
-      );
+        </>) :  (<>
+        <Button className='btn' onClick={() => history.push('/archive')}>See the Evidence</Button>
+        </>)
     }
     return null;
   }, [user.id]);
@@ -83,14 +83,14 @@ function LandingPage() {
               <Link sx={styles.body2} href="https://sites.google.com/view/spyontraces/" target='_blank'>
                 CLICK HERE TO SPY ON TRACES
               </Link>
-              <h4 style={{textAlign: 'center'}}>(Do NOT register for an account unless you have a ticket)</h4>
+              {!inArchive && <h4 style={{textAlign: 'center'}}>(Do NOT register for an account unless you have a ticket)</h4>}
             </>
           )}
         </div>
         <div style={{height: '100px', width: '100%', display: 'block'}}>
           <div style={{border: '1px solid black', opacity: '25%', marginTop: '50px'}}></div>
         </div>
-        {!user.id && (
+        {!user.id && !inArchive && (
           <Typography variant="body1" sx={{ ...styles.body1, whiteSpace: 'pre-wrap' }}>
             {"If you are participating in the "}
             <Link

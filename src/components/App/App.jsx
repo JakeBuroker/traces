@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import {
   HashRouter as Router,
@@ -24,19 +24,31 @@ import ResetPasswordCodeConfPage from "../ResetPasswordCodeConfPage/ResetPasswor
 import ResetPasswordEmailPage from "../ResetPasswordEmailPage/ResetPasswordEmailPage"
 import ResetPasswordPage from "../ResetPasswordPage/ResetPasswordPage"
 import VerificationPage from "../VerificationPage/VerificationPage"
+import axios from "axios";
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const [inArchiveMode, setInArchiveMode] = useState(true)
 
   useEffect(() => {
+    axios.get('/api/evidence/isArchive').then((response) => {
+      console.log({response});
+      
+      if (JSON.parse(response.data) === true) {
+        console.log("We're in archive mode");
+        setInArchiveMode(true)
+      } else {
+        setInArchiveMode(false)
+      }
+    })
     dispatch({ type: "FETCH_USER" });
   }, [dispatch]);
 
   return (
     <Router>
       <div >
-        <Nav />
+        <Nav inArchive={inArchiveMode} />
         <Switch>
           {/* Visiting localhost:5173 will redirect to localhost:5173/home */}
 
@@ -140,11 +152,11 @@ function App() {
 
           <Route exact path="/home">
             {/* Otherwise, show the Landing page */}
-            <LandingPage />
+            <LandingPage inArchive={inArchiveMode} />
           </Route>
           <Route exact path="/home-validate">
             {/* Otherwise, show the Landing page */}
-            <LandingPage />
+            <LandingPage inArchive={inArchiveMode} />
           </Route>
           <Route
             // shows AboutPage at all times (logged in or not)

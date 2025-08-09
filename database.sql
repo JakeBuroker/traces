@@ -35,6 +35,16 @@ CREATE TABLE IF NOT EXISTS evidence (
     FOREIGN KEY (media_type) REFERENCES media(id)
 );
 
+CREATE TABLE IF NOT EXISTS project_settings (
+    id SERIAL PRIMARY KEY,
+    setting_name VARCHAR(100) NOT NULL,
+    setting_value VARCHAR(100) NOT NULL
+);
+
+INSERT INTO project_settings (setting_name, setting_value) VALUES
+('register_enabled', 'true'),
+('upload_enabled', 'true'); -- may add more settings later
+
 INSERT INTO "media" ("type")
 VALUES ('text'),
 ('image'),
@@ -44,4 +54,9 @@ VALUES ('text'),
 
 ALTER TABLE "user" ADD IF NOT EXISTS pronouns VARCHAR(200);
 ALTER TABLE "user" ADD IF NOT EXISTS reset_code VARCHAR(100);
+
+-- migrating data to json
+COPY (SELECT json_agg(row_to_json(t)) FROM evidence t) TO '/Users/Gavin/Documents/Prime/TierThree/Client_Project/Traces/server/table/evidence.json';
+COPY (SELECT json_agg(row_to_json(t)) FROM media t) TO '/Users/Gavin/Documents/Prime/TierThree/Client_Project/Traces/server/table/media.json';
+COPY (SELECT json_agg(row_to_json(t)) FROM user t) TO '/Users/Gavin/Documents/Prime/TierThree/Client_Project/Traces/server/table/user.json';
 

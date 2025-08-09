@@ -73,3 +73,6 @@ TODO.md
 #HTTPS Certificates
 cert.pem
 key.pem
+
+/server/table/passwords
+/server/table/dev/passwords

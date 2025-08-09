@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../modules/pool");
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { filterInArchiveMode } = require('../modules/filterInArchiveMode')
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -21,6 +22,15 @@ const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
 const accessKey = process.env.ACCESS_KEY;
 const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+const archive = process.env.ARCHIVE
+const inArchiveMode = archive === "true"
+const dev = process.env.DEV
+const inDev = dev === 'true'
+const evidence = require(inDev ? '../table/dev/evidenceDev.json' : '../table/evidence.json')
+const users = require(inDev ? '../table/dev/userDev.json' : '../table/user.json')
+
+
+
 
 const s3 = new aws.S3Client({
   credentials: {
@@ -31,38 +41,58 @@ const s3 = new aws.S3Client({
 });
 
 // Gets all evidence that is public.
-router.get("/public", (req, res) => {
-  pool
-    .query(`
-    SELECT 
-    "evidence".id,
-    "evidence"."location",
-    "evidence".title,
-    "evidence".notes,
-    "evidence".aws_key,
-    "evidence".date_posted,
-    "evidence".media_type,
-    "user".username,
-    "user".avatar_url,
-    "user".verification_photo
-    FROM "evidence"
-    JOIN "user" ON "evidence".user_id = "user".id
-    WHERE "evidence".is_public = true;
-    `)
-    .then(async (result) => {
-      let awsGetResult = await awsGet.awsGetURLs(result);
+router.get("/public", async (req, res) => {
+  if (inArchiveMode) {
+    try {
+      const joinedInfo = evidence.map(e => {
+        const user = users.find(user => user.id === e.user_id)
+        return {
+          ...e,
+          ...user,
+          id: e.id // since user also has a property called 'id'
+        }
+      }).filter(e => e.is_public === true)
+      let awsGetResult = await awsGet.awsGetURLs({ rows: joinedInfo });
       awsGetResult = await awsGet.awsGetAvatarULRs(awsGetResult);
       awsGetResult = await awsGet.awsGetVerificationPhotoURLs(awsGetResult);
       res.send(awsGetResult);
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error("Error GET /api/evidence", error);
       res.sendStatus(500);
-    });
+    }
+  } else {
+    pool
+      .query(`
+      SELECT 
+      "evidence".id,
+      "evidence"."location",
+      "evidence".title,
+      "evidence".notes,
+      "evidence".aws_key,
+      "evidence".date_posted,
+      "evidence".media_type,
+      "user".username,
+      "user".avatar_url,
+      "user".verification_photo
+      FROM "evidence"
+      JOIN "user" ON "evidence".user_id = "user".id
+      WHERE "evidence".is_public = true;
+      `)
+      .then(async (result) => {
+        let awsGetResult = await awsGet.awsGetURLs(result);
+        awsGetResult = await awsGet.awsGetAvatarULRs(awsGetResult);
+        awsGetResult = await awsGet.awsGetVerificationPhotoURLs(awsGetResult);
+        res.send(awsGetResult);
+      })
+      .catch((error) => {
+        console.error("Error GET /api/evidence", error);
+        res.sendStatus(500);
+      });
+  }
 });
 
 // Gets all evidence for logged-in user.
-router.get('/', rejectUnauthenticated, (req, res) => {
+router.get('/', rejectUnauthenticated, filterInArchiveMode, (req, res) => {
   const queryText = `
   SELECT * FROM "evidence" WHERE "user_id" = $1;
   `;
@@ -78,7 +108,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 // GET route for the admin
 // GET route for the admin
-router.get('/admin', rejectUnauthenticated, (req, res) => {
+router.get('/admin', rejectUnauthenticated, filterInArchiveMode, (req, res) => {
   if (req.user.role === 2) { // checking for admin status
     const queryText = `
     SELECT 
@@ -111,6 +141,10 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
   }
 });
 
+router.get('/isArchive', (_req, res) => {
+  res.send(inArchiveMode)
+})
+
 
 // This post should post to AWS only if there's a file, otherwise it will post to server with 'text' as the media_type.
 // This POST is expecting in a Form Data:
@@ -118,7 +152,7 @@ router.get('/admin', rejectUnauthenticated, (req, res) => {
 //    notes
 //    file (optional)
 //    Sends 201 'Create' if successful
-router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+router.post('/', rejectUnauthenticated, filterInArchiveMode, upload.single('file'), async (req, res) => {
   const connection = await pool.connect();
   try {
     connection.query("BEGIN");
@@ -174,7 +208,7 @@ router.post('/', rejectUnauthenticated, upload.single('file'), async (req, res) 
 //    phone_number
 //    waiver_acknowledged (must be true or false)
 //    file (optional)
-router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+router.put('/user', rejectUnauthenticated, filterInArchiveMode, upload.single('file'), async (req, res) => {
   const queryText = `
   UPDATE "user" 
   SET 
@@ -229,7 +263,7 @@ router.put('/user', rejectUnauthenticated, upload.single('file'), async (req, re
 });
 
 // Updates to change all is_public to true.
-router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
+router.put('/makeAllPublic', rejectUnauthenticated, filterInArchiveMode, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = `
     UPDATE "evidence" SET "is_public" = true;
@@ -246,7 +280,7 @@ router.put('/makeAllPublic', rejectUnauthenticated, async (req, res) => {
 });
 
 // Updates to change all is_public to false.
-router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
+router.put('/makeAllSecret', rejectUnauthenticated, filterInArchiveMode, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = `
     UPDATE "evidence" SET "is_public" = false;
@@ -263,7 +297,7 @@ router.put('/makeAllSecret', rejectUnauthenticated, async (req, res) => {
 });
 
 // Update to change to toggle the specific is_public of an evidence.
-router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
+router.put('/clearance/:id', rejectUnauthenticated, filterInArchiveMode, async (req, res) => {
   if (req.user.role === 2) {
     const connection = await pool.connect();
     try {
@@ -293,7 +327,7 @@ router.put('/clearance/:id', rejectUnauthenticated, async (req, res) => {
 //    title
 //    notes
 //    file (optional)
-router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+router.put('/update/:id', rejectUnauthenticated, filterInArchiveMode, upload.single('file'), async (req, res) => {
   const connection = await pool.connect();
   try {
     await connection.query("BEGIN");
@@ -341,7 +375,7 @@ router.put('/update/:id', rejectUnauthenticated, upload.single('file'), async (r
 });
 
 // Deletes an entry for an admin or a user.
-router.delete('/delete/:id', rejectUnauthenticated, async (req, res) => {
+router.delete('/delete/:id', rejectUnauthenticated, filterInArchiveMode, async (req, res) => {
   // Check that user is either an admin or the user who created it
   const connection = await pool.connect();
   try {

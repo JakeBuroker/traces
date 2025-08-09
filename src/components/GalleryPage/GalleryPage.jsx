@@ -38,7 +38,7 @@ function GalleryPage() {
     }
 
     if (publicEvidence.length === 0) {
-        return (<div><h2 style={{ textAlign: 'center', paddingTop: '120px', color: '#000000' }}>All Evidence To Be Declassified Soon.</h2></div>);
+        return (<div><h2 style={{ textAlign: 'center', paddingTop: '120px', color: '#000000' }}>Loading evidence . . .</h2></div>);
     } else {
         return (
             <div style={{ padding: "65px 0" }}>
