@@ -21,6 +21,15 @@ const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
 const accessKey = process.env.ACCESS_KEY;
 const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+const archive = process.env.archive
+const inArchiveMode = archive === "true"
+const dev = process.env.dev
+const inDev = dev === 'true'
+const evidence = require(inDev ? '../table/dev/evidenceDev.json' : '../table/evidence.json')
+const users = require(inDev ? '../table/dev/userDev.json' : '../table/user.json')
+
+
+
 
 const s3 = new aws.S3Client({
   credentials: {
@@ -31,34 +40,53 @@ const s3 = new aws.S3Client({
 });
 
 // Gets all evidence that is public.
-router.get("/public", (req, res) => {
-  pool
-    .query(`
-    SELECT 
-    "evidence".id,
-    "evidence"."location",
-    "evidence".title,
-    "evidence".notes,
-    "evidence".aws_key,
-    "evidence".date_posted,
-    "evidence".media_type,
-    "user".username,
-    "user".avatar_url,
-    "user".verification_photo
-    FROM "evidence"
-    JOIN "user" ON "evidence".user_id = "user".id
-    WHERE "evidence".is_public = true;
-    `)
-    .then(async (result) => {
-      let awsGetResult = await awsGet.awsGetURLs(result);
+router.get("/public", async (req, res) => {
+  if (inArchiveMode) {
+    try {
+      const joinedInfo = evidence.map(e => {
+        const user = users.find(user => user.id === e.user_id)
+        return {
+          ...e,
+          ...user, // Todo we don't want to save the password data to github
+        }
+      }).filter(e => e.is_public === true)
+      let awsGetResult = await awsGet.awsGetURLs(joinedInfo);
       awsGetResult = await awsGet.awsGetAvatarULRs(awsGetResult);
       awsGetResult = await awsGet.awsGetVerificationPhotoURLs(awsGetResult);
       res.send(awsGetResult);
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error("Error GET /api/evidence", error);
       res.sendStatus(500);
-    });
+    }
+  } else {
+    pool
+      .query(`
+      SELECT 
+      "evidence".id,
+      "evidence"."location",
+      "evidence".title,
+      "evidence".notes,
+      "evidence".aws_key,
+      "evidence".date_posted,
+      "evidence".media_type,
+      "user".username,
+      "user".avatar_url,
+      "user".verification_photo
+      FROM "evidence"
+      JOIN "user" ON "evidence".user_id = "user".id
+      WHERE "evidence".is_public = true;
+      `)
+      .then(async (result) => {
+        let awsGetResult = await awsGet.awsGetURLs(result);
+        awsGetResult = await awsGet.awsGetAvatarULRs(awsGetResult);
+        awsGetResult = await awsGet.awsGetVerificationPhotoURLs(awsGetResult);
+        res.send(awsGetResult);
+      })
+      .catch((error) => {
+        console.error("Error GET /api/evidence", error);
+        res.sendStatus(500);
+      });
+  }
 });
 
 // Gets all evidence for logged-in user.
