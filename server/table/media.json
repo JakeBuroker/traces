@@ -1,0 +1,22 @@
+[
+  {
+    "xmin" : "785",
+    "id" : 1,
+    "type" : "text"
+  },
+  {
+    "xmin" : "785",
+    "id" : 2,
+    "type" : "image"
+  },
+  {
+    "xmin" : "785",
+    "id" : 3,
+    "type" : "video"
+  },
+  {
+    "xmin" : "785",
+    "id" : 4,
+    "type" : "audio"
+  }
+]
