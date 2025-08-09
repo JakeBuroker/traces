@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import "./Nav.css";
 import { useEffect } from "react";
 
-function Nav() {
+function Nav({ inArchive }) {
   const user = useSelector((store) => store.user);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -92,12 +92,12 @@ function Nav() {
                 <MenuItem onClick={() => navigateTo('/archive')} sx={menuItemStyle}>
                   Archive
                 </MenuItem>
-                <MenuItem onClick={() => navigateTo('/registration')} sx={menuItemStyle}>
+                {!inArchive && <MenuItem onClick={() => navigateTo('/registration')} sx={menuItemStyle}>
                   Register
-                </MenuItem>
-                <MenuItem onClick={() => navigateTo('/login')} sx={menuItemStyle}>
+                </MenuItem>}
+                {!inArchive && <MenuItem onClick={() => navigateTo('/login')} sx={menuItemStyle}>
                   Login
-                </MenuItem>
+                </MenuItem>}
               </>
             ) : (
               <>

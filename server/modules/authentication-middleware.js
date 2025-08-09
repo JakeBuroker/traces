@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const rejectUnauthenticated = (req, res, next) => {
   // check if logged in
   if (req.isAuthenticated()) {

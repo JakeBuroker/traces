@@ -1,5 +1,6 @@
 const express = require('express');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { filterInArchiveMode } = require("../modules/filterInArchiveMode")
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
@@ -92,7 +93,7 @@ transporter.verify((err, success) => {
 });
 
 // Route to get all users (admin only)
-router.get('/users', rejectUnauthenticated, async (req, res) => {
+router.get('/users', rejectUnauthenticated, filterInArchiveMode, async (req, res) => {
   if (req.user.role === 2) {
     const queryText = 'SELECT id, username, email, full_name, role, phone_number, avatar_url, verification_photo, video_watched, pronouns FROM "user"';
     try {
@@ -110,7 +111,7 @@ router.get('/users', rejectUnauthenticated, async (req, res) => {
 });
 
 // Route to get all evidence for a specific user (admin only)
-router.get('/:id/evidence', rejectUnauthenticated, async (req, res) => {
+router.get('/:id/evidence', rejectUnauthenticated, filterInArchiveMode, async (req, res) => {
   if (req.user.role === 2) {
     const userId = req.params.id;
     const queryText = 'SELECT * FROM "evidence" WHERE user_id = $1';
@@ -127,7 +128,7 @@ router.get('/:id/evidence', rejectUnauthenticated, async (req, res) => {
 });
 
 // Handles Ajax request for user information if user is authenticated
-router.get('/', rejectUnauthenticated, async (req, res) => {
+router.get('/', rejectUnauthenticated, filterInArchiveMode, async (req, res) => {
   const queryText = 'SELECT * FROM "user" WHERE id = $1';
   try {
     const result = await pool.query(queryText, [req.user.id]);
@@ -141,7 +142,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 });
 
 // Route for admin to delete a user
-router.delete('/:id', rejectUnauthenticated, async (req, res) => {
+router.delete('/:id', rejectUnauthenticated, filterInArchiveMode, async (req, res) => {
   const userId = req.params.id;
   const queryText = 'DELETE FROM "user" WHERE id = $1 RETURNING *';
 
@@ -211,7 +212,7 @@ router.post('/register', upload.single('verification_photo'), async (req, res) =
 });
 
 // Route to update video watched status
-router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
+router.put('/watched/:id', rejectUnauthenticated, filterInArchiveMode, async (req, res) => {
   const queryText = `
     UPDATE "user"
     SET "video_watched" = true
@@ -241,7 +242,7 @@ router.put('/watched/:id', rejectUnauthenticated, async (req, res) => {
 });
 
 // Route to update user information by admin
-router.put('/admin/:id', rejectUnauthenticated, upload.single('file'), async (req, res) => {
+router.put('/admin/:id', rejectUnauthenticated, filterInArchiveMode, upload.single('file'), async (req, res) => {
   const userId = req.params.id;
   const { username, email, phone_number, role, full_name, video_watched } = req.body;
 
