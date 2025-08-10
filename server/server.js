@@ -15,13 +15,25 @@ const PORT = process.env.PORT || 5001;
 const app = express();
 
 // Middleware to redirect non-www to www
+// app.use((req, res, next) => {
+//   if (!req.headers.host.startsWith('www.') && process.env.NODE_ENV === 'production') {
+//     res.redirect(301, 'https://www.' + req.headers.host + req.originalUrl);
+//   } else {
+//     next();
+//   }
+// });
 app.use((req, res, next) => {
-  if (!req.headers.host.startsWith('www.') && process.env.NODE_ENV === 'production') {
-    res.redirect(301, 'https://www.' + req.headers.host + req.originalUrl);
+  const isProd = process.env.NODE_ENV === 'production';
+  const host = req.headers.host;
+  
+  if (isProd && host && !host.startsWith('www.') && host.includes('traces.website')) {
+    res.redirect(301, 'https://www.' + host + req.originalUrl);
   } else {
     next();
   }
 });
+
+
 
 // Set up Express to trust proxies
 app.set('trust proxy', 1);
