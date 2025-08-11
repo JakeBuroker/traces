@@ -303,7 +303,7 @@ router.put('/admin/:id', rejectUnauthenticated, filterInArchiveMode, upload.sing
 });
 
 // Handles login form authenticate/login POST
-router.post('/login', userStrategy.authenticate('local'), (req, res) => {
+router.post('/login', filterInArchiveMode, userStrategy.authenticate('local'), (req, res) => {
   res.sendStatus(200);
 });
 
@@ -314,7 +314,7 @@ router.post('/logout', (req, res) => {
 });
 
 // Check if username or email already exists
-router.post('/check', async (req, res) => {
+router.post('/check', filterInArchiveMode, async (req, res) => {
   const { username, email } = req.body;
   const queryText = 'SELECT username, email FROM "user" WHERE username = $1 OR email = $2';
 
@@ -339,7 +339,7 @@ router.post('/check', async (req, res) => {
 });
 
 // Route to update the user's password
-router.put('/passwordupdated', async (req, res) => {
+router.put('/passwordupdated', filterInArchiveMode, async (req, res) => {
   const hashedPassword = await encryptLib.encryptPassword(req.body[0][0])
   const queryParams = [hashedPassword, req.body[0][1]];
   const sqlText = `UPDATE "user" SET "password" = $1 WHERE "email" = $2;`;
