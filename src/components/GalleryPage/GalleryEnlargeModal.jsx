@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dialog, DialogContent, Grid, Typography, Avatar } from '@mui/material';
 import { DateTime } from "luxon";
 

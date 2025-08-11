@@ -1,7 +1,7 @@
 [
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-08-06 20:52:09.31399",
+    "date_posted" : "2024-08-06T20:52:09.31399",
     "id" : 6,
     "notes" : "Walking towards",
     "title" : "Found her",
@@ -13,7 +13,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-08-06 20:52:59.872987",
+    "date_posted" : "2024-08-06T20:52:59.872987",
     "id" : 7,
     "notes" : "Interesting",
     "title" : "Getting a call",
@@ -25,7 +25,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-08-06 21:07:06.992394",
+    "date_posted" : "2024-08-06T21:07:06.992394",
     "id" : 8,
     "notes" : "",
     "title" : "Dead flowers",
@@ -37,7 +37,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-08-06 21:18:39.382323",
+    "date_posted" : "2024-08-06T21:18:39.382323",
     "id" : 9,
     "notes" : "It's interesting trying to set me off the trail a little",
     "title" : "Playing podcast about death",
@@ -49,7 +49,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-09 13:26:00.657633",
+    "date_posted" : "2024-09-09T13:26:00.657633",
     "id" : 18,
     "notes" : "it is all strange and mysterious... i feel like i am lost in the maze of suspicion and intrigue... i am trying to get to the bottom of it... but abandoning myself to the mission with the spirit of surprise and discovery... come what may!!!",
     "title" : "Supporting Evidence",
@@ -61,7 +61,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-09 13:27:07.653406",
+    "date_posted" : "2024-09-09T13:27:07.653406",
     "id" : 19,
     "notes" : "there she is... the mystery woman",
     "title" : "Supporting Evidence",
@@ -73,7 +73,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-09 13:28:37.458604",
+    "date_posted" : "2024-09-09T13:28:37.458604",
     "id" : 20,
     "notes" : "Gonthier is up to no good... What is happening at the Hewing???",
     "title" : "Supporting Evidence",
@@ -85,7 +85,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-13 01:41:06.380841",
+    "date_posted" : "2024-09-13T01:41:06.380841",
     "id" : 21,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -97,7 +97,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-13 01:42:00.798527",
+    "date_posted" : "2024-09-13T01:42:00.798527",
     "id" : 22,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -109,7 +109,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-13 13:28:11.833482",
+    "date_posted" : "2024-09-13T13:28:11.833482",
     "id" : 23,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -121,7 +121,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-18 01:23:42.081443",
+    "date_posted" : "2024-09-18T01:23:42.081443",
     "id" : 24,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -133,7 +133,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-18 01:26:48.570074",
+    "date_posted" : "2024-09-18T01:26:48.570074",
     "id" : 25,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -145,7 +145,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-19 01:47:57.143967",
+    "date_posted" : "2024-09-19T01:47:57.143967",
     "id" : 26,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -157,7 +157,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-19 01:55:14.909875",
+    "date_posted" : "2024-09-19T01:55:14.909875",
     "id" : 27,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -169,7 +169,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-09-25 02:01:53.715078",
+    "date_posted" : "2024-09-25T02:01:53.715078",
     "id" : 28,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -181,7 +181,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:52:48.39778",
+    "date_posted" : "2024-10-02T16:52:48.39778",
     "id" : 29,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -193,7 +193,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:53:32.871324",
+    "date_posted" : "2024-10-02T16:53:32.871324",
     "id" : 30,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -205,7 +205,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:53:56.989755",
+    "date_posted" : "2024-10-02T16:53:56.989755",
     "id" : 31,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -217,7 +217,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:54:17.627919",
+    "date_posted" : "2024-10-02T16:54:17.627919",
     "id" : 32,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -229,7 +229,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:54:36.013391",
+    "date_posted" : "2024-10-02T16:54:36.013391",
     "id" : 33,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -241,7 +241,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:54:55.508875",
+    "date_posted" : "2024-10-02T16:54:55.508875",
     "id" : 34,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -253,7 +253,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:55:14.012372",
+    "date_posted" : "2024-10-02T16:55:14.012372",
     "id" : 35,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -265,7 +265,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:55:29.626652",
+    "date_posted" : "2024-10-02T16:55:29.626652",
     "id" : 36,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -277,7 +277,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:56:04.155432",
+    "date_posted" : "2024-10-02T16:56:04.155432",
     "id" : 37,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -289,7 +289,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-02 16:56:30.64632",
+    "date_posted" : "2024-10-02T16:56:30.64632",
     "id" : 38,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -301,7 +301,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-08 23:43:37.498993",
+    "date_posted" : "2024-10-08T23:43:37.498993",
     "id" : 39,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -313,7 +313,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-08 23:46:39.239152",
+    "date_posted" : "2024-10-08T23:46:39.239152",
     "id" : 40,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -325,7 +325,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-08 23:56:47.802991",
+    "date_posted" : "2024-10-08T23:56:47.802991",
     "id" : 41,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -337,7 +337,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-08 23:58:52.13212",
+    "date_posted" : "2024-10-08T23:58:52.13212",
     "id" : 42,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -349,7 +349,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-08 23:59:37.384945",
+    "date_posted" : "2024-10-08T23:59:37.384945",
     "id" : 43,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -361,7 +361,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-20 18:33:35.188877",
+    "date_posted" : "2024-10-20T18:33:35.188877",
     "id" : 44,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -373,7 +373,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-21 18:01:08.08158",
+    "date_posted" : "2024-10-21T18:01:08.08158",
     "id" : 46,
     "notes" : "I SPOTTED HER THERE IN THE TREES!!!",
     "title" : "E-VIDENCE",
@@ -385,7 +385,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-21 18:01:15.014159",
+    "date_posted" : "2024-10-21T18:01:15.014159",
     "id" : 47,
     "notes" : "I SAW HER!",
     "title" : "Supporting Evidence",
@@ -397,7 +397,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 00:12:09.566984",
+    "date_posted" : "2024-10-22T00:12:09.566984",
     "id" : 48,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -409,7 +409,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 00:12:31.437761",
+    "date_posted" : "2024-10-22T00:12:31.437761",
     "id" : 49,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -421,7 +421,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 00:13:11.347337",
+    "date_posted" : "2024-10-22T00:13:11.347337",
     "id" : 50,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -433,7 +433,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 00:13:55.30878",
+    "date_posted" : "2024-10-22T00:13:55.30878",
     "id" : 51,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -445,7 +445,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 00:14:18.060857",
+    "date_posted" : "2024-10-22T00:14:18.060857",
     "id" : 52,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -457,7 +457,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 00:14:36.541316",
+    "date_posted" : "2024-10-22T00:14:36.541316",
     "id" : 53,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -469,7 +469,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 00:15:01.225179",
+    "date_posted" : "2024-10-22T00:15:01.225179",
     "id" : 54,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -481,7 +481,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 01:25:47.748334",
+    "date_posted" : "2024-10-22T01:25:47.748334",
     "id" : 55,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -493,7 +493,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 01:26:24.700469",
+    "date_posted" : "2024-10-22T01:26:24.700469",
     "id" : 56,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -505,7 +505,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 01:27:14.55151",
+    "date_posted" : "2024-10-22T01:27:14.55151",
     "id" : 57,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -517,7 +517,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 22:29:53.97111",
+    "date_posted" : "2024-10-22T22:29:53.97111",
     "id" : 58,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -529,7 +529,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-22 22:30:11.891006",
+    "date_posted" : "2024-10-22T22:30:11.891006",
     "id" : 59,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -541,7 +541,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 17:56:13.313112",
+    "date_posted" : "2024-10-23T17:56:13.313112",
     "id" : 60,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -553,7 +553,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 17:56:34.489273",
+    "date_posted" : "2024-10-23T17:56:34.489273",
     "id" : 61,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -565,7 +565,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 17:56:59.631838",
+    "date_posted" : "2024-10-23T17:56:59.631838",
     "id" : 62,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -577,7 +577,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 17:57:43.426216",
+    "date_posted" : "2024-10-23T17:57:43.426216",
     "id" : 63,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -589,7 +589,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 17:58:06.321846",
+    "date_posted" : "2024-10-23T17:58:06.321846",
     "id" : 64,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -601,7 +601,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 18:58:35.333511",
+    "date_posted" : "2024-10-23T18:58:35.333511",
     "id" : 66,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -613,7 +613,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 19:00:16.021182",
+    "date_posted" : "2024-10-23T19:00:16.021182",
     "id" : 67,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -625,7 +625,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 19:00:44.825891",
+    "date_posted" : "2024-10-23T19:00:44.825891",
     "id" : 68,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -637,7 +637,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 19:04:14.742929",
+    "date_posted" : "2024-10-23T19:04:14.742929",
     "id" : 69,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -649,7 +649,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 19:07:10.383609",
+    "date_posted" : "2024-10-23T19:07:10.383609",
     "id" : 71,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -661,7 +661,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 19:07:33.202828",
+    "date_posted" : "2024-10-23T19:07:33.202828",
     "id" : 72,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -673,7 +673,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 19:11:59.89099",
+    "date_posted" : "2024-10-23T19:11:59.89099",
     "id" : 73,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -685,7 +685,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 19:12:52.233133",
+    "date_posted" : "2024-10-23T19:12:52.233133",
     "id" : 74,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -697,7 +697,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 19:13:13.906996",
+    "date_posted" : "2024-10-23T19:13:13.906996",
     "id" : 75,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -709,7 +709,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 23:07:01.471657",
+    "date_posted" : "2024-10-23T23:07:01.471657",
     "id" : 76,
     "notes" : "Real candles left burning in the empty room",
     "title" : "Supporting Evidence",
@@ -721,7 +721,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 23:09:38.690866",
+    "date_posted" : "2024-10-23T23:09:38.690866",
     "id" : 77,
     "notes" : "An altar of sorts. \r\nWith video of…?\r\nA dead person?",
     "title" : "Supporting Evidence",
@@ -733,7 +733,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 23:10:48.391584",
+    "date_posted" : "2024-10-23T23:10:48.391584",
     "id" : 78,
     "notes" : "A message?\r\nFor whom?",
     "title" : "Supporting Evidence",
@@ -745,7 +745,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 23:11:42.971943",
+    "date_posted" : "2024-10-23T23:11:42.971943",
     "id" : 79,
     "notes" : "Mother?",
     "title" : "Supporting Evidence",
@@ -757,7 +757,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 23:13:00.541168",
+    "date_posted" : "2024-10-23T23:13:00.541168",
     "id" : 80,
     "notes" : "Disguises?",
     "title" : "Supporting Evidence",
@@ -769,7 +769,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 23:14:09.23484",
+    "date_posted" : "2024-10-23T23:14:09.23484",
     "id" : 81,
     "notes" : "Outfits to watch for?",
     "title" : "Supporting Evidence",
@@ -781,7 +781,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 23:38:42.037454",
+    "date_posted" : "2024-10-23T23:38:42.037454",
     "id" : 82,
     "notes" : "Suspicious person!",
     "title" : "Supporting Evidence",
@@ -793,7 +793,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-23 23:46:33.790977",
+    "date_posted" : "2024-10-23T23:46:33.790977",
     "id" : 83,
     "notes" : "License plate of suspicious car ",
     "title" : "Classic Cadillac",
@@ -805,7 +805,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 01:12:26.012324",
+    "date_posted" : "2024-10-24T01:12:26.012324",
     "id" : 84,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -817,7 +817,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:32:35.492657",
+    "date_posted" : "2024-10-24T04:32:35.492657",
     "id" : 85,
     "notes" : "Tom the driver",
     "title" : "Supporting Evidence",
@@ -829,7 +829,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:34:00.981335",
+    "date_posted" : "2024-10-24T04:34:00.981335",
     "id" : 86,
     "notes" : "Truck with Sophie’s curated death roses",
     "title" : "Supporting Evidence",
@@ -841,7 +841,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:35:01.883949",
+    "date_posted" : "2024-10-24T04:35:01.883949",
     "id" : 87,
     "notes" : "Sophie holding red book while talking to me",
     "title" : "Supporting Evidence",
@@ -853,7 +853,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:36:01.107084",
+    "date_posted" : "2024-10-24T04:36:01.107084",
     "id" : 88,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -865,7 +865,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:37:16.017365",
+    "date_posted" : "2024-10-24T04:37:16.017365",
     "id" : 89,
     "notes" : "Sophie in truck with roses",
     "title" : "Supporting Evidence",
@@ -877,7 +877,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:38:21.308116",
+    "date_posted" : "2024-10-24T04:38:21.308116",
     "id" : 90,
     "notes" : "Sophie’s book at Spyhouse ",
     "title" : "Supporting Evidence",
@@ -889,7 +889,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:39:26.510769",
+    "date_posted" : "2024-10-24T04:39:26.510769",
     "id" : 91,
     "notes" : "Sophie at Spyhouse",
     "title" : "Supporting Evidence",
@@ -901,7 +901,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:40:48.173198",
+    "date_posted" : "2024-10-24T04:40:48.173198",
     "id" : 92,
     "notes" : "Pedestrian\/spyhouse customer in skyway",
     "title" : "Supporting Evidence",
@@ -913,7 +913,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:41:40.422255",
+    "date_posted" : "2024-10-24T04:41:40.422255",
     "id" : 93,
     "notes" : "Martine ",
     "title" : "Supporting Evidence",
@@ -925,7 +925,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:42:35.813987",
+    "date_posted" : "2024-10-24T04:42:35.813987",
     "id" : 94,
     "notes" : "Hotel room video playing ",
     "title" : "Supporting Evidence",
@@ -937,7 +937,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 04:45:00.656115",
+    "date_posted" : "2024-10-24T04:45:00.656115",
     "id" : 95,
     "notes" : "The initial meeting spot was not northeast corner but apparently the southwest corner; ",
     "title" : "Supporting Evidence",
@@ -949,7 +949,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 11:06:20.909541",
+    "date_posted" : "2024-10-24T11:06:20.909541",
     "id" : 96,
     "notes" : "suspicious person seen in lobby, how obfuscated can you be before you’re seen in a tower of glass",
     "title" : "Supporting Evidence",
@@ -961,7 +961,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 11:08:22.066279",
+    "date_posted" : "2024-10-24T11:08:22.066279",
     "id" : 98,
     "notes" : "curious blood? sample? \r\n\r\n518\r\nh. h.",
     "title" : "Supporting Evidence",
@@ -973,7 +973,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-24 11:09:33.001053",
+    "date_posted" : "2024-10-24T11:09:33.001053",
     "id" : 99,
     "notes" : "check local L&B if person of interest slips away again",
     "title" : "Supporting Evidence",
@@ -985,7 +985,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:23:25.949963",
+    "date_posted" : "2024-10-25T01:23:25.949963",
     "id" : 100,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -997,7 +997,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:23:51.89483",
+    "date_posted" : "2024-10-25T01:23:51.89483",
     "id" : 101,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1009,7 +1009,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:24:15.682408",
+    "date_posted" : "2024-10-25T01:24:15.682408",
     "id" : 102,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1021,7 +1021,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:24:36.601661",
+    "date_posted" : "2024-10-25T01:24:36.601661",
     "id" : 103,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1033,7 +1033,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:24:58.442001",
+    "date_posted" : "2024-10-25T01:24:58.442001",
     "id" : 104,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1045,7 +1045,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:25:30.542087",
+    "date_posted" : "2024-10-25T01:25:30.542087",
     "id" : 105,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1057,7 +1057,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:25:59.052738",
+    "date_posted" : "2024-10-25T01:25:59.052738",
     "id" : 106,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1069,7 +1069,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:26:18.742776",
+    "date_posted" : "2024-10-25T01:26:18.742776",
     "id" : 107,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1081,7 +1081,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:26:35.958677",
+    "date_posted" : "2024-10-25T01:26:35.958677",
     "id" : 108,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1093,7 +1093,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:26:53.812839",
+    "date_posted" : "2024-10-25T01:26:53.812839",
     "id" : 109,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1105,7 +1105,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:27:46.768867",
+    "date_posted" : "2024-10-25T01:27:46.768867",
     "id" : 110,
     "notes" : "",
     "title" : "Footage Guy",
@@ -1117,7 +1117,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:28:23.507169",
+    "date_posted" : "2024-10-25T01:28:23.507169",
     "id" : 111,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1129,7 +1129,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:28:58.31822",
+    "date_posted" : "2024-10-25T01:28:58.31822",
     "id" : 112,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1141,7 +1141,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 01:31:06.059477",
+    "date_posted" : "2024-10-25T01:31:06.059477",
     "id" : 113,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1153,7 +1153,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 21:10:09.542962",
+    "date_posted" : "2024-10-25T21:10:09.542962",
     "id" : 115,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1165,7 +1165,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 21:10:47.963639",
+    "date_posted" : "2024-10-25T21:10:47.963639",
     "id" : 116,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1177,7 +1177,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 21:11:28.055552",
+    "date_posted" : "2024-10-25T21:11:28.055552",
     "id" : 117,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1189,7 +1189,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 21:11:54.261962",
+    "date_posted" : "2024-10-25T21:11:54.261962",
     "id" : 118,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1201,7 +1201,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 21:12:20.406941",
+    "date_posted" : "2024-10-25T21:12:20.406941",
     "id" : 119,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1213,7 +1213,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-25 21:13:01.362744",
+    "date_posted" : "2024-10-25T21:13:01.362744",
     "id" : 120,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1225,7 +1225,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-28 14:20:36.460947",
+    "date_posted" : "2024-10-28T14:20:36.460947",
     "id" : 121,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1237,7 +1237,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-28 14:21:10.822971",
+    "date_posted" : "2024-10-28T14:21:10.822971",
     "id" : 122,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1249,7 +1249,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-28 14:21:31.964707",
+    "date_posted" : "2024-10-28T14:21:31.964707",
     "id" : 123,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1261,7 +1261,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-28 14:21:59.036618",
+    "date_posted" : "2024-10-28T14:21:59.036618",
     "id" : 124,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1273,7 +1273,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-28 18:55:56.495381",
+    "date_posted" : "2024-10-28T18:55:56.495381",
     "id" : 125,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1285,7 +1285,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 02:34:36.550712",
+    "date_posted" : "2024-10-29T02:34:36.550712",
     "id" : 126,
     "notes" : "Sophie montre, dans le cadre d’un interview, l’importance de son exposition À toi de faire ma mignonne, tout en rajoutant des archives journalistiques qui retracent son engagement féministe afin de se détacher le plus possible de la figure du Minotaure. L’impératrice dépasse le Minotaure.",
     "title" : "Entre-deux ",
@@ -1297,7 +1297,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 02:42:45.133639",
+    "date_posted" : "2024-10-29T02:42:45.133639",
     "id" : 129,
     "notes" : "j’ai la même boîte à bijoux que SClle",
     "title" : "finir le post-espoir en beauté ",
@@ -1309,7 +1309,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 02:49:27.742505",
+    "date_posted" : "2024-10-29T02:49:27.742505",
     "id" : 130,
     "notes" : "Le mot de passe qui donne accès à la section secrète est «sophiecalle ». La section retrace 10 ans de performances métaconceptuelles autour de son travail. Ex: une intervention aux Fantômes d’Orsay.",
     "title" : "escale",
@@ -1321,7 +1321,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 02:54:53.518748",
+    "date_posted" : "2024-10-29T02:54:53.518748",
     "id" : 131,
     "notes" : "Je vois mes Créatures du hasard dans la bibliothèque de Sophie au Cailar… les voyez-vous?",
     "title" : "Créatures du Cailar",
@@ -1333,7 +1333,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 02:59:07.680921",
+    "date_posted" : "2024-10-29T02:59:07.680921",
     "id" : 132,
     "notes" : "Récit qui retrace les limites (à ne pas dépasser) dans notre rapport d’admiration envers une artiste conceptuelle consacrée. PS: elle a réussi à transformer tous ses deuils en incroyables projets… elle ne connaît pas la douleur. Elle sait tout transformer.",
     "title" : "Ravissement ",
@@ -1345,7 +1345,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 03:02:23.694203",
+    "date_posted" : "2024-10-29T03:02:23.694203",
     "id" : 133,
     "notes" : "Ou bien… est-ce Sophie qui m’a espionnée?",
     "title" : "Parlez-vous français?",
@@ -1357,7 +1357,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 19:20:13.978658",
+    "date_posted" : "2024-10-29T19:20:13.978658",
     "id" : 134,
     "notes" : "Claire ou Clara (à confirmer).",
     "title" : "Les cheveux de ",
@@ -1369,7 +1369,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 19:21:56.967708",
+    "date_posted" : "2024-10-29T19:21:56.967708",
     "id" : 135,
     "notes" : "lorsque je fais ma mignonne ",
     "title" : "Chambre à partager",
@@ -1381,7 +1381,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 19:24:57.578774",
+    "date_posted" : "2024-10-29T19:24:57.578774",
     "id" : 136,
     "notes" : "(Le prénom de mon chat)",
     "title" : "Sophie Kahlo",
@@ -1393,7 +1393,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 19:26:45.77202",
+    "date_posted" : "2024-10-29T19:26:45.77202",
     "id" : 137,
     "notes" : "future artiste sans enfants",
     "title" : "Cadeau d’anniversaire ",
@@ -1405,7 +1405,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:01:42.855223",
+    "date_posted" : "2024-10-29T22:01:42.855223",
     "id" : 139,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1417,7 +1417,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:02:05.68997",
+    "date_posted" : "2024-10-29T22:02:05.68997",
     "id" : 140,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1429,7 +1429,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:02:31.498657",
+    "date_posted" : "2024-10-29T22:02:31.498657",
     "id" : 141,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1441,7 +1441,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:02:57.817668",
+    "date_posted" : "2024-10-29T22:02:57.817668",
     "id" : 142,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1453,7 +1453,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:03:18.01853",
+    "date_posted" : "2024-10-29T22:03:18.01853",
     "id" : 143,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1465,7 +1465,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:03:55.307981",
+    "date_posted" : "2024-10-29T22:03:55.307981",
     "id" : 144,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1477,7 +1477,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:04:24.468447",
+    "date_posted" : "2024-10-29T22:04:24.468447",
     "id" : 145,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1489,7 +1489,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:04:58.089627",
+    "date_posted" : "2024-10-29T22:04:58.089627",
     "id" : 146,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1501,7 +1501,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:05:28.452883",
+    "date_posted" : "2024-10-29T22:05:28.452883",
     "id" : 147,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1513,7 +1513,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:53:11.607412",
+    "date_posted" : "2024-10-29T22:53:11.607412",
     "id" : 148,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1525,7 +1525,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:53:35.127383",
+    "date_posted" : "2024-10-29T22:53:35.127383",
     "id" : 149,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1537,7 +1537,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:54:10.710466",
+    "date_posted" : "2024-10-29T22:54:10.710466",
     "id" : 150,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1549,7 +1549,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 22:56:57.585122",
+    "date_posted" : "2024-10-29T22:56:57.585122",
     "id" : 151,
     "notes" : "Came to Traces from a friend’s mom’s funeral the day after my own mom reported a dream of losing me downtown, only to find me safe with my (deceased) grandmother. Uncanny in the extreme to have the subject muse on the passing of her own mother after reuniting her with the red notebook. ",
     "title" : "Supporting Evidence",
@@ -1561,7 +1561,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:33:41.787356",
+    "date_posted" : "2024-10-29T23:33:41.787356",
     "id" : 152,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1573,7 +1573,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:34:02.8841",
+    "date_posted" : "2024-10-29T23:34:02.8841",
     "id" : 153,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1585,7 +1585,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:34:17.220456",
+    "date_posted" : "2024-10-29T23:34:17.220456",
     "id" : 154,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1597,7 +1597,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:34:31.208074",
+    "date_posted" : "2024-10-29T23:34:31.208074",
     "id" : 155,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1609,7 +1609,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:34:40.699949",
+    "date_posted" : "2024-10-29T23:34:40.699949",
     "id" : 156,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1621,7 +1621,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:34:53.050099",
+    "date_posted" : "2024-10-29T23:34:53.050099",
     "id" : 157,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1633,7 +1633,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:35:17.376088",
+    "date_posted" : "2024-10-29T23:35:17.376088",
     "id" : 158,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1645,7 +1645,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:35:27.426186",
+    "date_posted" : "2024-10-29T23:35:27.426186",
     "id" : 159,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1657,7 +1657,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:35:35.372025",
+    "date_posted" : "2024-10-29T23:35:35.372025",
     "id" : 160,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1669,7 +1669,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:35:45.092787",
+    "date_posted" : "2024-10-29T23:35:45.092787",
     "id" : 161,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1681,7 +1681,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-29 23:35:52.890634",
+    "date_posted" : "2024-10-29T23:35:52.890634",
     "id" : 162,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1693,7 +1693,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 02:52:02.64248",
+    "date_posted" : "2024-10-30T02:52:02.64248",
     "id" : 163,
     "notes" : "Une question. Quinze minutes. Un trajet: Montréal\/Paris.",
     "title" : "Café ",
@@ -1705,7 +1705,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 02:53:59.316082",
+    "date_posted" : "2024-10-30T02:53:59.316082",
     "id" : 164,
     "notes" : "2015",
     "title" : "Première rencontre ",
@@ -1717,7 +1717,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 20:34:06.422439",
+    "date_posted" : "2024-10-30T20:34:06.422439",
     "id" : 165,
     "notes" : "Subject observed talking on cellphone on stairway of Minneapolis Central Library.  I am trying to overhear her conversation with little success.",
     "title" : "Subject of investigation",
@@ -1729,7 +1729,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 20:35:49.740549",
+    "date_posted" : "2024-10-30T20:35:49.740549",
     "id" : 166,
     "notes" : "",
     "title" : "Shocking completion of assignment",
@@ -1741,7 +1741,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 21:30:11.566994",
+    "date_posted" : "2024-10-30T21:30:11.566994",
     "id" : 167,
     "notes" : "I keep thinking about something Sophie said after I returned her notebook…about how “objects become obsessions.” She gestured to her notebook, but I don’t think that’s the object she meant. What is it really? Her mother, death, the aesthetic image of her mother, of being the body preserved in mourning, like all of those dried flowers?",
     "title" : "Reflections ",
@@ -1753,7 +1753,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 21:30:47.716855",
+    "date_posted" : "2024-10-30T21:30:47.716855",
     "id" : 168,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1765,7 +1765,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 21:31:20.568526",
+    "date_posted" : "2024-10-30T21:31:20.568526",
     "id" : 169,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1777,7 +1777,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 21:31:44.255069",
+    "date_posted" : "2024-10-30T21:31:44.255069",
     "id" : 170,
     "notes" : "mother dearest",
     "title" : "Supporting Evidence",
@@ -1789,7 +1789,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 21:34:21.360108",
+    "date_posted" : "2024-10-30T21:34:21.360108",
     "id" : 171,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1801,7 +1801,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-30 21:35:09.502493",
+    "date_posted" : "2024-10-30T21:35:09.502493",
     "id" : 172,
     "notes" : "It’s always about absence.",
     "title" : "Supporting Evidence",
@@ -1813,7 +1813,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 02:16:49.057605",
+    "date_posted" : "2024-10-31T02:16:49.057605",
     "id" : 173,
     "notes" : "Field Report: Subject Analysis - Traces — Mission Code: Traces — Date: 10\/30\/2024 — Operative Status: Defector — Notes for Evidence Gathering:  Initial Contact with Agency: Received an encrypted briefing. Instructions were clear but left little room for trust. Early surveillance was intense—I felt eyes on me from all directions, though I could never confirm by whom. The experience blurred the line between reality and performance in unsettling ways. —  Target Acquisition: Located the target in the designated area. They seemed panicked but measured, aware of my presence. Each look felt like a silent challenge, drawing me into a strange mix of duty and doubt. I began questioning if this was still the mission or something more personal. —  Critical Conflict - Defection Decision: Midway, I received a message from the Agency: “Trust broken is trust lost.” This forced a choice—stick to orders or follow an emerging sense of loyalty to the target. I knew I had to reach them without alerting the Agency. Meeting the target, we exchanged information as planned, though it left me with an unsettling mix of relief and apprehension. —  Final Interaction with Target: The target’s revelations dismantled everything I thought I knew—motives, alliances, all called into question. As I handed over the evidence, I felt the shift: this might very well end my assignment with the Agency. —  Exit Strategy: Evading the surveillance team on my way out, the target’s parting words haunted me: “They were watching all along.” By the end, it was impossible to separate reality from the layers of the mission. —  Closing Notes:  This mission left me with questions, an eagerness to go deeper. If there’s another chance to return to this world, I’d take it. There’s so much left to uncover.",
     "title" : "Mission Debrief: Traces",
@@ -1825,7 +1825,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 02:31:58.292987",
+    "date_posted" : "2024-10-31T02:31:58.292987",
     "id" : 174,
     "notes" : "This photograph captures RS John Hinckley in a vehicle, under escort, possibly by Secret Service or another high-level surveillance unit. While Hinckley’s connection to the mission remains unclear, intelligence suggests he may have ties to the broader network overseeing the Traces operation. His presence could indicate deeper, concealed affiliations tied to the original architect of this mission—a theory worth further investigation to uncover potential links between his movements and the surveillance apparatus established by the target’s mother.",
     "title" : "Photo Analysis - RS John Hinckley Transport",
@@ -1837,7 +1837,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 02:40:23.704616",
+    "date_posted" : "2024-10-31T02:40:23.704616",
     "id" : 175,
     "notes" : "Item: Sony ICF-PRO80 Radio Receiver\r\nLocation: Retrieved from Surveillance Site\r\n\r\nReport Notes:\r\nThis image documents the Sony ICF-PRO80, a portable radio receiver known for its versatility in intercepting various broadcast frequencies. Discovered at a surveillance site, this device was potentially utilized to monitor and intercept communications exchanged between myself and the Agency throughout the Traces mission.\r\n\r\nGiven its capabilities, the ICF-PRO80 could have provided the necessary access to track real-time intel during the mission, suggesting it may have been placed intentionally to manipulate our communications, filtering what the Agency chose for me to hear. The presence of this technology raises questions about the true extent of surveillance and whether the Agency itself was aware of third-party interception, possibly orchestrated by the target’s late mother. If so, this might have been part of the larger apparatus designed to manage and distort my directives, shaping my decisions toward defection.\r\n\r\nThe implications are concerning: was I responding to genuine Agency instructions or pre-filtered transmissions engineered by a hidden operator? This device remains a vital piece of evidence in understanding the layered complexity of the mission’s objectives.",
     "title" : "Photographic Evidence - Article 2",
@@ -1849,7 +1849,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 02:55:13.09722",
+    "date_posted" : "2024-10-31T02:55:13.09722",
     "id" : 176,
     "notes" : "Recording: Phone Conversation - Hideaki Anno and Unknown Female (Sex Worker) — \r\nContent Analysis: Suspected Obfuscated Communication — \r\n\r\nReport Notes:\r\nThe conversation between Hideaki Anno and the unnamed female reveals more than simple dialogue. On the surface, their exchange appears innocuous—small talk, casual flirtations, and discussions of future plans. However, dissecting the conversation uncovers a deeper, layered communication strategy potentially orchestrated to influence, mislead, or activate latent agents tied to the Traces mission. — \r\n\r\nConversation Analysis and Suspected Codes:\r\n\r\nOver the ten-minute call, Anno weaves casual phrases with hidden intentions, blending in coded phrases about time, places, and relationships. Here’s a breakdown of some potential codes embedded in the conversation:\r\n\r\n    Time References - “Maybe tomorrow, or whenever you’re ready”\r\n    Anno casually mentions “tomorrow” multiple times, giving an air of flexibility. But to an experienced listener, this could signify a countdown—marking when the next stage of the mission begins. The phrase \"whenever you're ready\" may imply a broader mission readiness, suggesting agents activate when prepared, rather than at a set time. This phrase might prompt agents to act when conditions are right, rather than by instruction. — \r\n\r\n    Disguised Locations - “I’ll meet you at the usual place, the one with the red lanterns”\r\n    While on the surface, this line suggests a casual meeting spot, “the red lanterns” may refer to a location embedded in Traces’ surveillance network, used as a safe house or rendezvous point. Additionally, it could serve as a code for a specific type of information—perhaps “red” indicating classified or restricted files. This choice of phraseology is familiar in espionage circles, where innocuous terms denote places or levels of access. — \r\n\r\n    Emotional Triggers - “I remember that night, how we felt…”\r\n    Anno brings up a shared “memory” in a seemingly intimate tone, but this could be a psychological cue. In covert operations, agents can use shared or fabricated memories to establish familiarity and trust. Here, the reference may be an attempt to prompt the female listener into a specific emotional state, rendering her more susceptible to influence or extraction of information. This memory serves as an anchor—a touchstone used to evoke compliance or emotional vulnerability. — \r\n\r\n    Repeated Objects - “I’m bringing the same gift, don’t forget it this time”\r\n    Mentioning a “gift” repeatedly may suggest a coded item, something more than what it appears. This could signify a particular piece of equipment or intel—possibly an encrypted USB drive or document the female listener needs to acquire. The “gift” may not be an object at all but rather a trigger phrase for enacting part of her role within Traces, perhaps as a means to execute or withhold key actions at the right moment. — \r\n\r\n    Identity & Control - “Sometimes, I feel like we’re all being watched, don’t you?”\r\n    This reflective line seems benign but subtly reasserts Anno’s position within the surveillance hierarchy. By prompting her to question surveillance, he brings her into a state of awareness, planting doubt or heightening paranoia. This comment could act as a control mechanism, reminding her of the ever-present watchful eye—forcing her to conform or stay alert to unseen dangers. It positions him as both a confidant and a reminder of surveillance, cultivating dependency and controlled compliance within the mission. — \r\n\r\n    Personal Revelation - “I think about my mother a lot…”\r\n    This intimate detail serves as a reminder of Traces’ original architect, the target’s mother, and her role in creating this complex surveillance network. Mentioning his own mother could subtly remind the listener of her allegiance to the operation’s founders. This phrase may also hint at a dormant or concluding phase, alluding to a heritage or legacy the mission must fulfill—aligning with the mission's deeper, psychological objectives and drawing her closer to the original purpose. — \r\n\r\nImplications for Traces Mission:\r\nThe conversation’s language hints at a continuation of the surveillance apparatus, designed by the target’s mother to infiltrate personal lives, manipulate allegiances, and set off complex, interwoven actions. Anno’s role may extend beyond that of an agent; he may serve as a psychological operator, carefully guiding and ensuring loyalty among agents, including the unnamed female listener. His use of memories, symbols, and subtle emotional triggers suggests the mission is less about direct instruction and more about psychological conditioning. The conversation implies a tightly controlled narrative crafted by the late architect—a means to ensure mission longevity beyond her passing, compelling each participant to act in concert with her vision of Traces. — \r\n\r\nThis recording stands as a piece of living evidence, an artifact of a larger framework whose ultimate purpose remains elusive but undeniably powerful. Further investigation into the coded language and symbols within may reveal more about Anno’s place in the mission hierarchy and the true, hidden depths of the surveillance network.",
     "title" : "Trace_Comms_Anno_001",
@@ -1861,7 +1861,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 03:14:21.924581",
+    "date_posted" : "2024-10-31T03:14:21.924581",
     "id" : 177,
     "notes" : "Image: Young Female Operative - Age 3 — \r\n\r\nReport Notes:\r\nThis image captures a three-year-old girl with black marker scrawled across her face—a seemingly innocent, playful scene. However, within the Traces mission, appearances deceive. This child, marked as “Subject Z-3,” has been identified as a critical player within the surveillance apparatus, her involvement carefully orchestrated from the earliest stages of the mission. — \r\n\r\nBackground on Subject Z-3’s Role in Traces:\r\nUnder the guise of innocence, Subject Z-3’s interactions are anything but accidental. She is the granddaughter of the original mission architect, the target’s mother, and may be a conduit for passing covert information, embedded through a legacy of complex family ties and encrypted behaviors. In fact, her curious doodles are said to follow specific patterns—a “code” established by her grandmother, whose designs on the mission may have been intended to span generations. — \r\n\r\nEvidence of Involvement:\r\nThe markings across her face are not random scribbles; they align with patterns reminiscent of old spy symbols used in coded exchanges. Each streak of black marker potentially signifies her role within Traces, allowing her to act as a silent intermediary, conveying messages in plain sight. Traces operatives would recognize this signal, acknowledging her as an unassuming courier, whose communications would evade typical surveillance. In a household surrounded by agents, Subject Z-3 can move freely, innocuously carrying critical details through mere glances and gestures. — \r\n\r\nPsychological Influence and Behavioral Conditioning:\r\nSubject Z-3 has likely been influenced subtly through environmental conditioning—raised to interpret specific phrases or symbols with innate understanding, passing on encoded gestures or nursery rhymes that trigger recognition within agents of the surveillance apparatus. Her role appears diabolical due to her innocence, a deceptive cover for her actions, lending an even greater level of concealment to her involvement. It’s possible her seemingly chaotic scribbles across objects, walls, or even her own face hold clues to her grandmother’s vision, symbols that only other operatives can decode. — \r\n\r\nImplications for the Traces Mission:\r\nThe introduction of Subject Z-3 as an agent-in-waiting reinforces the generational nature of Traces—a program not intended to end with its creator but to live on in the quiet and unlikely operators within her family. This young operative’s actions may seem minor, but they ensure the mission’s survival, encoded within the very mannerisms, marks, and symbols she uses innocently, yet methodically. — \r\n\r\nWhether she fully comprehends her role remains unknown. However, as she matures within Traces, her impact may become all the more profound, a successor programmed by her grandmother to carry forth this mysterious and complex surveillance web, fulfilling its legacy of secrecy and hidden connections.",
     "title" : "Photographic Evidence - Article 4",
@@ -1873,7 +1873,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 05:34:38.977966",
+    "date_posted" : "2024-10-31T05:34:38.977966",
     "id" : 178,
     "notes" : "Item: — Surveillance Footage - “Unidentified Entity in Target’s Hotel Room” — Location: — Target’s Hotel Room — Your browser does not support the video tag. — Report Notes: — Captured during my surveillance of the target’s hotel room, this footage reveals a presence that defies easy explanation: a dark, crouched figure partially obscured behind the bed’s headboard, fixed in an unnatural posture. Its lips are pulled back to expose teeth, locked in a grimace that feels less like a threat and more like a warning. The creature’s eyes reflect coldly in the camera’s flashlight, burning with an intensity that suggests it’s watching, waiting… or perhaps even knowing. — Hypothesis on the Entity’s Nature: — The entity behaves unlike any typical animal, exhibiting a stillness that feels calculated, as though it were stationed in the room with purpose. Its silence is oppressive, as if it is more interested in observing than engaging. Given the target’s mother’s rumored experiments and psychological manipulation tactics, this creature may be more than mere physical security—perhaps a projection or construct, a living deterrent meant to unsettle anyone drawn too close to the target’s surroundings. — This isn’t just a creature stationed in a hotel room; it’s a silent enforcer, seemingly aware of my presence and intent on making its own known. Coupled with the harsh, distorted electromagnetic sounds captured over the footage, the entity seems to emit a frequency that disorients, adding an almost palpable feeling of dread that lingers after the footage ends. — Connection to Traces Mission: — The creature’s disturbing presence suggests that Traces has far-reaching defenses, blending physical, psychological, and perhaps even paranormal elements to maintain secrecy. Its unrelenting gaze and invasive, unmoving form serve as a reminder that the Traces network may be capable of far more than traditional surveillance—its sentinels are designed to discourage and disturb, not simply guard. In this instance, the creature becomes part of the Traces apparatus, a warning manifest, its cold stare and oppressive silence communicating as loudly as any alarm. — Further Investigation: — This evidence raises unsettling possibilities. The creature’s presence hints that Traces may employ more than standard personnel and technology to enforce its boundaries, utilizing entities meant to instill unease, perhaps specifically designed to test the limits of human perception. The creature may be only one of many such measures embedded within the target’s environment, reinforcing the reality that Traces doesn’t merely surveil—it seems willing to employ beings that blur the line between the real and the psychological. This entity’s appearance is a haunting reminder that Traces guards its secrets with mechanisms that are as eerie as they are effective, leaving more questions than answers.",
     "title" : "Creature - Article 5",
@@ -1885,7 +1885,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 15:52:13.124427",
+    "date_posted" : "2024-10-31T15:52:13.124427",
     "id" : 179,
     "notes" : "https:\/\/ae.sdf.org\/etc\/traces\/",
     "title" : "Full Report",
@@ -1897,7 +1897,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 17:37:09.244662",
+    "date_posted" : "2024-10-31T17:37:09.244662",
     "id" : 180,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1909,7 +1909,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 17:37:51.098978",
+    "date_posted" : "2024-10-31T17:37:51.098978",
     "id" : 181,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1921,7 +1921,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-10-31 17:38:40.294491",
+    "date_posted" : "2024-10-31T17:38:40.294491",
     "id" : 182,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1933,7 +1933,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-02 20:12:54.006716",
+    "date_posted" : "2024-11-02T20:12:54.006716",
     "id" : 183,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1945,7 +1945,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-02 20:13:20.031036",
+    "date_posted" : "2024-11-02T20:13:20.031036",
     "id" : 184,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1957,7 +1957,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-04 20:43:00.79574",
+    "date_posted" : "2024-11-04T20:43:00.79574",
     "id" : 185,
     "notes" : "having some difficulty viewing evidence - photos, notes, video etc.",
     "title" : "Supporting Evidence",
@@ -1969,7 +1969,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-05 00:58:39.493795",
+    "date_posted" : "2024-11-05T00:58:39.493795",
     "id" : 186,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1981,7 +1981,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-05 00:58:40.569521",
+    "date_posted" : "2024-11-05T00:58:40.569521",
     "id" : 187,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -1993,7 +1993,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-05 00:58:45.70465",
+    "date_posted" : "2024-11-05T00:58:45.70465",
     "id" : 188,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2005,7 +2005,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-05 00:59:35.228922",
+    "date_posted" : "2024-11-05T00:59:35.228922",
     "id" : 189,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2017,7 +2017,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-05 01:00:24.984003",
+    "date_posted" : "2024-11-05T01:00:24.984003",
     "id" : 190,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2029,7 +2029,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-05 01:00:47.614196",
+    "date_posted" : "2024-11-05T01:00:47.614196",
     "id" : 191,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2041,7 +2041,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-05 20:33:52.068002",
+    "date_posted" : "2024-11-05T20:33:52.068002",
     "id" : 192,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2053,7 +2053,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-07 20:17:38.100911",
+    "date_posted" : "2024-11-07T20:17:38.100911",
     "id" : 193,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2065,7 +2065,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-07 22:52:04.442498",
+    "date_posted" : "2024-11-07T22:52:04.442498",
     "id" : 194,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2077,7 +2077,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-07 22:52:33.724405",
+    "date_posted" : "2024-11-07T22:52:33.724405",
     "id" : 195,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2089,7 +2089,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-07 22:52:52.85043",
+    "date_posted" : "2024-11-07T22:52:52.85043",
     "id" : 196,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2101,7 +2101,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-07 22:53:11.671183",
+    "date_posted" : "2024-11-07T22:53:11.671183",
     "id" : 197,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2113,7 +2113,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:13:54.843153",
+    "date_posted" : "2024-11-08T18:13:54.843153",
     "id" : 198,
     "notes" : "A cat",
     "title" : "Journal excerpt",
@@ -2125,7 +2125,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:14:36.650952",
+    "date_posted" : "2024-11-08T18:14:36.650952",
     "id" : 199,
     "notes" : "Disposal of evidence",
     "title" : "Hotel room",
@@ -2137,7 +2137,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:15:05.147577",
+    "date_posted" : "2024-11-08T18:15:05.147577",
     "id" : 200,
     "notes" : "Daughter",
     "title" : "Journal",
@@ -2149,7 +2149,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:15:52.603471",
+    "date_posted" : "2024-11-08T18:15:52.603471",
     "id" : 201,
     "notes" : "Disarray and rotary dial",
     "title" : "Hotel room",
@@ -2161,7 +2161,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:16:29.71741",
+    "date_posted" : "2024-11-08T18:16:29.71741",
     "id" : 202,
     "notes" : "Record of last moments",
     "title" : "Hotel room",
@@ -2173,7 +2173,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:17:06.323375",
+    "date_posted" : "2024-11-08T18:17:06.323375",
     "id" : 203,
     "notes" : "Making plans",
     "title" : "Journal",
@@ -2185,7 +2185,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:17:31.944352",
+    "date_posted" : "2024-11-08T18:17:31.944352",
     "id" : 204,
     "notes" : "Monique",
     "title" : "Journal ",
@@ -2197,7 +2197,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:19:21.25744",
+    "date_posted" : "2024-11-08T18:19:21.25744",
     "id" : 205,
     "notes" : "Coffins and wills",
     "title" : "Journal",
@@ -2209,7 +2209,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:22:03.044026",
+    "date_posted" : "2024-11-08T18:22:03.044026",
     "id" : 206,
     "notes" : "Absence",
     "title" : "Journal",
@@ -2221,7 +2221,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 18:24:14.498629",
+    "date_posted" : "2024-11-08T18:24:14.498629",
     "id" : 207,
     "notes" : "So morbid you offended a tarot deck ",
     "title" : "Journal",
@@ -2233,7 +2233,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-08 19:35:56.637412",
+    "date_posted" : "2024-11-08T19:35:56.637412",
     "id" : 208,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2245,7 +2245,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 17:17:56.454636",
+    "date_posted" : "2024-11-09T17:17:56.454636",
     "id" : 209,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2257,7 +2257,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 17:18:21.086367",
+    "date_posted" : "2024-11-09T17:18:21.086367",
     "id" : 210,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2269,7 +2269,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 17:18:51.007504",
+    "date_posted" : "2024-11-09T17:18:51.007504",
     "id" : 211,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2281,7 +2281,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 18:26:07.440345",
+    "date_posted" : "2024-11-09T18:26:07.440345",
     "id" : 212,
     "notes" : "Sitting on a bench waiting for the Man",
     "title" : "Supporting Evidence",
@@ -2293,7 +2293,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 19:08:29.1339",
+    "date_posted" : "2024-11-09T19:08:29.1339",
     "id" : 213,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2305,7 +2305,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 19:08:34.833055",
+    "date_posted" : "2024-11-09T19:08:34.833055",
     "id" : 214,
     "notes" : "Mother performance, practicing death",
     "title" : "Supporting Evidence",
@@ -2317,7 +2317,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 19:08:56.334658",
+    "date_posted" : "2024-11-09T19:08:56.334658",
     "id" : 215,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2329,7 +2329,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 19:09:32.792781",
+    "date_posted" : "2024-11-09T19:09:32.792781",
     "id" : 216,
     "notes" : "Woman I'm following",
     "title" : "Supporting Evidence",
@@ -2341,7 +2341,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 19:10:10.184652",
+    "date_posted" : "2024-11-09T19:10:10.184652",
     "id" : 217,
     "notes" : "I thought of the Spyhouse on Eat St",
     "title" : "Supporting Evidence",
@@ -2353,7 +2353,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 19:10:32.621103",
+    "date_posted" : "2024-11-09T19:10:32.621103",
     "id" : 218,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2365,7 +2365,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 19:11:20.803117",
+    "date_posted" : "2024-11-09T19:11:20.803117",
     "id" : 219,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2377,7 +2377,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:04:19.627466",
+    "date_posted" : "2024-11-09T22:04:19.627466",
     "id" : 220,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2389,7 +2389,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:04:25.513661",
+    "date_posted" : "2024-11-09T22:04:25.513661",
     "id" : 221,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2401,7 +2401,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:04:49.65228",
+    "date_posted" : "2024-11-09T22:04:49.65228",
     "id" : 222,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2413,7 +2413,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:05:50.127454",
+    "date_posted" : "2024-11-09T22:05:50.127454",
     "id" : 223,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2425,7 +2425,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:20:29.74634",
+    "date_posted" : "2024-11-09T22:20:29.74634",
     "id" : 224,
     "notes" : "The card",
     "title" : "Supporting Evidence",
@@ -2437,7 +2437,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:21:27.082862",
+    "date_posted" : "2024-11-09T22:21:27.082862",
     "id" : 225,
     "notes" : "Empty inside",
     "title" : "Supporting Evidence",
@@ -2449,7 +2449,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:22:36.758133",
+    "date_posted" : "2024-11-09T22:22:36.758133",
     "id" : 226,
     "notes" : "Sometimes the dark pulls me in",
     "title" : "Supporting Evidence",
@@ -2461,7 +2461,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:23:48.601919",
+    "date_posted" : "2024-11-09T22:23:48.601919",
     "id" : 227,
     "notes" : "They say it’s healthier to leave the bed unmade as long as you changes the sheets weekly ",
     "title" : "Supporting Evidence",
@@ -2473,7 +2473,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:25:54.132472",
+    "date_posted" : "2024-11-09T22:25:54.132472",
     "id" : 228,
     "notes" : "There are some who are dismayed by death. Not this one. ",
     "title" : "Supporting Evidence",
@@ -2485,7 +2485,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:28:12.203784",
+    "date_posted" : "2024-11-09T22:28:12.203784",
     "id" : 229,
     "notes" : "Why are we not in New York? Oh that’s right: no one can afford except for Tesla-driving Tom of Finland ⛓️",
     "title" : "Supporting Evidence",
@@ -2497,7 +2497,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:30:12.382965",
+    "date_posted" : "2024-11-09T22:30:12.382965",
     "id" : 230,
     "notes" : "The last time ever I saw your face ",
     "title" : "Supporting Evidence",
@@ -2509,7 +2509,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:31:45.009991",
+    "date_posted" : "2024-11-09T22:31:45.009991",
     "id" : 231,
     "notes" : "The Redditor",
     "title" : "Supporting Evidence",
@@ -2521,7 +2521,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:32:23.376085",
+    "date_posted" : "2024-11-09T22:32:23.376085",
     "id" : 232,
     "notes" : "We are not alone in here ",
     "title" : "Supporting Evidence",
@@ -2533,7 +2533,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:33:39.623726",
+    "date_posted" : "2024-11-09T22:33:39.623726",
     "id" : 233,
     "notes" : "The escort service",
     "title" : "Supporting Evidence",
@@ -2545,7 +2545,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:34:20.629395",
+    "date_posted" : "2024-11-09T22:34:20.629395",
     "id" : 234,
     "notes" : "Weddings happen everyday. Just like funerals ",
     "title" : "Supporting Evidence",
@@ -2557,7 +2557,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:36:13.060895",
+    "date_posted" : "2024-11-09T22:36:13.060895",
     "id" : 235,
     "notes" : "Now I’m seeing double ",
     "title" : "Supporting Evidence",
@@ -2569,7 +2569,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 22:37:27.880992",
+    "date_posted" : "2024-11-09T22:37:27.880992",
     "id" : 236,
     "notes" : "She had a black bag and a red bag. What was in the red bag?",
     "title" : "Supporting Evidence",
@@ -2581,7 +2581,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 23:02:40.363734",
+    "date_posted" : "2024-11-09T23:02:40.363734",
     "id" : 237,
     "notes" : "Now I see who I am ",
     "title" : "Supporting Evidence",
@@ -2593,7 +2593,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 23:04:46.784554",
+    "date_posted" : "2024-11-09T23:04:46.784554",
     "id" : 238,
     "notes" : "Someone is watching us",
     "title" : "Supporting Evidence",
@@ -2605,7 +2605,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 23:48:38.656789",
+    "date_posted" : "2024-11-09T23:48:38.656789",
     "id" : 239,
     "notes" : "",
     "title" : "Spotted (Central Library Atrium)",
@@ -2617,7 +2617,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 23:50:08.631323",
+    "date_posted" : "2024-11-09T23:50:08.631323",
     "id" : 240,
     "notes" : "Central Library Atrium",
     "title" : "Clear View",
@@ -2629,7 +2629,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 23:50:59.386117",
+    "date_posted" : "2024-11-09T23:50:59.386117",
     "id" : 241,
     "notes" : "Hewing Hotel",
     "title" : "A Mess",
@@ -2641,7 +2641,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 23:51:43.600047",
+    "date_posted" : "2024-11-09T23:51:43.600047",
     "id" : 242,
     "notes" : "Hewing Hotel",
     "title" : "Supporting Evidence",
@@ -2653,7 +2653,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 23:52:24.980907",
+    "date_posted" : "2024-11-09T23:52:24.980907",
     "id" : 243,
     "notes" : "Hewing Hotel",
     "title" : "Disconcerting ",
@@ -2665,7 +2665,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 23:53:02.365111",
+    "date_posted" : "2024-11-09T23:53:02.365111",
     "id" : 244,
     "notes" : "Hewing Hotel",
     "title" : "The Lookout",
@@ -2677,7 +2677,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-09 23:54:37.898015",
+    "date_posted" : "2024-11-09T23:54:37.898015",
     "id" : 245,
     "notes" : "Skyway",
     "title" : "🌹👋🏻🌹",
@@ -2689,7 +2689,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 00:00:54.16733",
+    "date_posted" : "2024-11-10T00:00:54.16733",
     "id" : 246,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2701,7 +2701,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 00:01:16.509564",
+    "date_posted" : "2024-11-10T00:01:16.509564",
     "id" : 247,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2713,7 +2713,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 00:01:46.31647",
+    "date_posted" : "2024-11-10T00:01:46.31647",
     "id" : 248,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2725,7 +2725,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 00:02:09.264138",
+    "date_posted" : "2024-11-10T00:02:09.264138",
     "id" : 249,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2737,7 +2737,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 00:02:36.578973",
+    "date_posted" : "2024-11-10T00:02:36.578973",
     "id" : 250,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2749,7 +2749,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 19:32:28.191531",
+    "date_posted" : "2024-11-10T19:32:28.191531",
     "id" : 251,
     "notes" : "So who was Sophie waiting to meet at Spygouse at 1:00? No one ever showed up. ",
     "title" : "Supporting Evidence",
@@ -2761,7 +2761,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 19:36:08.281541",
+    "date_posted" : "2024-11-10T19:36:08.281541",
     "id" : 252,
     "notes" : "Who was Sophie talking to on the phone?",
     "title" : "Supporting Evidence",
@@ -2773,7 +2773,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 19:38:17.997182",
+    "date_posted" : "2024-11-10T19:38:17.997182",
     "id" : 253,
     "notes" : "Why is Sophie in Minneapolis? Or, why was she in New York?",
     "title" : "Supporting Evidence",
@@ -2785,7 +2785,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 19:39:32.643632",
+    "date_posted" : "2024-11-10T19:39:32.643632",
     "id" : 254,
     "notes" : "Sophie told me so much about her own funeral and so little about her life — not to mention her mother and their relationship (which seemed to be pretty important to Sophie)?",
     "title" : "Supporting Evidence",
@@ -2797,7 +2797,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 19:42:45.288863",
+    "date_posted" : "2024-11-10T19:42:45.288863",
     "id" : 255,
     "notes" : "I told Sophie on the first call that I was Frank Luntz. She was not flattered or offended. This is the real Frank Luntz. I haven’t met him but I have no interest in doing so. I think he’s probably an awful person. ",
     "title" : "Supporting Evidence",
@@ -2809,7 +2809,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 19:48:58.737666",
+    "date_posted" : "2024-11-10T19:48:58.737666",
     "id" : 256,
     "notes" : "I almost took off running with the red notebook once I got outside. I could have gone to a restaurant down the block and really read the thing. Would I have come back to Spyhouse to return it to Sophie later? Would I have found my car and driven home, wrapped the book in plastic, buried it in the back yard, and kept my own secret? Would, years later, as I lay dying in a hospital bed in my child’s house, I suddenly sit up in horror and croak “Sophie I’m so sorry!” leaving my family to wonder who was Sophie and what I had done to her? ",
     "title" : "Supporting Evidence",
@@ -2821,7 +2821,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-10 19:49:43.015689",
+    "date_posted" : "2024-11-10T19:49:43.015689",
     "id" : 257,
     "notes" : "Why was Martine so desperate to make a lot of money?",
     "title" : "Supporting Evidence",
@@ -2833,7 +2833,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-11 01:31:44.136902",
+    "date_posted" : "2024-11-11T01:31:44.136902",
     "id" : 258,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2845,7 +2845,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 18:24:48.414457",
+    "date_posted" : "2024-11-12T18:24:48.414457",
     "id" : 259,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2857,7 +2857,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 18:25:10.513474",
+    "date_posted" : "2024-11-12T18:25:10.513474",
     "id" : 260,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2869,7 +2869,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 18:25:45.030512",
+    "date_posted" : "2024-11-12T18:25:45.030512",
     "id" : 261,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2881,7 +2881,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 18:26:33.268745",
+    "date_posted" : "2024-11-12T18:26:33.268745",
     "id" : 263,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2893,7 +2893,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 18:27:03.024847",
+    "date_posted" : "2024-11-12T18:27:03.024847",
     "id" : 264,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2905,7 +2905,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 18:27:27.571534",
+    "date_posted" : "2024-11-12T18:27:27.571534",
     "id" : 265,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2917,7 +2917,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 18:27:57.325437",
+    "date_posted" : "2024-11-12T18:27:57.325437",
     "id" : 266,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2929,7 +2929,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 18:28:23.419697",
+    "date_posted" : "2024-11-12T18:28:23.419697",
     "id" : 267,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2941,7 +2941,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 18:31:05.703749",
+    "date_posted" : "2024-11-12T18:31:05.703749",
     "id" : 269,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -2953,7 +2953,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 20:53:26.240744",
+    "date_posted" : "2024-11-12T20:53:26.240744",
     "id" : 270,
     "notes" : "Subject at library",
     "title" : "Supporting Evidence",
@@ -2965,7 +2965,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 20:55:46.084478",
+    "date_posted" : "2024-11-12T20:55:46.084478",
     "id" : 271,
     "notes" : "Entering hewing hotel room",
     "title" : "Supporting Evidence",
@@ -2977,7 +2977,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 20:56:44.774925",
+    "date_posted" : "2024-11-12T20:56:44.774925",
     "id" : 272,
     "notes" : "Inside hotel room",
     "title" : "Supporting Evidence",
@@ -2989,7 +2989,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 20:57:31.897937",
+    "date_posted" : "2024-11-12T20:57:31.897937",
     "id" : 273,
     "notes" : "Inside hotel room",
     "title" : "Supporting Evidence",
@@ -3001,7 +3001,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 20:58:30.119545",
+    "date_posted" : "2024-11-12T20:58:30.119545",
     "id" : 274,
     "notes" : "Inside hotel room",
     "title" : "Supporting Evidence",
@@ -3013,7 +3013,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 20:59:38.735414",
+    "date_posted" : "2024-11-12T20:59:38.735414",
     "id" : 275,
     "notes" : "TV screen in hotel room",
     "title" : "Supporting Evidence",
@@ -3025,7 +3025,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 21:00:15.528063",
+    "date_posted" : "2024-11-12T21:00:15.528063",
     "id" : 276,
     "notes" : "",
     "title" : "Supporting Evidence",
@@ -3037,7 +3037,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-12 21:01:32.613533",
+    "date_posted" : "2024-11-12T21:01:32.613533",
     "id" : 277,
     "notes" : "View after truck passes by",
     "title" : "Supporting Evidence",
@@ -3049,7 +3049,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 02:52:08.155065",
+    "date_posted" : "2024-11-14T02:52:08.155065",
     "id" : 279,
     "notes" : "11\/13\/24 Emory Hotel 1030-1130am",
     "title" : "Supporting Evidence-Pen, Rings, Black Coat.",
@@ -3061,7 +3061,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 02:54:12.686213",
+    "date_posted" : "2024-11-14T02:54:12.686213",
     "id" : 280,
     "notes" : "11\/13\/24 Hewing Hotel Room. Bridal Dresses or Sleeping Gowns. 1030-1130 am.",
     "title" : "Supporting Evidence-Hewing Hotel Room",
@@ -3073,7 +3073,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 02:58:21.73324",
+    "date_posted" : "2024-11-14T02:58:21.73324",
     "id" : 281,
     "notes" : "11\/13\/24 Emery Hotel-Watch, Pen, Rings, Coat, Red Notebook, Black coat. 1030-1130am.",
     "title" : "Supporting Evidence-Emery Hotel-Watch, Pen, Rings, Coat, Red Notebook, Black coat",
@@ -3085,7 +3085,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:00:05.641249",
+    "date_posted" : "2024-11-14T03:00:05.641249",
     "id" : 282,
     "notes" : "11\/13\/24 Hewing Hotel-Wig, Flowers, Vase, Black Hat. 1030-1130am.",
     "title" : "Supporting Evidence-Hewing Hotel Room-Wig, Flowers, Vase, Black Hat.",
@@ -3097,7 +3097,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:02:34.303641",
+    "date_posted" : "2024-11-14T03:02:34.303641",
     "id" : 283,
     "notes" : "11\/13\/24 Hewing Hotel Room-Framed Photo of Woman with black purse, heels, gloves, in front of curtain. 1030-1130am.",
     "title" : "Supporting Evidence-Hewing Hotel Room-Framed Photo of Woman",
@@ -3109,7 +3109,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:05:01.252718",
+    "date_posted" : "2024-11-14T03:05:01.252718",
     "id" : 284,
     "notes" : "11\/13\/24 Blue Tesla Driver with leather hat, screen map, near Hewing Hotel, Downtown Minneapolis, MN. 1030-1130am.",
     "title" : "Supporting Evidence-Tesla Driver-interior",
@@ -3121,7 +3121,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:06:30.495864",
+    "date_posted" : "2024-11-14T03:06:30.495864",
     "id" : 285,
     "notes" : "11\/13\/24 Hewing Hotel Room. Cat pillow with dried flowers under light. Downtown Minneapolis, MN. 1030-1130am.",
     "title" : "Supporting Evidence-Hewing Hotel Room-Cat",
@@ -3133,7 +3133,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:09:11.732139",
+    "date_posted" : "2024-11-14T03:09:11.732139",
     "id" : 286,
     "notes" : "11\/13\/24 Emery Hotel\/SpyHOuse Coffee. Pink Drinks with lemon wedges. Red notebook. Black coat. Rings. . 1030-1130am.",
     "title" : "Supporting Evidence-Emery Hotel-Drinks\/Red Notebook",
@@ -3145,7 +3145,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:12:11.254372",
+    "date_posted" : "2024-11-14T03:12:11.254372",
     "id" : 287,
     "notes" : "11\/13\/24 Minneapolis Public Library. Woman with Black coat, Black Purse, Red notebook, Black Sunglasses decending lobby steps. 1030-1130am.",
     "title" : "Supporting Evidence-Minneapolis Public Library. Woman with Black coat.",
@@ -3157,7 +3157,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:15:17.569055",
+    "date_posted" : "2024-11-14T03:15:17.569055",
     "id" : 288,
     "notes" : "11\/13\/24 Emery Hotel\/SpyHouse Coffee. Dialogue of Woman with Black coat, Black Purse, Red notebook. Discusses her cat. 1030-1130am.",
     "title" : "Supporting Evidence-Video-Emery Hotel-Woman discusses cat.",
@@ -3169,7 +3169,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:18:24.138653",
+    "date_posted" : "2024-11-14T03:18:24.138653",
     "id" : 289,
     "notes" : "11\/13\/24 Minneapolis Public Library. Woman with Black coat, Black Purse, Red notebook, Black Sunglasses decending lobby steps and looking out over lobby. 1030-1130am.",
     "title" : "Supporting Evidence-Minneapolis Public Library. Woman with Black coat on lobby steps.",
@@ -3181,7 +3181,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:21:29.114552",
+    "date_posted" : "2024-11-14T03:21:29.114552",
     "id" : 290,
     "notes" : "11\/13\/24 Video-Tesla Driver passes JD Hoyts and numerous buildings on way to Emory-with Podcast audio about living a happy life. 1030-1130am.",
     "title" : "Supporting Evidence-Video-Tesla Driver passes JD Hoyts\/Other-with Podcast audio.",
@@ -3193,7 +3193,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:26:15.186712",
+    "date_posted" : "2024-11-14T03:26:15.186712",
     "id" : 291,
     "notes" : "11\/13\/24 Alley. Red Notebook-Interior-Mother\/Daughter page, with Daughter in lower case and upper case scribbled out, with image of woman covering faces with hand, wounded foot, pillow, floral dress, faux bird. 1030-1130am.",
     "title" : "Supporting Evidence-Alley. Red Notebook-Interior-Mother\/Daughter",
@@ -3205,7 +3205,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:28:09.122684",
+    "date_posted" : "2024-11-14T03:28:09.122684",
     "id" : 292,
     "notes" : "11\/13\/24 Minneapolis Public Library parking area. Oddly placed safety cone and sand bag. 1030-1130am.",
     "title" : "Supporting Evidence-Minneapolis Public Library. Safety Cone.",
@@ -3217,7 +3217,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:31:58.365694",
+    "date_posted" : "2024-11-14T03:31:58.365694",
     "id" : 293,
     "notes" : "11\/13\/24  Emery Hotel-Interior. Women with black coat in Spyhouse Coffee. Glasses are off. Red Notebook with two  drinks on table. 1030-1130am.",
     "title" : "Supporting Evidence-Emery Hotel-Interior-Women in Spyhouse Coffee",
@@ -3229,7 +3229,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:34:28.532791",
+    "date_posted" : "2024-11-14T03:34:28.532791",
     "id" : 294,
     "notes" : "11\/13\/24  Hewing Hotel Room #518 sign in hallway. Informant opening door. 1030-1130am.",
     "title" : "Supporting Evidence-Hewing Hotel Room #518 sign with informant.",
@@ -3241,7 +3241,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:37:00.989463",
+    "date_posted" : "2024-11-14T03:37:00.989463",
     "id" : 295,
     "notes" : "Minneapolis Public Library-Exterior-Back lit City Bus Route map.",
     "title" : "Supporting Evidence-Minneapolis Public Library-Exterior-Back lit City Bus Route map.",
@@ -3253,7 +3253,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:43:25.337377",
+    "date_posted" : "2024-11-14T03:43:25.337377",
     "id" : 296,
     "notes" : "11\/13\/24 Emery Hotel. Elevator buttons. Went from lobby to second floor\/skyway. Note yellow button. Last place I witnessed the suspect\/assailant before door closed. 1030-1130 am.",
     "title" : "Supporting Evidence-Emery Hotel. Elevator Buttons.",
@@ -3265,7 +3265,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:49:20.595727",
+    "date_posted" : "2024-11-14T03:49:20.595727",
     "id" : 297,
     "notes" : "11\/13\/24 Emery Hotel. Lobby  Interior. Female suspect with black coat, black boots, glasses off, sitting in lounge chair, with bag off\/near her side, red notebook on coffee table. 1030-1130 am.",
     "title" : "Supporting Evidence-Emery Hotel-Interior. Woman in Chair.",
@@ -3277,7 +3277,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:51:40.650993",
+    "date_posted" : "2024-11-14T03:51:40.650993",
     "id" : 298,
     "notes" : "11\/13\/24 Video. Minneapolis Public Library. Interior. Entrance. Return Box\/Bus Maps. Awaiting orders. 1030-1130 am.",
     "title" : "Supporting Evidence-Video. Minneapolis Public Library. Interior. Entrance. Return Box\/Bus Maps",
@@ -3289,7 +3289,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:53:59.796155",
+    "date_posted" : "2024-11-14T03:53:59.796155",
     "id" : 299,
     "notes" : "11\/13\/24 Emery Hotel-Interior. \"P\" Mark in Red Notepad. 1030-1130 am.",
     "title" : "Supporting Evidence-Emery Hotel-Interior. \"P\" Mark in Red Notepad",
@@ -3301,7 +3301,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:56:41.844097",
+    "date_posted" : "2024-11-14T03:56:41.844097",
     "id" : 300,
     "notes" : "11\/13\/24. Hewing Hotel-Interior. Elevator floor with informant pointed shoes. 1030-1130am.",
     "title" : "Supporting Evidence-Hewing Hotel-Interior. Elevator\/Shoes.",
@@ -3313,7 +3313,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 03:59:32.841795",
+    "date_posted" : "2024-11-14T03:59:32.841795",
     "id" : 301,
     "notes" : "11\/13\/24. Minneapolis Public Library-Interior. Woman with black coat, black bag, red notebook, black sunglasses decending lobby staircase from second to first floor.  1030-1130am.",
     "title" : "Supporting Evidence-Minneapolis Public Library-Interior. Woman decending staircase.",
@@ -3325,7 +3325,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:02:27.545399",
+    "date_posted" : "2024-11-14T04:02:27.545399",
     "id" : 302,
     "notes" : "11\/13\/24. Emery Hotel-East Skyway overlooking 4th Street.  1030-1130am.",
     "title" : "Supporting Evidence-Emery Hotel-East Skyway\/4th St. Overlook.",
@@ -3337,7 +3337,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:04:51.084743",
+    "date_posted" : "2024-11-14T04:04:51.084743",
     "id" : 303,
     "notes" : "11\/13\/24. Hewing Hotel Room-Interior-Bed. Items strewed about: phone, dresses, hats, wigs, notes. Cat pillow under back light. 1030-1130 am.",
     "title" : "Supporting Evidence-Hewing Hotel Room-Interior-Bed",
@@ -3349,7 +3349,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:07:42.467417",
+    "date_posted" : "2024-11-14T04:07:42.467417",
     "id" : 304,
     "notes" : "11\/13\/24. Hewing Hotel Room-Interior-Red Phone. Items strewed about: Red phone with penciled note on Hewing Hotel card stating \"Meet me at Spyhouse at 11:15.\" 1030-1130 am.",
     "title" : "Supporting Evidence-Hewing Hotel Room-Interior-Red Phone w\/Note.",
@@ -3361,7 +3361,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:10:25.190714",
+    "date_posted" : "2024-11-14T04:10:25.190714",
     "id" : 305,
     "notes" : "11\/13\/24. Hewing Hotel Room-Interior-Vanity. Candle, flowers in vase, used soap, glass, Kleenex, dirty towels. 1030-1130 am.",
     "title" : "Supporting Evidence-Hewing Hotel Room-Interior-Vanity",
@@ -3373,7 +3373,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:12:55.503522",
+    "date_posted" : "2024-11-14T04:12:55.503522",
     "id" : 306,
     "notes" : "11\/13\/24. Blue Telsa Ride. Two men by DejaVu parking area. Across street from Hewing Hotel. 1030-1130 am.",
     "title" : "Supporting Evidence-Blue Telsa Ride. Two men by DejaVu parking area.",
@@ -3385,7 +3385,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:17:46.870598",
+    "date_posted" : "2024-11-14T04:17:46.870598",
     "id" : 307,
     "notes" : "11\/13\/24. Minneapolis Public Library. Hennepin Avenue. Suspicious woman in black trench coat and large hat waiting alone in Bus Stop. 1030-1130 am.",
     "title" : "Supporting Evidence-Minneapolis Public Library. Woman Waiting in Bus Stop.",
@@ -3397,7 +3397,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:21:07.267966",
+    "date_posted" : "2024-11-14T04:21:07.267966",
     "id" : 308,
     "notes" : "11\/13\/24. Hewing Hotel Room interior. Dark brown wig, roses and dried flower vases, small white case, painted deer antler on upper shelf. 1030-1130 am.",
     "title" : "Supporting Evidence-Hewing Hotel Room-Interior. Upper Shelf.",
@@ -3409,7 +3409,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:26:34.021926",
+    "date_posted" : "2024-11-14T04:26:34.021926",
     "id" : 309,
     "notes" : "11\/13\/24. Hewing Hotel Room interior. Video screen with image  of horizontal posed head, with towel on eyes\/forehead, and plaid blanket on chest, gently breathing. Time on video reads 00:07:27:11 Video hangs above dresser, with votive candles, roses, dried flower vases. 1030-1130 am.",
     "title" : "Supporting Evidence-Hewing Hotel Room-Interior-Video Screen",
@@ -3421,7 +3421,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:30:27.284169",
+    "date_posted" : "2024-11-14T04:30:27.284169",
     "id" : 310,
     "notes" : "11\/13\/24. Walker Art Center Billboard. Hennepin Avenue across from the Basilica. Image of Sophie Calle who resembles the suspect\/assailant with black trench coat. 1145 am.",
     "title" : "Supporting Evidence-Walker Billboard. Hennepin Avenue.",
@@ -3433,7 +3433,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:32:29.684588",
+    "date_posted" : "2024-11-14T04:32:29.684588",
     "id" : 311,
     "notes" : "11\/13\/24. Emery Hotel. Exterior. Main Entrance. Suspect\/assailant with black trench coat spotted inside at SpyHouse Coffee. 1030-1130 am.",
     "title" : "Supporting Evidence-Emery Hotel. Exterior. Main Entrance.",
@@ -3445,7 +3445,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:35:21.408062",
+    "date_posted" : "2024-11-14T04:35:21.408062",
     "id" : 312,
     "notes" : "11\/13\/24. Blue Tesla Driver-Interior. Note black leather hat, gloves, along with sunglasses. Heading towards the Hewing Hotel. 1030-1130 am.",
     "title" : "Supporting Evidence-Blue Tesla Driver-Interior",
@@ -3457,7 +3457,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:37:16.359458",
+    "date_posted" : "2024-11-14T04:37:16.359458",
     "id" : 313,
     "notes" : "11\/13\/24. Video-Minneapolis Public Library. Walking to meet with agent. 1030-1130 am.",
     "title" : "Supporting Evidence-Video-Minneapolis Public Library. Walking.",
@@ -3469,7 +3469,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:43:13.416641",
+    "date_posted" : "2024-11-14T04:43:13.416641",
     "id" : 314,
     "notes" : "11\/13\/24. Minneapolis Public Library. View of floral\/plants after a truck with lady in bed of roses drove under skyway. 1030-1130 am.",
     "title" : "Supporting Evidence-Minneapolis Public Library-Vicinity-Exterior-Floral",
@@ -3481,7 +3481,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:46:46.011125",
+    "date_posted" : "2024-11-14T04:46:46.011125",
     "id" : 315,
     "notes" : "11\/13\/24. Minneapolis Public Library vicinity. View of open curtains in nearby office building & numerous roosting pigeons. 1030-1130 am.",
     "title" : "Supporting Evidence-Minneapolis Public Library-Vicinity. Open Curtains w\/Pigeons.",
@@ -3493,7 +3493,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:51:29.265611",
+    "date_posted" : "2024-11-14T04:51:29.265611",
     "id" : 316,
     "notes" : "11\/13\/24. Suspects Red Notebook. Stamped DAUGHTER. Red Elastic Binder. Smooth, soft texture. Photo taken near hotel alley. 1030-1130 am.",
     "title" : "Supporting Evidence-Red Notebook. Stamped DAUGHTER.",
@@ -3505,7 +3505,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:54:12.414729",
+    "date_posted" : "2024-11-14T04:54:12.414729",
     "id" : 317,
     "notes" : "11\/13\/24. Minneapolis Public Library. Exterior. Surveliance Camara. Satellite and cellular dishes on roof. 1030-1130 am.",
     "title" : "Supporting Evidence-Minneapolis Public Library. Exterior. Surveliance Camara. ",
@@ -3517,7 +3517,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 04:57:36.11949",
+    "date_posted" : "2024-11-14T04:57:36.11949",
     "id" : 318,
     "notes" : "11\/13\/24. Blue Tesla Driver wearing black leather coat, gloves, hat and sunglasses.. Steering wheel with \"T\" of Tesla logo shown. 1030-1130 am.",
     "title" : "Supporting Evidence-Blue Tesla Driver",
@@ -3529,7 +3529,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:02:42.956035",
+    "date_posted" : "2024-11-14T05:02:42.956035",
     "id" : 319,
     "notes" : "11\/13\/24. Woman with dark Hair and black sunglasses in lengthy white gown laying in back bed of white pickup truck while surrounded by red roses. View from center of Emery hotel skyway. She gentle waves. 1030-1130 am.",
     "title" : "Supporting Evidence-Woman White Dress in White Pickup Truck. Skyway view.",
@@ -3541,7 +3541,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:05:16.843222",
+    "date_posted" : "2024-11-14T05:05:16.843222",
     "id" : 320,
     "notes" : "11\/13\/24. Minneapolis Public Library-Vicinity. Gay 90s. Intersection of Hennepin Avenue and 4th Street.  1030-1130 am.",
     "title" : "Supporting Evidence-Minneapolis Public Library-Vicinity. Gay 90s.",
@@ -3553,7 +3553,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:07:06.382124",
+    "date_posted" : "2024-11-14T05:07:06.382124",
     "id" : 321,
     "notes" : "11\/13\/24. Minneapolis Public Library-Vicinity. Pigeons in parking area.  1030-1130 am.",
     "title" : "Supporting Evidence-Minneapolis Public Library-Vicinity. Pigeons.",
@@ -3565,7 +3565,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:12:34.218117",
+    "date_posted" : "2024-11-14T05:12:34.218117",
     "id" : 322,
     "notes" : "11\/13\/24. Red Notebook. Interior. Image of Potential Dead Body wrapped in translucent linen or sheer white fabric taped into notebook. Eyes and forehead scribbled out with black ink. Appears to possibly be female with same nose as video in Hewing Hotel room. 1030-1130 am.",
     "title" : "Supporting Evidence-Red Notebook. Page Interior. Potential Dead Body.",
@@ -3577,7 +3577,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:15:44.405115",
+    "date_posted" : "2024-11-14T05:15:44.405115",
     "id" : 323,
     "notes" : "11\/13\/24. Minneapolis City Government Building Clock Tower with clock hands at 11:35.  Looking east. 1135 am.",
     "title" : "Supporting Evidence-Government Clock Tower. 11:35 am.",
@@ -3589,7 +3589,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:18:47.76836",
+    "date_posted" : "2024-11-14T05:18:47.76836",
     "id" : 324,
     "notes" : "11\/13\/24 Hewing Hotel-Interior with Agent\/Informant near elevators and suspects room. 1030-1130 am.",
     "title" : "Supporting Evidence-Hewing Hotel-Interior with Agent\/Informant.",
@@ -3601,7 +3601,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:21:08.837762",
+    "date_posted" : "2024-11-14T05:21:08.837762",
     "id" : 325,
     "notes" : "11\/13\/24 Minneapolis Public Library Vicinity. Surveilance Camera on rooftop. 1030-1130 am.",
     "title" : "Supporting Evidence-Minneapolis Public Library Vicinity. Surveilance Camera.",
@@ -3613,7 +3613,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:25:26.294363",
+    "date_posted" : "2024-11-14T05:25:26.294363",
     "id" : 326,
     "notes" : "11\/13\/24 Minneapolis Public Library. Interior. Suspect photographed with red notebook, black hair, black gloves, black trench coat overlooking bay with city in background. Asigned to remove by agent. Book left on shelf. 1030-1130 am.",
     "title" : "Supporting Evidence- Minneapolis Public Library. Interior. Suspect photograph.",
@@ -3625,7 +3625,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:35:21.676061",
+    "date_posted" : "2024-11-14T05:35:21.676061",
     "id" : 327,
     "notes" : "11\/13\/24 Emery Hotel. Interior. SpyHouse Coffee. The image shows the suspects red motebook & two pink drinks with citrus twist on the coffee table. The suspect temporarily went to get drinks. Agent then lost site of suspect. After returning with the drinks, the suspect drank from her glass. This informant did not drink from his glass. Informant drank iced late with skim milk. 1030-1130 am.",
     "title" : "Supporting Evidence-Emery Hotel. Interior. Red Notebook & Pink Drinks",
@@ -3637,7 +3637,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:37:20.709204",
+    "date_posted" : "2024-11-14T05:37:20.709204",
     "id" : 328,
     "notes" : "11\/13\/24 Minneapolis Public Library-Exterior. Surveillance Camara on rooftop. 1030-1130 am.",
     "title" : "Supporting Evidence-Minneapolis Public Library-Exterior. Surveillance Camara.",
@@ -3649,7 +3649,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:39:41.359387",
+    "date_posted" : "2024-11-14T05:39:41.359387",
     "id" : 329,
     "notes" : "11\/13\/24 Minneapolis Public Library-Exterior. Lady in pink dress and white shoes entering at Hennepin Avenue and 4th St. entrance. 1030-1130 am.",
     "title" : "Supporting Evidence- Minneapolis Public Library-Exterior. Lady in Pink Dress. ",
@@ -3661,7 +3661,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:44:37.72005",
+    "date_posted" : "2024-11-14T05:44:37.72005",
     "id" : 330,
     "notes" : "11\/13\/24 View from Emery Hotel Skyway of the Pickup Truck with Lady in White laying in bed of roses continuing down the street towards Vikings stadium to later take a left. 1030-1130 am.",
     "title" : "Supporting Evidence-Emery Hotel Skyway View-Pickup Truck Exiting.",
@@ -3673,7 +3673,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:49:55.894911",
+    "date_posted" : "2024-11-14T05:49:55.894911",
     "id" : 331,
     "notes" : "11\/13\/24 Detail view from Emery Hotel Skyway of the white Pickup Truck carrying Lady with black hair and black glasses, in a White flowing gown, laying in bed of red roses, continuing down the street while offering gentle wave gesture. 1030-1130 am.",
     "title" : "Supporting Evidence-Emery Hotel Skyway-Lady in White Dress-Final Wave",
@@ -3685,7 +3685,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:53:18.377282",
+    "date_posted" : "2024-11-14T05:53:18.377282",
     "id" : 332,
     "notes" : "11\/13\/24 White Pickup Truck approaching under the Emery Hotel skyway carrying woman with black hair and black glasses, in a white flowing gown, laying in bed of red roses. 1030-1130 am.",
     "title" : "Supporting Evidence Emery Hotel Skyway-White Truck Approach",
@@ -3697,7 +3697,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 05:58:45.56017",
+    "date_posted" : "2024-11-14T05:58:45.56017",
     "id" : 333,
     "notes" : "11\/13\/24  Red Notebook-Interior first page. Reads \"In cat of loss--please return to Sophie.\" Contains two phone numbers. Crossed out phone number: 612-704-6921. Circled with Star phone number: *763-377-3739. Image taken in alley outside hotel. 1030-1130 am.",
     "title" : "Supporting Evidence-Red Notebook-Interior page. Phone Numbers.",
@@ -3709,7 +3709,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 14:48:23.020647",
+    "date_posted" : "2024-11-14T14:48:23.020647",
     "id" : 334,
     "notes" : "11\/13\/24 Video-Minneapolis Public Library-Civilian informant walking through main atrium lobby to front corner of Hennepin Ave and 4th Street. 1030-1130 am. 3 seconds.",
     "title" : "Supporting Evidence-Video-Minneapolis Public Library-Walking",
@@ -3721,7 +3721,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 14:52:58.401645",
+    "date_posted" : "2024-11-14T14:52:58.401645",
     "id" : 335,
     "notes" : "11\/13\/24 Video-Minneapolis Public Library- NE Interior foyer entrance. Return Box and Bus maps\/schedules.  Near corner of Hennepin Ave and 4th Street. 1030-1130 am. 19 seconds.",
     "title" : "Supporting Evidence-Video-Minneapolis Public Library-Interior. Return Box & Bus maps.",
@@ -3733,7 +3733,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 14:58:21.343403",
+    "date_posted" : "2024-11-14T14:58:21.343403",
     "id" : 336,
     "notes" : "11\/13\/24 Video-Minneapolis Public Library-First floor Interior. Looking North on street with birch trees from lounge\/study\/fireplace area. Weather conditions: 35 degrees, low cloud cover, brisk & breezy. 1030-1130 am. 19 seconds.",
     "title" : "Supporting Evidence-Video-Minneapolis Public Library-Interior-Birch trees.",
@@ -3745,7 +3745,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 15:06:08.584215",
+    "date_posted" : "2024-11-14T15:06:08.584215",
     "id" : 337,
     "notes" : "11\/13\/24 Video-Blue Tesla Ride. Begins at JDHoyts across from Hewing Hotel.  Driver wearing black leather coat, leather gloves, leather hat, dark wire rim sunglasses. Tesla map spins at intersection. Ethereal podcast audio playing in background, including \"How to cherish life,\" and \"I don't like my feet touched.\" 1030-1130 am. 1:06 minutes.",
     "title" : "Supporting Evidence-Blue Tesla Ride. Begins at JDHoyts. Podcast Audio.",
@@ -3757,7 +3757,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 15:14:04.88437",
+    "date_posted" : "2024-11-14T15:14:04.88437",
     "id" : 338,
     "notes" : "11\/13\/24 Video-Emery Hotel-SpyHouse Coffee lounge. Suspect\/assailant with black trench coat, black pants, jewelry caught cropped on video camera, near coffee table with red notebook and pink drinks, and audio asking civilian informant questions about mother, consent, research, loved ones, pets, and discussing cat. \"I set up a camera with her consent'',  \"She was interested in my research,\" & \"I had a cat. Wanna see a picture?\" 1030-1130 am. 1:18 minutes.",
     "title" : "Supporting Evidence-Video-Emery Hotel-SpyHouse Coffee-Suspect Dialogue with Audio.",
@@ -3769,7 +3769,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 15:19:35.545663",
+    "date_posted" : "2024-11-14T15:19:35.545663",
     "id" : 339,
     "notes" : "11\/13\/24 Video-Emery Hotel Skyway-White pickup truck approaching and exiting the underpass of north Emery Hotel skyway. Women with white dress\/gown and black sunglasses laying face up in the truck bed, surrounded by a bed of red roses. Woman in bed of truck gently waves with right hand. Woman is Alive. Woman appears to closely resemble suspect. 1030-1130 am. 8 seconds.",
     "title" : "Supporting Evidence-Video-Emery Hotel Skyway-White Truck Approach & Exit",
@@ -3781,7 +3781,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 15:26:00.825048",
+    "date_posted" : "2024-11-14T15:26:00.825048",
     "id" : 340,
     "notes" : "11\/13\/24 Video-Emery Hotel Skyway. White pickup truck exiting the underpass of north skyway heading east in center lane. 1030-1130 am. 8 seconds.",
     "title" : "Supporting Evidence-Video-Emery Hotel Skyway-White Truck exiting with woman.",
@@ -3793,7 +3793,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 19:32:44.233948",
+    "date_posted" : "2024-11-14T19:32:44.233948",
     "id" : 341,
     "notes" : "",
     "title" : "Central library entrance ",
@@ -3805,7 +3805,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 19:33:37.490138",
+    "date_posted" : "2024-11-14T19:33:37.490138",
     "id" : 342,
     "notes" : "",
     "title" : "Target Sophie",
@@ -3817,7 +3817,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 19:34:40.581357",
+    "date_posted" : "2024-11-14T19:34:40.581357",
     "id" : 343,
     "notes" : "",
     "title" : "Altar",
@@ -3829,7 +3829,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 19:35:41.929879",
+    "date_posted" : "2024-11-14T19:35:41.929879",
     "id" : 344,
     "notes" : "",
     "title" : "Hewing Helper G",
@@ -3841,7 +3841,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 19:36:38.432865",
+    "date_posted" : "2024-11-14T19:36:38.432865",
     "id" : 345,
     "notes" : "Finish Tom drives ",
     "title" : "Tom drives. Death doula podcast listener",
@@ -3853,7 +3853,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 19:37:52.804648",
+    "date_posted" : "2024-11-14T19:37:52.804648",
     "id" : 346,
     "notes" : "These two agree. Death prep is worthy. ",
     "title" : "Supporting Evidence",
@@ -3865,7 +3865,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-14 19:38:37.382624",
+    "date_posted" : "2024-11-14T19:38:37.382624",
     "id" : 347,
     "notes" : "Endings are inevitable ",
     "title" : "Death comes",
@@ -3877,7 +3877,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:25:39.814804",
+    "date_posted" : "2024-11-15T16:25:39.814804",
     "id" : 348,
     "notes" : "photo of a very fashionable person! silhouette, gloves, shoes indicate late 1950s. chatted with martine about whether it was a vintage pic or someone with vintage style",
     "title" : "altar",
@@ -3889,7 +3889,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:28:33.791559",
+    "date_posted" : "2024-11-15T16:28:33.791559",
     "id" : 349,
     "notes" : "counting down to what? I can see the person breathing. it feels a bit ominous. martine led me to make a connection between the subject of the photo and the video, but that person doesn't look old enough to be the same",
     "title" : "countdown clock",
@@ -3901,7 +3901,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:29:09.251968",
+    "date_posted" : "2024-11-15T16:29:09.251968",
     "id" : 350,
     "notes" : "i chuckled when i saw this hiding down there : ) ",
     "title" : "spy kitty!",
@@ -3913,7 +3913,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:29:38.458155",
+    "date_posted" : "2024-11-15T16:29:38.458155",
     "id" : 351,
     "notes" : "I really wanted more time, I would have liked to look in those big bags in the cubbies!",
     "title" : "hotel room bed",
@@ -3925,7 +3925,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:30:37.910579",
+    "date_posted" : "2024-11-15T16:30:37.910579",
     "id" : 352,
     "notes" : "the library is actually quite loud : )  I couldn't hear much before she booked it outta there",
     "title" : "sophie's on the move",
@@ -3937,7 +3937,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:31:03.433974",
+    "date_posted" : "2024-11-15T16:31:03.433974",
     "id" : 353,
     "notes" : "he doesn't really say much but he's obviously listening",
     "title" : "driver",
@@ -3949,7 +3949,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:31:29.742145",
+    "date_posted" : "2024-11-15T16:31:29.742145",
     "id" : 354,
     "notes" : "psyching myself up to grab the notebook and slink outta there",
     "title" : "cafe",
@@ -3961,7 +3961,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:31:54.492353",
+    "date_posted" : "2024-11-15T16:31:54.492353",
     "id" : 355,
     "notes" : "eek! i really wanted to run away with the book, but i stayed",
     "title" : "sophie approaching in the alley",
@@ -3973,7 +3973,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:32:15.310618",
+    "date_posted" : "2024-11-15T16:32:15.310618",
     "id" : 356,
     "notes" : "",
     "title" : "rehearsal",
@@ -3985,7 +3985,7 @@
   },
   {
     "location" : "Minneapolis",
-    "date_posted" : "2024-11-15 16:33:31.679054",
+    "date_posted" : "2024-11-15T16:33:31.679054",
     "id" : 357,
     "notes" : "i guess i shouldn't be surprised that we're all being spied on",
     "title" : "hotel room surveillance",
